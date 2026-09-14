@@ -1,11 +1,20 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 const subsets = ['latin', 'latin-ext']; // latin-ext = Türkçe ğ ş ı İ ç ö ü
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://cmlonder.com',
+
+  integrations: [
+    sitemap({
+      i18n: { defaultLocale: 'en', locales: { en: 'en', tr: 'tr' } },
+      // .md aynaları insan sayfası değil — sitemap'e girmemeli.
+      filter: (page) => !page.endsWith('.md'),
+    }),
+  ],
 
   i18n: {
     locales: ['en', 'tr'],

@@ -1,0 +1,69 @@
+---
+import { SITE, ENTRY_TYPE, TOPIC_LABELS, type CollectionName, type Locale } from '../config';
+import { parseId, entryPath } from '../lib/content';
+import type { AnyEntry } from '../lib/content';
+
+interface Props {
+  lang: Locale;
+  entry?: { collection: CollectionName; entry: AnyEntry };
+}
+const { lang, entry } = Astro.props;
+
+const person = {
+  '@type': 'Person',
+  '@id': `${SITE.url}/#person`,
+  name: SITE.author,
+  url: SITE.url,
+  sameAs: ['https://github.com/cmlonder'],
+};
+
+let graph: unknown[] = [
+  person,
+  {
+    '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
+    url: SITE.url,
+    name: SITE.author,
+    inLanguage: lang,
+    author: { '@id': `${SITE.url}/#person` },
+  },
+];
+
+if (entry) {
+  const { collection, entry: e } = entry;
+  const d = e.data as any;
+  const { slug } = parseId(e.id);
+  const url = new URL(entryPath(lang, collection, slug), SITE.url).href;
+
+  graph = [
+    ...graph,
+    {
+      '@type': collection === 'playbooks' ? 'TechArticle' : 'BlogPosting',
+      '@id': `${url}#article`,
+      headline: d.title,
+      description: d.description,
+      url,
+      datePublished: d.pubDate.toISOString(),
+      ...(d.updatedDate && { dateModified: d.updatedDate.toISOString() }),
+      inLanguage: lang,
+      author: { '@id': `${SITE.url}/#person` },
+      keywords: [...d.topics, ...d.tags].join(', '),
+      about: d.topics.map((t: keyof typeof TOPIC_LABELS) => ({
+        '@type': 'Thing',
+        name: TOPIC_LABELS[t].en,
+      })),
+      genre: ENTRY_TYPE[collection],
+      // Ajanlar için: bu sayfanın ham Markdown karşılığı.
+      encoding: {
+        '@type': 'MediaObject',
+        encodingFormat: 'text/markdown',
+        contentUrl: `${url}.md`,
+      },
+    },
+  ];
+}
+
+const jsonld = { '@context': 'https://schema.org', '@graph': graph };
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonld)} is:inline />

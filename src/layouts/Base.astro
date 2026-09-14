@@ -1,8 +1,10 @@
 ---
 import { Font } from 'astro:assets';
 import ThemeToggle from '../components/ThemeToggle.astro';
-import { SITE, COLLECTIONS, COLLECTION_LABELS, type Locale } from '../config';
+import StructuredData from '../components/StructuredData.astro';
+import { SITE, COLLECTIONS, COLLECTION_LABELS, type CollectionName, type Locale } from '../config';
 import { localePath } from '../lib/content';
+import type { AnyEntry } from '../lib/content';
 import '../styles/base.css';
 
 interface Props {
@@ -11,9 +13,11 @@ interface Props {
   lang: Locale;
   /** Bu sayfanın diğer dildeki karşılığı (varsa). */
   altLocale?: { lang: Locale; href: string } | null;
+  /** Yazı sayfalarında JSON-LD'ye Article ekler. */
+  structured?: { collection: CollectionName; entry: AnyEntry } | undefined;
 }
 
-const { title, description, lang, altLocale = null } = Astro.props;
+const { title, description, lang, altLocale = null, structured } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const home = localePath(lang, '');
@@ -32,6 +36,10 @@ const home = localePath(lang, '');
     {altLocale && (
       <link rel="alternate" hreflang={altLocale.lang} href={new URL(altLocale.href, SITE.url).href} />
     )}
+
+    <link rel="alternate" type="application/rss+xml"
+          title={`${SITE.author} — RSS`} href={localePath(lang, 'rss.xml')} />
+    <StructuredData lang={lang} entry={structured} />
 
     <Font cssVariable="--font-serif" preload />
     <Font cssVariable="--font-sans" />

@@ -38,6 +38,14 @@ export const COLLECTION_LABELS: Record<CollectionName, Dict> = {
   signals:   { en: 'Signals',   tr: 'Sinyaller' },
 };
 
+/** Makine tarafı için tekil tip adı (.md aynası, llms.txt, JSON-LD). */
+export const ENTRY_TYPE: Record<CollectionName, string> = {
+  essays: 'essay',
+  notes: 'note',
+  playbooks: 'playbook',
+  signals: 'signal',
+};
+
 export const COLLECTION_BLURBS: Record<CollectionName, Dict> = {
   essays: {
     en: 'Finished arguments. Long, opinionated, meant to change your mind.',

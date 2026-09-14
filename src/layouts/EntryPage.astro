@@ -36,7 +36,8 @@ const t = {
 ---
 
 <Base title={`${d.title} — ${COLLECTION_LABELS[collection][lang]}`}
-      description={d.description} lang={lang} altLocale={altLocale}>
+      description={d.description} lang={lang} altLocale={altLocale}
+      structured={{ collection, entry }}>
   <article class="wrap">
     <header class="entry-head">
       <p class="meta kicker">
