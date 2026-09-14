@@ -1,0 +1,165 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import {
+  SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
+  HUB, NAV, type Locale,
+} from '../config';
+import { localePath } from '../lib/content';
+
+interface Props {
+  lang: Locale;
+  altLocale?: { lang: Locale; href: string } | null;
+}
+const { lang, altLocale = null } = Astro.props;
+const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
+---
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="wordmark" href={localePath(lang, '')}>
+      <span class="leaf" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+             stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 20c0-7 5-12 12-12" /><path d="M16 8c0 5-4 8-8 8" />
+        </svg>
+      </span>
+      {SITE.author}
+    </a>
+
+    <nav aria-label={menuLabel}>
+      {/* Maggie'nin "The Garden ⌄" megamenu kalıbı: tek dropdown, içinde
+          bölümler ve her birinin tek cümlelik tarifi. */}
+      <details class="hub">
+        <summary>
+          {HUB.name[lang]}
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </summary>
+        <div class="menu">
+          {COLLECTIONS.map((c) => (
+            <a href={localePath(lang, c)}>
+              <strong>{COLLECTION_LABELS[c][lang]}</strong>
+              <span>{COLLECTION_BLURBS[c][lang]}</span>
+            </a>
+          ))}
+        </div>
+      </details>
+
+      {NAV[lang].map((item) => (
+        <a class="top" href={localePath(lang, item.href.replace(/^\//, ''))}>{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="controls">
+      {altLocale && (
+        <a class="lang" href={altLocale.href} lang={altLocale.lang}>{altLocale.lang.toUpperCase()}</a>
+      )}
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { padding-block: var(--s-s); }
+
+  .bar { display: flex; align-items: center; gap: var(--s-s); }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3xs);
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    text-decoration: none;
+    margin-inline-end: auto;
+  }
+  .leaf { color: var(--c-mark); }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: var(--s-s);
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+  }
+  nav a.top { text-decoration: none; }
+
+  /* — Megamenu — */
+  .hub { position: relative; }
+  .hub summary {
+    display: inline-flex;
+    align-items: center;
+    gap: .35em;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .hub summary::-webkit-details-marker { display: none; }
+  .hub summary:hover { color: var(--c-accent); }
+  .hub[open] summary svg { transform: rotate(180deg); }
+  .hub summary svg { transition: transform 150ms ease; }
+
+  .menu {
+    position: absolute;
+    inset-inline-end: 0;
+    inset-block-start: calc(100% + var(--s-2xs));
+    z-index: 20;
+    inline-size: min(88vw, 26rem);
+    display: grid;
+    gap: var(--s-3xs);
+    padding: var(--s-2xs);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    box-shadow:
+      .8px 1.8px 3.8px -10px rgb(0 0 0 / .038),
+      2.5px 5.8px 12.5px -10px rgb(0 0 0 / .06),
+      6px 14px 30px -10px rgb(0 0 0 / .08);
+  }
+  .menu a {
+    display: grid;
+    gap: 2px;
+    padding: var(--s-3xs) var(--s-2xs);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+  .menu a:hover { background: var(--c-tinted); color: inherit; }
+  .menu strong { font-weight: 700; font-size: var(--t-sm); }
+  .menu span { color: var(--c-muted); font-size: var(--t-xs); line-height: 1.45; }
+
+  .controls { display: flex; align-items: center; gap: var(--s-3xs); }
+  .lang {
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    color: var(--c-muted);
+    text-decoration: none;
+    padding: 2px 8px;
+    border: 1px solid var(--c-border);
+    border-radius: 999px;
+  }
+
+  @media (max-width: 40rem) {
+    .bar { flex-wrap: wrap; }
+    .wordmark { margin-inline-end: 0; }
+    nav { order: 3; inline-size: 100%; }
+    .controls { margin-inline-start: auto; }
+    .menu { inset-inline-start: 0; inset-inline-end: auto; }
+  }
+</style>
+
+<script>
+  // Dışarı tıklayınca veya Esc ile megamenu kapansın.
+  const hub = document.querySelector('details.hub') as HTMLDetailsElement | null;
+  if (hub) {
+    document.addEventListener('click', (e) => {
+      if (hub.open && !hub.contains(e.target as Node)) hub.open = false;
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && hub.open) hub.open = false;
+    });
+  }
+</script>

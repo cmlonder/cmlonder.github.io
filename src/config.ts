@@ -116,3 +116,40 @@ export const UI: Record<Locale, Record<string, string>> = {
     home: 'Ana sayfa', latest: 'Son eklenenler',
   },
 };
+
+/**
+ * Şemsiye bölüm — Maggie'deki "The Garden"ın karşılığı.
+ * Dört koleksiyonun tamamını kapsayan üst kavram. Nav'daki dropdown ve
+ * anasayfadaki ikinci blok bunu kullanır.
+ * İSİM GEÇİCİ: beğenilmezse sadece bu iki satır değişir.
+ */
+export const HUB = {
+  path: 'workbench',
+  name:  { en: 'The Workbench', tr: 'Tezgâh' } as Record<Locale, string>,
+  blurb: {
+    en: 'A workbench of half-built ideas, finished arguments, and notes to myself — kept in the open.',
+    tr: 'Yarım kalmış fikirler, bitmiş argümanlar ve kendime notlar — açıkta duran bir tezgâh.',
+  } as Record<Locale, string>,
+};
+
+/** Anasayfa hero'su. Maggie'nin kalıbı: kalın isim + cümlenin devamı. */
+export const HERO: Record<Locale, { name: string; rest: string; role: string; now: string }> = {
+  en: {
+    name: 'Cemal',
+    rest: ' writes about building software with agents, architecture, and scale.',
+    role: 'Solution architect and software engineer',
+    now: 'Building end to end with agents, and something of my own',
+  },
+  tr: {
+    name: 'Cemal',
+    rest: ' ajanlarla yazılım geliştirmeyi, mimariyi ve ölçeği yazıyor.',
+    role: 'Çözüm mimarı ve yazılım mühendisi',
+    now: 'Uçtan uca ajanlarla geliştiriyor, bir yandan da kendi işini kuruyor',
+  },
+};
+
+/** Üst navigasyon — Maggie gibi 3 öğe, biri dropdown. */
+export const NAV: Record<Locale, { label: string; href: string }[]> = {
+  en: [{ label: 'Now', href: '/now' }, { label: 'About', href: '/about' }],
+  tr: [{ label: 'Şu An', href: '/now' }, { label: 'Hakkında', href: '/about' }],
+};

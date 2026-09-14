@@ -1,7 +1,8 @@
 ---
 import Base from './Base.astro';
 import EntryCard from '../components/EntryCard.astro';
-import { UI, type CollectionName, type Locale } from '../config';
+import { HUB, UI, type CollectionName, type Locale } from '../config';
+import { localePath } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
 interface Props {
@@ -10,20 +11,20 @@ interface Props {
   lang: Locale;
   items: { collection: CollectionName; entry: AnyEntry }[];
   altLocale?: { lang: Locale; href: string } | null;
-  /** Karışık listelerde (konu sayfası) koleksiyon rozetini göster. */
   showCollection?: boolean;
 }
 
-const {
-  title, blurb, lang, items,
-  altLocale = null, showCollection = false,
-} = Astro.props;
+const { title, blurb, lang, items, altLocale = null, showCollection = false } = Astro.props;
+const back = lang === 'tr' ? 'Tezgâha dön' : 'Back to the workbench';
 ---
 
-<Base title={`${title} — ${lang === 'tr' ? 'Cemal Önder' : 'Cemal Önder'}`}
-      description={blurb} lang={lang} altLocale={altLocale}>
+<Base title={`${title} — Cemal Önder`} description={blurb} lang={lang} altLocale={altLocale}>
   <div class="wrap">
-    <header class="list-head">
+    <header class="head">
+      <p class="kicker">
+        <span class="count">{items.length}</span>
+        <a href={localePath(lang, '')}>{back}</a>
+      </p>
       <h1>{title}</h1>
       <p class="blurb">{blurb}</p>
     </header>
@@ -31,16 +32,11 @@ const {
     {items.length === 0 ? (
       <p class="meta empty">{UI[lang].empty}</p>
     ) : (
-      <ul class="list">
+      <ul class="grid">
         {items.map(({ collection, entry }) => (
           <li>
-            <EntryCard
-              collection={collection}
-              entry={entry}
-              lang={lang}
-              variant="full"
-              showCollection={showCollection}
-            />
+            <EntryCard collection={collection} entry={entry} lang={lang}
+                       variant="row" showCollection={showCollection} showDescription />
           </li>
         ))}
       </ul>
@@ -49,27 +45,51 @@ const {
 </Base>
 
 <style>
-  .list-head { margin-block-end: var(--s-7); }
+  .head { margin-block-end: var(--s-2xl); }
+
+  .kicker {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-2xs);
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark); font-variant-numeric: tabular-nums; }
+  .kicker a { text-decoration: none; }
 
   h1 {
+    margin-block-start: var(--s-3xs);
     font-family: var(--f-serif);
-    font-size: clamp(1.875rem, 1.4rem + 2vw, 2.375rem);
-    font-weight: 500;
+    font-variation-settings: var(--axis-display);
+    font-weight: 400;
+    font-size: var(--t-3xl);
     line-height: var(--lh-tight);
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
   }
 
   .blurb {
-    margin-block-start: var(--s-3);
-    max-inline-size: 52ch;
+    margin-block-start: var(--s-2xs);
+    max-inline-size: 38ch;
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-lg);
+    line-height: 1.25;
     color: var(--c-muted);
-    font-size: 1.0625rem;
-    font-style: italic;
     text-wrap: pretty;
   }
 
-  .list { list-style: none; padding: 0; display: grid; gap: var(--s-6); }
-  .list > li + li { border-block-start: 1px solid var(--c-border); padding-block-start: var(--s-6); }
+  /* Maggie'nin 3 kolonlu liste ızgarası */
+  .grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: var(--s-l) var(--s-xl);
+    align-items: start;
+  }
 
-  .empty { margin-block-start: var(--s-6); }
+  .empty { margin-block-start: var(--s-m); }
 </style>

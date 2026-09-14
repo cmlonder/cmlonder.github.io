@@ -28,7 +28,18 @@ const collection = (dir: string, extend = z.object({})) =>
     schema: base.merge(extend),
   });
 
+/** Sabit sayfalar (now, about). Koleksiyonlardan ayrı — tarih/konu taşımazlar. */
+const site = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/site' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    updated: z.coerce.date(),
+  }),
+});
+
 export const collections = {
+  site,
   essays: collection(
     'essays',
     z.object({

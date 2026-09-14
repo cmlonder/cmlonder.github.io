@@ -1,8 +1,6 @@
 ---
-import {
-  COLLECTION_LABELS, STATUS_LABELS,
-  type CollectionName, type Locale,
-} from '../config';
+import { COLLECTION_LABELS, STATUS_LABELS, TOPIC_LABELS,
+         type CollectionName, type Locale, type Topic } from '../config';
 import { formatDate, entryPath, parseId } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
@@ -10,74 +8,129 @@ interface Props {
   collection: CollectionName;
   entry: AnyEntry;
   lang: Locale;
-  /** full: açıklamalı (koleksiyon sayfası) · compact: tek satır (anasayfa) */
-  variant?: 'full' | 'compact';
-  /** Karışık listelerde koleksiyon adını göster. */
+  /** card: kenarlıklı kart (Essays/Playbooks) · row: ikonlu liste satırı (Notes/Signals) */
+  variant?: 'card' | 'row';
   showCollection?: boolean;
+  /** Satırlarda açıklama göster (liste sayfaları evet, anasayfa hayır). */
+  showDescription?: boolean;
 }
-
 const {
   collection, entry, lang,
-  variant = 'full', showCollection = false,
+  variant = 'card', showCollection = false, showDescription = false,
 } = Astro.props;
 
 const { slug } = parseId(entry.id);
 const d = entry.data as any;
 const href = entryPath(lang, collection, slug);
+const typeLabel = COLLECTION_LABELS[collection][lang].replace(/lar$|ler$|s$/, '');
+// Kapakta illüstrasyon yok — kopyalanacak çizim yok, uydurma da yok.
+// Yerine yazının ana konusu tipografik olarak duruyor.
+const coverTopic = TOPIC_LABELS[(d.topics as Topic[])[0]][lang];
 ---
 
-<article class:list={['card', variant]}>
-  <h3><a href={href}>{d.title}</a></h3>
-
-  {variant === 'full' && <p class="dek">{d.description}</p>}
-
-  <p class="meta line">
-    {showCollection && (
-      <><span class="coll">{COLLECTION_LABELS[collection][lang]}</span><span aria-hidden="true">·</span></>
-    )}
-    <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
-    {collection === 'notes' && (
-      <><span aria-hidden="true">·</span><span>{STATUS_LABELS[d.status as keyof typeof STATUS_LABELS][lang]}</span></>
-    )}
-    {collection === 'signals' && (
-      <><span aria-hidden="true">·</span><span>{d.source}</span></>
-    )}
-  </p>
-</article>
+{variant === 'card' ? (
+  <article class="card">
+    <a class="cover" href={href} aria-hidden="true" tabindex="-1">
+      <span class="glyph">{coverTopic}</span>
+    </a>
+    <div class="body">
+      <h3><a href={href}>{d.title}</a></h3>
+      <p class="dek">{d.description}</p>
+      <p class="foot meta">
+        <span>{typeLabel}</span>
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21V11" /><path d="M12 11c0-4 3-7 7-7 0 4-3 7-7 7Z" />
+            <path d="M12 14c0-3-2.5-5-5.5-5 0 3 2.5 5 5.5 5Z" />
+          </svg>
+        </span>
+        <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+      </p>
+    </div>
+  </article>
+) : (
+  <article class="row">
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21V11" /><path d="M12 11c0-4 3-7 7-7 0 4-3 7-7 7Z" />
+        <path d="M12 14c0-3-2.5-5-5.5-5 0 3 2.5 5 5.5 5Z" />
+      </svg>
+    </span>
+    <div>
+      <h3><a href={href}>{d.title}</a></h3>
+      {showDescription && <p class="dek">{d.description}</p>}
+      <p class="foot meta">
+        {showCollection && <><span class="coll">{typeLabel}</span><span aria-hidden="true">·</span></>}
+        <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+        {collection === 'notes' && (
+          <><span aria-hidden="true">·</span><span>{STATUS_LABELS[d.status as keyof typeof STATUS_LABELS][lang]}</span></>
+        )}
+        {collection === 'signals' && (<><span aria-hidden="true">·</span><span>{d.source}</span></>)}
+      </p>
+    </div>
+  </article>
+)}
 
 <style>
-  .card { display: grid; gap: var(--s-2); }
-
   h3 {
     font-family: var(--f-serif);
-    font-weight: 500;
-    line-height: 1.25;
-    letter-spacing: -0.005em;
-    text-wrap: balance;
+    font-variation-settings: var(--axis-display);
+    font-weight: 400;
+    line-height: var(--lh-snug);
+    font-size: var(--t-base);
   }
-  .full h3    { font-size: 1.4375rem; max-inline-size: 30ch; }
-  .compact h3 { font-size: 1.125rem;  max-inline-size: 42ch; }
-
   h3 a { text-decoration: none; }
-  h3 a:hover { text-decoration: underline; text-decoration-color: var(--c-accent); }
+  h3 a:hover { color: var(--c-accent); }
 
-  .dek {
+  .foot { display: flex; flex-wrap: wrap; align-items: center; gap: .5em; }
+  .mark { color: var(--c-mark); display: inline-flex; }
+
+  /* — Kart — */
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color 140ms ease, transform 140ms ease;
+  }
+  .card:hover { border-color: var(--c-accent); transform: translateY(-2px); }
+
+  /* İllüstrasyon yerine sakin bir tip-levhası: kopyalanacak çizim yok. */
+  .cover {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 5 / 2;
+    padding: var(--s-2xs);
+    background: var(--c-tinted);
+    border-block-end: 1px solid var(--c-border);
+    text-decoration: none;
+  }
+  .glyph {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-md);
+    line-height: 1.1;
+    text-align: center;
+    text-wrap: balance;
     color: var(--c-muted);
-    font-size: 1.0625rem;
-    line-height: 1.55;
-    max-inline-size: 58ch;
-    text-wrap: pretty;
+  }
+  .card:hover .cover { background: var(--c-border); }
+
+  .card .body { display: grid; gap: var(--s-3xs); padding: var(--s-xs); }
+  .dek {
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    line-height: 1.5;
+    color: var(--c-muted);
   }
 
-  .line { display: flex; flex-wrap: wrap; gap: var(--s-2); }
-  .coll { color: var(--c-accent); }
-
-  /* Compact'te meta başlığın üstünde değil, yanında okunur bir ritim kurar. */
-  .compact { grid-template-columns: 1fr auto; align-items: baseline; gap: var(--s-4); }
-  .compact .line { justify-content: end; }
-
-  @media (max-width: 34rem) {
-    .compact { grid-template-columns: 1fr; gap: var(--s-1); }
-    .compact .line { justify-content: start; }
-  }
+  /* — Satır — */
+  .row { display: grid; grid-template-columns: auto 1fr; gap: var(--s-2xs); align-items: start; }
+  .row .dek { margin-block: .25em .15em; }
+  .row .mark { padding-block-start: .3em; }
+  .row .coll { color: var(--c-accent); }
 </style>

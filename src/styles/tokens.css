@@ -1,52 +1,101 @@
 /*
- * Tasarım token'ları — "sıcak kâğıt".
- * Tüm kontrastlar WCAG AA'ya karşı ölçüldü (bkz. commit mesajı).
+ * Tasarım token'ları.
+ * Ölçek ve palet maggieappleton.com'dan ölçülerek alındı (Utopia akışkan
+ * ölçek, 320-1200px arası). Renkler onun :root ve prefers-color-scheme
+ * bloklarındaki değerlerin birebir aynısı.
  * Renk BURADA tanımlanır; başka hiçbir dosyada ham hex olmamalı.
  */
 
 :root {
-  /* — Renk: açık tema (varsayılan) — */
-  --c-bg:      #FDFCF8;  /* kırık beyaz kâğıt */
-  --c-surface: #F4F0E6;  /* kod bloğu, alıntı, kart */
-  --c-text:    #1F1B16;  /* sıcak siyah        16.7:1 */
-  --c-muted:   #6B6154;  /* metadata, tarih     5.9:1 */
-  --c-border:  #E4DECF;  /* ince çizgi */
-  --c-accent:  #A8431F;  /* terracotta, link    5.9:1 */
+  /* — Akışkan ölçek tabanı — */
+  --fluid-min-width: 320;
+  --fluid-max-width: 1200;
+  --fluid-screen: 100vw;
+  --fluid-bp: calc(
+    (var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) /
+    (var(--fluid-max-width) - var(--fluid-min-width))
+  );
+
+  /* — Tipografi adımları (min px -> max px) — */
+  --f--2-min: 13.33;  --f--2-max: 15;
+  --f--1-min: 16;     --f--1-max: 16.5;
+  --f-0-min:  20;     --f-0-max:  22;    /* gövde */
+  --f-1-min:  25;     --f-1-max:  28.6;
+  --f-2-min:  30;     --f-2-max:  36;
+  --f-3-min:  39.06;  --f-3-max:  44;
+  --f-4-min:  46.87;  --f-4-max:  56;
+  --f-5-min:  57.6;   --f-5-max:  81.8;  /* hero */
+
+  --t-xs:   calc(((var(--f--2-min) / 16) * 1rem) + (var(--f--2-max) - var(--f--2-min)) * var(--fluid-bp));
+  --t-sm:   calc(((var(--f--1-min) / 16) * 1rem) + (var(--f--1-max) - var(--f--1-min)) * var(--fluid-bp));
+  --t-base: calc(((var(--f-0-min)  / 16) * 1rem) + (var(--f-0-max)  - var(--f-0-min))  * var(--fluid-bp));
+  --t-md:   calc(((var(--f-1-min)  / 16) * 1rem) + (var(--f-1-max)  - var(--f-1-min))  * var(--fluid-bp));
+  --t-lg:   calc(((var(--f-2-min)  / 16) * 1rem) + (var(--f-2-max)  - var(--f-2-min))  * var(--fluid-bp));
+  --t-xl:   calc(((var(--f-3-min)  / 16) * 1rem) + (var(--f-3-max)  - var(--f-3-min))  * var(--fluid-bp));
+  --t-2xl:  calc(((var(--f-4-min)  / 16) * 1rem) + (var(--f-4-max)  - var(--f-4-min))  * var(--fluid-bp));
+  --t-3xl:  calc(((var(--f-5-min)  / 16) * 1rem) + (var(--f-5-max)  - var(--f-5-min))  * var(--fluid-bp));
+
+  /* — Boşluk: gövde satırından türer (s = 20 -> 22px) — */
+  --sc-min: 20;  --sc-max: 22;
+  --s-3xs: calc(((var(--sc-min) * 0.25 / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 0.25 * var(--fluid-bp));
+  --s-2xs: calc(((var(--sc-min) * 0.5  / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 0.5  * var(--fluid-bp));
+  --s-xs:  calc(((var(--sc-min) * 0.75 / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 0.75 * var(--fluid-bp));
+  --s-s:   calc(((var(--sc-min) * 1    / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 1    * var(--fluid-bp));
+  --s-m:   calc(((var(--sc-min) * 1.5  / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 1.5  * var(--fluid-bp));
+  --s-l:   calc(((var(--sc-min) * 2    / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 2    * var(--fluid-bp));
+  --s-xl:  calc(((var(--sc-min) * 3    / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 3    * var(--fluid-bp));
+  --s-2xl: calc(((var(--sc-min) * 4    / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 4    * var(--fluid-bp));
+  --s-3xl: calc(((var(--sc-min) * 6    / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 6    * var(--fluid-bp));
+  --s-4xl: calc(((var(--sc-min) * 8    / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 8    * var(--fluid-bp));
 
   /* — Tipografi — */
   --f-serif: var(--font-serif);
   --f-sans:  var(--font-sans);
   --f-mono:  var(--font-mono);
 
-  --t-body:    1.1875rem;  /* 19px */
-  --t-small:   0.875rem;
-  --t-meta:    0.8125rem;
-  --t-h3:      1.0625rem;
-  --t-h2:      1.25rem;
-  --t-title:   clamp(2.125rem, 1.4rem + 3.2vw, 2.75rem); /* 34 → 44px */
+  /* Fraunces değişken eksenleri: SOFT/WONK sıfır = Canela'ya en yakın,
+     yumuşak ve tuhaf harf formları kapalı. */
+  --axis-text:    'SOFT' 0, 'WONK' 0, 'opsz' 14;
+  --axis-display: 'SOFT' 0, 'WONK' 0, 'opsz' 144;
 
-  --lh-body:  1.7;
-  --lh-tight: 1.15;
+  --lh-body:  1.6;
+  --lh-tight: 1.05;
+  --lh-snug:  1.2;
 
   /* — Ölçü — */
-  --w-prose: 62ch;   /* okuma kolonu */
-  --w-page:  46rem;  /* başlık/meta hizası */
+  --w-prose: 66ch;
+  --w-page:  72rem;   /* geniş iki kolonlu ızgara */
+  --w-narrow: 46rem;  /* okuma sayfası */
 
-  --s-1: 0.25rem;  --s-2: 0.5rem;   --s-3: 0.75rem;
-  --s-4: 1rem;     --s-5: 1.5rem;   --s-6: 2rem;
-  --s-7: 3rem;     --s-8: 4rem;     --s-9: 6rem;
+  --radius-sm: 0.2rem;
+  --radius:    0.4rem;
+  --radius-lg: 0.6rem;
+
+  /* — Renk: açık tema — */
+  --c-bg:        #f6f5f1;  /* cream */
+  --c-surface:   #fcfbf7;  /* light cream — kartlar */
+  --c-tinted:    #e6e3e1;  /* tinted cream */
+  --c-text:      #353534;  /* 11.3:1 */
+  --c-muted:     #73706d;  /*  4.5:1 */
+  --c-border:    #e3e3e0;
+  --c-accent:    #5f023e;  /* crimson      12.3:1 */
+  --c-accent-lo: #960462;  /* bright crimson 7.7:1 */
+  --c-mark:      #04a5bb;  /* sea blue — SADECE ikon/süs, metin değil (2.7:1) */
 
   color-scheme: light;
 }
 
 /* — Renk: koyu tema — */
 :root[data-theme='dark'] {
-  --c-bg:      #14120E;  /* sıcak koyu, saf siyah değil */
-  --c-surface: #1F1C16;
-  --c-text:    #EDE7DA;  /* 15.2:1 */
-  --c-muted:   #9A9184;  /*  6.0:1 */
-  --c-border:  #332E25;
-  --c-accent:  #E1835A;  /*  6.8:1 */
+  --c-bg:        #1c1b18;
+  --c-surface:   #252420;
+  --c-tinted:    #3a3835;
+  --c-text:      #c2bfba;  /* 9.4:1 */
+  --c-muted:     #a8a5a0;  /* 7.0:1 */
+  --c-border:    #3a3835;
+  --c-accent:    #e85aab;  /* 5.3:1 */
+  --c-accent-lo: #ff7ac4;  /* 7.2:1 */
+  --c-mark:      #2bc4da;
 
   color-scheme: dark;
 }
@@ -54,12 +103,15 @@
 /* Kullanıcı seçim yapmadıysa sistem tercihini izle. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --c-bg:      #14120E;
-    --c-surface: #1F1C16;
-    --c-text:    #EDE7DA;
-    --c-muted:   #9A9184;
-    --c-border:  #332E25;
-    --c-accent:  #E1835A;
+    --c-bg:        #1c1b18;
+    --c-surface:   #252420;
+    --c-tinted:    #3a3835;
+    --c-text:      #c2bfba;
+    --c-muted:     #a8a5a0;
+    --c-border:    #3a3835;
+    --c-accent:    #e85aab;
+    --c-accent-lo: #ff7ac4;
+    --c-mark:      #2bc4da;
 
     color-scheme: dark;
   }

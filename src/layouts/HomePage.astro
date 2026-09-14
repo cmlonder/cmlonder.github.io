@@ -2,127 +2,199 @@
 import Base from './Base.astro';
 import EntryCard from '../components/EntryCard.astro';
 import {
-  SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  INTRO, UI, type CollectionName, type Locale,
+  SITE, COLLECTION_LABELS, COLLECTION_BLURBS,
+  HERO, HUB, UI, type Locale,
 } from '../config';
 import { getEntries, localePath, countLabel } from '../lib/content';
 
 interface Props { lang: Locale }
 const { lang } = Astro.props;
 const other: Locale = lang === 'en' ? 'tr' : 'en';
+const hero = HERO[lang];
 
-/** Anasayfada koleksiyon başına kaç girdi ve hangi yoğunlukta gösterilecek. */
-const SHAPE: Record<CollectionName, { take: number; variant: 'full' | 'compact' }> = {
-  essays:    { take: 3, variant: 'full' },
-  playbooks: { take: 4, variant: 'compact' },
-  notes:     { take: 4, variant: 'compact' },
-  signals:   { take: 5, variant: 'compact' },
-};
+const [essays, notes, playbooks, signals] = await Promise.all([
+  getEntries('essays', lang),
+  getEntries('notes', lang),
+  getEntries('playbooks', lang),
+  getEntries('signals', lang),
+]);
 
-const sections = (
-  await Promise.all(
-    COLLECTIONS.map(async (collection) => {
-      const all = await getEntries(collection, lang);
-      // Essays'te öne çıkarılanlar başa alınır, sonra tarih sırası.
-      const ordered =
-        collection === 'essays'
-          ? [...all].sort((a, b) => Number((b.data as any).featured) - Number((a.data as any).featured))
-          : all;
-      return { collection, entries: ordered.slice(0, SHAPE[collection].take), total: all.length };
-    })
-  )
-).filter((s) => s.entries.length > 0);
+// Essays'te öne çıkarılanlar başa.
+const featured = [...essays].sort(
+  (a, b) => Number((b.data as any).featured) - Number((a.data as any).featured)
+);
 
-const intro = INTRO[lang];
-const t = UI[lang];
+const more = lang === 'tr' ? 'Devamı' : 'Learn more';
 ---
 
-<Base title={`${SITE.author} — ${intro.role}`} description={intro.body} lang={lang}
+<Base title={`${SITE.author} — ${hero.role}`} description={hero.rest.trim()} lang={lang}
       altLocale={{ lang: other, href: localePath(other, '') }}>
-  <div class="wrap">
-    <section class="intro">
-      <p class="meta role">{intro.role}</p>
-      <p class="body">{intro.body}</p>
-    </section>
 
-    {sections.map(({ collection, entries, total }) => (
-      <section class="block">
-        <header class="block-head">
-          <h2>
-            <a href={localePath(lang, collection)}>{COLLECTION_LABELS[collection][lang]}</a>
-          </h2>
-          <p class="meta blurb">{COLLECTION_BLURBS[collection][lang]}</p>
-          {total > entries.length && (
-            <a class="meta all" href={localePath(lang, collection)}>
-              {countLabel(total, lang)} →
-            </a>
-          )}
-        </header>
-
-        <ul class:list={['items', SHAPE[collection].variant]}>
-          {entries.map((entry) => (
-            <li>
-              <EntryCard
-                collection={collection}
-                entry={entry}
-                lang={lang}
-                variant={SHAPE[collection].variant}
-              />
-            </li>
-          ))}
-        </ul>
-      </section>
-    ))}
-
-    <p class="topics-link">
-      <a href={localePath(lang, 'topics')}>{t.allTopics} →</a>
+  <section class="wrap hero">
+    <h1><strong>{hero.name}</strong>{hero.rest}</h1>
+    <p class="sub">
+      <span>{hero.role}</span>
+      <span>{hero.now}</span>
     </p>
+  </section>
+
+  <section class="wrap hub">
+    <h2>{HUB.name[lang]}</h2>
+    <p class="hub-blurb">
+      {HUB.blurb[lang]}{' '}
+      <a href={localePath(lang, 'topics')}>{more} <span aria-hidden="true">→</span></a>
+    </p>
+  </section>
+
+  <div class="wrap columns">
+    {/* Sol kolon: kartlar */}
+    <div class="col-main">
+      {featured.length > 0 && (
+        <section class="block">
+          <h3 class="section-title">
+            <a href={localePath(lang, 'essays')}>{COLLECTION_LABELS.essays[lang]} <span aria-hidden="true">→</span></a>
+          </h3>
+          <p class="blurb">{COLLECTION_BLURBS.essays[lang]}</p>
+          <div class="cards">
+            {featured.slice(0, 4).map((entry) => (
+              <EntryCard collection="essays" entry={entry} lang={lang} variant="card" />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {playbooks.length > 0 && (
+        <section class="block">
+          <h3 class="section-title">
+            <a href={localePath(lang, 'playbooks')}>{COLLECTION_LABELS.playbooks[lang]} <span aria-hidden="true">→</span></a>
+          </h3>
+          <p class="blurb">{COLLECTION_BLURBS.playbooks[lang]}</p>
+          <div class="cards">
+            {playbooks.slice(0, 4).map((entry) => (
+              <EntryCard collection="playbooks" entry={entry} lang={lang} variant="card" />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+
+    {/* Sağ kolon: listeler */}
+    <aside class="col-side">
+      {notes.length > 0 && (
+        <section class="block">
+          <h3 class="section-title">
+            <a href={localePath(lang, 'notes')}>{COLLECTION_LABELS.notes[lang]} <span aria-hidden="true">→</span></a>
+          </h3>
+          <p class="blurb">{COLLECTION_BLURBS.notes[lang]}</p>
+          <ul class="rows">
+            {notes.slice(0, 8).map((entry) => (
+              <li><EntryCard collection="notes" entry={entry} lang={lang} variant="row" /></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {signals.length > 0 && (
+        <section class="block">
+          <h3 class="section-title">
+            <a href={localePath(lang, 'signals')}>{COLLECTION_LABELS.signals[lang]} <span aria-hidden="true">→</span></a>
+          </h3>
+          <p class="blurb">{COLLECTION_BLURBS.signals[lang]}</p>
+          <ul class="rows">
+            {signals.slice(0, 8).map((entry) => (
+              <li><EntryCard collection="signals" entry={entry} lang={lang} variant="row" /></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <p class="count meta">
+        {countLabel(essays.length + notes.length + playbooks.length + signals.length, lang)}
+        {' · '}
+        <a href={localePath(lang, 'topics')}>{UI[lang].allTopics}</a>
+      </p>
+    </aside>
   </div>
 </Base>
 
 <style>
-  .intro { max-inline-size: 58ch; margin-block-end: var(--s-9); }
-  .role {
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--c-accent);
-    margin-block-end: var(--s-4);
+  /* — Hero — */
+  .hero { padding-block: var(--s-l) var(--s-2xl); }
+  h1 {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-weight: 400;
+    font-size: var(--t-3xl);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.015em;
+    max-inline-size: 30ch;
+    text-wrap: pretty;
   }
-  .intro .body { font-size: 1.25rem; line-height: 1.65; text-wrap: pretty; }
+  h1 strong { font-weight: 700; }
 
-  .block + .block { margin-block-start: var(--s-9); }
-
-  .block-head {
+  .sub {
     display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: baseline;
-    gap: var(--s-2) var(--s-4);
-    padding-block-end: var(--s-4);
-    border-block-end: 1px solid var(--c-border);
-  }
-  .block-head h2 {
+    gap: .15em;
+    margin-block-start: var(--s-m);
     font-family: var(--f-sans);
-    font-size: var(--t-meta);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    font-size: var(--t-md);
+    line-height: 1.35;
+    color: var(--c-muted);
   }
-  .block-head h2 a { text-decoration: none; }
-  .block-head .blurb { grid-column: 1; font-style: italic; }
-  .block-head .all { grid-row: 1; grid-column: 2; text-decoration: none; white-space: nowrap; }
 
-  .items { list-style: none; padding: 0; display: grid; }
-  .items.full    { gap: var(--s-6); margin-block-start: var(--s-6); }
-  .items.compact { gap: 0; margin-block-start: var(--s-2); }
-  .items.compact > li { padding-block: var(--s-3); }
-  .items.compact > li + li { border-block-start: 1px solid var(--c-border); }
-
-  .topics-link {
-    margin-block-start: var(--s-9);
-    padding-block-start: var(--s-5);
-    border-block-start: 1px solid var(--c-border);
+  /* — Şemsiye bölüm — */
+  .hub { padding-block-end: var(--s-xl); }
+  .hub h2 {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-weight: 400;
+    font-size: var(--t-xl);
+    line-height: var(--lh-snug);
+  }
+  .hub-blurb {
+    margin-block-start: var(--s-2xs);
+    max-inline-size: 62ch;
     font-family: var(--f-sans);
-    font-size: var(--t-meta);
+    font-size: var(--t-sm);
+    line-height: 1.5;
   }
-  .topics-link a { text-decoration: none; color: var(--c-accent); }
+  .hub-blurb a { color: var(--c-accent); text-decoration: none; white-space: nowrap; }
+
+  /* — İki kolon: Maggie'nin asimetrik ızgarası — */
+  .columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+    gap: var(--s-xl);
+    align-items: start;
+  }
+
+  .col-main .block + .block { margin-block-start: var(--s-2xl); }
+  .col-side .block + .block { margin-block-start: var(--s-l); }
+  .blurb {
+    margin-block-start: var(--s-3xs);
+    max-inline-size: 46ch;
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    line-height: 1.5;
+    color: var(--c-muted);
+  }
+
+  .cards {
+    margin-block-start: var(--s-s);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--s-xs);
+  }
+
+  .rows { list-style: none; padding: 0; margin-block-start: var(--s-2xs); }
+  .rows > li { padding-block: var(--s-2xs); }
+  .rows > li + li { border-block-start: 1px solid var(--c-border); }
+
+  .count { margin-block-start: var(--s-l); }
+  .count a { color: var(--c-accent); text-decoration: none; }
+
+  @media (max-width: 56rem) {
+    .columns { grid-template-columns: 1fr; gap: var(--s-2xl); }
+    h1 { max-inline-size: none; }
+  }
 </style>

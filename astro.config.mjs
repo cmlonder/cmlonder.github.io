@@ -31,21 +31,25 @@ export default defineConfig({
   },
 
   // Build sırasında indirilip self-host edilir — harici istek yok.
+  // Fraunces: Maggie'nin Canela'sının (ticari) serbest en yakın karşılığı —
+  // değişken opsz ekseniyle tek aile hem gövde hem display rolünü karşılıyor.
+  // Lato ve IBM Plex Mono onun kullandıklarıyla birebir aynı.
   fonts: [
     {
       provider: fontProviders.google(),
-      name: 'Newsreader',
+      name: 'Fraunces',
       cssVariable: '--font-serif',
-      weights: [400, 500, 600],
+      weights: [400, 500, 600, 700],
       styles: ['normal', 'italic'],
       subsets,
       fallbacks: ['Iowan Old Style', 'Georgia', 'serif'],
     },
     {
       provider: fontProviders.google(),
-      name: 'Inter',
+      name: 'Lato',
       cssVariable: '--font-sans',
-      weights: [400, 500, 600],
+      weights: [400, 700],
+      styles: ['normal', 'italic'],
       subsets,
       fallbacks: ['system-ui', 'sans-serif'],
     },

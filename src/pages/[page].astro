@@ -1,0 +1,46 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { localePath, formatDate } from '../lib/content';
+
+export async function getStaticPaths() {
+  const all = await getCollection('site');
+  return all
+    .filter((e) => e.id.startsWith('en/'))
+    .map((e) => ({ params: { page: e.id.split('/')[1] }, props: { entry: e } }));
+}
+
+const lang = 'en' as const;
+const other = lang === 'en' ? 'tr' : 'en';
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const slug = entry.id.split('/')[1];
+const twin = await getEntry('site', `${other}/${slug}`);
+const altLocale = twin
+  ? { lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', slug) }
+  : null;
+
+const updatedLabel = lang === 'tr' ? 'Güncellendi' : 'Updated';
+---
+
+<Base title={`${entry.data.title} — Cemal Önder`} description={entry.data.description}
+      lang={lang} altLocale={altLocale}>
+  <article class="narrow">
+    <h1>{entry.data.title}</h1>
+    <p class="meta">{updatedLabel} {formatDate(entry.data.updated, lang)}</p>
+    <div class="prose"><Content /></div>
+  </article>
+</Base>
+
+<style>
+  h1 {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-weight: 400;
+    font-size: var(--t-2xl);
+    line-height: var(--lh-tight);
+  }
+  .meta { margin-block-start: var(--s-3xs); }
+  .prose { margin-block-start: var(--s-l); }
+</style>
