@@ -1,0 +1,145 @@
+---
+import { Font } from 'astro:assets';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { SITE, COLLECTIONS, COLLECTION_LABELS, type Locale } from '../config';
+import { localePath } from '../lib/content';
+import '../styles/base.css';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Locale;
+  /** Bu sayfanın diğer dildeki karşılığı (varsa). */
+  altLocale?: { lang: Locale; href: string } | null;
+}
+
+const { title, description, lang, altLocale = null } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const home = localePath(lang, '');
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {altLocale && (
+      <link rel="alternate" hreflang={altLocale.lang} href={new URL(altLocale.href, SITE.url).href} />
+    )}
+
+    <Font cssVariable="--font-serif" preload />
+    <Font cssVariable="--font-sans" />
+    <Font cssVariable="--font-mono" />
+
+    {/* Tema, boyamadan önce uygulanmalı — aksi halde beyaz flaş olur. */}
+    <script is:inline>
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark' || stored === 'light') {
+        document.documentElement.dataset.theme = stored;
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip" href="#main">{lang === 'tr' ? 'İçeriğe geç' : 'Skip to content'}</a>
+
+    <header class="wrap site-header">
+      <a class="wordmark" href={home}>{SITE.author}</a>
+
+      <nav aria-label={lang === 'tr' ? 'Bölümler' : 'Sections'}>
+        {COLLECTIONS.map((c) => (
+          <a href={localePath(lang, c)}>{COLLECTION_LABELS[c][lang]}</a>
+        ))}
+      </nav>
+
+      <div class="controls">
+        {altLocale && (
+          <a class="lang" href={altLocale.href} lang={altLocale.lang}>
+            {altLocale.lang.toUpperCase()}
+          </a>
+        )}
+        <ThemeToggle />
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="wrap site-footer">
+      <p class="meta">© {new Date().getFullYear()} {SITE.author}</p>
+    </footer>
+
+    <style>
+      .skip {
+        position: absolute;
+        inset-block-start: -100%;
+        inset-inline-start: var(--s-4);
+        z-index: 10;
+        background: var(--c-surface);
+        padding: var(--s-2) var(--s-4);
+        border-radius: 4px;
+        font-family: var(--f-sans);
+        font-size: var(--t-small);
+      }
+      .skip:focus { inset-block-start: var(--s-4); }
+
+      .site-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--s-4);
+        padding-block: var(--s-5);
+        border-block-end: 1px solid var(--c-border);
+      }
+
+      .wordmark {
+        font-family: var(--f-serif);
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        text-decoration: none;
+        margin-inline-end: auto;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--s-4);
+        font-family: var(--f-sans);
+        font-size: var(--t-meta);
+        color: var(--c-muted);
+      }
+      nav a { text-decoration: none; }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: var(--s-2);
+      }
+
+      .lang {
+        font-family: var(--f-sans);
+        font-size: var(--t-meta);
+        color: var(--c-muted);
+        text-decoration: none;
+        padding: var(--s-1) var(--s-2);
+        border: 1px solid var(--c-border);
+        border-radius: 999px;
+      }
+
+      main { padding-block: var(--s-8) var(--s-9); }
+
+      .site-footer {
+        padding-block: var(--s-5);
+        border-block-start: 1px solid var(--c-border);
+      }
+    </style>
+  </body>
+</html>

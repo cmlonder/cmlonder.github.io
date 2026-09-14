@@ -1,0 +1,56 @@
+---
+const label = Astro.currentLocale === 'tr' ? 'Temayı değiştir' : 'Toggle theme';
+---
+
+<button id="theme-toggle" type="button" aria-label={label} title={label}>
+  <svg class="sun" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"
+       fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <circle cx="12" cy="12" r="4.2" />
+    <path d="M12 2.6v2.2M12 19.2v2.2M4.2 12H2M22 12h-2.2M6.2 6.2 4.7 4.7M19.3 19.3l-1.5-1.5M17.8 6.2l1.5-1.5M4.7 19.3l1.5-1.5" />
+  </svg>
+  <svg class="moon" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"
+       fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 14.4A8.4 8.4 0 0 1 9.6 4a8.4 8.4 0 1 0 10.4 10.4Z" />
+  </svg>
+</button>
+
+<style>
+  button {
+    display: grid;
+    place-items: center;
+    inline-size: 2rem;
+    block-size: 2rem;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: none;
+    color: var(--c-muted);
+    cursor: pointer;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  button:hover { color: var(--c-accent); border-color: var(--c-border); }
+  button > svg { grid-area: 1 / 1; }
+
+  /* Açık temada ay, koyu temada güneş göster (tıklayınca ne olacağını anlatır). */
+  .sun  { display: none; }
+  .moon { display: block; }
+  :root[data-theme='dark'] .sun  { display: block; }
+  :root[data-theme='dark'] .moon { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .sun  { display: block; }
+    :root:not([data-theme='light']) .moon { display: none; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const current =
+      root.dataset.theme ??
+      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>

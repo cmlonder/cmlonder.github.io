@@ -1,0 +1,13 @@
+---
+// İngilizce (varsayılan dil, prefix yok): /essays/the-agent-shaped-codebase
+import EntryPage from '../../layouts/EntryPage.astro';
+import { entryPaths } from '../../lib/routes';
+
+export async function getStaticPaths() {
+  return entryPaths('en');
+}
+
+const { collection, entry, lang } = Astro.props;
+---
+
+<EntryPage collection={collection} entry={entry} lang={lang} />

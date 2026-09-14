@@ -1,0 +1,66 @@
+/*
+ * Tasarım token'ları — "sıcak kâğıt".
+ * Tüm kontrastlar WCAG AA'ya karşı ölçüldü (bkz. commit mesajı).
+ * Renk BURADA tanımlanır; başka hiçbir dosyada ham hex olmamalı.
+ */
+
+:root {
+  /* — Renk: açık tema (varsayılan) — */
+  --c-bg:      #FDFCF8;  /* kırık beyaz kâğıt */
+  --c-surface: #F4F0E6;  /* kod bloğu, alıntı, kart */
+  --c-text:    #1F1B16;  /* sıcak siyah        16.7:1 */
+  --c-muted:   #6B6154;  /* metadata, tarih     5.9:1 */
+  --c-border:  #E4DECF;  /* ince çizgi */
+  --c-accent:  #A8431F;  /* terracotta, link    5.9:1 */
+
+  /* — Tipografi — */
+  --f-serif: var(--font-serif);
+  --f-sans:  var(--font-sans);
+  --f-mono:  var(--font-mono);
+
+  --t-body:    1.1875rem;  /* 19px */
+  --t-small:   0.875rem;
+  --t-meta:    0.8125rem;
+  --t-h3:      1.0625rem;
+  --t-h2:      1.25rem;
+  --t-title:   clamp(2.125rem, 1.4rem + 3.2vw, 2.75rem); /* 34 → 44px */
+
+  --lh-body:  1.7;
+  --lh-tight: 1.15;
+
+  /* — Ölçü — */
+  --w-prose: 62ch;   /* okuma kolonu */
+  --w-page:  46rem;  /* başlık/meta hizası */
+
+  --s-1: 0.25rem;  --s-2: 0.5rem;   --s-3: 0.75rem;
+  --s-4: 1rem;     --s-5: 1.5rem;   --s-6: 2rem;
+  --s-7: 3rem;     --s-8: 4rem;     --s-9: 6rem;
+
+  color-scheme: light;
+}
+
+/* — Renk: koyu tema — */
+:root[data-theme='dark'] {
+  --c-bg:      #14120E;  /* sıcak koyu, saf siyah değil */
+  --c-surface: #1F1C16;
+  --c-text:    #EDE7DA;  /* 15.2:1 */
+  --c-muted:   #9A9184;  /*  6.0:1 */
+  --c-border:  #332E25;
+  --c-accent:  #E1835A;  /*  6.8:1 */
+
+  color-scheme: dark;
+}
+
+/* Kullanıcı seçim yapmadıysa sistem tercihini izle. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --c-bg:      #14120E;
+    --c-surface: #1F1C16;
+    --c-text:    #EDE7DA;
+    --c-muted:   #9A9184;
+    --c-border:  #332E25;
+    --c-accent:  #E1835A;
+
+    color-scheme: dark;
+  }
+}
