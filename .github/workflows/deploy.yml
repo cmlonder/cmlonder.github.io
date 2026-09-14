@@ -20,10 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      # pnpm sürümü package.json'daki packageManager alanından okunur.
+      # Burada da belirtmek "Multiple versions of pnpm specified" hatası verir.
       - uses: withastro/action@v6
         with:
           node-version: 22
-          package-manager: pnpm@latest
 
   deploy:
     needs: build
