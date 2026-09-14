@@ -6,7 +6,11 @@ const subsets = ['latin', 'latin-ext']; // latin-ext = Türkçe ğ ş ı İ ç �
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://cmlonder.com',
+  // Sitenin GERÇEKTEN yayınlandığı adres. Canonical, sitemap, llms.txt ve
+  // .md aynalarındaki mutlak URL'ler buradan türer.
+  // Cutover (DNS cmlonder.com'a çevrildiğinde): bunu ve src/config.ts'deki
+  // SITE.url'i 'https://cmlonder.com' yap, public/CNAME ekle.
+  site: 'https://cmlonder.github.io',
 
   integrations: [
     sitemap({

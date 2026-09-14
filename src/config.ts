@@ -3,7 +3,7 @@
  */
 
 export const SITE = {
-  url: 'https://cmlonder.com',
+  url: 'https://cmlonder.github.io', // cutover'da cmlonder.com olacak
   author: 'Cemal Önder',
   defaultLocale: 'en' as const,
   locales: ['en', 'tr'] as const,
