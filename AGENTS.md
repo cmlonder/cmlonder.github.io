@@ -105,3 +105,11 @@ Yeni koleksiyon eklersen şu üretenleri de güncelle:
 - Tohum içerikler gövdesinde "Tohum içerik" uyarısı taşır; gerçek yazı
   eklenince silinmeli.
 - Kod yorumları ve commit mesajları Türkçe. Site içeriği İngilizce veya Türkçe.
+
+## Araç zinciri
+
+`packageManager` alanı pnpm sürümünü sabitler — CI ve local aynı sürümü
+kullanır. pnpm 10'a geçerken dikkat: build script onayı (`esbuild`, `sharp`)
+artık `package.json` içindeki `pnpm.onlyBuiltDependencies` alanından değil,
+`pnpm-workspace.yaml` içindeki `allowBuilds` alanından okunuyor. Sürümü
+yükseltirken o dosyayı geri getir, yoksa CI `ERR_PNPM_IGNORED_BUILDS` ile durur.
