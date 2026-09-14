@@ -1,0 +1,29 @@
+---
+import ListPage from '../../layouts/ListPage.astro';
+import { COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS } from '../../config';
+import { getEntries, localePath } from '../../lib/content';
+
+export async function getStaticPaths() {
+  return COLLECTIONS.map((collection) => ({ params: { collection } }));
+}
+
+const lang = 'en' as const;
+const { collection } = Astro.params as { collection: typeof COLLECTIONS[number] };
+
+const entries = await getEntries(collection, lang);
+const items = entries.map((entry) => ({ collection, entry }));
+
+// Türkçesinde de girdi varsa dil değiştiriciyi göster.
+const trEntries = await getEntries(collection, 'tr');
+const altLocale = trEntries.length
+  ? { lang: 'tr' as const, href: localePath('tr', collection) }
+  : null;
+---
+
+<ListPage
+  title={COLLECTION_LABELS[collection][lang]}
+  blurb={COLLECTION_BLURBS[collection][lang]}
+  lang={lang}
+  items={items}
+  altLocale={altLocale}
+/>

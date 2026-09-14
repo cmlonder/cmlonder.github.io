@@ -1,0 +1,128 @@
+---
+import Base from './Base.astro';
+import EntryCard from '../components/EntryCard.astro';
+import {
+  SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
+  INTRO, UI, type CollectionName, type Locale,
+} from '../config';
+import { getEntries, localePath, countLabel } from '../lib/content';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const other: Locale = lang === 'en' ? 'tr' : 'en';
+
+/** Anasayfada koleksiyon başına kaç girdi ve hangi yoğunlukta gösterilecek. */
+const SHAPE: Record<CollectionName, { take: number; variant: 'full' | 'compact' }> = {
+  essays:    { take: 3, variant: 'full' },
+  playbooks: { take: 4, variant: 'compact' },
+  notes:     { take: 4, variant: 'compact' },
+  signals:   { take: 5, variant: 'compact' },
+};
+
+const sections = (
+  await Promise.all(
+    COLLECTIONS.map(async (collection) => {
+      const all = await getEntries(collection, lang);
+      // Essays'te öne çıkarılanlar başa alınır, sonra tarih sırası.
+      const ordered =
+        collection === 'essays'
+          ? [...all].sort((a, b) => Number((b.data as any).featured) - Number((a.data as any).featured))
+          : all;
+      return { collection, entries: ordered.slice(0, SHAPE[collection].take), total: all.length };
+    })
+  )
+).filter((s) => s.entries.length > 0);
+
+const intro = INTRO[lang];
+const t = UI[lang];
+---
+
+<Base title={`${SITE.author} — ${intro.role}`} description={intro.body} lang={lang}
+      altLocale={{ lang: other, href: localePath(other, '') }}>
+  <div class="wrap">
+    <section class="intro">
+      <p class="meta role">{intro.role}</p>
+      <p class="body">{intro.body}</p>
+    </section>
+
+    {sections.map(({ collection, entries, total }) => (
+      <section class="block">
+        <header class="block-head">
+          <h2>
+            <a href={localePath(lang, collection)}>{COLLECTION_LABELS[collection][lang]}</a>
+          </h2>
+          <p class="meta blurb">{COLLECTION_BLURBS[collection][lang]}</p>
+          {total > entries.length && (
+            <a class="meta all" href={localePath(lang, collection)}>
+              {countLabel(total, lang)} →
+            </a>
+          )}
+        </header>
+
+        <ul class:list={['items', SHAPE[collection].variant]}>
+          {entries.map((entry) => (
+            <li>
+              <EntryCard
+                collection={collection}
+                entry={entry}
+                lang={lang}
+                variant={SHAPE[collection].variant}
+              />
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
+    <p class="topics-link">
+      <a href={localePath(lang, 'topics')}>{t.allTopics} →</a>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .intro { max-inline-size: 58ch; margin-block-end: var(--s-9); }
+  .role {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c-accent);
+    margin-block-end: var(--s-4);
+  }
+  .intro .body { font-size: 1.25rem; line-height: 1.65; text-wrap: pretty; }
+
+  .block + .block { margin-block-start: var(--s-9); }
+
+  .block-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: var(--s-2) var(--s-4);
+    padding-block-end: var(--s-4);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .block-head h2 {
+    font-family: var(--f-sans);
+    font-size: var(--t-meta);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .block-head h2 a { text-decoration: none; }
+  .block-head .blurb { grid-column: 1; font-style: italic; }
+  .block-head .all { grid-row: 1; grid-column: 2; text-decoration: none; white-space: nowrap; }
+
+  .items { list-style: none; padding: 0; display: grid; }
+  .items.full    { gap: var(--s-6); margin-block-start: var(--s-6); }
+  .items.compact { gap: 0; margin-block-start: var(--s-2); }
+  .items.compact > li { padding-block: var(--s-3); }
+  .items.compact > li + li { border-block-start: 1px solid var(--c-border); }
+
+  .topics-link {
+    margin-block-start: var(--s-9);
+    padding-block-start: var(--s-5);
+    border-block-start: 1px solid var(--c-border);
+    font-family: var(--f-sans);
+    font-size: var(--t-meta);
+  }
+  .topics-link a { text-decoration: none; color: var(--c-accent); }
+</style>

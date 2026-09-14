@@ -1,0 +1,75 @@
+---
+import Base from './Base.astro';
+import EntryCard from '../components/EntryCard.astro';
+import { UI, type CollectionName, type Locale } from '../config';
+import type { AnyEntry } from '../lib/content';
+
+interface Props {
+  title: string;
+  blurb: string;
+  lang: Locale;
+  items: { collection: CollectionName; entry: AnyEntry }[];
+  altLocale?: { lang: Locale; href: string } | null;
+  /** Karışık listelerde (konu sayfası) koleksiyon rozetini göster. */
+  showCollection?: boolean;
+}
+
+const {
+  title, blurb, lang, items,
+  altLocale = null, showCollection = false,
+} = Astro.props;
+---
+
+<Base title={`${title} — ${lang === 'tr' ? 'Cemal Önder' : 'Cemal Önder'}`}
+      description={blurb} lang={lang} altLocale={altLocale}>
+  <div class="wrap">
+    <header class="list-head">
+      <h1>{title}</h1>
+      <p class="blurb">{blurb}</p>
+    </header>
+
+    {items.length === 0 ? (
+      <p class="meta empty">{UI[lang].empty}</p>
+    ) : (
+      <ul class="list">
+        {items.map(({ collection, entry }) => (
+          <li>
+            <EntryCard
+              collection={collection}
+              entry={entry}
+              lang={lang}
+              variant="full"
+              showCollection={showCollection}
+            />
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</Base>
+
+<style>
+  .list-head { margin-block-end: var(--s-7); }
+
+  h1 {
+    font-family: var(--f-serif);
+    font-size: clamp(1.875rem, 1.4rem + 2vw, 2.375rem);
+    font-weight: 500;
+    line-height: var(--lh-tight);
+    letter-spacing: -0.015em;
+  }
+
+  .blurb {
+    margin-block-start: var(--s-3);
+    max-inline-size: 52ch;
+    color: var(--c-muted);
+    font-size: 1.0625rem;
+    font-style: italic;
+    text-wrap: pretty;
+  }
+
+  .list { list-style: none; padding: 0; display: grid; gap: var(--s-6); }
+  .list > li + li { border-block-start: 1px solid var(--c-border); padding-block-start: var(--s-6); }
+
+  .empty { margin-block-start: var(--s-6); }
+</style>

@@ -1,0 +1,83 @@
+---
+import {
+  COLLECTION_LABELS, STATUS_LABELS,
+  type CollectionName, type Locale,
+} from '../config';
+import { formatDate, entryPath, parseId } from '../lib/content';
+import type { AnyEntry } from '../lib/content';
+
+interface Props {
+  collection: CollectionName;
+  entry: AnyEntry;
+  lang: Locale;
+  /** full: açıklamalı (koleksiyon sayfası) · compact: tek satır (anasayfa) */
+  variant?: 'full' | 'compact';
+  /** Karışık listelerde koleksiyon adını göster. */
+  showCollection?: boolean;
+}
+
+const {
+  collection, entry, lang,
+  variant = 'full', showCollection = false,
+} = Astro.props;
+
+const { slug } = parseId(entry.id);
+const d = entry.data as any;
+const href = entryPath(lang, collection, slug);
+---
+
+<article class:list={['card', variant]}>
+  <h3><a href={href}>{d.title}</a></h3>
+
+  {variant === 'full' && <p class="dek">{d.description}</p>}
+
+  <p class="meta line">
+    {showCollection && (
+      <><span class="coll">{COLLECTION_LABELS[collection][lang]}</span><span aria-hidden="true">·</span></>
+    )}
+    <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+    {collection === 'notes' && (
+      <><span aria-hidden="true">·</span><span>{STATUS_LABELS[d.status as keyof typeof STATUS_LABELS][lang]}</span></>
+    )}
+    {collection === 'signals' && (
+      <><span aria-hidden="true">·</span><span>{d.source}</span></>
+    )}
+  </p>
+</article>
+
+<style>
+  .card { display: grid; gap: var(--s-2); }
+
+  h3 {
+    font-family: var(--f-serif);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+  .full h3    { font-size: 1.4375rem; max-inline-size: 30ch; }
+  .compact h3 { font-size: 1.125rem;  max-inline-size: 42ch; }
+
+  h3 a { text-decoration: none; }
+  h3 a:hover { text-decoration: underline; text-decoration-color: var(--c-accent); }
+
+  .dek {
+    color: var(--c-muted);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    max-inline-size: 58ch;
+    text-wrap: pretty;
+  }
+
+  .line { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .coll { color: var(--c-accent); }
+
+  /* Compact'te meta başlığın üstünde değil, yanında okunur bir ritim kurar. */
+  .compact { grid-template-columns: 1fr auto; align-items: baseline; gap: var(--s-4); }
+  .compact .line { justify-content: end; }
+
+  @media (max-width: 34rem) {
+    .compact { grid-template-columns: 1fr; gap: var(--s-1); }
+    .compact .line { justify-content: start; }
+  }
+</style>

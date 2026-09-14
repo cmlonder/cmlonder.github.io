@@ -1,0 +1,39 @@
+---
+import ListPage from '../../../layouts/ListPage.astro';
+import { TOPICS, TOPIC_LABELS } from '../../../config';
+import { getEntriesByTopic, localePath } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  // Boş konu sayfası üretme — ince içerikli sayfa SEO'ya zarar verir.
+  const withEntries = await Promise.all(
+    TOPICS.map(async (topic) => ({
+      topic,
+      count: (await getEntriesByTopic(topic, 'tr')).length,
+    }))
+  );
+  return withEntries.filter((t) => t.count > 0).map(({ topic }) => ({ params: { topic } }));
+}
+
+const lang = 'tr' as const;
+const other = lang === 'en' ? 'tr' : 'en';
+const { topic } = Astro.params as { topic: typeof TOPICS[number] };
+
+const items = await getEntriesByTopic(topic, lang);
+const otherItems = await getEntriesByTopic(topic, other);
+const altLocale = otherItems.length
+  ? { lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', 'topics', topic) }
+  : null;
+
+const blurb = lang === 'tr'
+  ? `${TOPIC_LABELS[topic].tr} konusundaki tüm yazı, not, playbook ve sinyaller.`
+  : `Everything filed under ${TOPIC_LABELS[topic].en} — essays, notes, playbooks and signals.`;
+---
+
+<ListPage
+  title={TOPIC_LABELS[topic][lang]}
+  blurb={blurb}
+  lang={lang}
+  items={items}
+  altLocale={altLocale}
+  showCollection
+/>

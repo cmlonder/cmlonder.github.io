@@ -72,3 +72,39 @@ export const STATUS_LABELS = {
   budding:  { en: 'Budding',  tr: 'Filiz' },
   evergreen:{ en: 'Evergreen',tr: 'Kökleşmiş' },
 } as const;
+
+/**
+ * Anasayfa girişi. Kısa tutuluyor — sayfanın işi yazıları göstermek,
+ * kendini anlatmak değil. İşveren adı kasten geçmiyor.
+ */
+export const INTRO: Record<Locale, { role: string; body: string }> = {
+  en: {
+    role: 'Solution architect',
+    body:
+      'I design systems that have to keep working when they get big, and lately ' +
+      'I build most of them alongside agents. I write here about what that ' +
+      'actually looks like in practice — the architecture decisions, the scale ' +
+      'problems, and the parts of the agentic workflow nobody demos.',
+  },
+  tr: {
+    role: 'Çözüm mimarı',
+    body:
+      'Büyüdüğünde de çalışmak zorunda olan sistemler tasarlıyorum ve son ' +
+      "zamanlarda bunların çoğunu ajanlarla birlikte kuruyorum. Burada bunun " +
+      'pratikte neye benzediğini yazıyorum — mimari kararlar, ölçek problemleri ' +
+      've agentic akışın kimsenin demo yapmadığı kısımları.',
+  },
+};
+
+export const UI: Record<Locale, Record<string, string>> = {
+  en: {
+    topics: 'Topics', allTopics: 'All topics', readMore: 'Read',
+    empty: 'Nothing here yet.',
+    home: 'Home', latest: 'Latest',
+  },
+  tr: {
+    topics: 'Konular', allTopics: 'Tüm konular', readMore: 'Oku',
+    empty: 'Burada henüz bir şey yok.',
+    home: 'Ana sayfa', latest: 'Son eklenenler',
+  },
+};

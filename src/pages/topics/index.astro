@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import { TOPICS, TOPIC_LABELS, UI } from '../../config';
+import { getTopicCounts, localePath, countLabel } from '../../lib/content';
+
+const lang = 'en' as const;
+const other = lang === 'en' ? 'tr' : 'en';
+const counts = await getTopicCounts(lang);
+
+const blurb = lang === 'tr'
+  ? 'Yazdıklarım altı başlık altında toplanıyor. Bir konu her formatta görünebilir.'
+  : 'Everything I write sits under one of six headings. A topic can appear in any format.';
+---
+
+<Base title={`${UI[lang].topics} — Cemal Önder`} description={blurb} lang={lang}
+      altLocale={{ lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', 'topics') }}>
+  <div class="wrap">
+    <h1>{UI[lang].topics}</h1>
+    <p class="blurb">{blurb}</p>
+
+    <ul class="topics">
+      {TOPICS.map((topic) => {
+        const n = counts.get(topic) ?? 0;
+        return (
+          <li class:list={{ empty: n === 0 }}>
+            {/* Henüz yazı olmayan konu link değil — boş sayfaya göndermeyelim,
+                ama altı sütun görünür kalsın: sitenin kapsamını ilan ediyor. */}
+            {n > 0
+              ? <a href={localePath(lang, 'topics', topic)}>{TOPIC_LABELS[topic][lang]}</a>
+              : <span class="name">{TOPIC_LABELS[topic][lang]}</span>}
+            <span class="meta">{countLabel(n, lang)}</span>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  h1 {
+    font-family: var(--f-serif);
+    font-size: clamp(1.875rem, 1.4rem + 2vw, 2.375rem);
+    font-weight: 500;
+    line-height: var(--lh-tight);
+    letter-spacing: -0.015em;
+  }
+  .blurb {
+    margin-block-start: var(--s-3);
+    max-inline-size: 52ch;
+    color: var(--c-muted);
+    font-size: 1.0625rem;
+    font-style: italic;
+  }
+  .topics {
+    list-style: none;
+    padding: 0;
+    margin-block-start: var(--s-7);
+    display: grid;
+    gap: 0;
+  }
+  .topics li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding-block: var(--s-4);
+    border-block-start: 1px solid var(--c-border);
+  }
+  .topics li:last-child { border-block-end: 1px solid var(--c-border); }
+  .topics a, .topics .name {
+    font-family: var(--f-serif);
+    font-size: 1.25rem;
+    text-decoration: none;
+  }
+  .topics li.empty { color: var(--c-muted); }
+</style>

@@ -1,5 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { SITE, type CollectionName, type Locale } from '../config';
+import { SITE, type CollectionName, type Locale, type Topic } from '../config';
 
 export type AnyEntry = CollectionEntry<CollectionName>;
 
@@ -68,4 +68,31 @@ export function formatDate(date: Date, lang: Locale): string {
     day: 'numeric',
     timeZone: 'UTC',
   }).format(date);
+}
+
+/** Bir konuya ait tüm girdiler, koleksiyon fark etmeksizin. */
+export async function getEntriesByTopic(topic: Topic, lang: Locale) {
+  const all = await getAllEntries(lang);
+  return all.filter(({ entry }) => (entry.data.topics as Topic[]).includes(topic));
+}
+
+/** Konu → o konudaki girdi sayısı. Boş konular listede gösterilmez. */
+export async function getTopicCounts(lang: Locale): Promise<Map<Topic, number>> {
+  const all = await getAllEntries(lang);
+  const counts = new Map<Topic, number>();
+  for (const { entry } of all) {
+    for (const topic of entry.data.topics as Topic[]) {
+      counts.set(topic, (counts.get(topic) ?? 0) + 1);
+    }
+  }
+  return counts;
+}
+
+/**
+ * "1 entry" / "3 entries" — Türkçede sayıdan sonra çoğul eki gelmez,
+ * bu yüzden dil bazlı ayrışıyor.
+ */
+export function countLabel(n: number, lang: Locale): string {
+  if (lang === 'tr') return `${n} girdi`;
+  return `${n} ${n === 1 ? 'entry' : 'entries'}`;
 }
