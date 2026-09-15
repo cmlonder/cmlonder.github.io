@@ -1,13 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
+import type { Locale } from '../../config';
 import { getEntries, parseId, entryPath, localePath } from '../../lib/content';
 
 /**
  * Belirti seçici. Ağaç elle yazılmıyor — playbook'ların symptoms alanından
  * türetiliyor, yani yeni playbook eklenince seçenekler de kendiliğinden büyür.
  */
-const lang = 'en' as const;
-const other = lang === 'en' ? 'tr' : 'en';
+const lang: Locale = 'en';
+const other = 'tr' as const;
 
 const entries = await getEntries('playbooks', lang);
 const items = entries
@@ -42,7 +43,7 @@ const t = {
 ---
 
 <Base title={t.title + ' — Cemal Önder'} description={t.blurb} lang={lang}
-      altLocale={{ lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', 'playbooks/find') }}>
+      altLocale={{ lang: other, href: localePath(other, 'playbooks/find') }}>
   <div class="wrap">
     <header class="head">
       <p class="kicker">

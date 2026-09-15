@@ -111,11 +111,21 @@ sistem erişimi gerektiriyor.
 ## Doğrulama
 
 ```bash
-pnpm verify    # build + kırık link ve başlık hiyerarşisi kontrolü
-pnpm check     # sadece kontrol (dist/ zaten varsa)
+pnpm verify    # build + tip kontrolü + kırık link ve başlık hiyerarşisi
+pnpm check     # tip kontrolü + link kontrolü (dist/ zaten varsa)
 ```
 
-CI aynı script'i çalıştırır; kırık link veya başlık atlaması deploy'u durdurur.
+CI aynı adımları çalıştırır; tip hatası, kırık link veya başlık atlaması
+deploy'u durdurur.
+
+**TypeScript 6'da sabit.** `astro check`, TS 7'nin kaldırdığı programatik
+API'ye dayanıyor. Astro destek verene kadar `typescript@^6` kalmalı, yoksa
+`astro check` çalışmadan hata verir.
+
+Sayfa dosyalarında `lang === 'tr' ? ... : ...` **yazma**. Sayfalar tek dilli;
+TypeScript o karşılaştırmayı ölü dal olarak işaretler ve iki dilin metni aynı
+dosyada ikizlenir. Metinler `src/config.ts` içindeki `PAGE` sözlüğünde durur,
+sayfa `PAGE[lang].x` der.
 
 ## İnteraktif açıklayıcılar
 

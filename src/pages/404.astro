@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { HUB, COLLECTIONS, COLLECTION_LABELS } from '../config';
+import { HUB, COLLECTIONS, COLLECTION_LABELS, type Locale } from '../config';
 import { localePath } from '../lib/content';
 
 // GitHub Pages tek bir 404.html sunar; dil ayrımı yapamayız, iki dili de yazıyoruz.
-const lang = 'en' as const;
+const lang: Locale = 'en';
 ---
 
 <Base title="Not found — Cemal Önder" description="That page does not exist." lang={lang}>

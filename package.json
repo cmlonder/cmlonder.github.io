@@ -11,8 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "node scripts/check-build.mjs",
-    "verify": "astro build && node scripts/check-build.mjs"
+    "check": "astro check && node scripts/check-build.mjs",
+    "verify": "astro build && astro check && node scripts/check-build.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -21,6 +21,8 @@
     "astro-pagefind": "^2.0.1"
   },
   "devDependencies": {
-    "@pagefind/default-ui": "^1.5.2"
+    "@astrojs/check": "^0.9.10",
+    "@pagefind/default-ui": "^1.5.2",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,35 +1,27 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { SKILLS } from '../../config';
+import { SKILLS, type Locale, PAGE } from '../../config';
 import { localePath } from '../../lib/content';
 
-const lang = 'tr' as const;
-const other = lang === 'en' ? 'tr' : 'en';
+const lang: Locale = 'tr';
+const other = 'en' as const;
 
 const skills = (await getCollection('skills')).sort((a, b) => a.id.localeCompare(b.id));
 const rendered = await Promise.all(skills.map(async (s) => ({ s, ...(await render(s)) })));
 
-const back = lang === 'tr' ? 'Tezgâha dön' : 'Back to the workbench';
-const t = lang === 'tr'
-  ? { tools: 'İzinli araçlar', path: 'Repo yolu', lead:
-      'Bunlar örnek değil — bu sitenin gerçekten kullandığı dosyalar. Sayfa, ' +
-      'repodaki .claude/skills/ klasöründen build sırasında üretiliyor, o yüzden ' +
-      'kaynakla ayrışamaz.' }
-  : { tools: 'Allowed tools', path: 'Repo path', lead:
-      'These are not examples — they are the files this site actually runs on. ' +
-      'The page is generated from .claude/skills/ at build time, so it cannot ' +
-      'drift from the source.' };
+const back = PAGE[lang].back;
+const t = PAGE[lang];
 ---
 
 <Base title={`${SKILLS.name[lang]} — Cemal Önder`} description={SKILLS.blurb[lang]}
-      lang={lang} altLocale={{ lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', 'skills') }}>
+      lang={lang} altLocale={{ lang: other, href: localePath(other, 'skills') }}>
   <div class="wrap">
     <header class="head">
       <p class="kicker"><span class="count">{skills.length}</span><a href={localePath(lang, '')}>{back}</a></p>
       <h1>{SKILLS.name[lang]}</h1>
       <p class="blurb">{SKILLS.blurb[lang]}</p>
-      <p class="lead">{t.lead}</p>
+      <p class="lead">{t.skillsLead}</p>
     </header>
 
     {rendered.map(({ s, Content }) => (
@@ -37,12 +29,12 @@ const t = lang === 'tr'
         <h2>{s.data.name}</h2>
         <p class="desc">{s.data.description}</p>
         <dl class="facts meta">
-          <dt>{t.path}</dt>
+          <dt>{t.repoPath}</dt>
           <dd><code>.claude/skills/{s.id.split('/')[0]}/SKILL.md</code></dd>
           {s.data['allowed-tools'] && (<><dt>{t.tools}</dt><dd><code>{s.data['allowed-tools']}</code></dd></>)}
         </dl>
         <details>
-          <summary>{lang === 'tr' ? 'Tam metni göster' : 'Show the full file'}</summary>
+          <summary>{t.showFile}</summary>
           <div class="prose"><Content /></div>
         </details>
       </section>

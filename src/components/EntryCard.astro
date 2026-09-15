@@ -23,11 +23,11 @@ interface Props {
 const {
   collection, entry, lang,
   variant = 'card', showCollection = false, showDescription = false, as = 'h3',
-} = Astro.props;
+} = Astro.props as Props;
 const Heading = as;
 
 const { slug } = parseId(entry.id);
-const d = entry.data as any;
+const d = entry.data as AnyEntry['data'] & Record<string, any>;
 const href = entryPath(lang, collection, slug);
 const typeLabel = COLLECTION_LABELS[collection][lang].replace(/lar$|ler$|s$/, '');
 // Kapakta illüstrasyon yok — kopyalanacak çizim yok, uydurma da yok.

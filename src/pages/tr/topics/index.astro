@@ -1,19 +1,17 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import { TOPICS, TOPIC_LABELS, UI } from '../../../config';
+import { TOPICS, TOPIC_LABELS, UI, type Locale, PAGE } from '../../../config';
 import { getTopicCounts, localePath, countLabel } from '../../../lib/content';
 
-const lang = 'tr' as const;
-const other = lang === 'en' ? 'tr' : 'en';
+const lang: Locale = 'tr';
+const other = 'en' as const;
 const counts = await getTopicCounts(lang);
 
-const blurb = lang === 'tr'
-  ? 'Yazdıklarım altı başlık altında toplanıyor. Bir konu her formatta görünebilir.'
-  : 'Everything I write sits under one of six headings. A topic can appear in any format.';
+const blurb = PAGE[lang].topicsBlurb;
 ---
 
 <Base title={`${UI[lang].topics} — Cemal Önder`} description={blurb} lang={lang}
-      altLocale={{ lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', 'topics') }}>
+      altLocale={{ lang: other, href: localePath(other, 'topics') }}>
   <div class="wrap">
     <h1>{UI[lang].topics}</h1>
     <p class="blurb">{blurb}</p>

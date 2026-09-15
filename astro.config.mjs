@@ -3,6 +3,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import pagefind from 'astro-pagefind';
 
+/** @type {['latin', 'latin-ext']} */
 const subsets = ['latin', 'latin-ext']; // latin-ext = Türkçe ğ ş ı İ ç ö ü
 
 /**
@@ -10,6 +11,7 @@ const subsets = ['latin', 'latin-ext']; // latin-ext = Türkçe ğ ş ı İ ç �
  * Bu yönlendirmeler SADECE cutover'da (site cmlonder.com olunca) devreye girer —
  * önizleme adresinde eski URL'ler zaten yok, boşuna sayfa üretilmesin.
  */
+/** Cutover'da 'https://cmlonder.com' olacak. @type {string} */
 const SITE_URL = 'https://cmlonder.github.io';
 const IS_CUTOVER = SITE_URL === 'https://cmlonder.com';
 

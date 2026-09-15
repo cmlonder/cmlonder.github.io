@@ -26,7 +26,10 @@ jobs:
         with:
           node-version: 22
 
-      # Kırık iç link veya başlık atlaması varsa deploy etme.
+      # Tip hatası, kırık iç link veya başlık atlaması varsa deploy etme.
+      - name: Tip kontrolü
+        run: pnpm astro check
+
       - name: Build doğrulaması
         run: node scripts/check-build.mjs
 

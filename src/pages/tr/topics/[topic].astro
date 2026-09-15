@@ -1,6 +1,6 @@
 ---
 import ListPage from '../../../layouts/ListPage.astro';
-import { TOPICS, TOPIC_LABELS } from '../../../config';
+import { TOPICS, TOPIC_LABELS, type Locale, PAGE } from '../../../config';
 import { getEntriesByTopic, localePath } from '../../../lib/content';
 
 export async function getStaticPaths() {
@@ -14,19 +14,17 @@ export async function getStaticPaths() {
   return withEntries.filter((t) => t.count > 0).map(({ topic }) => ({ params: { topic } }));
 }
 
-const lang = 'tr' as const;
-const other = lang === 'en' ? 'tr' : 'en';
+const lang: Locale = 'tr';
+const other = 'en' as const;
 const { topic } = Astro.params as { topic: typeof TOPICS[number] };
 
 const items = await getEntriesByTopic(topic, lang);
 const otherItems = await getEntriesByTopic(topic, other);
 const altLocale = otherItems.length
-  ? { lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', 'topics', topic) }
+  ? { lang: other, href: localePath(other, 'topics', topic) }
   : null;
 
-const blurb = lang === 'tr'
-  ? `${TOPIC_LABELS[topic].tr} konusundaki tüm yazı, not, playbook ve sinyaller.`
-  : `Everything filed under ${TOPIC_LABELS[topic].en} — essays, notes, playbooks and signals.`;
+const blurb = PAGE[lang].topicBlurb(TOPIC_LABELS[topic][lang]);
 ---
 
 <ListPage

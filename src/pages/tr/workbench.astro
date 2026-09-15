@@ -1,23 +1,23 @@
 ---
 import Base from '../../layouts/Base.astro';
 import EntryCard from '../../components/EntryCard.astro';
-import { HUB, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS, UI } from '../../config';
+import { HUB, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS, UI, type Locale, PAGE } from '../../config';
 import { getAllEntries, getEntries, localePath, countLabel } from '../../lib/content';
 
 /** Maggie'nin /garden'ının karşılığı: her şeyin tek akışta toplandığı sayfa. */
-const lang = 'tr' as const;
-const other = lang === 'en' ? 'tr' : 'en';
+const lang: Locale = 'tr';
+const other = 'en' as const;
 
 const all = await getAllEntries(lang);
 const byType = await Promise.all(
   COLLECTIONS.map(async (c) => ({ c, entries: await getEntries(c, lang) }))
 );
 
-const recentLabel = lang === 'tr' ? 'Son eklenenler' : 'Recently';
+const recentLabel = PAGE[lang].recently;
 ---
 
 <Base title={`${HUB.name[lang]} — Cemal Önder`} description={HUB.blurb[lang]} lang={lang}
-      altLocale={{ lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', 'workbench') }}>
+      altLocale={{ lang: other, href: localePath(other, 'workbench') }}>
   <div class="wrap">
     <header class="head">
       <p class="kicker">

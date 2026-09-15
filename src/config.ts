@@ -165,3 +165,85 @@ export const NAV: Record<Locale, { label: string; href: string }[]> = {
   en: [{ label: 'Uses', href: '/uses' }, { label: 'Now', href: '/now' }, { label: 'About', href: '/about' }],
   tr: [{ label: 'Kullandıklarım', href: '/uses' }, { label: 'Şu An', href: '/now' }, { label: 'Hakkında', href: '/about' }],
 };
+
+/**
+ * Sayfa metinleri. Sayfa dosyaları tek dilli olduğu için içlerinde
+ * `lang === 'tr' ? ... : ...` yazmak hem ölü dal hem ikizleme üretiyordu.
+ * Metin burada, sayfa sadece `PAGE[lang].x` diyor.
+ */
+export const PAGE: Record<Locale, {
+  back: string;
+  home: string;
+  updated: string;
+  tools: string;
+  repoPath: string;
+  showFile: string;
+  skillsLead: string;
+  topicsBlurb: string;
+  topicBlurb: (topic: string) => string;
+  recently: string;
+  findTitle: string;
+  findBlurb: string;
+  symptoms: string;
+  clear: string;
+  allPlaybooks: string;
+  problem: string;
+  context: string;
+  match: string;
+  noSelection: string;
+  noMatch: string;
+  findAction: string;
+}> = {
+  en: {
+    back: 'Back to the workbench',
+    home: 'Home',
+    updated: 'Updated',
+    tools: 'Allowed tools',
+    repoPath: 'Repo path',
+    showFile: 'Show the full file',
+    skillsLead:
+      'These are not examples — they are the files this site actually runs on. ' +
+      'The page is generated from .claude/skills/ at build time, so it cannot ' +
+      'drift from the source.',
+    topicsBlurb: 'Everything I write sits under one of six headings. A topic can appear in any format.',
+    topicBlurb: (t) => `Everything filed under ${t} — essays, notes, playbooks and signals.`,
+    recently: 'Recently',
+    findTitle: 'Which playbook?',
+    findBlurb: 'Pick the symptoms you are seeing. Matching playbooks rise to the top.',
+    symptoms: 'Symptoms',
+    clear: 'Clear',
+    allPlaybooks: 'All playbooks',
+    problem: 'Problem',
+    context: 'Context',
+    match: 'match',
+    noSelection: 'Nothing selected — showing everything, cheapest fix first.',
+    noMatch: 'Nothing matches that combination. Try removing a symptom.',
+    findAction: 'Which playbook? Find it by symptom',
+  },
+  tr: {
+    back: 'Tezgâha dön',
+    home: 'Ana sayfa',
+    updated: 'Güncellendi',
+    tools: 'İzinli araçlar',
+    repoPath: 'Repo yolu',
+    showFile: 'Tam metni göster',
+    skillsLead:
+      'Bunlar örnek değil — bu sitenin gerçekten kullandığı dosyalar. Sayfa, ' +
+      'repodaki .claude/skills/ klasöründen build sırasında üretiliyor, o yüzden ' +
+      'kaynakla ayrışamaz.',
+    topicsBlurb: 'Yazdıklarım altı başlık altında toplanıyor. Bir konu her formatta görünebilir.',
+    topicBlurb: (t) => `${t} konusundaki tüm yazı, not, playbook ve sinyaller.`,
+    recently: 'Son eklenenler',
+    findTitle: 'Hangi playbook?',
+    findBlurb: "Gördüğün belirtileri seç. Eşleşen playbook'lar öne çıkar.",
+    symptoms: 'Belirtiler',
+    clear: 'Temizle',
+    allPlaybooks: "Tüm playbook'lar",
+    problem: 'Problem',
+    context: 'Bağlam',
+    match: 'eşleşme',
+    noSelection: 'Seçim yok — hepsi listeleniyor, en ucuz çözüm önce.',
+    noMatch: 'Bu kombinasyona uyan playbook yok. Bir belirti çıkarmayı dene.',
+    findAction: 'Hangi playbook? Belirtiden bul',
+  },
+};

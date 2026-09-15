@@ -1,7 +1,9 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import type { Locale } from '../../config';
 import Base from '../../layouts/Base.astro';
 import { localePath, formatDate } from '../../lib/content';
+import { PAGE } from '../../config';
 
 export async function getStaticPaths() {
   const all = await getCollection('site');
@@ -10,18 +12,18 @@ export async function getStaticPaths() {
     .map((e) => ({ params: { page: e.id.split('/')[1] }, props: { entry: e } }));
 }
 
-const lang = 'tr' as const;
-const other = lang === 'en' ? 'tr' : 'en';
+const lang: Locale = 'tr';
+const other = 'en' as const;
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
 const slug = entry.id.split('/')[1];
 const twin = await getEntry('site', `${other}/${slug}`);
 const altLocale = twin
-  ? { lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', slug) }
+  ? { lang: other, href: localePath(other, slug) }
   : null;
 
-const updatedLabel = lang === 'tr' ? 'Güncellendi' : 'Updated';
+const updatedLabel = PAGE[lang].updated;
 ---
 
 <Base title={`${entry.data.title} — Cemal Önder`} description={entry.data.description}
