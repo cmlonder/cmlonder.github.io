@@ -50,6 +50,25 @@ case "$SPF" in
   *) wa "$SPF adet SPF kaydı — RFC 7208 tek olmasını şart koşar, şu an SPF doğrulaması başarısız" ;;
 esac
 echo "$TXT" | grep -q 'google-site-verification' && ok "Search Console doğrulaması duruyor" || wa "google-site-verification yok"
+
+DKIM=$(doh zoho._domainkey.$DOMAIN TXT)
+[ -n "$DKIM" ] && ok "DKIM kaydı duruyor" || wa "DKIM (zoho._domainkey) yok"
+
+DMARC=$(doh _dmarc.$DOMAIN TXT)
+if [ -z "$DMARC" ]; then
+  wa "DMARC kaydı yok — SPF/DKIM var ama üçüncü ayak eksik"
+else
+  pol=$(echo "$DMARC" | grep -o 'p=[a-z]*' | head -1 | cut -d= -f2)
+  case "$pol" in
+    none)       ok "DMARC var (p=none — rapor modu, doğru başlangıç)" ;;
+    quarantine) ok "DMARC var (p=quarantine)" ;;
+    reject)     ok "DMARC var (p=reject)" ;;
+    *)          wa "DMARC var ama politika okunamadı: $DMARC" ;;
+  esac
+  if [ "$SPF" != "1" ] && [ "$pol" != "none" ]; then
+    no "SPF bozukken p=$pol tehlikeli — kendi maillerin engellenebilir"
+  fi
+fi
 echo "$TXT" | grep -q 'zoho-verification' && ok "Zoho doğrulaması duruyor" || wa "zoho-verification yok"
 
 echo "── GitHub Pages ──"
