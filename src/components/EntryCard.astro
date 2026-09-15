@@ -1,6 +1,7 @@
 ---
 import { COLLECTION_LABELS, STATUS_LABELS, TOPIC_LABELS,
          type CollectionName, type Locale, type Topic } from '../config';
+import TypeMark from './TypeMark.astro';
 import { formatDate, entryPath, parseId } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
@@ -38,26 +39,14 @@ const coverTopic = TOPIC_LABELS[(d.topics as Topic[])[0]][lang];
       <p class="dek">{d.description}</p>
       <p class="foot meta">
         <span>{typeLabel}</span>
-        <span class="mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
-               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 21V11" /><path d="M12 11c0-4 3-7 7-7 0 4-3 7-7 7Z" />
-            <path d="M12 14c0-3-2.5-5-5.5-5 0 3 2.5 5 5.5 5Z" />
-          </svg>
-        </span>
+        <span class="mark"><TypeMark collection={collection} size={13} /></span>
         <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
       </p>
     </div>
   </article>
 ) : (
   <article class="row">
-    <span class="mark" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
-           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 21V11" /><path d="M12 11c0-4 3-7 7-7 0 4-3 7-7 7Z" />
-        <path d="M12 14c0-3-2.5-5-5.5-5 0 3 2.5 5 5.5 5Z" />
-      </svg>
-    </span>
+    <span class="mark"><TypeMark collection={collection} /></span>
     <div>
       <h3><a href={href}>{d.title}</a></h3>
       {showDescription && <p class="dek">{d.description}</p>}

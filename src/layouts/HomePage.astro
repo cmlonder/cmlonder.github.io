@@ -47,12 +47,11 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
   </section>
 
   <div class="wrap columns">
-    {/* Sol kolon: kartlar */}
     <div class="col-main">
-      {featured.length > 0 && (
+      {essays.length > 0 && (
         <section class="block">
           <h3 class="section-title">
-            <a href={localePath(lang, 'essays')}>{COLLECTION_LABELS.essays[lang]} <span aria-hidden="true">→</span></a>
+            <a href={localePath(lang, 'essays')}>{COLLECTION_LABELS.essays[lang]} <span aria-hidden="true">&#8594;</span></a>
           </h3>
           <p class="blurb">{COLLECTION_BLURBS.essays[lang]}</p>
           <div class="cards">
@@ -62,28 +61,13 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
           </div>
         </section>
       )}
-
-      {playbooks.length > 0 && (
-        <section class="block">
-          <h3 class="section-title">
-            <a href={localePath(lang, 'playbooks')}>{COLLECTION_LABELS.playbooks[lang]} <span aria-hidden="true">→</span></a>
-          </h3>
-          <p class="blurb">{COLLECTION_BLURBS.playbooks[lang]}</p>
-          <div class="cards">
-            {playbooks.slice(0, 4).map((entry) => (
-              <EntryCard collection="playbooks" entry={entry} lang={lang} variant="card" />
-            ))}
-          </div>
-        </section>
-      )}
     </div>
 
-    {/* Sağ kolon: listeler */}
     <aside class="col-side">
       {notes.length > 0 && (
         <section class="block">
           <h3 class="section-title">
-            <a href={localePath(lang, 'notes')}>{COLLECTION_LABELS.notes[lang]} <span aria-hidden="true">→</span></a>
+            <a href={localePath(lang, 'notes')}>{COLLECTION_LABELS.notes[lang]} <span aria-hidden="true">&#8594;</span></a>
           </h3>
           <p class="blurb">{COLLECTION_BLURBS.notes[lang]}</p>
           <ul class="rows">
@@ -93,11 +77,31 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
           </ul>
         </section>
       )}
+    </aside>
+  </div>
 
+  <div class="wrap columns second">
+    <div class="col-main">
+      {playbooks.length > 0 && (
+        <section class="block">
+          <h3 class="section-title">
+            <a href={localePath(lang, 'playbooks')}>{COLLECTION_LABELS.playbooks[lang]} <span aria-hidden="true">&#8594;</span></a>
+          </h3>
+          <p class="blurb">{COLLECTION_BLURBS.playbooks[lang]}</p>
+          <ul class="rows two-up">
+            {playbooks.slice(0, 8).map((entry) => (
+              <li><EntryCard collection="playbooks" entry={entry} lang={lang} variant="row" showDescription /></li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+
+    <aside class="col-side">
       {signals.length > 0 && (
         <section class="block">
           <h3 class="section-title">
-            <a href={localePath(lang, 'signals')}>{COLLECTION_LABELS.signals[lang]} <span aria-hidden="true">→</span></a>
+            <a href={localePath(lang, 'signals')}>{COLLECTION_LABELS.signals[lang]} <span aria-hidden="true">&#8594;</span></a>
           </h3>
           <p class="blurb">{COLLECTION_BLURBS.signals[lang]}</p>
           <ul class="rows">
@@ -110,11 +114,12 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
 
       <p class="count meta">
         {countLabel(essays.length + notes.length + playbooks.length + signals.length, lang)}
-        {' · '}
+        {' \u00B7 '}
         <a href={localePath(lang, 'topics')}>{UI[lang].allTopics}</a>
       </p>
     </aside>
   </div>
+
 </Base>
 
 <style>
@@ -161,6 +166,19 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
   .hub-blurb a { color: var(--c-accent); text-decoration: none; white-space: nowrap; }
 
   /* — İki kolon: Maggie'nin asimetrik ızgarası — */
+  .columns.second { margin-block-start: var(--s-2xl); }
+
+  .col-main .block + .block { margin-block-start: var(--s-2xl); }
+  .col-side .block + .block { margin-block-start: var(--s-l); }
+
+  /* Playbook listesi geniş kolonda iki sütuna yayılsın. */
+  .rows.two-up {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: 0 var(--s-l);
+  }
+  .rows.two-up > li + li { border-block-start: 1px solid var(--c-border); }
+
   .columns {
     display: grid;
     grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);

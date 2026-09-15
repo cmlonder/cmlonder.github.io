@@ -1,6 +1,7 @@
 ---
 import { Font } from 'astro:assets';
 import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import StructuredData from '../components/StructuredData.astro';
 import { SITE, type CollectionName, type Locale } from '../config';
 import { localePath } from '../lib/content';
@@ -63,9 +64,7 @@ const home = localePath(lang, '');
       <slot />
     </main>
 
-    <footer class="wrap site-footer">
-      <p class="meta">© {new Date().getFullYear()} {SITE.author}</p>
-    </footer>
+    <SiteFooter lang={lang} />
 
     <style>
       .skip {
@@ -84,10 +83,6 @@ const home = localePath(lang, '');
 
       main { padding-block: var(--s-l) var(--s-3xl); }
 
-      .site-footer {
-        padding-block: var(--s-s);
-        border-block-start: 1px solid var(--c-border);
-      }
     </style>
   </body>
 </html>

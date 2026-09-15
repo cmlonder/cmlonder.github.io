@@ -1,0 +1,26 @@
+---
+import type { CollectionName } from '../config';
+
+/**
+ * Her içerik tipinin kendi işareti. Maggie'de Notes yaprak, Patterns elmas;
+ * aynı sistematiği dört tipimize uyguluyoruz.
+ */
+interface Props { collection: CollectionName; size?: number }
+const { collection, size = 15 } = Astro.props;
+const a = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none',
+            stroke: 'currentColor', 'stroke-width': 1.7,
+            'stroke-linecap': 'round' as const, 'stroke-linejoin': 'round' as const };
+---
+
+{collection === 'essays' && (
+  <svg {...a} aria-hidden="true"><path d="M12 21V10"/><path d="M12 10c0-4 3-7 7-7 0 4-3 7-7 7Z"/><path d="M12 13c0-3-2.5-5-5.5-5 0 3 2.5 5 5.5 5Z"/></svg>
+)}
+{collection === 'notes' && (
+  <svg {...a} aria-hidden="true"><path d="M12 21v-7"/><path d="M12 14c0-3.3 2.2-6 5-6 0 3.3-2.2 6-5 6Z"/></svg>
+)}
+{collection === 'playbooks' && (
+  <svg {...a} aria-hidden="true"><path d="m12 2 9 7-3.4 10.5h-11L3 9l9-7Z"/><path d="M8.6 9h6.8"/></svg>
+)}
+{collection === 'signals' && (
+  <svg {...a} aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4"/><path d="M16.2 16.2a6 6 0 0 0 0-8.4"/><path d="M4.9 4.9a10 10 0 0 0 0 14.2"/><path d="M19.1 19.1a10 10 0 0 0 0-14.2"/></svg>
+)}
