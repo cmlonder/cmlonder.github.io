@@ -26,6 +26,10 @@ jobs:
         with:
           node-version: 22
 
+      # Kırık iç link veya başlık atlaması varsa deploy etme.
+      - name: Build doğrulaması
+        run: node scripts/check-build.mjs
+
   deploy:
     needs: build
     runs-on: ubuntu-latest

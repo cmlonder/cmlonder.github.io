@@ -102,6 +102,21 @@ Yeni koleksiyon eklersen şu üretenleri de güncelle:
 `src/pages/llms.txt.ts`, `src/pages/llms-full.txt.ts`,
 `src/pages/[collection]/[...slug].md.ts` ve Türkçe karşılığı.
 
+## Sahibinin yapacakları
+
+Marka kararları, yer tutucu temizliği ve cutover adımları **[TODO.md](./TODO.md)**
+içinde. Oradaki maddeleri kendi başına yapma — hepsi kişisel tercih veya dış
+sistem erişimi gerektiriyor.
+
+## Doğrulama
+
+```bash
+pnpm verify    # build + kırık link ve başlık hiyerarşisi kontrolü
+pnpm check     # sadece kontrol (dist/ zaten varsa)
+```
+
+CI aynı script'i çalıştırır; kırık link veya başlık atlaması deploy'u durdurur.
+
 ## Yer tutucu içerik
 
 Sitedeki yazıların çoğu şu an **yer tutucu** — tasarımı doldurmak için yazıldı,

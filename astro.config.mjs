@@ -4,13 +4,30 @@ import sitemap from '@astrojs/sitemap';
 
 const subsets = ['latin', 'latin-ext']; // latin-ext = Türkçe ğ ş ı İ ç ö ü
 
+/**
+ * Hashnode'dan taşınan yazılar kök seviyedeydi (/slug), bizde /essays/slug.
+ * Bu yönlendirmeler SADECE cutover'da (site cmlonder.com olunca) devreye girer —
+ * önizleme adresinde eski URL'ler zaten yok, boşuna sayfa üretilmesin.
+ */
+const SITE_URL = 'https://cmlonder.github.io';
+const IS_CUTOVER = SITE_URL === 'https://cmlonder.com';
+
+const LEGACY_SLUGS = [
+  'how-buying-an-iphone-helped-me-to-land-my-first-job-as-a-developer',
+  'how-one-feature-from-a-failed-startup-can-become-a-billion-dollar-idea',
+];
+
 // https://astro.build/config
 export default defineConfig({
   // Sitenin GERÇEKTEN yayınlandığı adres. Canonical, sitemap, llms.txt ve
   // .md aynalarındaki mutlak URL'ler buradan türer.
   // Cutover (DNS cmlonder.com'a çevrildiğinde): bunu ve src/config.ts'deki
   // SITE.url'i 'https://cmlonder.com' yap, public/CNAME ekle.
-  site: 'https://cmlonder.github.io',
+  site: SITE_URL,
+
+  redirects: IS_CUTOVER
+    ? Object.fromEntries(LEGACY_SLUGS.map((s) => [`/${s}`, `/essays/${s}`]))
+    : {},
 
   integrations: [
     sitemap({
