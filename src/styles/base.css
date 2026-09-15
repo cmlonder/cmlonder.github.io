@@ -132,3 +132,63 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
     font-weight: var(--shiki-dark-font-weight) !important;
   }
 }
+
+/* — İnteraktif açıklayıcılar —
+   Custom element'ler yazının içinde düz HTML olarak duruyor; stil burada,
+   böylece her açıklayıcı aynı çerçeveyi paylaşıyor. */
+.prose :is(c-replicas) { display: block; margin-block: var(--s-m); }
+
+.ex {
+  margin: 0;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  background: var(--c-surface);
+  overflow: hidden;
+}
+.ex canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: var(--ex-height, 210px);
+}
+
+.ex-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2xs) var(--s-s);
+  padding: var(--s-2xs) var(--s-xs);
+  border-block-start: 1px solid var(--c-border);
+  background: var(--c-tinted);
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+}
+.ex-bar button {
+  inline-size: 1.9rem; block-size: 1.9rem;
+  display: grid; place-items: center;
+  padding: 0; border: 1px solid var(--c-border); border-radius: 999px;
+  background: var(--c-surface); color: var(--c-text);
+  font-size: .7rem; cursor: pointer;
+}
+.ex-bar button:hover { border-color: var(--c-accent); color: var(--c-accent); }
+
+.ex-ctl { display: inline-flex; align-items: center; gap: .5em; color: var(--c-muted); }
+.ex-ctl input[type='range'] { inline-size: 6.5rem; accent-color: var(--c-accent); }
+.ex-ctl output { color: var(--c-text); font-variant-numeric: tabular-nums; min-inline-size: 3ch; }
+
+.ex-stats {
+  display: flex; flex-wrap: wrap; gap: 0 var(--s-s);
+  padding: var(--s-2xs) var(--s-xs);
+  border-block-start: 1px solid var(--c-border);
+  font-family: var(--f-sans); font-size: var(--t-xs);
+}
+.ex-stats dt { color: var(--c-muted); }
+.ex-stats dt::after { content: ' '; }
+.ex-stats dd { margin: 0; margin-inline-end: var(--s-2xs); color: var(--c-text); font-variant-numeric: tabular-nums; }
+.ex-stats dt, .ex-stats dd { display: inline; }
+
+.ex figcaption {
+  padding: var(--s-2xs) var(--s-xs);
+  border-block-start: 1px solid var(--c-border);
+  font-family: var(--f-sans); font-size: var(--t-xs);
+  line-height: 1.45; color: var(--c-muted);
+}

@@ -62,9 +62,23 @@ const library = defineCollection({
   }),
 });
 
+/**
+ * Skill kütüphanesi. İçerik yazılmaz — repodaki gerçek .claude/skills/
+ * dosyalarından okunur. Böylece sayfa asla kaynakla ayrışmaz.
+ */
+const skills = defineCollection({
+  loader: glob({ pattern: '*/SKILL.md', base: './.claude/skills' }),
+  schema: z.object({
+    name: z.string(),
+    description: z.string(),
+    'allowed-tools': z.string().optional(),
+  }),
+});
+
 export const collections = {
   site,
   library,
+  skills,
   essays: collection(
     'essays',
     z.object({
@@ -88,6 +102,13 @@ export const collections = {
       problem: z.string(),
       /** Bu playbook hangi ölçek/bağlamda geçerli. */
       context: z.string(),
+      /**
+       * Karar ağacı için. Kullanıcının gördüğü belirtiler; /playbooks/find
+       * sayfası bunlarla eşleştirme yapar. Boşsa playbook ağaçta çıkmaz.
+       */
+      symptoms: z.array(z.string()).default([]),
+      /** Ağaçta kaba bir "önce buna bak" sırası. Küçük olan önce. */
+      tryFirst: z.number().default(50),
     })
   ),
 

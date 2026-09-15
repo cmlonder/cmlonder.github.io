@@ -18,9 +18,14 @@ const trEntries = await getEntries(collection, 'tr');
 const altLocale = trEntries.length
   ? { lang: 'tr' as const, href: localePath('tr', collection) }
   : null;
+
+const action = collection === 'playbooks'
+  ? { label: 'Which playbook? Find it by symptom', href: localePath(lang, 'playbooks/find') }
+  : null;
 ---
 
 <ListPage
+  action={action}
   title={COLLECTION_LABELS[collection][lang]}
   blurb={COLLECTION_BLURBS[collection][lang]}
   lang={lang}

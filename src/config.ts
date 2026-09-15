@@ -110,6 +110,16 @@ export const LIBRARY = {
   } as Record<Locale, string>,
 };
 
+/** Skill kütüphanesi — agentic kimliğin kanıtı. */
+export const SKILLS = {
+  path: 'skills',
+  name:  { en: 'Skills', tr: 'Skill\'ler' } as Record<Locale, string>,
+  blurb: {
+    en: 'The actual agent instructions this site runs on. Copy them.',
+    tr: 'Bu sitenin üzerinde çalıştığı gerçek ajan talimatları. Kopyalayabilirsin.',
+  } as Record<Locale, string>,
+};
+
 export const HUB = {
   path: 'workbench',
   name:  { en: 'The Workbench', tr: 'Tezgâh' } as Record<Locale, string>,
@@ -137,6 +147,6 @@ export const HERO: Record<Locale, { name: string; rest: string; role: string; no
 
 /** Üst navigasyon — Maggie gibi 3 öğe, biri dropdown. */
 export const NAV: Record<Locale, { label: string; href: string }[]> = {
-  en: [{ label: 'Now', href: '/now' }, { label: 'About', href: '/about' }],
-  tr: [{ label: 'Şu An', href: '/now' }, { label: 'Hakkında', href: '/about' }],
+  en: [{ label: 'Uses', href: '/uses' }, { label: 'Now', href: '/now' }, { label: 'About', href: '/about' }],
+  tr: [{ label: 'Kullandıklarım', href: '/uses' }, { label: 'Şu An', href: '/now' }, { label: 'Hakkında', href: '/about' }],
 };

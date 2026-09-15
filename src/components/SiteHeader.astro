@@ -1,8 +1,9 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+import Search from './Search.astro';
 import {
   SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  HUB, NAV, LIBRARY, type Locale,
+  HUB, NAV, LIBRARY, SKILLS, type Locale,
 } from '../config';
 import { localePath } from '../lib/content';
 
@@ -52,6 +53,10 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
             <strong>{LIBRARY.name[lang]}</strong>
             <span>{LIBRARY.blurb[lang]}</span>
           </a>
+          <a href={localePath(lang, SKILLS.path)}>
+            <strong>{SKILLS.name[lang]}</strong>
+            <span>{SKILLS.blurb[lang]}</span>
+          </a>
         </div>
       </details>
 
@@ -61,6 +66,7 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
     </nav>
 
     <div class="controls">
+      <Search lang={lang} />
       {altLocale && (
         <a class="lang" href={altLocale.href} lang={altLocale.lang}>{altLocale.lang.toUpperCase()}</a>
       )}

@@ -17,9 +17,14 @@ const enEntries = await getEntries(collection, 'en');
 const altLocale = enEntries.length
   ? { lang: 'en' as const, href: localePath('en', collection) }
   : null;
+
+const action = collection === 'playbooks'
+  ? { label: 'Hangi playbook? Belirtiden bul', href: localePath(lang, 'playbooks/find') }
+  : null;
 ---
 
 <ListPage
+  action={action}
   title={COLLECTION_LABELS[collection][lang]}
   blurb={COLLECTION_BLURBS[collection][lang]}
   lang={lang}

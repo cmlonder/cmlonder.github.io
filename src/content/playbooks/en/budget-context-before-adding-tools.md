@@ -4,6 +4,11 @@ description: 'Every tool definition costs tokens on every turn. Most agent slowd
 pubDate: 2026-09-15
 problem: 'An agent is slow, expensive, or losing the plot mid-task.'
 context: 'Any tool-using agent with more than a handful of tools in its definition list.'
+symptoms:
+- An agent is slow or expensive
+- An agent loses the plot mid-task
+- Something is slow and nobody knows why
+tryFirst: 10
 topics: [agentic-development]
 tags: [context-engineering, tools]
 draft: false

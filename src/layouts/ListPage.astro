@@ -6,6 +6,8 @@ import { localePath } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
 interface Props {
+  /** Başlığın yanında duran ek eylem (ör. playbook karar ağacı). */
+  action?: { label: string; href: string } | null;
   title: string;
   blurb: string;
   lang: Locale;
@@ -14,7 +16,7 @@ interface Props {
   showCollection?: boolean;
 }
 
-const { title, blurb, lang, items, altLocale = null, showCollection = false } = Astro.props;
+const { title, blurb, lang, items, altLocale = null, showCollection = false, action = null } = Astro.props;
 const back = lang === 'tr' ? 'Tezgâha dön' : 'Back to the workbench';
 ---
 
@@ -27,6 +29,7 @@ const back = lang === 'tr' ? 'Tezgâha dön' : 'Back to the workbench';
       </p>
       <h1>{title}</h1>
       <p class="blurb">{blurb}</p>
+      {action && <p class="action"><a href={action.href}>{action.label} <span aria-hidden="true">&#8594;</span></a></p>}
     </header>
 
     {items.length === 0 ? (
@@ -82,6 +85,12 @@ const back = lang === 'tr' ? 'Tezgâha dön' : 'Back to the workbench';
   }
 
   /* Maggie'nin 3 kolonlu liste ızgarası */
+  .action {
+    margin-block-start: var(--s-s);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+  }
+  .action a { color: var(--c-accent); text-decoration: none; }
+
   .grid {
     list-style: none;
     padding: 0;

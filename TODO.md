@@ -73,7 +73,20 @@ Hashnode'daki iki yazı repoya alındı, görselleri indirilip
 Kök seviyedeki eski URL'lerden yeni adreslere yönlendirme `astro.config.mjs`
 içinde tanımlı ve cutover'da kendiliğinden devreye giriyor.
 
-## 5. Opsiyonel
+## 5. Yeni bölümlerin içeriği
+
+Bu turda eklenen bölümlerin bir kısmı senin doldurmanı bekliyor:
+
+- **`/uses`** — donanım ve uygulama listesi eksik, sonunda ⚠️ ile işaretli.
+  Ajan kurulumu bölümü gerçek, oraya dokunmaya gerek yok.
+- **Playbook belirtileri** — `symptoms` alanları benim yazdığım yer tutucu
+  playbook'lardan türetildi. Gerçek playbook yazdıkça belirtileri de sen yaz;
+  `/playbooks/find` sayfası kendiliğinden güncellenir.
+- **`watch-replicas-stop-helping`** — bu yazı gerçek, yer tutucu değil. Ama
+  simülasyonun servis süreleri (`SERVICE_READ` vb.) uydurma sabitler; kendi
+  ölçümlerinle değiştirmek istersen `src/scripts/explainers/replicas.ts`.
+
+## 6. Opsiyonel
 
 - **OG görselleri** `public/og/*.png` elle üretildi (PIL). Metinleri
   değişirse yeniden üretilmeli; üretici script commit'te yok.

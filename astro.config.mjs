@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import pagefind from 'astro-pagefind';
 
 const subsets = ['latin', 'latin-ext']; // latin-ext = Türkçe ğ ş ı İ ç ö ü
 
@@ -30,6 +31,8 @@ export default defineConfig({
     : {},
 
   integrations: [
+    // Build sonrası dist/ üzerinden statik arama indeksi üretir. Sunucu yok.
+    pagefind(),
     sitemap({
       i18n: { defaultLocale: 'en', locales: { en: 'en', tr: 'tr' } },
       // .md aynaları insan sayfası değil — sitemap'e girmemeli.

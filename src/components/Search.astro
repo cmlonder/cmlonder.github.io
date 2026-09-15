@@ -1,0 +1,94 @@
+---
+import type { Locale } from '../config';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const label = lang === 'tr' ? 'Ara' : 'Search';
+const placeholder = lang === 'tr' ? 'Yazılarda ara…' : 'Search entries…';
+---
+
+<div class="search" data-label={label}>
+  <button id="search-open" type="button" aria-label={label} title={label}>
+    <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none"
+         stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
+    </svg>
+  </button>
+
+  <dialog id="search-dialog" aria-label={label}>
+    <div id="pagefind" data-placeholder={placeholder}></div>
+  </dialog>
+</div>
+
+<style is:global>
+  /* Pagefind'in kendi CSS değişkenleri — sitenin token'larına bağlanıyor. */
+  #pagefind {
+    --pagefind-ui-scale: 0.85;
+    --pagefind-ui-primary: var(--c-text);
+    --pagefind-ui-text: var(--c-text);
+    --pagefind-ui-background: var(--c-surface);
+    --pagefind-ui-border: var(--c-border);
+    --pagefind-ui-tag: var(--c-tinted);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: var(--radius);
+    --pagefind-ui-font: var(--f-sans);
+  }
+  #pagefind mark { background: color-mix(in srgb, var(--c-accent) 18%, transparent); color: inherit; }
+</style>
+
+<style>
+  #search-open {
+    display: grid; place-items: center;
+    inline-size: 2rem; block-size: 2rem;
+    padding: 0; border: 1px solid transparent; border-radius: 999px;
+    background: none; color: var(--c-muted); cursor: pointer;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  #search-open:hover { color: var(--c-accent); border-color: var(--c-border); }
+
+  dialog {
+    inline-size: min(92vw, 40rem);
+    max-block-size: 80vh;
+    margin-block-start: 12vh;
+    padding: var(--s-xs);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background: var(--c-surface);
+    color: var(--c-text);
+  }
+  dialog::backdrop { background: color-mix(in srgb, var(--c-bg) 70%, transparent); backdrop-filter: blur(3px); }
+</style>
+
+<script>
+  const dialog = document.getElementById('search-dialog') as HTMLDialogElement | null;
+  const open = document.getElementById('search-open');
+  const mount = document.getElementById('pagefind');
+  let loaded = false;
+
+  async function show() {
+    if (!dialog) return;
+    if (!loaded && mount) {
+      loaded = true;                       // Pagefind paketi ilk açılışta yüklenir.
+      const { PagefindUI } = await import('@pagefind/default-ui');
+      await import('@pagefind/default-ui/css/ui.css');
+      new PagefindUI({
+        element: '#pagefind',
+        showImages: false,
+        showSubResults: true,
+        excerptLength: 20,
+        translations: { placeholder: mount.dataset.placeholder ?? 'Search' },
+      });
+    }
+    dialog.showModal();
+    setTimeout(() => dialog.querySelector('input')?.focus(), 40);
+  }
+
+  open?.addEventListener('click', show);
+  // Cmd/Ctrl+K ve / ile aç.
+  addEventListener('keydown', (e) => {
+    const typing = /^(INPUT|TEXTAREA)$/.test((e.target as HTMLElement)?.tagName ?? '');
+    if (((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') || (e.key === '/' && !typing)) {
+      e.preventDefault(); show();
+    }
+  });
+  dialog?.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+</script>

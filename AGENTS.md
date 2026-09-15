@@ -117,6 +117,44 @@ pnpm check     # sadece kontrol (dist/ zaten varsa)
 
 CI aynı script'i çalıştırır; kırık link veya başlık atlaması deploy'u durdurur.
 
+## İnteraktif açıklayıcılar
+
+Yöntem [samwho.dev](https://samwho.dev/load-balancing/)'den alındı: simülasyon,
+yazının içine **düz HTML custom element** olarak gömülür. Parametreler HTML
+niteliği. MDX gerekmez, framework yok.
+
+```markdown
+<c-replicas rps="30" read-pct="90" replicas="2" style="--ex-height: 210px" description="Ekran okuyucu için ne olduğunu anlatan cümle.">
+</c-replicas>
+```
+
+**Markdown tuzağı:** açılış etiketi tek satırda ve satırda başka bir şey
+olmadan bitmeli, kapanış etiketi alt satıra alınmalı. Aksi halde CommonMark
+bunu blok saymaz ve `<p>` içine sarar.
+
+### Yeni açıklayıcı ekleme
+
+1. `src/scripts/explainers/<ad>.ts` — `Explainer` taban sınıfından türet.
+   Doldurman gerekenler: `controls()`, `reset()`, `step(dt)`, `draw()`,
+   opsiyonel `stats()`. Taban sınıf canvas ölçeklemeyi, oynat/durdur/sıfırla
+   kontrollerini, ekran dışında duraklatmayı, `prefers-reduced-motion`'ı ve
+   renklerin `tokens.css`'ten okunmasını halleder — tema değişince simülasyon
+   da değişir.
+2. Dosyanın sonunda `customElements.define('c-<ad>', Sinif)`.
+3. `src/scripts/explainers/boot.ts` içindeki `REGISTRY`'ye bir satır ekle.
+   Sayfada o etiket yoksa modül indirilmez.
+4. Stil gerekiyorsa `base.css` içindeki `.ex` bloğuna ekle; her açıklayıcı aynı
+   çerçeveyi paylaşır.
+
+**Kurallar:**
+- `description` niteliği zorunlu — canvas'ın `aria-label`'ı olur.
+- Renkleri elle yazma, `this.palette` kullan.
+- `step(dt)` saf olmalı: aynı dt ile aynı sonucu vermeli, `Date.now()` çağırma.
+- Simülasyon bir iddiayı görünür kılmalı. Süs olacaksa koyma.
+
+Örnek: [`replicas.ts`](./src/scripts/explainers/replicas.ts) ve onu kullanan
+`src/content/essays/en/watch-replicas-stop-helping.md`.
+
 ## Yer tutucu içerik
 
 Sitedeki yazıların çoğu şu an **yer tutucu** — tasarımı doldurmak için yazıldı,
