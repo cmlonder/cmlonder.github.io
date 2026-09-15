@@ -58,8 +58,15 @@ Yapılanlar (deploy edildi):
 | A | (boş) | `185.199.110.153` |
 | A | (boş) | `185.199.111.153` |
 
-İstersen IPv6 de ekle (zorunlu değil):
-`2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
+**A kayıtları zorunlu.** IPv6 (AAAA) ek olarak konur, A'nın yerine geçmez —
+internetin çoğu hâlâ IPv4. Sadece AAAA eklersen alan adı hiç yanıt vermez.
+
+| Tip | Host | Cevap |
+|---|---|---|
+| AAAA | (boş) | `2606:50c0:8000::153` |
+| AAAA | (boş) | `2606:50c0:8001::153` |
+| AAAA | (boş) | `2606:50c0:8002::153` |
+| AAAA | (boş) | `2606:50c0:8003::153` |
 
 **DEĞİŞTİR — www.** `CNAME www -> hashnode.network` kaydını sil,
 yerine `CNAME www -> cmlonder.github.io`
