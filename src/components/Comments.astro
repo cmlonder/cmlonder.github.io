@@ -1,8 +1,13 @@
 ---
-import { COMMENTS, type Locale } from '../config';
+import { COMMENTS, SITE, type Locale } from '../config';
 
 interface Props { lang: Locale }
 const { lang } = Astro.props;
+
+// Özel tema dosyaları mutlak URL olmak zorunda (giscus iframe'inden yükleniyor).
+// SITE.url'den türetiliyor, cutover'da kendiliğinden doğru adrese dönüyor.
+const themeLight = new URL('/giscus-light.css', SITE.url).href;
+const themeDark = new URL('/giscus-dark.css', SITE.url).href;
 
 const t = lang === 'tr'
   ? { title: 'Yorumlar', note: 'Yorumlar bu sitenin GitHub deposunda Discussions olarak saklanıyor. Yazmak için GitHub hesabı gerekiyor.' }
@@ -26,7 +31,8 @@ const t = lang === 'tr'
         data-reactions-enabled="1"
         data-emit-metadata="0"
         data-input-position="top"
-        data-theme="light"
+        data-theme={themeLight}
+        data-theme-dark={themeDark}
         data-lang={lang}
         data-loading="lazy"
         crossorigin="anonymous"
@@ -38,10 +44,15 @@ const t = lang === 'tr'
           yorumlar kapalıyken de sayfaya ölü kod düşer. */}
       <script is:inline>
         (function () {
+          var el = document.currentScript;
+          var box = el.closest('.comments');
+          var s = box.querySelector('script[src*="giscus.app"]');
+          var LIGHT = s.getAttribute('data-theme');
+          var DARK = s.getAttribute('data-theme-dark');
           var themeFor = function () {
             var t = document.documentElement.dataset.theme;
             var dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-            return dark ? 'dark_dimmed' : 'light';
+            return dark ? DARK : LIGHT;
           };
           var send = function () {
             var f = document.querySelector('iframe.giscus-frame');
@@ -52,8 +63,7 @@ const t = lang === 'tr'
               );
             }
           };
-          var s = document.querySelector('script[src*="giscus.app"]');
-          if (s) s.setAttribute('data-theme', themeFor());
+          s.setAttribute('data-theme', themeFor());
           addEventListener('message', function (e) {
             if (e.origin === 'https://giscus.app' && e.data && e.data.giscus) send();
           });
