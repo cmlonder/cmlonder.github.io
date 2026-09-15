@@ -12,7 +12,7 @@ const subsets = ['latin', 'latin-ext']; // latin-ext = Türkçe ğ ş ı İ ç �
  * önizleme adresinde eski URL'ler zaten yok, boşuna sayfa üretilmesin.
  */
 /** Cutover'da 'https://cmlonder.com' olacak. @type {string} */
-const SITE_URL = 'https://cmlonder.github.io';
+const SITE_URL = 'https://cmlonder.com';
 const IS_CUTOVER = SITE_URL === 'https://cmlonder.com';
 
 const LEGACY_SLUGS = [

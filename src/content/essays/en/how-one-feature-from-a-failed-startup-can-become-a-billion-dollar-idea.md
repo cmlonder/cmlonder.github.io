@@ -5,7 +5,7 @@ pubDate: 2022-08-30
 topics: [solo-company]
 tags: [legacy, startup]
 featured: false
-draft: true
+draft: false
 placeholder: false
 ---
 

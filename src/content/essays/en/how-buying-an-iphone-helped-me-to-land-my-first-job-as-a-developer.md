@@ -5,7 +5,7 @@ pubDate: 2022-08-28
 topics: [solo-company]
 tags: [legacy, career]
 featured: false
-draft: true
+draft: false
 placeholder: false
 ---
 
