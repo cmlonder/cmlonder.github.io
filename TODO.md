@@ -35,45 +35,78 @@ kaldır.
 `src/content/site/{en,tr}/` altında `now.md`, `about.md`, `colophon.md`.
 Üçü de yazılı ve yayında ama sahibinin sesiyle değil.
 
-## 4. Cutover: cmlonder.com'a taşınma
+## 4. Cutover — kod tarafı TAMAM, DNS bekliyor
 
-Şu an site `https://cmlonder.github.io` adresinde. `cmlonder.com` hâlâ
-Hashnode'da (DNS `hashnode.network`). Sıra önemli.
+Yapılanlar (deploy edildi):
 
-1. Yer tutucu içeriği temizle (madde 2).
-2. Eski repoda Pages kapalı olduğunu doğrula — alan adı serbest olmalı:
-   ```bash
-   gh api repos/cmlonder/legacy-cmlonder-github-io --jq '.has_pages'   # false
-   ```
-3. `astro.config.mjs` → `const SITE_URL = 'https://cmlonder.com';`
-   Bu tek değişiklik `IS_CUTOVER` üzerinden eski yazıların yönlendirmelerini de
-   otomatik açar.
-4. `src/config.ts` → `SITE.url` aynı değer.
-5. `public/CNAME` oluştur, tek satır: `cmlonder.com`
-6. Taşınan iki yazıyı yayınla: `src/content/essays/en/how-*.md` içinde
-   `draft: true` → `false`.
-7. Push et, deploy'un geçmesini bekle.
-8. GitHub → Settings → Pages → Custom domain `cmlonder.com`, Enforce HTTPS.
-9. DNS kayıtlarını değiştir (registrar'da):
-   - `cmlonder.com` A → `185.199.108.153`, `185.199.109.153`,
-     `185.199.110.153`, `185.199.111.153`
-   - `www` CNAME → `cmlonder.github.io`
-10. Hashnode blogunu kapat.
-11. Google Search Console'a yeni sitemap: `https://cmlonder.com/sitemap-index.xml`
+- `SITE_URL` ve `SITE.url` -> `https://cmlonder.com`
+- `public/CNAME` eklendi, GitHub Pages custom domain API'den set edildi
+- Eski Hashnode yazıları yayına açıldı, kök slug'lardan yönlendirme üretiliyor
+  (`canonical` + `noindex` ile)
+- Sitemap, llms.txt, `.md` aynaları, giscus tema URL'leri hepsi yeni adrese döndü
 
-### Taşınmış eski yazılar
+### Kalan: Porkbun DNS
 
-Hashnode'daki iki yazı repoya alındı, görselleri indirilip
-`public/legacy/` altına kondu (5.95 MB → 0.87 MB sıkıştırıldı).
-`draft: true` oldukları için yayında değiller.
+`dash.porkbun.com` -> cmlonder.com -> **DNS**
 
-| Eski URL | Yeni URL |
-|---|---|
-| `/how-buying-an-iphone-helped-me-to-land-my-first-job-as-a-developer` | `/essays/...` (aynı slug) |
-| `/how-one-feature-from-a-failed-startup-can-become-a-billion-dollar-idea` | `/essays/...` (aynı slug) |
+**DEĞİŞTİR — apex A kaydı.** Tek `76.76.21.21` kaydını sil, yerine dört tane:
 
-Kök seviyedeki eski URL'lerden yeni adreslere yönlendirme `astro.config.mjs`
-içinde tanımlı ve cutover'da kendiliğinden devreye giriyor.
+| Tip | Host | Cevap |
+|---|---|---|
+| A | (boş) | `185.199.108.153` |
+| A | (boş) | `185.199.109.153` |
+| A | (boş) | `185.199.110.153` |
+| A | (boş) | `185.199.111.153` |
+
+İstersen IPv6 de ekle (zorunlu değil):
+`2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
+
+**DEĞİŞTİR — www.** `CNAME www -> hashnode.network` kaydını sil,
+yerine `CNAME www -> cmlonder.github.io`
+
+**SAKIN SİLME** (e-posta ve doğrulama):
+
+| Tip | Değer | Ne işe yarıyor |
+|---|---|---|
+| MX | `10 mx.zoho.com` / `20 mx2.zoho.com` / `50 mx3.zoho.com` | Zoho e-posta |
+| TXT | `zoho-verification=zb90139965...` | Zoho doğrulaması |
+| TXT | `google-site-verification=yB-RRM76...` | Search Console erişimi |
+
+**AYRICA DÜZELT — çift SPF kaydı.** Şu an iki tane var, bu geçersiz:
+
+```
+v=spf1 include:zoho.com ~all
+v=spf1 mx include:_spf.porkbun.com ~all
+```
+
+RFC 7208 birden fazla SPF kaydını `permerror` sayar; alıcı sunucular SPF'i
+başarısız kabul eder. İkisini sil, tek kayıt bırak:
+
+```
+v=spf1 include:zoho.com include:_spf.porkbun.com ~all
+```
+
+(Porkbun e-posta yönlendirmesi kullanmıyorsan sadece `v=spf1 include:zoho.com ~all` yeter.)
+
+### Sonra
+
+```bash
+bash scripts/check-dns.sh    # hepsi yeşil olana kadar
+```
+
+DNS yayıldıktan sonra GitHub sertifikayı üretir (5-30 dk). Ardından:
+repo -> Settings -> Pages -> **Enforce HTTPS** işaretle.
+
+### En son: Hashnode
+
+DNS geçtiğini `check-dns.sh` ile doğruladıktan **sonra**:
+Hashnode -> Blog Dashboard -> Domain -> custom domain'i kaldır.
+Blogu tamamen silmek istersen o da oradan.
+
+### Search Console
+
+`google-site-verification` TXT kaydı durduğu için erişimin kopmaz.
+Yeni sitemap'i bildir: `https://cmlonder.com/sitemap-index.xml`
 
 ## 5. Yeni bölümlerin içeriği
 
