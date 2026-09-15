@@ -128,7 +128,7 @@ export const SKILLS = {
  * her yazıda hata kutusu çıkar.
  */
 export const COMMENTS = {
-  enabled: false,
+  enabled: true,
   repo: 'cmlonder/cmlonder.github.io',
   repoId: 'R_kgDOUbFfAw',
   category: 'Announcements',
