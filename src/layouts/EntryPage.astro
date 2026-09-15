@@ -6,6 +6,7 @@ import {
   type CollectionName, type Locale,
 } from '../config';
 import EntryCard from '../components/EntryCard.astro';
+import Comments from '../components/Comments.astro';
 import { formatDate, localePath, entryPath, getTranslations, parseId, getRelated, getNeighbours } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
@@ -121,6 +122,7 @@ const t = {
     </aside>
   )}
 
+  {d.commentable && <Comments lang={lang} />}
 </Base>
 
 <script>

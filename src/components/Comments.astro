@@ -1,0 +1,81 @@
+---
+import { COMMENTS, type Locale } from '../config';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+
+const t = lang === 'tr'
+  ? { title: 'Yorumlar', note: 'Yorumlar bu sitenin GitHub deposunda Discussions olarak saklanıyor. Yazmak için GitHub hesabı gerekiyor.' }
+  : { title: 'Comments', note: 'Comments are stored as GitHub Discussions on this site\'s repository. Posting requires a GitHub account.' };
+---
+
+{COMMENTS.enabled && (
+  <aside class="narrow comments">
+    <h2 class="section-title">{t.title}</h2>
+    <p class="note meta">{t.note}</p>
+
+    <div class="frame">
+      <script
+        src="https://giscus.app/client.js"
+        data-repo={COMMENTS.repo}
+        data-repo-id={COMMENTS.repoId}
+        data-category={COMMENTS.category}
+        data-category-id={COMMENTS.categoryId}
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang={lang}
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async
+        is:inline
+      />
+
+      {/* is:inline olmadan Astro bu script'i koşuldan bağımsız paketler ve
+          yorumlar kapalıyken de sayfaya ölü kod düşer. */}
+      <script is:inline>
+        (function () {
+          var themeFor = function () {
+            var t = document.documentElement.dataset.theme;
+            var dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+            return dark ? 'dark_dimmed' : 'light';
+          };
+          var send = function () {
+            var f = document.querySelector('iframe.giscus-frame');
+            if (f && f.contentWindow) {
+              f.contentWindow.postMessage(
+                { giscus: { setConfig: { theme: themeFor() } } },
+                'https://giscus.app'
+              );
+            }
+          };
+          var s = document.querySelector('script[src*="giscus.app"]');
+          if (s) s.setAttribute('data-theme', themeFor());
+          addEventListener('message', function (e) {
+            if (e.origin === 'https://giscus.app' && e.data && e.data.giscus) send();
+          });
+          new MutationObserver(send).observe(document.documentElement, {
+            attributes: true, attributeFilter: ['data-theme'],
+          });
+          matchMedia('(prefers-color-scheme: dark)').addEventListener('change', send);
+        })();
+      </script>
+    </div>
+  </aside>
+)}
+
+<style>
+  .comments { margin-block-start: var(--s-2xl); }
+  .note { margin-block-start: var(--s-3xs); max-inline-size: 60ch; }
+  .frame {
+    margin-block-start: var(--s-s);
+    padding: var(--s-xs);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background: var(--c-surface);
+    min-block-size: 8rem;
+  }
+</style>

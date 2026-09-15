@@ -155,6 +155,20 @@ bunu blok saymaz ve `<p>` içine sarar.
 Örnek: [`replicas.ts`](./src/scripts/explainers/replicas.ts) ve onu kullanan
 `src/content/essays/en/watch-replicas-stop-helping.md`.
 
+## Yorumlar
+
+giscus (GitHub Discussions). `src/config.ts` içindeki `COMMENTS.enabled`
+kapalıyken sayfaya **hiçbir şey** düşmez — ne iframe ne script. Açma adımları
+[TODO.md](./TODO.md) madde 6'da; giscus GitHub App kurulmadan açma.
+
+`Comments.astro` içindeki script `is:inline` olmak zorunda: Astro normal
+`<script>` etiketlerini koşuldan bağımsız paketler ve kapalıyken sayfaya ölü
+kod düşer.
+
+Yorum kutusu `commentable: true` olan girdilerde çıkar. Essay'lerde varsayılan
+açık, diğer koleksiyonlarda kapalı — boş bir yorum kutusu sayfayı fakir
+gösteriyor.
+
 ## Yer tutucu içerik
 
 Sitedeki yazıların çoğu şu an **yer tutucu** — tasarımı doldurmak için yazıldı,

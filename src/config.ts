@@ -120,6 +120,21 @@ export const SKILLS = {
   } as Record<Locale, string>,
 };
 
+/**
+ * Yorumlar (giscus). Yorumlar repodaki GitHub Discussions'ta durur.
+ *
+ * enabled=false iken hiçbir şey render edilmez. Açmadan önce giscus GitHub
+ * App'inin bu repoda kurulu olması gerekir (github.com/apps/giscus), yoksa
+ * her yazıda hata kutusu çıkar.
+ */
+export const COMMENTS = {
+  enabled: false,
+  repo: 'cmlonder/cmlonder.github.io',
+  repoId: 'R_kgDOUbFfAw',
+  category: 'Announcements',
+  categoryId: 'DIC_kwDOUbFfA84DFpWk',
+};
+
 export const HUB = {
   path: 'workbench',
   name:  { en: 'The Workbench', tr: 'Tezgâh' } as Record<Locale, string>,

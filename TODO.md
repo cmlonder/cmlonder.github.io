@@ -86,7 +86,26 @@ Bu turda eklenen bölümlerin bir kısmı senin doldurmanı bekliyor:
   simülasyonun servis süreleri (`SERVICE_READ` vb.) uydurma sabitler; kendi
   ölçümlerinle değiştirmek istersen `src/scripts/explainers/replicas.ts`.
 
-## 6. Opsiyonel
+## 6. Yorumları aç (giscus)
+
+Altyapı kurulu ama **kapalı**. Senin yapman gereken tek şey var:
+
+1. [github.com/apps/giscus](https://github.com/apps/giscus) → Install →
+   sadece `cmlonder/cmlonder.github.io` reposunu seç.
+2. `src/config.ts` → `COMMENTS.enabled` değerini `true` yap.
+3. Push et.
+
+Repoda Discussions zaten açıldı; `Announcements` kategorisi kullanılıyor —
+tartışmayı sadece sen açabilirsin, giscus yazı başına oluşturur, rastgele konu
+açılamaz. Yorumlar repoda durur, veri sende.
+
+Yorumlar **sadece essay'lerde** çıkar (`commentable` varsayılanı essay'de true,
+diğerlerinde false). Tek bir not veya playbook'ta açmak istersen frontmatter'a
+`commentable: true` yaz.
+
+App kurulmadan `enabled: true` yaparsan her essay'de giscus hata kutusu çıkar.
+
+## 7. Opsiyonel
 
 - **OG görselleri** `public/og/*.png` elle üretildi (PIL). Metinleri
   değişirse yeniden üretilmeli; üretici script commit'te yok.

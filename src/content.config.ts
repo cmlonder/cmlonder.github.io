@@ -26,6 +26,11 @@ const base = z.object({
    *   grep -rl 'placeholder: true' src/content
    */
   placeholder: z.boolean().default(false),
+  /**
+   * Yorum kutusu. Boş bir kutu sayfayı fakir gösterdiği için sadece
+   * essay'lerde varsayılan açık; diğer tiplerde tek tek açılır.
+   */
+  commentable: z.boolean().default(false),
 });
 
 const collection = (dir: string, extend = z.object({})) =>
@@ -84,6 +89,7 @@ export const collections = {
     z.object({
       /** Anasayfada öne çıkar. */
       featured: z.boolean().default(false),
+      commentable: z.boolean().default(true),
     })
   ),
 
