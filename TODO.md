@@ -35,84 +35,45 @@ kaldır.
 `src/content/site/{en,tr}/` altında `now.md`, `about.md`, `colophon.md`.
 Üçü de yazılı ve yayında ama sahibinin sesiyle değil.
 
-## 4. Cutover — kod tarafı TAMAM, DNS bekliyor
+## 4. Cutover — TAMAM ✅
 
-Yapılanlar (deploy edildi):
+Site `https://cmlonder.com` adresinde yayında (15 Eyl 2026).
 
-- `SITE_URL` ve `SITE.url` -> `https://cmlonder.com`
-- `public/CNAME` eklendi, GitHub Pages custom domain API'den set edildi
-- Eski Hashnode yazıları yayına açıldı, kök slug'lardan yönlendirme üretiliyor
-  (`canonical` + `noindex` ile)
-- Sitemap, llms.txt, `.md` aynaları, giscus tema URL'leri hepsi yeni adrese döndü
+| | |
+|---|---|
+| apex A + AAAA | GitHub Pages'e işaret ediyor |
+| www | `cmlonder.github.io` CNAME, apex'e 301 |
+| Sertifika | onaylı, `cmlonder.com` + `www`, 14 Ara 2026'ya kadar |
+| Enforce HTTPS | açık, http -> https 301 |
+| Eski Hashnode slug'ları | `canonical` + `noindex` ile yeni adrese yönlendiriyor |
+| Eski yazıların görselleri | `/legacy/` altında self-host, çalışıyor |
+| Sitemap / RSS / llms.txt / `.md` aynaları | hepsi cmlonder.com |
+| Zoho e-postası, Zoho + Search Console doğrulamaları | korundu |
 
-### Kalan: Porkbun DNS
+Doğrulama: `bash scripts/check-dns.sh`
 
-`dash.porkbun.com` -> cmlonder.com -> **DNS**
+> Not: script DNS'i DoH ile sorguluyor, `dig` ile değil. Cutover sırasında
+> yerel çözümleyici "A kaydı yok" yanıtını 1800 saniye negatif önbellekte
+> tuttu ve cutover başarısız görünürken aslında çalışıyordu.
 
-**DEĞİŞTİR — apex A kaydı.** Tek `76.76.21.21` kaydını sil, yerine dört tane:
+### Kalan iki iş
 
-| Tip | Host | Cevap |
-|---|---|---|
-| A | (boş) | `185.199.108.153` |
-| A | (boş) | `185.199.109.153` |
-| A | (boş) | `185.199.110.153` |
-| A | (boş) | `185.199.111.153` |
+**1. Hashnode'u kapat.** Blog Dashboard -> Domain -> custom domain'i kaldır.
+   Trafik zaten GitHub'a geçti; bu sadece temizlik. Blogu tamamen silmek
+   istersen o da oradan.
 
-**A kayıtları zorunlu.** IPv6 (AAAA) ek olarak konur, A'nın yerine geçmez —
-internetin çoğu hâlâ IPv4. Sadece AAAA eklersen alan adı hiç yanıt vermez.
+**2. Çift SPF kaydını düzelt** (cutover'la ilgisi yok, mevcut bir hata).
+   Porkbun'da iki `v=spf1` TXT kaydı var; RFC 7208 bunu `permerror` sayar,
+   yani Zoho'dan gönderdiğin maillerin SPF doğrulaması şu an başarısız.
+   İkisini sil, tek kayıt bırak:
 
-| Tip | Host | Cevap |
-|---|---|---|
-| AAAA | (boş) | `2606:50c0:8000::153` |
-| AAAA | (boş) | `2606:50c0:8001::153` |
-| AAAA | (boş) | `2606:50c0:8002::153` |
-| AAAA | (boş) | `2606:50c0:8003::153` |
-
-**DEĞİŞTİR — www.** `CNAME www -> hashnode.network` kaydını sil,
-yerine `CNAME www -> cmlonder.github.io`
-
-**SAKIN SİLME** (e-posta ve doğrulama):
-
-| Tip | Değer | Ne işe yarıyor |
-|---|---|---|
-| MX | `10 mx.zoho.com` / `20 mx2.zoho.com` / `50 mx3.zoho.com` | Zoho e-posta |
-| TXT | `zoho-verification=zb90139965...` | Zoho doğrulaması |
-| TXT | `google-site-verification=yB-RRM76...` | Search Console erişimi |
-
-**AYRICA DÜZELT — çift SPF kaydı.** Şu an iki tane var, bu geçersiz:
-
-```
-v=spf1 include:zoho.com ~all
-v=spf1 mx include:_spf.porkbun.com ~all
-```
-
-RFC 7208 birden fazla SPF kaydını `permerror` sayar; alıcı sunucular SPF'i
-başarısız kabul eder. İkisini sil, tek kayıt bırak:
-
-```
-v=spf1 include:zoho.com include:_spf.porkbun.com ~all
-```
-
-(Porkbun e-posta yönlendirmesi kullanmıyorsan sadece `v=spf1 include:zoho.com ~all` yeter.)
-
-### Sonra
-
-```bash
-bash scripts/check-dns.sh    # hepsi yeşil olana kadar
-```
-
-DNS yayıldıktan sonra GitHub sertifikayı üretir (5-30 dk). Ardından:
-repo -> Settings -> Pages -> **Enforce HTTPS** işaretle.
-
-### En son: Hashnode
-
-DNS geçtiğini `check-dns.sh` ile doğruladıktan **sonra**:
-Hashnode -> Blog Dashboard -> Domain -> custom domain'i kaldır.
-Blogu tamamen silmek istersen o da oradan.
+   ```
+   v=spf1 include:zoho.com include:_spf.porkbun.com ~all
+   ```
 
 ### Search Console
 
-`google-site-verification` TXT kaydı durduğu için erişimin kopmaz.
+`google-site-verification` TXT kaydı korunduğu için erişimin kopmadı.
 Yeni sitemap'i bildir: `https://cmlonder.com/sitemap-index.xml`
 
 ## 5. Yeni bölümlerin içeriği
