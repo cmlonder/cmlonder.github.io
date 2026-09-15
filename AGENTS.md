@@ -102,6 +102,13 @@ Yeni koleksiyon eklersen şu üretenleri de güncelle:
 `src/pages/llms.txt.ts`, `src/pages/llms-full.txt.ts`,
 `src/pages/[collection]/[...slug].md.ts` ve Türkçe karşılığı.
 
+## Ne nereye yazılır
+
+Editoryal rehber **[WRITING.md](./WRITING.md)** içinde: hangi içerik hangi
+bölüme ait, başlık nasıl atılır, ne yazılmaz. Bir girdi eklerken oradaki
+tanımlara uy — özellikle `signals` iki cümle, `playbooks` son başlığı atlamaz,
+`notes` emin olmadığını söyler.
+
 ## Sahibinin yapacakları
 
 Marka kararları, yer tutucu temizliği ve cutover adımları **[TODO.md](./TODO.md)**

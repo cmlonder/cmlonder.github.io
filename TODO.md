@@ -16,6 +16,8 @@ kendi başına yapmamalı — hepsi kişisel tercih veya dış sistem erişimi g
 
 ## 2. Yer tutucu içeriği değiştir
 
+> Ne yazacağını [WRITING.md](./WRITING.md) anlatıyor — bölüm bölüm, örnekli.
+
 ```bash
 grep -rl 'placeholder: true' src/content     # listeyi gör
 grep -rl 'placeholder: true' src/content | wc -l
