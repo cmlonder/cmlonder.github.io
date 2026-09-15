@@ -86,24 +86,22 @@ Bu turda eklenen bölümlerin bir kısmı senin doldurmanı bekliyor:
   simülasyonun servis süreleri (`SERVICE_READ` vb.) uydurma sabitler; kendi
   ölçümlerinle değiştirmek istersen `src/scripts/explainers/replicas.ts`.
 
-## 6. Yorumları aç (giscus)
+## 6. Yorumlar — TAMAM
 
-Altyapı kurulu ama **kapalı**. Senin yapman gereken tek şey var:
+giscus kurulu ve açık. Yorumlar repoda GitHub Discussions olarak duruyor
+(`Announcements` kategorisi — tartışmayı sadece sen açabilirsin).
 
-1. [github.com/apps/giscus](https://github.com/apps/giscus) → Install →
-   sadece `cmlonder/cmlonder.github.io` reposunu seç.
-2. `src/config.ts` → `COMMENTS.enabled` değerini `true` yap.
-3. Push et.
+Bilmen gerekenler:
 
-Repoda Discussions zaten açıldı; `Announcements` kategorisi kullanılıyor —
-tartışmayı sadece sen açabilirsin, giscus yazı başına oluşturur, rastgele konu
-açılamaz. Yorumlar repoda durur, veri sende.
-
-Yorumlar **sadece essay'lerde** çıkar (`commentable` varsayılanı essay'de true,
-diğerlerinde false). Tek bir not veya playbook'ta açmak istersen frontmatter'a
-`commentable: true` yaz.
-
-App kurulmadan `enabled: true` yaparsan her essay'de giscus hata kutusu çıkar.
+- Yorumlar **sadece essay'lerde** çıkıyor. Bir not veya playbook'ta açmak
+  istersen frontmatter'a `commentable: true` yaz.
+- Kapatmak istersen tek yer: `src/config.ts` → `COMMENTS.enabled: false`.
+  Kapalıyken sayfaya hiçbir şey düşmüyor, ne iframe ne script.
+- Tema `public/giscus-light.css` ve `public/giscus-dark.css` dosyalarından
+  geliyor; resmi giscus temaları taban alınıp sitenin paletiyle ezildi.
+  Palet değişirse bu iki dosyayı da güncelle.
+- Moderasyon GitHub'da: repo → Discussions. Bir yorumu silmek, kilitlemek
+  veya kullanıcıyı engellemek oradan yapılır.
 
 ## 7. Opsiyonel
 
