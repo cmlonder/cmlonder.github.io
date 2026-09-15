@@ -1,9 +1,9 @@
 ---
-title: Engineer away the slop
-description: On treating low-quality agent output as an engineering problem rather than a model problem.
+title: 'Engineer away the slop'
+description: 'On treating low-quality agent output as an engineering problem rather than a model problem.'
 pubDate: 2026-09-15
 url: https://ghuntley.com/slop/
-source: Geoffrey Huntley
+source: 'Geoffrey Huntley'
 topics: [agentic-development]
 tags: [quality]
 draft: false

@@ -1,6 +1,6 @@
 ---
-title: Now
-description: What has my attention at the moment.
+title: 'Now'
+description: 'What has my attention at the moment.'
 updated: 2026-09-15
 ---
 

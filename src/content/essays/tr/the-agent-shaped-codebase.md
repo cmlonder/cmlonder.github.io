@@ -1,6 +1,6 @@
 ---
-title: Agent Biçimli Kod Tabanı
-description: Kod tabanları artık insanlardan çok ajanlar tarafından okunacak. Bu, "temiz kod"un ne demek olduğunu değiştiriyor.
+title: 'Agent Biçimli Kod Tabanı'
+description: 'Kod tabanları artık insanlardan çok ajanlar tarafından okunacak. Bu, "temiz kod"un ne demek olduğunu değiştiriyor.'
 pubDate: 2026-09-15
 topics: [agentic-development, solution-architecture]
 tags: [konvansiyon, code-review]

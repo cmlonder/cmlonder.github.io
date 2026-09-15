@@ -75,7 +75,7 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
 .prose h2, .prose h3 {
   font-family: var(--f-serif);
   font-variation-settings: var(--axis-display);
-  font-weight: 500;
+  font-weight: 700;
   line-height: var(--lh-snug);
   margin-block-start: var(--s-l);
   margin-block-end: var(--s-2xs);

@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import { HUB, COLLECTIONS, COLLECTION_LABELS } from '../config';
+import { localePath } from '../lib/content';
+
+// GitHub Pages tek bir 404.html sunar; dil ayrımı yapamayız, iki dili de yazıyoruz.
+const lang = 'en' as const;
+---
+
+<Base title="Not found — Cemal Önder" description="That page does not exist." lang={lang}>
+  <div class="wrap narrow-col">
+    <p class="kicker">404</p>
+    <h1>This page isn't on the workbench.</h1>
+    <p class="sub">Bu sayfa tezgâhta yok.</p>
+
+    <ul class="links">
+      <li><a href={localePath(lang, '')}>Home</a></li>
+      <li><a href={localePath(lang, HUB.path)}>{HUB.name[lang]}</a></li>
+      {COLLECTIONS.map((c) => (
+        <li><a href={localePath(lang, c)}>{COLLECTION_LABELS[c][lang]}</a></li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .narrow-col { max-inline-size: 42ch; }
+  .kicker {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    letter-spacing: .12em; color: var(--c-mark);
+    font-variant-numeric: tabular-nums;
+  }
+  h1 {
+    margin-block-start: var(--s-2xs);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-2xl);
+    line-height: var(--lh-tight); text-wrap: balance;
+  }
+  .sub {
+    margin-block-start: var(--s-2xs);
+    font-family: var(--f-serif); font-style: italic; color: var(--c-muted);
+  }
+  .links {
+    list-style: none; padding: 0;
+    margin-block-start: var(--s-l);
+    display: flex; flex-wrap: wrap; gap: var(--s-2xs) var(--s-s);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+  }
+  .links a { text-decoration: none; color: var(--c-accent); }
+</style>

@@ -1,6 +1,6 @@
 ---
-title: Hakkında
-description: Kim olduğum ve bu sitenin neden var olduğu.
+title: 'Hakkında'
+description: 'Kim olduğum ve bu sitenin neden var olduğu.'
 updated: 2026-09-15
 ---
 

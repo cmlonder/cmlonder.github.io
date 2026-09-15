@@ -96,3 +96,52 @@ export function countLabel(n: number, lang: Locale): string {
   if (lang === 'tr') return `${n} girdi`;
   return `${n} ${n === 1 ? 'entry' : 'entries'}`;
 }
+
+/**
+ * "About 1 year ago" / "8 ay önce" — Maggie'nin liste sayfalarındaki kalıp.
+ * Mutlak tarih `datetime` niteliğinde kalır; bu sadece görünen metin.
+ */
+export function relativeDate(date: Date, lang: Locale, now = new Date()): string {
+  const days = Math.round((now.getTime() - date.getTime()) / 86_400_000);
+  const rtf = new Intl.RelativeTimeFormat(lang === 'tr' ? 'tr-TR' : 'en-US', {
+    numeric: 'auto',
+  });
+  if (days < 1) return lang === 'tr' ? 'bugün' : 'today';
+  if (days < 30) return rtf.format(-days, 'day');
+  if (days < 365) return rtf.format(-Math.round(days / 30), 'month');
+  return rtf.format(-Math.round(days / 365), 'year');
+}
+
+/** Aynı konuyu paylaşan diğer girdiler — okuma sayfasının altında. */
+export async function getRelated(
+  collection: CollectionName,
+  entry: AnyEntry,
+  lang: Locale,
+  limit = 4
+) {
+  const topics = new Set(entry.data.topics as string[]);
+  const all = await getAllEntries(lang);
+  return all
+    .filter((i) => i.entry.id !== entry.id)
+    .map((i) => ({
+      ...i,
+      shared: (i.entry.data.topics as string[]).filter((t) => topics.has(t)).length,
+    }))
+    .filter((i) => i.shared > 0)
+    .sort((a, b) => b.shared - a.shared || b.entry.data.pubDate.valueOf() - a.entry.data.pubDate.valueOf())
+    .slice(0, limit);
+}
+
+/** Aynı koleksiyonda tarihe göre önceki ve sonraki girdi. */
+export async function getNeighbours(
+  collection: CollectionName,
+  entry: AnyEntry,
+  lang: Locale
+) {
+  const list = await getEntries(collection, lang);   // yeniden eskiye
+  const i = list.findIndex((e) => e.id === entry.id);
+  return {
+    newer: i > 0 ? list[i - 1] : null,
+    older: i >= 0 && i < list.length - 1 ? list[i + 1] : null,
+  };
+}

@@ -1,8 +1,8 @@
 ---
-title: "The Pragmatic Programmer"
-author: "Hunt & Thomas"
+title: 'The Pragmatic Programmer'
+author: 'Hunt & Thomas'
 year: 1999
-note: "The one I re-read when I catch myself building something clever."
+note: 'The one I re-read when I catch myself building something clever.'
 order: 7
 placeholder: true
 ---

@@ -39,17 +39,20 @@ const blurb = lang === 'tr'
 <style>
   h1 {
     font-family: var(--f-serif);
-    font-size: clamp(1.875rem, 1.4rem + 2vw, 2.375rem);
-    font-weight: 500;
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-3xl);
+    font-weight: 400;
     line-height: var(--lh-tight);
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
   }
   .blurb {
     margin-block-start: var(--s-2xs);
-    max-inline-size: 52ch;
+    max-inline-size: 38ch;
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-lg);
+    line-height: 1.25;
     color: var(--c-muted);
-    font-size: 1.0625rem;
-    font-style: italic;
   }
   .topics {
     list-style: none;

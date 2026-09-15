@@ -36,7 +36,7 @@ const back = lang === 'tr' ? 'Tezgâha dön' : 'Back to the workbench';
         {items.map(({ collection, entry }) => (
           <li>
             <EntryCard collection={collection} entry={entry} lang={lang}
-                       variant="row" showCollection={showCollection} showDescription />
+                       variant="row" showCollection={showCollection} showDescription as="h2" />
           </li>
         ))}
       </ul>

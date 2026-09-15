@@ -1,9 +1,9 @@
 ---
-title: Outbox before dual writes
-description: If a write has to land in two places, put it in one place and let a reader fan it out.
+title: 'Outbox before dual writes'
+description: 'If a write has to land in two places, put it in one place and let a reader fan it out.'
 pubDate: 2026-09-15
-problem: A service must update its database and publish an event, and sometimes only one happens.
-context: Any service with a transactional store and a message broker. Especially Kafka.
+problem: 'A service must update its database and publish an event, and sometimes only one happens.'
+context: 'Any service with a transactional store and a message broker. Especially Kafka.'
 topics: [solution-architecture, scale-and-performance]
 tags: [kafka, consistency, outbox]
 draft: false

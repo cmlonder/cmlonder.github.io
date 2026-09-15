@@ -1,6 +1,6 @@
 ---
-title: About
-description: Who I am and why this site exists.
+title: 'About'
+description: 'Who I am and why this site exists.'
 updated: 2026-09-15
 ---
 

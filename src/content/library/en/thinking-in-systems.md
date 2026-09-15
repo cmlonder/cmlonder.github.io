@@ -1,8 +1,8 @@
 ---
-title: "Thinking in Systems"
-author: "Donella Meadows"
+title: 'Thinking in Systems'
+author: 'Donella Meadows'
 year: 2008
-note: "Changed how I read an architecture diagram more than any architecture book did."
+note: 'Changed how I read an architecture diagram more than any architecture book did.'
 order: 1
 placeholder: true
 ---

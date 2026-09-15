@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import EntryCard from '../components/EntryCard.astro';
+import { HUB, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS, UI } from '../config';
+import { getAllEntries, getEntries, localePath, countLabel } from '../lib/content';
+
+/** Maggie'nin /garden'ının karşılığı: her şeyin tek akışta toplandığı sayfa. */
+const lang = 'en' as const;
+const other = lang === 'en' ? 'tr' : 'en';
+
+const all = await getAllEntries(lang);
+const byType = await Promise.all(
+  COLLECTIONS.map(async (c) => ({ c, entries: await getEntries(c, lang) }))
+);
+
+const recentLabel = lang === 'tr' ? 'Son eklenenler' : 'Recently';
+---
+
+<Base title={`${HUB.name[lang]} — Cemal Önder`} description={HUB.blurb[lang]} lang={lang}
+      altLocale={{ lang: other as 'en' | 'tr', href: localePath(other as 'en' | 'tr', 'workbench') }}>
+  <div class="wrap">
+    <header class="head">
+      <p class="kicker">
+        <span class="count">{all.length}</span>
+        <a href={localePath(lang, '')}>{UI[lang].home}</a>
+      </p>
+      <h1>{HUB.name[lang]}</h1>
+      <p class="blurb">{HUB.blurb[lang]}</p>
+    </header>
+
+    <section class="recent">
+      <h2 class="section-title">{recentLabel}</h2>
+      <ul class="stream">
+        {all.slice(0, 12).map(({ collection, entry }) => (
+          <li>
+            <EntryCard collection={collection} entry={entry} lang={lang}
+                       variant="row" showCollection showDescription />
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {byType.filter((g) => g.entries.length > 0).map(({ c, entries }) => (
+      <section class="group">
+        <h2 class="section-title">
+          <a href={localePath(lang, c)}>{COLLECTION_LABELS[c][lang]} <span aria-hidden="true">&#8594;</span></a>
+        </h2>
+        <p class="group-blurb">{COLLECTION_BLURBS[c][lang]} <span class="n">{countLabel(entries.length, lang)}</span></p>
+        <ul class="stream">
+          {entries.slice(0, 6).map((entry) => (
+            <li><EntryCard collection={c} entry={entry} lang={lang} variant="row" /></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .head { margin-block-end: var(--s-2xl); }
+  .kicker {
+    display: flex; align-items: baseline; gap: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark); font-variant-numeric: tabular-nums; }
+  .kicker a { text-decoration: none; }
+  h1 {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-3xl);
+    line-height: var(--lh-tight); letter-spacing: -0.02em;
+  }
+  .blurb {
+    margin-block-start: var(--s-2xs); max-inline-size: 38ch;
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-size: var(--t-lg); line-height: 1.25; color: var(--c-muted);
+  }
+  .group, .recent { margin-block-start: var(--s-2xl); }
+  .group-blurb {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  .group-blurb .n { color: var(--c-mark); }
+  .stream {
+    list-style: none; padding: 0; margin-block-start: var(--s-s);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: var(--s-m) var(--s-xl);
+    align-items: start;
+  }
+</style>

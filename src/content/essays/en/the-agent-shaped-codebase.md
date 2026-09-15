@@ -1,6 +1,6 @@
 ---
-title: The Agent-Shaped Codebase
-description: Codebases are about to be read more often by agents than by people. That changes what "clean code" means.
+title: 'The Agent-Shaped Codebase'
+description: 'Codebases are about to be read more often by agents than by people. That changes what "clean code" means.'
 pubDate: 2026-09-15
 topics: [agentic-development, solution-architecture]
 tags: [conventions, code-review]

@@ -2,7 +2,7 @@
 import { COLLECTION_LABELS, STATUS_LABELS, TOPIC_LABELS,
          type CollectionName, type Locale, type Topic } from '../config';
 import TypeMark from './TypeMark.astro';
-import { formatDate, entryPath, parseId } from '../lib/content';
+import { formatDate, relativeDate, entryPath, parseId } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
 interface Props {
@@ -14,11 +14,17 @@ interface Props {
   showCollection?: boolean;
   /** Satırlarda açıklama göster (liste sayfaları evet, anasayfa hayır). */
   showDescription?: boolean;
+  /**
+   * Başlık etiketi. Ebeveyn bağlamına göre ayarlanır — h1'in hemen altındaki
+   * listede h2, bir bölüm başlığının altındaysa h3 olmalı.
+   */
+  as?: 'h2' | 'h3';
 }
 const {
   collection, entry, lang,
-  variant = 'card', showCollection = false, showDescription = false,
+  variant = 'card', showCollection = false, showDescription = false, as = 'h3',
 } = Astro.props;
+const Heading = as;
 
 const { slug } = parseId(entry.id);
 const d = entry.data as any;
@@ -35,12 +41,12 @@ const coverTopic = TOPIC_LABELS[(d.topics as Topic[])[0]][lang];
       <span class="glyph">{coverTopic}</span>
     </a>
     <div class="body">
-      <h3><a href={href}>{d.title}</a></h3>
+      <Heading><a href={href}>{d.title}</a></Heading>
       <p class="dek">{d.description}</p>
       <p class="foot meta">
         <span>{typeLabel}</span>
         <span class="mark"><TypeMark collection={collection} size={13} /></span>
-        <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+        <time datetime={d.pubDate.toISOString()} title={formatDate(d.pubDate, lang)}>{relativeDate(d.pubDate, lang)}</time>
       </p>
     </div>
   </article>
@@ -48,11 +54,11 @@ const coverTopic = TOPIC_LABELS[(d.topics as Topic[])[0]][lang];
   <article class="row">
     <span class="mark"><TypeMark collection={collection} /></span>
     <div>
-      <h3><a href={href}>{d.title}</a></h3>
+      <Heading><a href={href}>{d.title}</a></Heading>
       {showDescription && <p class="dek">{d.description}</p>}
       <p class="foot meta">
         {showCollection && <><span class="coll">{typeLabel}</span><span aria-hidden="true">·</span></>}
-        <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+        <time datetime={d.pubDate.toISOString()} title={formatDate(d.pubDate, lang)}>{relativeDate(d.pubDate, lang)}</time>
         {collection === 'notes' && (
           <><span aria-hidden="true">·</span><span>{STATUS_LABELS[d.status as keyof typeof STATUS_LABELS][lang]}</span></>
         )}
@@ -63,15 +69,15 @@ const coverTopic = TOPIC_LABELS[(d.topics as Topic[])[0]][lang];
 )}
 
 <style>
-  h3 {
+  h2, h3 {
     font-family: var(--f-serif);
     font-variation-settings: var(--axis-display);
     font-weight: 400;
     line-height: var(--lh-snug);
     font-size: var(--t-base);
   }
-  h3 a { text-decoration: none; }
-  h3 a:hover { color: var(--c-accent); }
+  h2 a, h3 a { text-decoration: none; }
+  h2 a:hover, h3 a:hover { color: var(--c-accent); }
 
   .foot { display: flex; flex-wrap: wrap; align-items: center; gap: .5em; }
   .mark { color: var(--c-mark); display: inline-flex; }

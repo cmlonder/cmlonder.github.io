@@ -1,6 +1,6 @@
 ---
-title: Leaving the Big Company, Slowly
-description: Notes on building something of your own without a dramatic exit, and why the slow version might be better.
+title: 'Leaving the Big Company, Slowly'
+description: 'Notes on building something of your own without a dramatic exit, and why the slow version might be better.'
 pubDate: 2026-09-15
 topics: [solo-company]
 tags: [independence]

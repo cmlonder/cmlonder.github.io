@@ -50,7 +50,7 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
     <h2>{HUB.name[lang]}</h2>
     <p class="hub-blurb">
       {HUB.blurb[lang]}{' '}
-      <a href={localePath(lang, 'topics')}>{more} <span aria-hidden="true">→</span></a>
+      <a href={localePath(lang, HUB.path)}>{more} <span aria-hidden="true">→</span></a>
     </p>
   </section>
 
@@ -58,9 +58,9 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
     <div class="col-main">
       {essays.length > 0 && (
         <section class="block">
-          <h3 class="section-title">
+          <h2 class="section-title">
             <a href={localePath(lang, 'essays')}>{COLLECTION_LABELS.essays[lang]} <span aria-hidden="true">&#8594;</span></a>
-          </h3>
+          </h2>
           <p class="blurb">{COLLECTION_BLURBS.essays[lang]}</p>
           <div class="cards">
             {featured.slice(0, 4).map((entry) => (
@@ -74,9 +74,9 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
     <aside class="col-side">
       {notes.length > 0 && (
         <section class="block">
-          <h3 class="section-title">
+          <h2 class="section-title">
             <a href={localePath(lang, 'notes')}>{COLLECTION_LABELS.notes[lang]} <span aria-hidden="true">&#8594;</span></a>
-          </h3>
+          </h2>
           <p class="blurb">{COLLECTION_BLURBS.notes[lang]}</p>
           <ul class="rows">
             {notes.slice(0, 8).map((entry) => (
@@ -92,9 +92,9 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
     <div class="col-main">
       {playbooks.length > 0 && (
         <section class="block">
-          <h3 class="section-title">
+          <h2 class="section-title">
             <a href={localePath(lang, 'playbooks')}>{COLLECTION_LABELS.playbooks[lang]} <span aria-hidden="true">&#8594;</span></a>
-          </h3>
+          </h2>
           <p class="blurb">{COLLECTION_BLURBS.playbooks[lang]}</p>
           <ul class="rows two-up">
             {playbooks.slice(0, 8).map((entry) => (
@@ -108,9 +108,9 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
     <aside class="col-side">
       {signals.length > 0 && (
         <section class="block">
-          <h3 class="section-title">
+          <h2 class="section-title">
             <a href={localePath(lang, 'signals')}>{COLLECTION_LABELS.signals[lang]} <span aria-hidden="true">&#8594;</span></a>
-          </h3>
+          </h2>
           <p class="blurb">{COLLECTION_BLURBS.signals[lang]}</p>
           <ul class="rows">
             {signals.slice(0, 8).map((entry) => (
@@ -130,9 +130,9 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
 
   {books.length > 0 && (
     <section class="wrap block library">
-      <h3 class="section-title">
+      <h2 class="section-title">
         <a href={localePath(lang, 'library')}>{LIBRARY.name[lang]} <span aria-hidden="true">&#8594;</span></a>
-      </h3>
+      </h2>
       <p class="blurb">{LIBRARY.blurb[lang]}</p>
       <ul class="books">
         {books.map((entry) => <li><BookCard entry={entry} compact /></li>)}

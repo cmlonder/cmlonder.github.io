@@ -1,6 +1,6 @@
 ---
-title: p99 is a team boundary, not a metric
-description: Whoever owns the p99 owns the on-call pager. Everything else follows from that.
+title: 'p99 is a team boundary, not a metric'
+description: 'Whoever owns the p99 owns the on-call pager. Everything else follows from that.'
 pubDate: 2026-09-15
 status: budding
 topics: [scale-and-performance]

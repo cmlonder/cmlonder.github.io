@@ -39,7 +39,9 @@ export default defineConfig({
       provider: fontProviders.google(),
       name: 'Fraunces',
       cssVariable: '--font-serif',
-      weights: [400, 500, 600, 700],
+      // Sadece iki ağırlık: gövde/başlık 400, vurgu 700. Ara ağırlıklar
+      // kullanılmıyordu ve her biri ayrı dosya demek.
+      weights: [400, 700],
       styles: ['normal', 'italic'],
       subsets,
       fallbacks: ['Iowan Old Style', 'Georgia', 'serif'],
@@ -49,7 +51,8 @@ export default defineConfig({
       name: 'Lato',
       cssVariable: '--font-sans',
       weights: [400, 700],
-      styles: ['normal', 'italic'],
+      // Sans italic hiç kullanılmıyor — bütün italikler serif.
+      styles: ['normal'],
       subsets,
       fallbacks: ['system-ui', 'sans-serif'],
     },
@@ -57,7 +60,7 @@ export default defineConfig({
       provider: fontProviders.google(),
       name: 'IBM Plex Mono',
       cssVariable: '--font-mono',
-      weights: [400, 500],
+      weights: [400],
       subsets,
       fallbacks: ['ui-monospace', 'SFMono-Regular', 'monospace'],
     },

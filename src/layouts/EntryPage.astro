@@ -5,7 +5,8 @@ import {
   COLLECTION_LABELS, TOPIC_LABELS, STATUS_LABELS,
   type CollectionName, type Locale,
 } from '../config';
-import { formatDate, localePath, getTranslations, parseId } from '../lib/content';
+import EntryCard from '../components/EntryCard.astro';
+import { formatDate, localePath, entryPath, getTranslations, parseId, getRelated, getNeighbours } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
 interface Props {
@@ -27,11 +28,19 @@ const altLocale = other
   ? { lang: other, href: localePath(other, collection, slug) }
   : null;
 
+const entryHref = (e: AnyEntry) => entryPath(lang, collection, parseId(e.id).slug);
+
+const related = await getRelated(collection, entry, lang);
+const { newer, older } = await getNeighbours(collection, entry, lang);
+
 const t = {
   updated: lang === 'tr' ? 'Güncellendi' : 'Updated',
   problem: lang === 'tr' ? 'Problem' : 'Problem',
   context: lang === 'tr' ? 'Bağlam' : 'Context',
   via:     lang === 'tr' ? 'Kaynak'  : 'Source',
+  related: lang === 'tr' ? 'İlgili'   : 'Related',
+  newer:   lang === 'tr' ? 'Daha yeni': 'Newer',
+  older:   lang === 'tr' ? 'Daha eski': 'Older',
 };
 ---
 
@@ -72,12 +81,46 @@ const t = {
 
     <div class="prose"><Content /></div>
 
-    <footer class="entry-foot meta">
-      {d.topics.map((topic: keyof typeof TOPIC_LABELS) => (
-        <a href={localePath(lang, 'topics', topic)}>{TOPIC_LABELS[topic][lang]}</a>
-      ))}
+    <footer class="entry-foot">
+      <p class="topics meta">
+        {d.topics.map((topic: keyof typeof TOPIC_LABELS) => (
+          <a href={localePath(lang, 'topics', topic)}>{TOPIC_LABELS[topic][lang]}</a>
+        ))}
+      </p>
+
+      {(newer || older) && (
+        <nav class="neighbours" aria-label={COLLECTION_LABELS[collection][lang]}>
+          {older ? (
+            <a class="prev" href={entryHref(older)}>
+              <span class="meta">&#8592; {t.older}</span>
+              <span class="ttl">{(older.data as any).title}</span>
+            </a>
+          ) : <span />}
+          {newer && (
+            <a class="next" href={entryHref(newer)}>
+              <span class="meta">{t.newer} &#8594;</span>
+              <span class="ttl">{(newer.data as any).title}</span>
+            </a>
+          )}
+        </nav>
+      )}
     </footer>
   </article>
+
+  {related.length > 0 && (
+    <aside class="narrow related">
+      <h2 class="section-title">{t.related}</h2>
+      <ul>
+        {related.map((r) => (
+          <li>
+            <EntryCard collection={r.collection} entry={r.entry} lang={lang}
+                       variant="row" showCollection />
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )}
+
 </Base>
 
 <style>
@@ -94,7 +137,7 @@ const t = {
   .kicker a {
     text-decoration: none;
     color: var(--c-accent);
-    font-weight: 500;
+    font-weight: 700;
   }
 
   h1 {
@@ -142,11 +185,34 @@ const t = {
   .entry-foot a { text-decoration-color: var(--c-border); }
 
   .entry-foot {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2xs);
     margin-block-start: var(--s-xl);
     padding-block-start: var(--s-s);
     border-block-start: 1px solid var(--c-border);
+  }
+  .topics { display: flex; flex-wrap: wrap; gap: var(--s-2xs); }
+
+  .neighbours {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-s);
+    margin-block-start: var(--s-m);
+  }
+  .neighbours a { display: grid; gap: 2px; text-decoration: none; }
+  .neighbours .next { text-align: end; }
+  .neighbours .ttl {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-sm);
+    line-height: var(--lh-snug);
+  }
+  .neighbours a:hover .ttl { color: var(--c-accent); }
+
+  .related { margin-block-start: var(--s-2xl); }
+  .related ul {
+    list-style: none; padding: 0; margin-block-start: var(--s-s);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: var(--s-m) var(--s-l);
+    align-items: start;
   }
 </style>

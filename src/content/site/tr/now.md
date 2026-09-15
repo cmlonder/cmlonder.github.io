@@ -1,6 +1,6 @@
 ---
-title: Şu An
-description: Şu sıralar dikkatimi ne çekiyor.
+title: 'Şu An'
+description: 'Şu sıralar dikkatimi ne çekiyor.'
 updated: 2026-09-15
 ---
 

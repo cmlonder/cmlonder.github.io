@@ -1,9 +1,9 @@
 ---
-title: What blog posts influenced your thinking the most?
-description: A long thread of the posts that actually changed how working engineers think.
+title: 'What blog posts influenced your thinking the most?'
+description: 'A long thread of the posts that actually changed how working engineers think.'
 pubDate: 2026-09-15
 url: https://simonwillison.net/2026/Sep/14/influences/
-source: Simon Willison
+source: 'Simon Willison'
 topics: [ai-news]
 tags: [reading]
 draft: false
