@@ -1,9 +1,11 @@
 ---
 import Base from './Base.astro';
 import EntryCard from '../components/EntryCard.astro';
+import BookCard from '../components/BookCard.astro';
+import { getCollection } from 'astro:content';
 import {
   SITE, COLLECTION_LABELS, COLLECTION_BLURBS,
-  HERO, HUB, UI, type Locale,
+  HERO, HUB, LIBRARY, UI, type Locale,
 } from '../config';
 import { getEntries, localePath, countLabel } from '../lib/content';
 
@@ -23,6 +25,12 @@ const [essays, notes, playbooks, signals] = await Promise.all([
 const featured = [...essays].sort(
   (a, b) => Number((b.data as any).featured) - Number((a.data as any).featured)
 );
+
+const allBooks = await getCollection('library');
+const localBooks = allBooks.filter((b) => b.id.startsWith(`${lang}/`));
+const books = (localBooks.length ? localBooks : allBooks.filter((b) => b.id.startsWith('en/')))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 6);
 
 const more = lang === 'tr' ? 'Devamı' : 'Learn more';
 ---
@@ -120,6 +128,18 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
     </aside>
   </div>
 
+  {books.length > 0 && (
+    <section class="wrap block library">
+      <h3 class="section-title">
+        <a href={localePath(lang, 'library')}>{LIBRARY.name[lang]} <span aria-hidden="true">&#8594;</span></a>
+      </h3>
+      <p class="blurb">{LIBRARY.blurb[lang]}</p>
+      <ul class="books">
+        {books.map((entry) => <li><BookCard entry={entry} compact /></li>)}
+      </ul>
+    </section>
+  )}
+
 </Base>
 
 <style>
@@ -209,6 +229,16 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
   .rows > li + li { border-block-start: 1px solid var(--c-border); }
 
   .count { margin-block-start: var(--s-l); }
+
+  .library { margin-block-start: var(--s-2xl); }
+  .books {
+    list-style: none;
+    padding: 0;
+    margin-block-start: var(--s-s);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(45%, 10rem), 1fr));
+    gap: var(--s-m) var(--s-s);
+  }
   .count a { color: var(--c-accent); text-decoration: none; }
 
   @media (max-width: 56rem) {

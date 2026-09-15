@@ -1,19 +1,19 @@
 ---
 title: Agent Biçimli Kod Tabanı
 description: Kod tabanları artık insanlardan çok ajanlar tarafından okunacak. Bu, "temiz kod"un ne demek olduğunu değiştiriyor.
-pubDate: 2026-09-14
+pubDate: 2026-09-15
 topics: [agentic-development, solution-architecture]
-tags: [claude-code, code-review, konvansiyon]
+tags: [konvansiyon, code-review]
 featured: true
+draft: false
+placeholder: true
 ---
 
-> ⚠️ Tohum içerik — pipeline'ı doğrulamak için. Gerçek yazıyla değiştirilecek.
+Yirmi yıl boyunca kaynak kodu insan okuyucu için optimize ettik. O okuyucunun
+çalışma belleği sınırlıydı, yukarıdan aşağı okurdu ve bir meslektaşına
+sorabilirdi. Bu kısıtların hiçbiri, artık zamanımızın çoğunda yazdığımız
+okuyucuyu tarif etmiyor.
 
-Yirmi yıl boyunca kaynak kodu insan okuyucu için optimize ettik. Optimize
-ettiğimiz okuyucunun çalışma belleği sınırlıydı, yukarıdan aşağı okurdu ve bir
-meslektaşına sorabilirdi. Bu kısıtların hiçbiri, artık zamanımızın çoğunda
-yazdığımız okuyucuyu tarif etmiyor.
+## Kozmetik olmaktan çıkanlar
 
-## Asıl değişen ne
-
-Üç şey kozmetik olmaktan çıkıp taşıyıcı hale geliyor.
+Üç şey stil tercihi olmaktan çıkıp taşıyıcı altyapıya dönüşüyor.

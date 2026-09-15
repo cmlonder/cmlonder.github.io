@@ -123,6 +123,16 @@ export const UI: Record<Locale, Record<string, string>> = {
  * anasayfadaki ikinci blok bunu kullanır.
  * İSİM GEÇİCİ: beğenilmezse sadece bu iki satır değişir.
  */
+/** Okuma listesi — koleksiyon makinesinin dışında, kendi sayfası var. */
+export const LIBRARY = {
+  path: 'library',
+  name:  { en: 'Library', tr: 'Kitaplık' } as Record<Locale, string>,
+  blurb: {
+    en: 'Books that changed how I think about systems, work, or myself.',
+    tr: 'Sistemler, iş ya da kendim hakkında düşüncemi değiştiren kitaplar.',
+  } as Record<Locale, string>,
+};
+
 export const HUB = {
   path: 'workbench',
   name:  { en: 'The Workbench', tr: 'Tezgâh' } as Record<Locale, string>,

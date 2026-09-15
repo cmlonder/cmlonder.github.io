@@ -1,6 +1,6 @@
 ---
 import {
-  SITE, COLLECTIONS, COLLECTION_LABELS, HUB, NAV, type Locale,
+  SITE, COLLECTIONS, COLLECTION_LABELS, HUB, NAV, LIBRARY, type Locale,
 } from '../config';
 import { localePath } from '../lib/content';
 
@@ -14,6 +14,7 @@ const t = lang === 'tr'
 const links = [
   { label: HUB.name[lang], href: localePath(lang, 'topics') },
   ...COLLECTIONS.map((c) => ({ label: COLLECTION_LABELS[c][lang], href: localePath(lang, c) })),
+  { label: LIBRARY.name[lang], href: localePath(lang, LIBRARY.path) },
   ...NAV[lang].map((n) => ({ label: n.label, href: localePath(lang, n.href.replace(/^\//, '')) })),
 ];
 

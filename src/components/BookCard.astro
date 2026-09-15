@@ -1,0 +1,71 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'library'>;
+  /** Anasayfada not gizlenir; /library sayfasında görünür. */
+  compact?: boolean;
+}
+const { entry, compact = false } = Astro.props;
+const d = entry.data;
+
+/** Kapak görseli yok — kitap kapağı taramıyoruz. Tipografik kapak üretiyoruz. */
+const tone = [...d.title].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 4;
+const Wrapper = d.url ? 'a' : 'div';
+---
+
+<article class="book">
+  {/* Kapak başlığı taşıyor — altında tekrar etmiyoruz. */}
+  <Wrapper class={`cover tone-${tone}`} {...(d.url ? { href: d.url, rel: 'noopener' } : {})}>
+    <span class="t">{d.title}</span>
+    <span class="a">{d.author}</span>
+  </Wrapper>
+  <p class="meta">{d.year}</p>
+  {!compact && <p class="note">{d.note}</p>}
+</article>
+
+<style>
+  .book { display: grid; gap: var(--s-3xs); }
+
+  .cover {
+    aspect-ratio: 2 / 3;
+    display: grid;
+    align-content: space-between;
+    gap: var(--s-2xs);
+    padding: var(--s-2xs);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    background: var(--c-tinted);
+    overflow: hidden;
+  }
+  /* Dört sakin ton — palet dışına çıkmadan ızgarada ritim kurar. */
+  .tone-0 { background: color-mix(in srgb, var(--c-accent) 8%, var(--c-tinted)); }
+  .tone-1 { background: color-mix(in srgb, var(--c-mark) 10%, var(--c-tinted)); }
+  .tone-2 { background: var(--c-tinted); }
+  .tone-3 { background: color-mix(in srgb, var(--c-text) 6%, var(--c-tinted)); }
+
+  .cover .t {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-sm);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .cover .a {
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    color: var(--c-muted);
+  }
+
+  a.cover { text-decoration: none; transition: border-color 140ms ease; }
+  a.cover:hover { border-color: var(--c-accent); }
+
+  .meta { margin-block-start: var(--s-3xs); }
+
+  .note {
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    line-height: 1.45;
+    color: var(--c-muted);
+  }
+</style>

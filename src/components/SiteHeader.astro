@@ -2,7 +2,7 @@
 import ThemeToggle from './ThemeToggle.astro';
 import {
   SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  HUB, NAV, type Locale,
+  HUB, NAV, LIBRARY, type Locale,
 } from '../config';
 import { localePath } from '../lib/content';
 
@@ -44,6 +44,10 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
               <span>{COLLECTION_BLURBS[c][lang]}</span>
             </a>
           ))}
+          <a href={localePath(lang, LIBRARY.path)}>
+            <strong>{LIBRARY.name[lang]}</strong>
+            <span>{LIBRARY.blurb[lang]}</span>
+          </a>
         </div>
       </details>
 

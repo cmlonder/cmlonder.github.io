@@ -20,6 +20,12 @@ const base = z.object({
   topics: z.array(z.enum(TOPICS)).min(1),
   /** Serbest etiketler: kafka, postgres, claude-code... */
   tags: z.array(z.string()).default([]),
+  /**
+   * Tasarımı doldurmak için eklenen yer tutucu içerik.
+   * Gerçek yazıyla değiştirilecek. Bulmak için:
+   *   grep -rl 'placeholder: true' src/content
+   */
+  placeholder: z.boolean().default(false),
 });
 
 const collection = (dir: string, extend = z.object({})) =>
@@ -38,8 +44,27 @@ const site = defineCollection({
   }),
 });
 
+/**
+ * Okuma listesi. Diğer koleksiyonlardan farklı: kendi sayfası yok,
+ * sadece anasayfada ve /library'de kart olarak görünür.
+ */
+const library = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/library' }),
+  schema: z.object({
+    title: z.string(),
+    author: z.string(),
+    year: z.number().optional(),
+    /** Tek cümle: neden burada. */
+    note: z.string(),
+    url: z.string().url().optional(),
+    order: z.number().default(0),
+    placeholder: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   site,
+  library,
   essays: collection(
     'essays',
     z.object({

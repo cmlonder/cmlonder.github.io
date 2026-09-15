@@ -29,6 +29,10 @@ değil, yazının ne kadar pişmiş olduğuna göre ayrılır:
 | `playbooks` | Tekrarlanabilir karar. Sabit şablon | 500-1500 kelime |
 | `signals` | Link + neden önemli. İki cümle, fazlası değil | 100 kelimeden az |
 
+Ayrıca `library` var: okuma listesi. Diğerlerinden farklı — tarihi, konusu ve
+kendi yazı sayfası yok. Sadece anasayfada ve `/library`'de kart olarak görünür.
+Alanları: `title`, `author`, `year`, `note` (tek cümle), `url`, `order`.
+
 **Konular ayrı bir eksen.** `src/config.ts` içindeki `TOPICS` altı sabit
 sütundur ve zod enum'u olarak zorunludur. Yeni konu uydurma — build patlar.
 Serbest etiket gerekiyorsa `tags` alanını kullan.
@@ -97,6 +101,20 @@ Koleksiyona özel zorunlu alanlar:
 Yeni koleksiyon eklersen şu üretenleri de güncelle:
 `src/pages/llms.txt.ts`, `src/pages/llms-full.txt.ts`,
 `src/pages/[collection]/[...slug].md.ts` ve Türkçe karşılığı.
+
+## Yer tutucu içerik
+
+Sitedeki yazıların çoğu şu an **yer tutucu** — tasarımı doldurmak için yazıldı,
+gerçek değil. Hepsinde frontmatter'da `placeholder: true` var.
+
+```bash
+grep -rl 'placeholder: true' src/content     # hepsini listele
+grep -rc 'placeholder: true' src/content -r  # sayısı
+```
+
+Gerçek yazı eklerken o dosyayı sil ya da içeriğini değiştirip `placeholder`
+satırını kaldır. **Yer tutucu bir yazıyı olduğu gibi bırakıp gerçek gibi
+sunma.** `signals` içindeki link ve kaynak bilgileri gerçek, yorum kısmı değil.
 
 ## Kurallar
 
