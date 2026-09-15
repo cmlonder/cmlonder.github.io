@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { SITE, INTRO, ENTRY_TYPE } from '../config';
+import { SITE, HERO, ENTRY_TYPE } from '../config';
 import { getAllEntries, parseId, entryPath } from '../lib/content';
 
 export async function GET(context: APIContext) {
@@ -8,8 +8,8 @@ export async function GET(context: APIContext) {
   const items = await getAllEntries(lang);
 
   return rss({
-    title: `${SITE.author} — ${INTRO[lang].role}`,
-    description: INTRO[lang].body,
+    title: `${SITE.author} — ${HERO[lang].role}`,
+    description: `${SITE.author}${HERO[lang].rest}`,
     site: context.site ?? SITE.url,
     xmlns: { atom: 'http://www.w3.org/2005/Atom' },
     customData: `<language>${lang}</language>`,

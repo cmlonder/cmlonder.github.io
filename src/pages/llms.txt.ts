@@ -1,8 +1,9 @@
 import type { APIRoute } from 'astro';
 import {
   SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  ENTRY_TYPE, TOPICS, TOPIC_LABELS, INTRO,
+  ENTRY_TYPE, TOPICS, TOPIC_LABELS, HERO, LIBRARY,
 } from '../config';
+import { getCollection } from 'astro:content';
 import { getEntries, parseId, entryPath, getTopicCounts } from '../lib/content';
 
 /**
@@ -21,8 +22,8 @@ export const GET: APIRoute = async () => {
   const out: string[] = [
     `# ${SITE.author}`,
     '',
-    `> ${INTRO.en.role}. ${INTRO.en.body} ${total} entries in four formats, ` +
-      `plus Turkish translations of some of them under /tr/.`,
+    `> ${HERO.en.role}. ${SITE.author}${HERO.en.rest} ${total} entries in four ` +
+      `formats, plus a reading list and Turkish translations of some entries under /tr/.`,
     '',
     'Every entry is also available as clean Markdown: append `.md` to its URL ' +
       `(for example ${abs('/essays/example')} becomes ${abs('/essays/example.md')}). ` +
@@ -54,6 +55,17 @@ export const GET: APIRoute = async () => {
     for (const entry of entries.slice(0, 10)) {
       const { slug } = parseId(entry.id);
       out.push(`- [${entry.data.title}](${abs(entryPath('en', c, slug))}.md): ${entry.data.description}`);
+    }
+    out.push('');
+  }
+
+  const books = (await getCollection('library'))
+    .filter((b) => b.id.startsWith('en/'))
+    .sort((a, b) => a.data.order - b.data.order);
+  if (books.length) {
+    out.push(`## ${LIBRARY.name.en}`, '', LIBRARY.blurb.en, '');
+    for (const b of books) {
+      out.push(`- **${b.data.title}** — ${b.data.author}${b.data.year ? ` (${b.data.year})` : ''}: ${b.data.note}`);
     }
     out.push('');
   }
