@@ -15,10 +15,19 @@ const subsets = ['latin', 'latin-ext']; // latin-ext = Türkçe ğ ş ı İ ç �
 const SITE_URL = 'https://cmlonder.com';
 const IS_CUTOVER = SITE_URL === 'https://cmlonder.com';
 
-const LEGACY_SLUGS = [
-  'how-buying-an-iphone-helped-me-to-land-my-first-job-as-a-developer',
-  'how-one-feature-from-a-failed-startup-can-become-a-billion-dollar-idea',
-];
+/**
+ * Eski Hashnode slug'ları -> /essays/<slug>.
+ * Üçüncüsü yazının Hashnode'da yeniden adlandırılmadan önceki adı; HackerNoon
+ * hâlâ ona link veriyor ve cutover sonrası 404 dönüyordu.
+ */
+const LEGACY_SLUGS = {
+  'how-buying-an-iphone-helped-me-to-land-my-first-job-as-a-developer':
+    'how-buying-an-iphone-helped-me-to-land-my-first-job-as-a-developer',
+  'how-one-feature-from-a-failed-startup-can-become-a-billion-dollar-idea':
+    'how-one-feature-from-a-failed-startup-can-become-a-billion-dollar-idea',
+  'interesting-startup-story-can-a-feature-of-your-project-make-you-a-billionaire':
+    'how-one-feature-from-a-failed-startup-can-become-a-billion-dollar-idea',
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -29,7 +38,9 @@ export default defineConfig({
   site: SITE_URL,
 
   redirects: IS_CUTOVER
-    ? Object.fromEntries(LEGACY_SLUGS.map((s) => [`/${s}`, `/essays/${s}`]))
+    ? Object.fromEntries(
+        Object.entries(LEGACY_SLUGS).map(([from, to]) => [`/${from}`, `/essays/${to}`])
+      )
     : {},
 
   integrations: [
