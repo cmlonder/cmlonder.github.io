@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import RadarStrip from '../components/RadarStrip.astro';
 import EntryCard from '../components/EntryCard.astro';
 import { HUB, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS, UI, type Locale, PAGE } from '../config';
 import { getAllEntries, getEntries, localePath, countLabel } from '../lib/content';
@@ -53,6 +54,7 @@ const recentLabel = PAGE[lang].recently;
         </ul>
       </section>
     ))}
+    <RadarStrip lang={lang} />
   </div>
 </Base>
 

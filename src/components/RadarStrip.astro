@@ -1,0 +1,85 @@
+---
+/**
+ * Radar'ı bahçeye bağlayan şerit.
+ *
+ * Radar ayrı duruyordu: /workbench'te, /topics'te ve ana sayfada hiç
+ * görünmüyordu. Ama tamamen karıştırmak da yanlış olurdu — Radar makine
+ * üretimi ve günlük, bahçedeki yazılar el yazımı ve zamanla olgunlaşıyor.
+ * Bu yüzden akışa karışmıyor, kendi bloğunda duruyor.
+ */
+import { getCollection } from 'astro:content';
+import { RADAR, RADAR_CATEGORY, RADAR_STATUS, type Locale } from '../config';
+import { formatDate } from '../lib/content';
+
+interface Props { lang: Locale; limit?: number }
+const { lang, limit = 3 } = Astro.props as Props;
+
+const all = (await getCollection('radar'))
+  .filter((e) => !e.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const son = all.slice(0, limit);
+---
+
+{son.length > 0 && (
+  <section class="strip">
+    <h2 class="section-title">
+      <a href="/radar">{RADAR.name[lang]} <span aria-hidden="true">&#8594;</span></a>
+    </h2>
+    <p class="blurb">
+      {lang === 'tr'
+        ? 'Ajan yazıyor, ben yazmıyorum. Bahçedeki yazılardan ayrı tutuyorum.'
+        : 'Written by an agent, not by me. Kept apart from the garden.'}
+      <span class="n">{all.length}</span>
+    </p>
+    <ul>
+      {son.map((e) => (
+        <li>
+          <a href={`/radar/${e.id}`}>
+            <time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time>
+            <span class="sum">{e.data.summary}</span>
+          </a>
+          {(e.data.category || e.data.status) && (
+            <span class="chips">
+              {e.data.category && <span class="chip">{RADAR_CATEGORY[e.data.category] ?? e.data.category}</span>}
+              {e.data.status && <span class="chip" data-s={e.data.status}>{RADAR_STATUS[e.data.status] ?? e.data.status}</span>}
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .strip { margin-block-start: var(--s-2xl); }
+  .section-title a { text-decoration: none; }
+  .section-title a:hover { color: var(--c-accent); }
+  .blurb {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted);
+  }
+  .n {
+    margin-inline-start: .5em; font-variant-numeric: tabular-nums;
+    color: var(--c-mark);
+  }
+  ul { list-style: none; padding: 0; margin-block-start: var(--s-s); }
+  li { padding-block: var(--s-2xs); border-block-start: 1px solid var(--c-border); }
+  li a {
+    display: grid; grid-template-columns: 8rem 1fr; gap: var(--s-xs);
+    align-items: baseline; text-decoration: none;
+    font-family: var(--f-sans); font-size: var(--t-sm);
+  }
+  li a time { color: var(--c-muted); font-size: var(--t-xs); }
+  .sum { color: var(--c-text); }
+  .chips { display: inline-flex; gap: var(--s-3xs); margin-inline-start: 8rem; }
+  .chip {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    padding: .1em .5em; border: 1px solid var(--c-border);
+    border-radius: 99px; color: var(--c-muted);
+  }
+  .chip[data-s='graveyard'] { color: var(--c-accent); border-color: currentColor; }
+  @media (max-width: 34rem) {
+    li a { grid-template-columns: 1fr; gap: var(--s-3xs); }
+    .chips { margin-inline-start: 0; }
+  }
+</style>

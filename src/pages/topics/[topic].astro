@@ -1,4 +1,5 @@
 ---
+import RadarStrip from '../../components/RadarStrip.astro';
 import ListPage from '../../layouts/ListPage.astro';
 import { TOPICS, TOPIC_LABELS, type Locale, PAGE } from '../../config';
 import { getEntriesByTopic, localePath } from '../../lib/content';
@@ -34,4 +35,6 @@ const blurb = PAGE[lang].topicBlurb(TOPIC_LABELS[topic][lang]);
   items={items}
   altLocale={altLocale}
   showCollection
-/>
+>
+  {topic === 'solo-company' && <RadarStrip slot="after" lang={lang} />}
+</ListPage>
