@@ -33,12 +33,26 @@ function yeniBultenleriGonder() {
   const folderId = props.getProperty('FOLDER_ID');
   if (!folderId) throw new Error('FOLDER_ID script property tanımlı değil');
 
-  const files = DriveApp.getFolderById(folderId).getFilesByType(MimeType.GOOGLE_DOCS);
+  const folder = DriveApp.getFolderById(folderId);
+
+  // Spark artık düz .md yazıyor. Google Doc'a gerek yok — ve olmaması
+  // daha iyi: Docs'un markdown export'u köşeli parantezi kaçırıyor
+  // ("\[1\]"), başlık seviyelerini düzleştiriyor, araya &nbsp; koyuyor.
+  // Düz dosyada bunların hiçbiri olmuyor, baytlar olduğu gibi geçiyor.
+  const files = folder.getFiles();
   let gonderilen = 0;
 
   while (files.hasNext()) {
     const file = files.next();
+    const ad   = file.getName();
     const id   = file.getId();
+
+    if (file.getMimeType() === MimeType.GOOGLE_DOCS) {
+      Logger.log('atlandı (Google Doc, .md bekleniyor): ' + ad);
+      continue;
+    }
+    if (!/\.md$/i.test(ad)) continue;
+
     const anahtar = 'gonderildi_' + id;
 
     // Aynı Doc'u iki kez göndermeyelim. Doc sonradan düzenlenirse
@@ -47,61 +61,20 @@ function yeniBultenleriGonder() {
     const guncel = String(file.getLastUpdated().getTime());
     if (damga === guncel) continue;
 
-    let md = docuMarkdownOlarakAl(id);
+    const md = file.getBlob().getDataAsString('UTF-8');
     if (!md || md.length < 200) {
-      Logger.log('atlandı (çok kısa): ' + file.getName());
+      Logger.log('atlandı (çok kısa): ' + ad);
       continue;
     }
 
-    // Doc'a gömülü ilk görsel varsa kapak olarak kullanılıyor.
-    // Docs'un markdown export'u görselleri süreli googleusercontent
-    // bağlantısına çeviriyor — o yüzden ikili veriyi biz taşıyoruz.
-    const gorsel = ilkGorsel(id);
-    if (gorsel) {
-      const yol = 'public/radar/' + id + '.' + gorsel.uzanti;
-      githubaYaz(yol, gorsel.bytes, file.getName() + ' (kapak)', true);
-      md = 'image: /radar/' + id + '.' + gorsel.uzanti + '\n' + md;
-      Logger.log('  kapak: ' + yol + ' (' + Math.round(gorsel.bytes.length / 1024) + ' KB)');
-    }
 
-    githubaYaz('inbox/radar/' + SERI + '/' + id + '.md', md, file.getName());
+    githubaYaz('inbox/radar/' + SERI + '/' + ad, md, ad);
     props.setProperty(anahtar, guncel);
     gonderilen++;
-    Logger.log('gönderildi: ' + file.getName());
+    Logger.log('gönderildi: ' + ad);
   }
 
   Logger.log(gonderilen + ' bülten gönderildi.');
-}
-
-/**
- * Doc'un içindeki ilk gömülü görseli ikili olarak döndürür.
- * Yoksa null — kapak isteğe bağlı.
- */
-function ilkGorsel(fileId) {
-  const body = DocumentApp.openById(fileId).getBody();
-  const imgs = body.getImages();
-  if (!imgs.length) return null;
-  const blob = imgs[0].getBlob();
-  const tip = blob.getContentType() || '';
-  const uzanti = tip.indexOf('png') >= 0 ? 'png'
-               : tip.indexOf('webp') >= 0 ? 'webp'
-               : tip.indexOf('gif') >= 0 ? 'gif' : 'jpg';
-  return { bytes: blob.getBytes(), uzanti: uzanti };
-}
-
-/** Google Doc -> markdown. Drive v3 export, Docs'un kendi dönüştürücüsü. */
-function docuMarkdownOlarakAl(fileId) {
-  const url = 'https://www.googleapis.com/drive/v3/files/' + fileId +
-              '/export?mimeType=text%2Fmarkdown';
-  const res = UrlFetchApp.fetch(url, {
-    headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() },
-    muteHttpExceptions: true,
-  });
-  if (res.getResponseCode() !== 200) {
-    throw new Error('Doc export başarısız (' + res.getResponseCode() + '): ' +
-                    res.getContentText().slice(0, 200));
-  }
-  return res.getContentText();
 }
 
 /** GitHub Contents API ile dosyayı yaz (varsa üzerine). */
