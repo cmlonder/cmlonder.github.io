@@ -109,7 +109,7 @@ yazıyor. Bu yüzden kardeş bir bölüm değil, ayrı bir bölge — ana RSS'e 
 anasayfa ızgarasında durmaz, kendi beslemesi vardır.
 
 **Ajanın kendi güven beyanına güvenilmez.** Çıktı yalnızca iddia + kaynak URL +
-kaynak tarihi içerir; kararı `scripts/verify-radar.mjs` verir:
+kaynak bağlantısı içerir; doğrulama okura bırakılmıştır:
 
 ```bash
 pnpm verify:radar    # her kaynağı çeker, beklenen değer metinde mi diye bakar
@@ -145,7 +145,7 @@ pnpm verify:radar
 pnpm verify
 ```
 
-**Frontmatter'ı elle yazma.** `parse-radar.mjs` yazıyor, çünkü Türkçe kesme
+**Frontmatter'ı Spark yazıyor.** `check-radar.mjs` yalnızca doğruluyor. Türkçe kesme
 işareti (`BuiltWith'in`) elle tırnaklanan YAML'ı bozuyor — bu hata hem ajanda
 hem bu repoda ayrı ayrı gerçekleşti.
 

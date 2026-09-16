@@ -102,15 +102,6 @@ const radar = defineCollection({
     generator: z.string(),
     /** Yayınlanan prompt sürümü — /ai sayfasından okunabilir. */
     promptVersion: z.string(),
-    claims: z.array(z.object({
-      claim: z.string(),
-      /** Ajan URL bulamadıysa boş bırakır; kapı bunu ERİŞİLEMEDİ sayar. */
-      url: z.string().url().optional(),
-      sourceDate: z.coerce.date().optional(),
-      sourceType: z.string(),
-      /** Kaynak metninde aranacak değer (sayı, tarih, isim). */
-      expect: z.string().optional(),
-    })).min(1),
     // Kapak görseli — Doc'a gömülü görsel varsa Apps Script repoya
     // itiyor, yolu buraya yazılıyor.
     image: z.string().optional(),

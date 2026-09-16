@@ -19,24 +19,16 @@ metni ben görmeden makine üretiyor.
 
 ## Radar nasıl çalışıyor
 
-Günlük bir ajan görevi tek kişilik girişim vakalarını tarıyor ve yapılandırılmış
-bir bülten üretiyor. Bülten iki parça halinde geliyor: **metin** ve **iddia tablosu**
-(her iddia, kaynak URL'i ve kaynağın tarihi).
+Günlük bir ajan görevi tek kişilik girişim vakalarını tarıyor ve yayına hazır
+markdown üretiyor — Drive'a `2026-09-16.md` gibi bir dosya bırakıyor. Bir Apps
+Script dosyayı olduğu gibi repoya itiyor, bir GitHub Action frontmatter'ın
+sağlam olduğunu kontrol edip yerine taşıyor ve site yeniden kuruluyor. Arada
+metni okuyan, düzelten, yeniden yazan kimse yok — ne insan ne başka bir model.
 
-Yayından önce `scripts/verify-radar.mjs` çalışıyor ve **her kaynağı gerçekten
-çekiyor**. Beklenen değerin o metinde geçip geçmediğine bakıyor.
-
-| Sonuç | Anlamı |
-|---|---|
-| **Doğrulandı** | Kaynak çekildi, beklenen değer metinde bulundu |
-| **Kaynakta yok** | Kaynak çekildi ama değer orada yok. Yakın bir sayı varsa o da raporlanıyor |
-| **Kaynağa erişilemedi** | 404, zaman aşımı, ya da site engelledi |
-| **Kaynak verilmedi** | Ajan URL bulamadı |
-| **Doğrulanamadı** | Sayfa istemci tarafında render ediliyor, metin çıkarılamadı |
-| **Kaynaksız model** | İddia değil, açıkça kurgu olduğu beyan edilen mimari öneri |
-
-Doğrulanamayan iddialar **silinmiyor** — yazının en üstünde, gövdeden önce ayrı
-bir kutuda listeleniyor. Her bültenin sonunda da tam tablo var.
+Her iddia yazının içinde numarayla gösteriliyor ve numaranın karşılığı yazının
+altındaki kaynak listesinde, bağlantısıyla duruyor. Rakamları kendin kontrol
+edebilirsin; doğrulama işini sana bırakıyorum, benim adıma yapıldığını iddia
+etmiyorum.
 
 ## Neden ajanın kendi beyanına güvenmiyorum
 
@@ -47,23 +39,27 @@ yazdı. Tahmin ettiği adres 404'tü.
 
 Ajan URL çekemiyor. Çekemediğinde bunu söylemek yerine doğruladığını iddia
 ediyordu. O yüzden güven sütunu prompt'tan kaldırıldı — ajan artık yalnızca
-iddia, kaynak ve tarih veriyor; karar boru hattının.
+iddia ve kaynak veriyor, yorum katmıyor.
 
-Dört tur prompt iyileştirmesinde şunlar düzeldi: uydurulmuş teknoloji yığınları,
-vakaları kategoriye zorlama, etiketlenmemiş kurgu, eski ciroyu güncel gibi sunma.
-Düzelmeyen tek şey buydu — çünkü talimat sorunu değil, yetenek sınırı.
+Bir dönem her iddianın kaynağını çekip aranan değeri metinde arayan bir script
+çalıştırdım. İşe yaradı: bir gün ajanın gerçek bir satılık ilanını doğru
+aktardığını ama **fiyatı uydurduğunu** yakaladı — ilan sayfada vardı, rakam
+yoktu. Ama iki sorunu vardı. Canlı kaynaklar kayıyor: bir gün `$6,441` yazan
+sayfa ertesi gün `$6,491` yazıyordu, yayınlanmış yazı kendiliğinden
+"doğrulanmamış"a dönüşüyordu. İkincisi, sayfa doğrulama tablolarıyla doluyor,
+okunmuyordu. Şimdilik kaldırdım; kaynakları görünür kılmanın okura daha çok
+yaradığını düşünüyorum.
 
 ## Şeffaflık işaretleri
 
 Her Radar yazısı şunları taşıyor:
 
-- Gövdeden önce, aynı görsel ağırlıkta bir **makine üretimi** rozeti ve
-  doğrulama sayıları
-- Doğrulanamayan iddiaların ayrı listesi
-- Tam iddia/kaynak tablosu
+- `/radar` sayfasında, serinin tamamı için tek ve net bir beyan: metni ajan
+  üretiyor, ben yazmıyorum
+- Her iddia için numaralı kaynak ve yazının altında tam bağlantı listesi
 - Makine okunur işaretleme: IPTC
   [`trainedAlgorithmicMedia`](http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia)
-  ve `creativeWorkStatus: Machine-generated, machine-audited`
+  ve `creativeWorkStatus: Machine-generated`
 
 Rozetin tek başına yeterli olmadığını biliyorum —
 [araştırmalar](https://hai.stanford.edu/policy/labeling-ai-generated-content-may-not-change-its-persuasiveness)
@@ -73,7 +69,7 @@ Tablo bu yüzden yayınlanıyor.
 
 ## Radar ana akışa karışmaz
 
-Radar'ın **kendi RSS'i** var: [`/radar/rss.xml`](/radar/rss.xml).
+Radar bültenleri ana beslemede: [`/rss.xml`](/rss.xml).
 Ana [`/rss.xml`](/rss.xml) beslemesine girmiyor — makine üretimi içeriği
 istemeden abone olman mümkün değil.
 

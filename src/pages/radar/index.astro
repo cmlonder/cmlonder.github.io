@@ -3,24 +3,16 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { RADAR, RADAR_SERIES, type Locale } from '../../config';
 import { formatDate } from '../../lib/content';
-import verification from '../../data/radar-verification.json';
 
 const lang: Locale = 'tr';
-const v = verification as Record<string, any>;
 
 const all = (await getCollection('radar'))
   .filter((e) => !e.data.draft || import.meta.env.DEV)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const series = Object.entries(RADAR_SERIES).map(([id, meta]) => {
-  const entries = all.filter((e) => e.id.startsWith(`${id}/`));
-  const t = entries.reduce((acc, e) => {
-    const s = v[e.id];
-    if (s) { acc.total += s.total; acc.passed += s.passed; acc.failed += s.failed; }
-    return acc;
-  }, { total: 0, passed: 0, failed: 0 });
-  return { id, meta, entries, ...t };
-}).filter((s) => s.entries.length > 0);
+const series = Object.entries(RADAR_SERIES)
+  .map(([id, meta]) => ({ id, meta, entries: all.filter((e) => e.id.startsWith(`${id}/`)) }))
+  .filter((s) => s.entries.length > 0);
 ---
 
 <Base title={`${RADAR.name.tr} — Cemal Önder`} description={RADAR.blurb.tr} lang={lang}
@@ -30,16 +22,11 @@ const series = Object.entries(RADAR_SERIES).map(([id, meta]) => {
       <p class="kicker"><span class="count">{all.length}</span><a href="/">Ana sayfa</a></p>
       <h1>{RADAR.name.tr}</h1>
       <p class="lead">
-          Buradaki bültenleri <strong>Gemini Spark</strong> ile üretiyorum, tek
-          tek ben yazmıyorum. Yayınlanmadan önce her iddianın kaynağını çekip
-          aranan değerin gerçekten o metinde geçip geçmediğine bakan bir script
-          çalıştırıyorum — ajanın kendi beyanına güvenmiyorum. Eşleşmeyen iddia
-          silinmiyor, her bültenin kaynak listesinde işaretli duruyor.
-          Yöntemin tamamı <a href="/ai">/ai</a> sayfasında.
+          Buradaki bültenleri <strong>Gemini Spark</strong> ile üretiyorum,
+          tek tek ben yazmıyorum. Her iddianın kaynağı yazının içinde
+          numarayla gösteriliyor, hepsinin bağlantısı yazının altında —
+          okurken kendin kontrol edebilirsin. Yöntem: <a href="/ai">/ai</a>.
         </p>
-      <p class="feed meta">
-        <a href="/radar/rss.xml">Radar RSS</a> — ana beslemeye karışmaz.
-      </p>
     </header>
 
     {series.map((s) => (
@@ -49,7 +36,6 @@ const series = Object.entries(RADAR_SERIES).map(([id, meta]) => {
         <p class="stats meta">{s.entries.length} bülten</p>
         <ul class="list">
           {s.entries.slice(0, 5).map((e) => {
-            const st = v[e.id];
             return (
               <li>
                 <a href={`/radar/${e.id}`}>{formatDate(e.data.date, lang)}</a>

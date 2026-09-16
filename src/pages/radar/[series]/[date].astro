@@ -1,10 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
-import Sources from '../../../components/Sources.astro';
 import { RADAR, RADAR_SERIES, SITE, type Locale } from '../../../config';
 import { formatDate } from '../../../lib/content';
-import verification from '../../../data/radar-verification.json';
 
 export async function getStaticPaths() {
   const all = (await getCollection('radar'))
@@ -30,9 +28,6 @@ const { entry, series, prev, next } = Astro.props;
 const meta = RADAR_SERIES[series as keyof typeof RADAR_SERIES];
 const { Content } = await render(entry);
 
-const v = (verification as Record<string, any>)[entry.id];
-const stats = v ?? { total: entry.data.claims.length, passed: 0, failed: 0, inconclusive: 0, unsourced: 0, staleCount: 0, checkedAt: '—' };
-const claims = v?.claims ?? entry.data.claims.map((c: any) => ({ ...c, verdict: 'ERISILDI' }));
 ---
 
 <Base title={`${entry.data.title} — ${RADAR.name.tr}`} description={entry.data.summary}
@@ -55,7 +50,6 @@ const claims = v?.claims ?? entry.data.claims.map((c: any) => ({ ...c, verdict: 
     )}
 
     <div class="prose"><Content /></div>
-    <Sources claims={claims} />
     <nav class="daynav" aria-label="Diğer bültenler">
       {prev ? (
         <a class="prev" href={`/radar/${prev.id}`}>

@@ -1,4 +1,4 @@
-# Solo Kurucu Bülteni — Spark prompt (v9)
+# Solo Kurucu Bülteni — Spark prompt (v10)
 
 > Şablon sabittir. Her gün AYNI iskelet gelir, sadece içerik değişir.
 > Böylece siteye yerleştirme deterministik olur.
@@ -19,71 +19,79 @@ biri 2025 sonrasından. Üçüncü bir bölüm yok. Kurgusal mimari önerisi,
 model taslağı, "şöyle bir iş kurulabilir" bölümü **yok** — sadece
 gerçekten var olan, kaynağı gösterilebilen girişimler.
 
-## Çıktı tam olarak iki parçadır
+## Çıktı: Drive'a tek bir .md dosyası
 
-**1) Makale.** 900-1200 kelime. Düz yazı, paragraflar hâlinde.
-**2) İddia bloğu.** Yazının sonunda, ``` ile çevrili tek kod bloğu.
+Dosya adı **`YYYY-MM-DD.md`** (örn. `2026-09-16.md`). Google Doc değil,
+düz metin dosyası.
 
-Başka hiçbir şey yok. Ne ön bilgi, ne kontrol listesi, ne özet kutusu.
+Dosya **yayına hazır** olmalı. Kimse açıp düzeltmiyor, dönüştürmüyor —
+ne bir insan ne bir script. Yazdığın bayt neyse sitede o yayınlanıyor.
 
-## Makalenin şablonu — bu iskelet her gün aynı
+### Dosyanın tam yapısı
 
 ```
-date: YYYY-MM-DD
-title: Solo Kurucu Bülteni — <D Ay YYYY>
-summary: <tek cümle, yüklemli, en fazla 25 kelime>
-promptVersion: v9
+---
+title: "Solo Kurucu Bülteni — 16 Eylül 2026"
+date: 2026-09-16
+summary: "Levels Nomad List'i ücretsiz yaptı, AppAlchemy zirvesinin üçte birine satışa çıktı."
+generator: "Gemini Spark"
+promptVersion: "v10"
+---
 
 <GİRİŞ — 2 paragraf, ~150 kelime>
-En çarpıcı SOMUT olguyla aç. Bugün ne yazacağını anlatan gündem
-paragrafı yazma. İki vakayı ve aralarındaki gerilimi kur.
 
 ## Yapay zeka öncesi: <Kurucu Adı — Ürün>
 
 <4-5 paragraf, ~400 kelime>
-1. Ne kurdu, ne zaman, neyle. Somut teknik detay ver.
-2. Bugün nerede: güncel ciro, kullanıcı, statü.
-3. Nasıl büyüdü: dağıtım kanalı tam olarak neydi.
-4. Savunma hattı: bunu bugün kopyalamak neden zor (ya da kolay).
 
 ## Yapay zeka çağı: <Kurucu Adı — Ürün>
 
 <4-5 paragraf, ~400 kelime>
-1. Ne kurdu, ne zaman, hangi araçlarla. Somut stack ver.
-2. Ne kadar sürdü, hangi rakamlara ulaştı.
-3. Bugün nerede: büyüdü mü, düştü mü, satıldı mı.
-4. Farkın nedeni: araçlar mı, dağıtım mı, zamanlama mı.
 
 ## Karşılaştırma
 
 <2 paragraf, ~200 kelime>
-İki vakayı doğrudan karşılaştır. Hangisi neyi kanıtlıyor. Yapay zeka
-araçları neyi ucuzlattı, neyi ucuzlatmadı. Genel geçer laf etme —
-yukarıdaki iki vakadan çıkan somut şeyi söyle.
+
+## Kaynaklar
+
+1. [Kaynağın ne olduğu](https://tam-url)
+2. [Kaynağın ne olduğu](https://tam-url)
 ```
 
-**Tam olarak 3 başlık.** Ne eksik ne fazla.
+### Frontmatter kuralları — bunlar kırılgan
 
-## Kaynak gösterimi — numaralı atıf
+- `---` satırları **tam olarak üç tire**, başında sonunda boşluk yok.
+- `title` ve `summary` **çift tırnak içinde**. Türkçe kesme işareti
+  (`Levels'ın`) tek tırnakla YAML'ı bozuyor.
+- Değerin içinde çift tırnak geçiyorsa `\"` diye kaçır.
+- `date` tırnaksız, `YYYY-MM-DD`.
+- Başka alan ekleme.
 
-Cümlenin içine markdown bağlantısı **gömme**. Bunun yerine, iddia
-bloğundaki satırın sırasına karşılık gelen numarayı köşeli parantezle yaz:
+Frontmatter bozuksa bülten yayınlanmıyor ve kuyrukta bekliyor.
 
-    Levels platformu tek bir index.php dosyası ve yalın jQuery ile
-    kurdu [2]. Portföyünün yıllık cirosu 3 milyon dolar bandında [1].
+## Kaynak gösterimi
 
-Site bu numaraları yazının altındaki kaynak listesine bağlıyor.
+İki yerde, ikisi de düz markdown:
 
-- Numara, **iddia bloğundaki satır sırasıdır**. İlk satır [1], ikinci [2].
-- Her vaka bölümünde **en az 4 farklı alan adı** kullan. Dört ayrı
-  kaynağa dayanmayan vakayı yazma, başkasını seç.
-- Aynı kaynağı birden çok yerde gösterebilirsin — aynı numarayı tekrar
-  kullan.
-- Numarayı cümlenin sonuna, noktadan önce koy.
+**1) Cümlenin içinde**, üst simge bağlantı olarak:
 
-Neden böyle: Google Docs markdown'a çevirirken bağlantıları yer yer
-bozuyor. Numara düz metin olduğu için hiç bozulmuyor, ve URL zaten
-iddia bloğunda tam hâliyle duruyor.
+    Levels platformu tek bir index.php dosyası ile kurdu<sup>[2](https://levels.io/nomad-list-founder)</sup>.
+
+**2) Yazının sonunda**, `## Kaynaklar` başlığı altında numaralı liste:
+
+    ## Kaynaklar
+
+    1. [Fast-SaaS — Pieter Levels vaka analizi](https://www.fast-saas.com/blog/pieter-levels-success-story/)
+    2. [Kurucunun kendi blogu — Nomad List hikâyesi](https://levels.io/nomad-list-founder)
+
+Kurallar:
+
+- Numaralar iki yerde **aynı** olmalı. Metindeki `[2]` listedeki 2. satır.
+- Her vaka bölümünde **en az 4 farklı alan adı**. Dört ayrı kaynağa
+  dayanmayan vakayı yazma, başkasını seç.
+- Liste satırının metni kaynağın **ne olduğunu** söylesin — "kaynak 1"
+  veya çıplak URL değil.
+- Aynı kaynağı birden çok yerde gösterebilirsin, aynı numarayı kullan.
 
 ## Yasak
 
@@ -123,27 +131,6 @@ uydurmadır ve script bunu yakalıyor.
 **Sayı biçimi:** Yazının içinde Türkçe — `6.441 dolar`, `45 bin dolar`,
 `17 bin dolar`. (İddia bloğu bunun tersi, aşağıya bak.)
 
-## İddia bloğu
-
-Yazıda geçen **her sayı, tarih ve olgusal iddia** için bir satır:
-
-```
-iddia | url | tarih | tür | aranacak
-<kısa iddia> | <tam URL veya boş> | YYYY-MM-DD | <kaynak türü> | <aranacak>
-```
-
-- **url**: Sayfayı gerçekten okuduğun tam adres. Arama motoru bağlantısı
-  (`google.com/search?…`) **yasak**, reddediliyor. Kaynağın yoksa boş
-  bırak, uydurma.
-- **aranacak**: Kaynak sayfada geçen metni **birebir kopyala**. Yeniden
-  yazma, biçimini değiştirme.
-  - Kaynak `February 2025` diyorsa → `February 2025` (❌ `February 1, 2025`)
-  - Kaynak `$45k` diyorsa → `45k` (❌ `45,000`)
-  - Kaynak `$6,441` diyorsa → `6,441` (❌ `6.441`)
-
-  Bir script bu metni kaynak sayfada **harfiyen** arıyor. Yeniden
-  yazarsan doğru iddia bile eşleşmiyor.
-
 ## Alıntı — her vaka bölümünde en az bir tane
 
 Kurucunun **kendi ağzından** bir cümle al ve yazıya göm. Blok alıntı
@@ -163,22 +150,33 @@ Kurallar:
 - Hatırlamadığın, "böyle demiş olmalı" dediğin cümleyi yazma. Alıntı
   uydurmak en ağır hatadır ve script bunu kesin yakalar.
 
-## Kapak görseli
+## Kapak görseli (isteğe bağlı)
 
-Belgenin **en başına**, metadata satırlarından önce **tek bir görsel**
-ekle. Yazının konusunu çağrıştıran, geniş (yatay) bir görsel olsun.
+Görseli **ayrı bir dosya** olarak aynı klasöre bırak, markdown'ın
+içine gömme:
 
-- **İnsan yüzü veya tanınabilir kişi olmasın.**
-- Metin, logo, marka içermesin.
-- Gerçek bir ekran görüntüsü gibi görünmesin — bu dekoratif bir kapak,
-  kanıt değil. Soyut, atmosferik, kavramsal olsun.
-- Tek görsel. Yazının içine ayrıca görsel serpiştirme.
+- Dosya adı yazıyla aynı: `2026-09-16.png` (ya da `.jpg`)
+- Frontmatter'a bir satır ekle: `image: "/radar/2026-09-16.png"`
 
-Görsel yoksa da bülten yayınlanır; kapak isteğe bağlıdır.
+Görselin kendisi:
 
-## Nasıl değerlendirileceğini bil
+- Yazının konusunu çağrıştıran, geniş (yatay) bir görsel
+- **İnsan yüzü veya tanınabilir kişi olmasın**
+- Metin, logo, marka içermesin
+- Gerçek bir ekran görüntüsü gibi görünmesin — dekoratif bir kapak,
+  kanıt değil. Soyut, atmosferik, kavramsal olsun
 
-Yayınlamadan önce her satırın URL'si çekiliyor ve `aranacak` metni
-sayfada harfiyen aranıyor. Sonuç makalenin altındaki kaynak listesinde
-görünüyor — eşleşmeyen satır işaretleniyor. Uydurmanın saklanacak yeri
-yok; tek etkisi bültenin güvenilmez görünmesi.
+Görsel yoksa `image` satırını hiç yazma; bülten kapaksız yayınlanır.
+
+## Nasıl yayınlandığını bil
+
+Dosyan Drive'dan alınıp doğrudan siteye konuyor. Arada metni okuyan,
+düzelten, biçimlendiren hiçbir adım yok. Bu şu demek:
+
+- Bozuk frontmatter = yayınlanmayan bülten.
+- Yanlış rakam = sitede duran yanlış rakam. Kimse yakalamıyor.
+- Verdiğin URL okurun tıklayacağı URL. Çalıştığından emin ol.
+
+Kaynakta olmayan sayıyı yazma. Sayfada satılık ilanı var ama fiyat
+orada yazmıyorsa, fiyatı yazma. "Muhtemelen şudur" diye rakam
+tamamlamak uydurmadır.

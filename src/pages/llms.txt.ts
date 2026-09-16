@@ -81,7 +81,6 @@ export const GET: APIRoute = async () => {
       'before relying on any figure.',
     '',
     `- Index: ${abs('/radar')}`,
-    `- Separate feed: ${abs('/radar/rss.xml')} (not included in the main feed)`,
     `- Method: ${abs('/ai')}`,
     '',
     '## Elsewhere',

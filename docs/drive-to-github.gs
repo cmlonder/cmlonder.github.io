@@ -40,6 +40,7 @@ function yeniBultenleriGonder() {
   // ("\[1\]"), başlık seviyelerini düzleştiriyor, araya &nbsp; koyuyor.
   // Düz dosyada bunların hiçbiri olmuyor, baytlar olduğu gibi geçiyor.
   const files = folder.getFiles();
+  const gorseller = [];   // yazıyla aynı adı taşıyan kapaklar
   let gonderilen = 0;
 
   while (files.hasNext()) {
@@ -51,6 +52,7 @@ function yeniBultenleriGonder() {
       Logger.log('atlandı (Google Doc, .md bekleniyor): ' + ad);
       continue;
     }
+    if (/\.(png|jpe?g|webp)$/i.test(ad)) { gorseller.push(file); continue; }
     if (!/\.md$/i.test(ad)) continue;
 
     const anahtar = 'gonderildi_' + id;
@@ -72,6 +74,18 @@ function yeniBultenleriGonder() {
     props.setProperty(anahtar, guncel);
     gonderilen++;
     Logger.log('gönderildi: ' + ad);
+  }
+
+  // Kapaklar: yazıyla aynı adı taşıyan görseller doğrudan public/radar
+  // altına gidiyor. Spark frontmatter'da "image: /radar/<ad>" yazıyor.
+  for (let i = 0; i < gorseller.length; i++) {
+    const g = gorseller[i];
+    const anahtar = 'gonderildi_' + g.getId();
+    const guncel = String(g.getLastUpdated().getTime());
+    if (props.getProperty(anahtar) === guncel) continue;
+    githubaYaz('public/radar/' + g.getName(), g.getBlob().getBytes(), g.getName(), true);
+    props.setProperty(anahtar, guncel);
+    Logger.log('kapak gönderildi: ' + g.getName());
   }
 
   Logger.log(gonderilen + ' bülten gönderildi.');

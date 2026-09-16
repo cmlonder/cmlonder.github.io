@@ -194,46 +194,6 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
 }
 
 
-/* — Radar bülteni: rapor tipografisi —
-   Ajan çıktısı bir rapor, deneme değil. '**Etiket:** değer' madde işaretleri
-   parse-radar.mjs tarafından <dl class="facts"> yapısına çevriliyor;
-   burada da tarama yapılabilir bir ızgara olarak diziliyor. */
-.prose .facts {
-  display: grid;
-  grid-template-columns: minmax(8rem, 15ch) 1fr;
-  gap: var(--s-3xs) var(--s-s);
-  margin-block: var(--s-s);
-  font-family: var(--f-sans);
-  font-size: var(--t-sm);
-  line-height: 1.5;
-}
-.prose .facts dt {
-  color: var(--c-muted);
-  font-weight: 400;
-  text-wrap: balance;
-}
-.prose .facts dd { margin: 0; }
-.prose .facts dd + dt {
-  padding-block-start: var(--s-3xs);
-  border-block-start: 1px solid var(--c-border);
-}
-.prose .facts dd:not(:last-child) {
-  padding-block-start: var(--s-3xs);
-  border-block-start: 1px solid var(--c-border);
-}
-@media (max-width: 34rem) {
-  /* Telefonda 2 kolon 8rem etiketle sıkışıyor — üst üste diz */
-  .prose .facts { grid-template-columns: 1fr; gap: 0; }
-  .prose .facts dt {
-    padding-block-start: var(--s-2xs);
-    border-block-start: 1px solid var(--c-border);
-    font-size: var(--t-xs);
-    text-transform: uppercase;
-    letter-spacing: .05em;
-  }
-  .prose .facts dd { padding-block-end: var(--s-3xs); }
-  .prose .facts dd:not(:last-child) { border-block-start: 0; padding-block-start: 0; }
-}
 
 /* Kategori etiketi — 'Başlık 2: <uzun kategori>' başlık değil, üst etiket */
 .prose .kicker {
@@ -258,7 +218,7 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
 }
 
 
-/* Numaralı kaynak atfı — parse-radar "[1]" işaretini buna çeviriyor */
+/* Numaralı kaynak atfı — Spark "[1]" yazıyor, markdown bağlantısı olarak geliyor */
 .prose sup.ref { line-height: 0; font-size: .66em; }
 .prose sup.ref a {
   text-decoration: none;
