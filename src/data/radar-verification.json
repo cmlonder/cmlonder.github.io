@@ -226,7 +226,7 @@
         "sourceType": "Kurucu mülakatı analizi",
         "expect": "Cursor",
         "verdict": "BULUNAMADI",
-        "detail": "\"Cursor\" kaynakta yok (arşiv kopyası)",
+        "detail": "\"Cursor\" kaynakta yok",
         "ageMonths": 14,
         "stale": true
       },
