@@ -20,7 +20,7 @@
  *   URL_YOK     ajan kaynak veremedi
  *   KAYNAKSIZ   iddia zaten kaynaksız olduğunu beyan ediyor (mimari taslak vb.)
  */
-import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIR = 'src/content/radar';
@@ -40,7 +40,10 @@ function parseFrontmatter(text) {
   for (const line of lines) {
     if (/^claims:\s*$/.test(line)) { inClaims = true; continue; }
     if (inClaims) {
-      if (/^\S/.test(line)) { inClaims = false; if (current) out.claims.push(current); current = null; }
+      // Çıkış koşulu YENİ ÜST SEVİYE ANAHTAR olmalı. "^\S" yazmak, yaml'ın
+      // sıfır girintiyle yazdığı "- claim:" satırlarını da yakalıyor ve
+      // listeyi daha başlamadan bitiriyordu.
+      if (/^\w+:/.test(line)) { inClaims = false; if (current) out.claims.push(current); current = null; }
       else {
         const item = /^\s*-\s+(\w+):\s*(.*)$/.exec(line);
         if (item) { if (current) out.claims.push(current); current = { [item[1]]: strip(item[2]) }; continue; }
@@ -111,7 +114,14 @@ function monthsOld(dateStr) {
 }
 
 const results = {};
-const files = readdirSync(DIR).filter((f) => f.endsWith('.md'));
+// src/content/radar/<seri>/<tarih>.md
+const files = readdirSync(DIR)
+  .filter((d) => statSync(join(DIR, d)).isDirectory())
+  .flatMap((series) =>
+    readdirSync(join(DIR, series))
+      .filter((f) => f.endsWith('.md'))
+      .map((f) => join(series, f))
+  );
 
 for (const file of files) {
   const slug = file.replace(/\.md$/, '');

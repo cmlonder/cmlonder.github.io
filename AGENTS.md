@@ -122,12 +122,27 @@ Neden böyle: ajan URL çekemiyor. Çekemediği bir sayfanın adresini tahmin ed
 Google arama linkine sarıp "profilden çekildi" dediği gözlendi. Bu bir talimat
 sorunu değil, yetenek sınırı. Detay: `/ai` sayfası.
 
+### Seriler
+
+Radar bir bölüm değil, **bölge**. İçinde adlandırılmış seriler var; her seri
+ayrı bir ajan görevine ve Drive'da ayrı bir klasöre karşılık gelir.
+
+```
+src/content/radar/<seri>/<YYYY-MM-DD>.md
+     -> /radar               (seriler)
+     -> /radar/<seri>        (o serinin bültenleri)
+     -> /radar/<seri>/<tarih>
+```
+
+Yeni seri açmak: `src/config.ts` -> `RADAR_SERIES` içine bir satır, sonra
+`src/content/radar/<seri>/` klasörü. Drive'da aynı adla klasör.
+
 ### Yeni bülten ekleme
 
 ```bash
-pnpm radar <spark-ciktisi.txt>   # ayrıştır -> src/content/radar/<tarih>.md
-pnpm verify:radar                 # her kaynağı çek, iddiayı test et
-pnpm verify                       # build + tip + link
+pnpm radar solo-founder <spark-ciktisi.md>
+pnpm verify:radar
+pnpm verify
 ```
 
 **Frontmatter'ı elle yazma.** `parse-radar.mjs` yazıyor, çünkü Türkçe kesme

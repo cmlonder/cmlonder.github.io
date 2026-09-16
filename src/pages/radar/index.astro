@@ -1,63 +1,73 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { RADAR, type Locale } from '../../config';
+import { RADAR, RADAR_SERIES, type Locale } from '../../config';
 import { formatDate } from '../../lib/content';
 import verification from '../../data/radar-verification.json';
 
 const lang: Locale = 'tr';
-const entries = (await getCollection('radar'))
+const v = verification as Record<string, any>;
+
+const all = (await getCollection('radar'))
   .filter((e) => !e.data.draft || import.meta.env.DEV)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const v = verification as Record<string, any>;
-const totals = entries.reduce((acc, e) => {
-  const s = v[e.id];
-  if (s) { acc.total += s.total; acc.passed += s.passed; acc.failed += s.failed; }
-  return acc;
-}, { total: 0, passed: 0, failed: 0 });
+const series = Object.entries(RADAR_SERIES).map(([id, meta]) => {
+  const entries = all.filter((e) => e.id.startsWith(`${id}/`));
+  const t = entries.reduce((acc, e) => {
+    const s = v[e.id];
+    if (s) { acc.total += s.total; acc.passed += s.passed; acc.failed += s.failed; }
+    return acc;
+  }, { total: 0, passed: 0, failed: 0 });
+  return { id, meta, entries, ...t };
+}).filter((s) => s.entries.length > 0);
 ---
 
-<Base title={`${RADAR.name.tr} — Cemal Önder`} description={RADAR.blurb.tr} lang={lang}>
+<Base title={`${RADAR.name.tr} — Cemal Önder`} description={RADAR.blurb.tr} lang={lang}
+      ogImage="/og/radar.png">
   <div class="wrap">
     <header class="head">
-      <p class="kicker"><span class="count">{entries.length}</span><a href="/">Ana sayfa</a></p>
+      <p class="kicker"><span class="count">{all.length}</span><a href="/">Ana sayfa</a></p>
       <h1>{RADAR.name.tr}</h1>
       <p class="blurb">{RADAR.blurb.tr}</p>
       <p class="lead">
         Metni bir ajan üretiyor. Yayından önce her iddianın kaynağı çekiliyor ve
         beklenen değerin gerçekten o metinde geçip geçmediğine bakılıyor —
-        ajanın kendi beyanına güvenilmiyor. Toplamda{' '}
-        <strong>{totals.passed}/{totals.total}</strong>{' '}iddia doğrulandı,{' '}
-        <strong>{totals.failed}</strong>{' '}tanesi doğrulanamadı ve öyle işaretlendi.
-        Yöntemin tamamı <a href="/ai">/ai</a> sayfasında.
+        ajanın kendi beyanına güvenilmiyor. Doğrulanamayan iddialar silinmiyor,
+        işaretleniyor. Yöntemin tamamı <a href="/ai">/ai</a> sayfasında.
       </p>
       <p class="feed meta">
-        <a href="/radar/rss.xml">Radar RSS</a> — ana beslemeye karışmaz,
-        makine üretimi içeriğe istemeden abone olmazsın.
+        <a href="/radar/rss.xml">Radar RSS</a> — ana beslemeye karışmaz.
       </p>
     </header>
 
-    <ul class="list">
-      {entries.map((e) => {
-        const s = v[e.id];
-        return (
-          <li>
-            <p class="meta line">
-              <time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time>
-              {s && (
-                <><span aria-hidden="true">·</span>
-                <span class="score" data-clean={String(s.failed === 0)}>
-                  {s.passed}/{s.total} doğrulandı{s.failed > 0 ? `, ${s.failed} değil` : ''}
-                </span></>
-              )}
-            </p>
-            <h2><a href={`/radar/${e.id}`}>{e.data.title}</a></h2>
-            <p class="dek">{e.data.summary}</p>
-          </li>
-        );
-      })}
-    </ul>
+    {series.map((s) => (
+      <section class="series">
+        <h2><a href={`/radar/${s.id}`}>{s.meta.name}</a></h2>
+        <p class="sblurb">{s.meta.blurb}</p>
+        <p class="stats meta">
+          {s.entries.length} bülten · {s.passed}/{s.total} iddia doğrulandı
+          {s.failed > 0 && <>, <span class="bad">{s.failed} doğrulanamadı</span></>}
+        </p>
+        <ul class="list">
+          {s.entries.slice(0, 5).map((e) => {
+            const st = v[e.id];
+            return (
+              <li>
+                <a href={`/radar/${e.id}`}>{e.data.title}</a>
+                <span class="meta">
+                  {formatDate(e.data.date, lang)}
+                  {st && <> · <span data-clean={String(st.failed === 0)}>{st.passed}/{st.total}</span></>}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+        {s.entries.length > 5 && (
+          <p class="more meta"><a href={`/radar/${s.id}`}>tümü ({s.entries.length}) →</a></p>
+        )}
+      </section>
+    ))}
   </div>
 </Base>
 
@@ -85,26 +95,33 @@ const totals = entries.reduce((acc, e) => {
     margin-block-start: var(--s-s); max-inline-size: 62ch;
     font-family: var(--f-sans); font-size: var(--t-sm); line-height: 1.55;
   }
-  .lead a { color: var(--c-accent); }
-
+  .lead a, .feed a, .more a { color: var(--c-accent); }
   .feed { margin-block-start: var(--s-2xs); }
-  .feed a { color: var(--c-accent); }
 
-  .list { list-style: none; padding: 0; display: grid; gap: var(--s-m); max-inline-size: 66ch; }
-  .list li { padding-block-start: var(--s-s); border-block-start: 1px solid var(--c-border); }
-  .line { display: flex; flex-wrap: wrap; gap: .5em; }
-  .score[data-clean='false'] { color: var(--c-accent); }
-  .score[data-clean='true'] { color: var(--c-mark); }
-  h2 {
-    margin-block-start: var(--s-3xs);
+  .series { padding-block-start: var(--s-s); border-block-start: 1px solid var(--c-border); max-inline-size: 66ch; }
+  .series + .series { margin-block-start: var(--s-m); }
+  .series h2 {
     font-family: var(--f-serif); font-variation-settings: var(--axis-display);
     font-weight: 400; font-size: var(--t-md); line-height: var(--lh-snug);
   }
-  h2 a { text-decoration: none; }
-  h2 a:hover { color: var(--c-accent); }
-  .dek {
+  .series h2 a { text-decoration: none; }
+  .series h2 a:hover { color: var(--c-accent); }
+  .sblurb {
     margin-block-start: var(--s-3xs);
-    font-family: var(--f-sans); font-size: var(--t-sm);
-    line-height: 1.5; color: var(--c-muted);
+    font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted);
   }
+  .stats { margin-block-start: var(--s-3xs); }
+  .stats .bad { color: var(--c-accent); }
+
+  .list { list-style: none; padding: 0; margin-block-start: var(--s-2xs); display: grid; }
+  .list li {
+    display: flex; flex-wrap: wrap; gap: var(--s-2xs);
+    align-items: baseline; justify-content: space-between;
+    padding-block: var(--s-3xs);
+  }
+  .list li + li { border-block-start: 1px solid var(--c-border); }
+  .list a { text-decoration: none; }
+  .list [data-clean='false'] { color: var(--c-accent); }
+  .list [data-clean='true'] { color: var(--c-mark); }
+  .more { margin-block-start: var(--s-2xs); }
 </style>

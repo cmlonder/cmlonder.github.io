@@ -1,32 +1,218 @@
 {
-  "2026-09-14": {
+  "solo-founder/2026-09-14": {
     "checkedAt": "2026-09-16",
-    "total": 0,
-    "passed": 0,
-    "failed": 0,
+    "total": 4,
+    "passed": 3,
+    "failed": 1,
     "inconclusive": 0,
     "unsourced": 0,
-    "staleCount": 0,
-    "claims": []
+    "staleCount": 3,
+    "claims": [
+      {
+        "claim": "BuiltWith ~14M $ ARR",
+        "url": "https://www.starterstory.com/stories/builtwith-technology-lookup-breakdown",
+        "sourceDate": "2023-11-13",
+        "sourceType": "İkincil vaka analizi",
+        "expect": "14M",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 34,
+        "stale": true
+      },
+      {
+        "claim": "BuiltWith kuruluş 2007",
+        "url": "https://www.starterstory.com/stories/builtwith-technology-lookup-breakdown",
+        "sourceDate": "2023-11-13",
+        "sourceType": "İkincil vaka analizi",
+        "expect": "2007",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 34,
+        "stale": true
+      },
+      {
+        "claim": "BuiltWith tek kurucu tarafından yönetiliyor, kurucu ortak yok",
+        "url": "https://www.crunchbase.com/person/gary-brewer",
+        "sourceDate": "2024-01-01",
+        "sourceType": "Şirket kaydı",
+        "expect": "sole founder",
+        "verdict": "ERISILEMEDI",
+        "detail": "HTTP 403",
+        "ageMonths": 33,
+        "stale": true
+      },
+      {
+        "claim": "BuiltWith kurumsal paketler 295$–995$/ay",
+        "url": "https://marketintelligencetools.com/reviews/builtwith/",
+        "sourceDate": "2026-08-03",
+        "sourceType": "Ürün incelemesi",
+        "expect": "995",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 1,
+        "stale": false
+      }
+    ]
   },
-  "2026-09-15": {
+  "solo-founder/2026-09-15": {
     "checkedAt": "2026-09-16",
-    "total": 0,
-    "passed": 0,
-    "failed": 0,
+    "total": 4,
+    "passed": 2,
+    "failed": 2,
     "inconclusive": 0,
     "unsourced": 0,
-    "staleCount": 0,
-    "claims": []
+    "staleCount": 2,
+    "claims": [
+      {
+        "claim": "TypingMind ilk yıl 500K $ toplam ciro",
+        "url": "https://news.tonydinh.com/p/500k-milestone-my-reflections-after",
+        "sourceDate": "2024-02-26",
+        "sourceType": "Kurucunun resmi bülteni",
+        "expect": "500K",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 31,
+        "stale": true
+      },
+      {
+        "claim": "Tony Dinh portföy 130.000 $ MRR",
+        "url": "https://indiehackerdirectory.com/profile/tony-dinh",
+        "sourceDate": "2025-10-09",
+        "sourceType": "Üçüncü taraf dizin kaydı",
+        "expect": "130",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 11,
+        "stale": false
+      },
+      {
+        "claim": "Tony Dinh: 1 kurucu, sıfır çalışan, sıfır VC",
+        "url": "https://www.indiehackers.com/post/unpopular-opinions-from-successful-indie-hackers-652a1b534d",
+        "sourceDate": "2023-11-17",
+        "sourceType": "Kurucu beyanı",
+        "expect": "zero employees",
+        "verdict": "BULUNAMADI",
+        "detail": "\"zero employees\" kaynakta yok",
+        "ageMonths": 34,
+        "stale": true
+      },
+      {
+        "claim": "AppAlchemy canlı ciro 6.441 $ MRR",
+        "url": "https://trustmrr.com/startup/appalchemy",
+        "sourceDate": "2026-09-15",
+        "sourceType": "Doğrulanmış gelir platformu",
+        "expect": "6,441",
+        "verdict": "BULUNAMADI",
+        "detail": "\"6,441\" kaynakta yok — kaynakta en yakın: \"$6,421\"",
+        "ageMonths": 0,
+        "stale": false
+      }
+    ]
   },
-  "2026-09-16": {
+  "solo-founder/2026-09-16": {
     "checkedAt": "2026-09-16",
-    "total": 0,
-    "passed": 0,
-    "failed": 0,
+    "total": 9,
+    "passed": 5,
+    "failed": 3,
     "inconclusive": 0,
-    "unsourced": 0,
-    "staleCount": 0,
-    "claims": []
+    "unsourced": 1,
+    "staleCount": 2,
+    "claims": [
+      {
+        "claim": "Pieter Levels ~3M $ ARR portföy cirosu",
+        "url": "https://www.fast-saas.com/blog/pieter-levels-success-story/",
+        "sourceDate": "2025-10-29",
+        "sourceType": "İkincil vaka analizi (portföy toplamı)",
+        "expect": "3M",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 11,
+        "stale": false
+      },
+      {
+        "claim": "Pieter Levels: tek kurucu, sıfır VC",
+        "url": "https://levels.io/nomad-list-founder",
+        "sourceDate": "2017-01-07",
+        "sourceType": "Kurucunun resmi blogu (tarihsel referans)",
+        "expect": "Nomad List",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 116,
+        "stale": true
+      },
+      {
+        "claim": "Nomads.com ücretsiz yapıldı (1$ kayıt ücreti hariç)",
+        "url": "https://levels.io/tag/nomad-list",
+        "sourceDate": "2026-09-05",
+        "sourceType": "Kurucunun resmi blog arşivi",
+        "expect": "free",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 0,
+        "stale": false
+      },
+      {
+        "claim": "AppAlchemy canlı ciro 6.441 $ MRR",
+        "url": "https://trustmrr.com/startup/appalchemy",
+        "sourceDate": "2026-09-16",
+        "sourceType": "Doğrulanmış gelir platformu canlı profili",
+        "expect": "6,441",
+        "verdict": "BULUNAMADI",
+        "detail": "\"6,441\" kaynakta yok — kaynakta en yakın: \"$6,421\"",
+        "ageMonths": 0,
+        "stale": false
+      },
+      {
+        "claim": "AppAlchemy son 30 gün 5.890 $",
+        "url": "https://trustmrr.com/startup/appalchemy",
+        "sourceDate": "2026-09-16",
+        "sourceType": "Doğrulanmış gelir platformu canlı profili",
+        "expect": "5,890",
+        "verdict": "BULUNAMADI",
+        "detail": "\"5,890\" kaynakta yok — kaynakta en yakın: \"$5,889\"",
+        "ageMonths": 0,
+        "stale": false
+      },
+      {
+        "claim": "AppAlchemy zirve dönem 17K $ MRR",
+        "url": "https://www.starterstory.com/appalchemy-breakdown",
+        "sourceDate": "2025-08-19",
+        "sourceType": "Kurucu mülakatı (tarihsel zirve)",
+        "expect": "17K",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 13,
+        "stale": true
+      },
+      {
+        "claim": "Post Bridge 55.175 $ MRR",
+        "sourceDate": "2026-09-16",
+        "sourceType": "TrustMRR platform verisi — ajan derin link bulamadı",
+        "verdict": "URL_YOK",
+        "detail": "TrustMRR platform verisi — ajan derin link bulamadı",
+        "ageMonths": 0,
+        "stale": false
+      },
+      {
+        "claim": "Post Bridge kuruluş Eylül 2024 / 35k $ MRR röportajı",
+        "url": "https://www.indiehackers.com/post/tech/hitting-35k-mrr-after-struggling-to-make-money-online-for-four-years-CNVpxrwIVqxcsfZ4fERw",
+        "sourceDate": "2026-06-17",
+        "sourceType": "Kurucu röportajı",
+        "expect": "35K",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 3,
+        "stale": false
+      },
+      {
+        "claim": "Mac Studio token arbitraj modeli",
+        "sourceDate": "2026-09-16",
+        "sourceType": "Teknik mimari taslak — doğrulanmış vaka değildir",
+        "verdict": "KAYNAKSIZ",
+        "detail": "Teknik mimari taslak — doğrulanmış vaka değildir",
+        "ageMonths": 0,
+        "stale": false
+      }
+    ]
   }
 }

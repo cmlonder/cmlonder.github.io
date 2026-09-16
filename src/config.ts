@@ -148,6 +148,21 @@ export const RADAR = {
   } as Record<Locale, string>,
 };
 
+/**
+ * Radar serileri. Her seri ayrı bir ajan görevine karşılık gelir ve
+ * Drive'da kendi klasörü vardır. Yeni bir günlük bülten eklemek:
+ * buraya bir satır + Drive'da aynı adla klasör.
+ */
+export const RADAR_SERIES = {
+  'solo-founder': {
+    name: 'Solo Kurucu Bülteni',
+    driveFolder: 'Radar/Solo Kurucu Bülteni',
+    blurb: 'Tek kişilik girişim vakaları, doğrulanmış ciro rakamlarıyla. Günlük.',
+  },
+} as const;
+
+export type RadarSeries = keyof typeof RADAR_SERIES;
+
 export const HUB = {
   path: 'workbench',
   name:  { en: 'The Workbench', tr: 'Tezgâh' } as Record<Locale, string>,

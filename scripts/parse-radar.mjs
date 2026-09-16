@@ -1,7 +1,10 @@
 /**
  * Spark çıktısını radar girdisine çevirir.
  *
- *   node scripts/parse-radar.mjs <dosya.txt|->
+ *   node scripts/parse-radar.mjs <seri> <dosya.txt|->
+ *   node scripts/parse-radar.mjs solo-founder gunluk.md
+ *
+ * Çıktı: src/content/radar/<seri>/<tarih>.md
  *
  * Sözleşme: ajan İKİ çitli blok üretir, aralarında serbest metin.
  *
@@ -86,8 +89,14 @@ const yamlStr = (v) => {
   return /[:#\-?{}[\]&*!|>'"%@`\n]/.test(s) ? `"${s.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"` : s;
 };
 
-const src = process.argv[2];
-if (!src) die('kullanım: node scripts/parse-radar.mjs <dosya|->');
+const series = process.argv[2];
+const src = process.argv[3];
+if (!series || !src) die('kullanım: node scripts/parse-radar.mjs <seri> <dosya|->');
+if (!/^[a-z0-9-]+$/.test(series)) die(`geçersiz seri adı: "${series}"`);
+if (!existsSync(`src/content/radar/${series}`)) {
+  die(`src/content/radar/${series}/ klasörü yok. Yeni seri açıyorsan önce\n` +
+      `   src/config.ts içindeki RADAR_SERIES'e ekle, sonra klasörü oluştur.`);
+}
 const text = src === '-' ? readFileSync(0, 'utf8') : readFileSync(src, 'utf8');
 
 const metaBlock = fence(text, 'radar');
@@ -129,7 +138,7 @@ const fm = [
   '',
 ].join('\n');
 
-const out = `src/content/radar/${meta.date}.md`;
+const out = `src/content/radar/${series}/${meta.date}.md`;
 if (existsSync(out) && !process.argv.includes('--force')) {
   die(`${out} zaten var. Üzerine yazmak için --force ekle.`);
 }

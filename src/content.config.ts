@@ -91,7 +91,9 @@ const skills = defineCollection({
  * metinde geçip geçmediğine bakıyor. Ajanın kendi beyanına güvenmiyoruz.
  */
 const radar = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/radar' }),
+  // Dosya düzeni: src/content/radar/<seri>/<YYYY-MM-DD>.md
+  // Entry id'si "solo-founder/2026-09-16" olur; seri ve tarih buradan türer.
+  loader: glob({ pattern: '*/[^_]*.md', base: './src/content/radar' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),

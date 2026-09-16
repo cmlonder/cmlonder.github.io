@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { RADAR, RADAR_SERIES, type Locale } from '../../../config';
+import { formatDate } from '../../../lib/content';
+import verification from '../../../data/radar-verification.json';
+
+export async function getStaticPaths() {
+  return Object.keys(RADAR_SERIES).map((series) => ({ params: { series } }));
+}
+
+const lang: Locale = 'tr';
+const { series } = Astro.params as { series: keyof typeof RADAR_SERIES };
+const meta = RADAR_SERIES[series];
+const v = verification as Record<string, any>;
+
+const entries = (await getCollection('radar'))
+  .filter((e) => e.id.startsWith(`${series}/`))
+  .filter((e) => !e.data.draft || import.meta.env.DEV)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const t = entries.reduce((acc, e) => {
+  const s = v[e.id];
+  if (s) { acc.total += s.total; acc.passed += s.passed; acc.failed += s.failed; }
+  return acc;
+}, { total: 0, passed: 0, failed: 0 });
+---
+
+<Base title={`${meta.name} — ${RADAR.name.tr}`} description={meta.blurb} lang={lang}
+      ogImage="/og/radar.png">
+  <div class="wrap">
+    <header class="head">
+      <p class="kicker">
+        <span class="count">{entries.length}</span>
+        <a href="/radar">{RADAR.name.tr}</a>
+      </p>
+      <h1>{meta.name}</h1>
+      <p class="blurb">{meta.blurb}</p>
+      <p class="lead">
+        Makine üretimi. {t.passed}/{t.total} iddia kaynağı çekilerek doğrulandı
+        {t.failed > 0 && <>, <strong>{t.failed}</strong> tanesi doğrulanamadı ve öyle işaretlendi</>}.
+        Yöntem: <a href="/ai">/ai</a>
+      </p>
+    </header>
+
+    <ul class="list">
+      {entries.map((e) => {
+        const s = v[e.id];
+        return (
+          <li>
+            <p class="meta line">
+              <time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time>
+              {s && (<><span aria-hidden="true">·</span>
+                <span data-clean={String(s.failed === 0)}>
+                  {s.passed}/{s.total} doğrulandı{s.failed > 0 ? `, ${s.failed} değil` : ''}
+                </span></>)}
+            </p>
+            <h2><a href={`/radar/${e.id}`}>{e.data.title}</a></h2>
+            <p class="dek">{e.data.summary}</p>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .head { margin-block-end: var(--s-2xl); }
+  .kicker {
+    display: flex; align-items: baseline; gap: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark); font-variant-numeric: tabular-nums; }
+  .kicker a { text-decoration: none; }
+  h1 {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-3xl);
+    line-height: var(--lh-tight); letter-spacing: -0.02em;
+  }
+  .blurb {
+    margin-block-start: var(--s-2xs); max-inline-size: 38ch;
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-size: var(--t-lg); line-height: 1.25; color: var(--c-muted);
+  }
+  .lead {
+    margin-block-start: var(--s-s); max-inline-size: 62ch;
+    font-family: var(--f-sans); font-size: var(--t-sm); line-height: 1.55;
+  }
+  .lead a { color: var(--c-accent); }
+  .list { list-style: none; padding: 0; display: grid; gap: var(--s-m); max-inline-size: 66ch; }
+  .list li { padding-block-start: var(--s-s); border-block-start: 1px solid var(--c-border); }
+  .line { display: flex; flex-wrap: wrap; gap: .5em; }
+  .line [data-clean='false'] { color: var(--c-accent); }
+  .line [data-clean='true'] { color: var(--c-mark); }
+  h2 {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-md); line-height: var(--lh-snug);
+  }
+  h2 a { text-decoration: none; }
+  h2 a:hover { color: var(--c-accent); }
+  .dek {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-sm); line-height: 1.5; color: var(--c-muted);
+  }
+</style>

@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
-import { SITE, RADAR } from '../../config';
+import { SITE, RADAR, RADAR_SERIES } from '../../config';
 import verification from '../../data/radar-verification.json';
 
 /**
@@ -21,15 +21,16 @@ export async function GET(context: APIContext) {
     customData: '<language>tr</language>',
     items: entries.map((e) => {
       const s = v[e.id];
+      const seriesName = RADAR_SERIES[e.id.split('/')[0] as keyof typeof RADAR_SERIES]?.name ?? '';
       const audit = s
         ? ` [Makine üretimi · ${s.passed}/${s.total} iddia doğrulandı${s.failed ? `, ${s.failed} doğrulanamadı` : ''}]`
         : ' [Makine üretimi]';
       return {
-        title: e.data.title,
+        title: seriesName ? `${seriesName}: ${e.data.title}` : e.data.title,
         description: e.data.summary + audit,
         pubDate: e.data.date,
         link: `/radar/${e.id}`,
-        categories: ['radar', 'machine-generated'],
+        categories: ['radar', 'machine-generated', e.id.split('/')[0]],
       };
     }),
   });
