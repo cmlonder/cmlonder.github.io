@@ -91,17 +91,35 @@ const skills = defineCollection({
  * metinde geçip geçmediğine bakıyor. Ajanın kendi beyanına güvenmiyoruz.
  */
 const radar = defineCollection({
-  // Dosya düzeni: src/content/radar/<seri>/<YYYY-MM-DD>.md
-  // Entry id'si "solo-founder/2026-09-16" olur; seri ve tarih buradan türer.
   loader: glob({ pattern: '*/[^_]*.md', base: './src/content/radar' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
     summary: z.string(),
-    /** Metni üreten sistem. Künyede ve JSON-LD'de görünür. */
-    generator: z.string(),
-    /** Yayınlanan prompt sürümü — /ai sayfasından okunabilir. */
-    promptVersion: z.string(),
+    generator: z.string().default('Gemini Spark'),
+    promptVersion: z.string().optional(),
+
+    // — Sınıflandırma —
+    // Hepsi optional: eski bültenlerde yok, yenilerde var. Şema
+    // kırılırsa bülten YAYINLANMIYOR, o yüzden gevşek tutuluyor;
+    // bilinmeyen değer hata değil, sadece filtrede görünmez.
+    category: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+    defensibility: z.enum(['deep_tech', 'distribution', 'creative_ip', 'operational']).optional(),
+    status: z.enum(['active', 'acquired', 'graveyard']).optional(),
+
+    // Ajan "doğrulandı" diyemez — doğrulama script'i kaldırıldı.
+    // Sorabileceğimiz dürüst soru rakamın NEREDEN geldiği.
+    revenue_source: z.enum(['platform', 'interview', 'self_reported', 'unknown']).optional(),
+    financial_status: z.enum(['verified', 'estimated', 'unknown']).optional(),
+
+    // Alan adları Spark'ın yazdığı gibi (snake_case) — arada eşleme
+    // yapmak yine dönüşüm demek olurdu.
+    // Virgüllü dize de dizi de kabul: Spark hangisini verirse.
+    core_stack: z.union([z.string(), z.array(z.string())])
+      .transform((v) => (Array.isArray(v) ? v : v.split(',').map((s) => s.trim()).filter(Boolean)))
+      .default([]),
+
     draft: z.boolean().default(false),
   }),
 });
