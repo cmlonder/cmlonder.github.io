@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
-import { RADAR, RADAR_SERIES, RADAR_CATEGORY, RADAR_STATUS, type Locale } from '../../../config';
+import { RADAR, RADAR_SERIES, RADAR_CATEGORY, type Locale } from '../../../config';
 import { formatDate } from '../../../lib/content';
 
 export async function getStaticPaths() {
@@ -38,11 +38,10 @@ const entries = (await getCollection('radar'))
             <a class="row" href={`/radar/${e.id}`}>
               <h2><time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time></h2>
               <p class="dek">{e.data.summary}</p>
-              {(e.data.category || e.data.status) && (
+              {e.data.category && (
                 <p class="chips">
                   {e.data.category && <span class="chip">{RADAR_CATEGORY[e.data.category] ?? e.data.category}</span>}
-                  {e.data.status && <span class="chip" data-s={e.data.status}>{RADAR_STATUS[e.data.status] ?? e.data.status}</span>}
-                </p>
+                                  </p>
               )}
             </a>
           </li>
@@ -68,7 +67,6 @@ const entries = (await getCollection('radar'))
     border-radius: 99px;
     color: var(--c-muted);
   }
-  .chip[data-s='graveyard'] { color: var(--c-accent); border-color: currentColor; }
 
   .list a.row {
     display: block;
@@ -89,7 +87,6 @@ const entries = (await getCollection('radar'))
     border-radius: 99px;
     color: var(--c-muted);
   }
-  .chip[data-s='graveyard'] { color: var(--c-accent); border-color: currentColor; }
 
   .head { margin-block-end: var(--s-2xl); }
   .kicker {

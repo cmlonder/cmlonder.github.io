@@ -100,25 +100,13 @@ const radar = defineCollection({
     promptVersion: z.string().optional(),
 
     // — Sınıflandırma —
-    // Hepsi optional: eski bültenlerde yok, yenilerde var. Şema
-    // kırılırsa bülten YAYINLANMIYOR, o yüzden gevşek tutuluyor;
-    // bilinmeyen değer hata değil, sadece filtrede görünmez.
+    // Yalnızca GEZİNMEYE yarayanlar duruyor. status, defensibility ve
+    // core_stack kaldırıldı: üç vakalı bir yazıda tek bir "durum" ya da
+    // "yığın" hangi vakayı anlatıyor belirsizdi, ve bülten bir veritabanı
+    // değil — hikâye anlatıyor.
     category: z.string().optional(),
     tags: z.array(z.string()).default([]),
-    defensibility: z.enum(['deep_tech', 'distribution', 'creative_ip', 'operational']).optional(),
-    status: z.enum(['active', 'acquired', 'graveyard']).optional(),
-
-    // Ajan "doğrulandı" diyemez — doğrulama script'i kaldırıldı.
-    // Sorabileceğimiz dürüst soru rakamın NEREDEN geldiği.
     revenue_source: z.enum(['platform', 'interview', 'self_reported', 'unknown']).optional(),
-    financial_status: z.enum(['verified', 'estimated', 'unknown']).optional(),
-
-    // Alan adları Spark'ın yazdığı gibi (snake_case) — arada eşleme
-    // yapmak yine dönüşüm demek olurdu.
-    // Virgüllü dize de dizi de kabul: Spark hangisini verirse.
-    core_stack: z.union([z.string(), z.array(z.string())])
-      .transform((v) => (Array.isArray(v) ? v : v.split(',').map((s) => s.trim()).filter(Boolean)))
-      .default([]),
 
     draft: z.boolean().default(false),
   }),

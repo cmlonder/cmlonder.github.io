@@ -145,44 +145,31 @@ export const COMMENTS = {
  * Türkçe karşılıkları duruyor. Bilinmeyen değer sessizce gizleniyor —
  * yeni bir kategori bülteni yayınlanmaktan alıkoymasın.
  */
+/**
+ * Radar kategorileri — eksen ÜRÜN TİPİ.
+ *
+ * Önceki set ("eBPF", "moleküler gastronomi", "noir asset kütüphaneleri")
+ * taksonomi değil örnek listesiydi; o gün o dalda iki doğrulanabilir solo
+ * kurucu bulmak neredeyse imkânsızdı ve joker sürekli devreye giriyordu.
+ *
+ * Bu on kova hem dünyayı kapsıyor hem de her gün bulunabilir, ve
+ * aralarındaki fark bir iş modeli farkı — yani bültenin sorduğu
+ * "hangisi ayakta kalıyor" sorusuna gerçekten cevap veriyorlar.
+ */
 export const RADAR_CATEGORY: Record<string, string> = {
-  kernel: 'Derin sistemler',
-  ebpf: 'Derin sistemler',
-  'low-level': 'Derin sistemler',
-  'indie-game': 'Bağımsız oyun',
-  trivia: 'Bağımsız oyun',
-  'ip-monetization': 'IP gelirleştirme',
-  'tech-media': 'Teknik medya',
-  architecture: 'Mimari',
-  'asset-library': 'Görsel varlık',
-  'prompt-engineering': 'Prompt mühendisliği',
-  'dev-tools': 'Geliştirici araçları',
-  debugging: 'Hata ayıklama',
-  'physical-tech': 'Fiziksel teknoloji',
-  chemistry: 'Kimya',
-  b2b: 'Görünmez B2B',
-  'micro-saas': 'Mikro SaaS',
-  'legal-tech': 'Yasal altyapı',
-  compliance: 'Uyum',
-  'post-mortem': 'Post-mortem',
-  failure: 'Post-mortem',
-  'cash-cow': 'Çirkin ama kârlı',
-  bootstrapped: 'Bootstrapped',
-  wildcard: 'Joker',
+  saas: 'SaaS',
+  eklenti: 'Eklenti',
+  'gelistirici-araci': 'Geliştirici aracı',
+  oyun: 'Oyun',
+  icerik: 'İçerik',
+  'dijital-varlik': 'Dijital varlık',
+  'dizin-veri': 'Dizin & veri',
+  otomasyon: 'Otomasyon',
+  donanim: 'Donanım',
+  'hizmet-urunu': 'Hizmet ürünü',
 };
 
-export const RADAR_DEFENSIBILITY: Record<string, string> = {
-  deep_tech: 'Derin teknoloji',
-  distribution: 'Dağıtım',
-  creative_ip: 'Yaratıcı IP',
-  operational: 'Operasyon',
-};
 
-export const RADAR_STATUS: Record<string, string> = {
-  active: 'Faal',
-  acquired: 'Satıldı',
-  graveyard: 'Kapandı',
-};
 
 export const RADAR_REVENUE_SOURCE: Record<string, string> = {
   platform: 'Platform verisi',

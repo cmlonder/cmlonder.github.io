@@ -8,7 +8,7 @@
  * Bu yüzden akışa karışmıyor, kendi bloğunda duruyor.
  */
 import { getCollection } from 'astro:content';
-import { RADAR, RADAR_CATEGORY, RADAR_STATUS, type Locale } from '../config';
+import { RADAR, RADAR_CATEGORY, type Locale } from '../config';
 import { formatDate } from '../lib/content';
 
 interface Props { lang: Locale; limit?: number }
@@ -38,11 +38,10 @@ const son = all.slice(0, limit);
             <time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time>
             <span class="sum">{e.data.summary}</span>
           </a>
-          {(e.data.category || e.data.status) && (
+          {e.data.category && (
             <span class="chips">
               {e.data.category && <span class="chip">{RADAR_CATEGORY[e.data.category] ?? e.data.category}</span>}
-              {e.data.status && <span class="chip" data-s={e.data.status}>{RADAR_STATUS[e.data.status] ?? e.data.status}</span>}
-            </span>
+                          </span>
           )}
         </li>
       ))}
@@ -77,7 +76,6 @@ const son = all.slice(0, limit);
     padding: .1em .5em; border: 1px solid var(--c-border);
     border-radius: 99px; color: var(--c-muted);
   }
-  .chip[data-s='graveyard'] { color: var(--c-accent); border-color: currentColor; }
   @media (max-width: 34rem) {
     li a { grid-template-columns: 1fr; gap: var(--s-3xs); }
     .chips { margin-inline-start: 0; }
