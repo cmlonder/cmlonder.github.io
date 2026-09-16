@@ -3,7 +3,7 @@ import ThemeToggle from './ThemeToggle.astro';
 import Search from './Search.astro';
 import {
   SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  HUB, NAV, LIBRARY, SKILLS, type Locale,
+  HUB, NAV, LIBRARY, SKILLS, RADAR, type Locale,
 } from '../config';
 import { localePath } from '../lib/content';
 
@@ -56,6 +56,11 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
           <a href={localePath(lang, SKILLS.path)}>
             <strong>{SKILLS.name[lang]}</strong>
             <span>{SKILLS.blurb[lang]}</span>
+          </a>
+          {/* Radar makine üretimi — menüde de ayrılıyor, dil bağımsız tek adres. */}
+          <a class="machine" href="/radar">
+            <strong>{RADAR.name[lang]}<span class="tag">makine</span></strong>
+            <span>{RADAR.blurb[lang]}</span>
           </a>
         </div>
       </details>
@@ -144,6 +149,13 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
   .menu a:hover { background: var(--c-tinted); color: inherit; }
   .menu a.all { border-block-end: 1px solid var(--c-border); border-radius: 0; margin-block-end: var(--s-3xs); padding-block-end: var(--s-2xs); }
   .menu a.all strong { color: var(--c-accent); }
+  .menu a.machine { border-block-start: 1px solid var(--c-border); border-radius: 0; margin-block-start: var(--s-3xs); padding-block-start: var(--s-2xs); }
+  .menu .tag {
+    margin-inline-start: .5em; padding: .1em .45em;
+    border: 1px solid var(--c-accent); border-radius: 999px;
+    font-size: .75em; font-weight: 400; color: var(--c-accent);
+    text-transform: uppercase; letter-spacing: .06em;
+  }
   .menu strong { font-weight: 700; font-size: var(--t-sm); }
   .menu span { color: var(--c-muted); font-size: var(--t-xs); line-height: 1.45; }
 

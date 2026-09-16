@@ -102,6 +102,34 @@ Yeni koleksiyon eklersen şu üretenleri de güncelle:
 `src/pages/llms.txt.ts`, `src/pages/llms-full.txt.ts`,
 `src/pages/[collection]/[...slug].md.ts` ve Türkçe karşılığı.
 
+## Radar — makine üretimi bölge
+
+`/radar` diğer koleksiyonlardan **kategorik olarak farklı**: metni bir ajan
+yazıyor. Bu yüzden kardeş bir bölüm değil, ayrı bir bölge — ana RSS'e karışmaz,
+anasayfa ızgarasında durmaz, kendi beslemesi vardır.
+
+**Ajanın kendi güven beyanına güvenilmez.** Çıktı yalnızca iddia + kaynak URL +
+kaynak tarihi içerir; kararı `scripts/verify-radar.mjs` verir:
+
+```bash
+pnpm verify:radar    # her kaynağı çeker, beklenen değer metinde mi diye bakar
+```
+
+Sonuç `src/data/radar-verification.json`'a yazılır, sayfa oradan okur.
+Doğrulanamayan iddialar **silinmez** — gövdeden önce ayrı bir kutuda listelenir.
+
+Neden böyle: ajan URL çekemiyor. Çekemediği bir sayfanın adresini tahmin edip
+Google arama linkine sarıp "profilden çekildi" dediği gözlendi. Bu bir talimat
+sorunu değil, yetenek sınırı. Detay: `/ai` sayfası.
+
+Yeni bülten eklerken:
+1. `src/content/radar/<YYYY-MM-DD>.md` — frontmatter'ı **yaml ile** üret,
+   elle tırnaklama. Türkçe kesme işareti (`BuiltWith'in`) YAML'ı bozar.
+2. `claims` her iddia için: `claim`, `url`, `sourceDate`, `sourceType`, `expect`.
+   `expect` kaynak metninde aranacak değerdir.
+3. `pnpm verify:radar` çalıştır, sonucu oku.
+4. `pnpm verify` (build + tip + link) ve commit.
+
 ## Ne nereye yazılır
 
 Editoryal rehber **[WRITING.md](./WRITING.md)** içinde: hangi içerik hangi

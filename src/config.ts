@@ -135,6 +135,19 @@ export const COMMENTS = {
   categoryId: 'DIC_kwDOUbFfA84DFpWk',
 };
 
+/**
+ * Radar — makine üretimi bölge. Bilerek ayrı tutuluyor: ana RSS'e karışmaz,
+ * anasayfada Essays kartlarıyla aynı ızgarada durmaz.
+ */
+export const RADAR = {
+  path: 'radar',
+  name:  { en: 'Radar', tr: 'Radar' } as Record<Locale, string>,
+  blurb: {
+    en: 'A daily briefing written by an agent, not by me. Every claim is machine-checked before it publishes.',
+    tr: 'Günlük bülten — bir ajan yazıyor, ben yazmıyorum. Her iddia yayından önce makineyle doğrulanıyor.',
+  } as Record<Locale, string>,
+};
+
 export const HUB = {
   path: 'workbench',
   name:  { en: 'The Workbench', tr: 'Tezgâh' } as Record<Locale, string>,

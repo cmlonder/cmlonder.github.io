@@ -106,7 +106,21 @@ Bilmen gerekenler:
 - Moderasyon GitHub'da: repo → Discussions. Bir yorumu silmek, kilitlemek
   veya kullanıcıyı engellemek oradan yapılır.
 
-## 7. Opsiyonel
+## 7. Radar — kurulu, boru hattı bekliyor
+
+`/radar` yayında, 3 test bülteniyle. Doğrulama kapısı çalışıyor ve gerçek
+hatalar yakalıyor.
+
+Kalan:
+
+1. **Spark çıktısını Drive'a yazdır.** Prompt'un sonuna bir Google Doc'a
+   kaydetme talimatı ekle. Drive bağlantısı zaten kurulu.
+2. **`/digest` skill'i** — Drive'dan okur, `claims` frontmatter'ını üretir,
+   `verify:radar` çalıştırır, sonucu raporlar. Henüz yazılmadı.
+3. **Test bültenleri** — `src/content/radar/2026-09-1{4,5,6}.md` deneme
+   amaçlı; gerçek akış başlayınca sil.
+
+## 8. Opsiyonel
 
 - **OG görselleri** `public/og/*.png` elle üretildi (PIL). Metinleri
   değişirse yeniden üretilmeli; üretici script commit'te yok.

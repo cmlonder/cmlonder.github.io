@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { RADAR, type Locale } from '../../config';
+import { formatDate } from '../../lib/content';
+import verification from '../../data/radar-verification.json';
+
+const lang: Locale = 'tr';
+const entries = (await getCollection('radar'))
+  .filter((e) => !e.data.draft || import.meta.env.DEV)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const v = verification as Record<string, any>;
+const totals = entries.reduce((acc, e) => {
+  const s = v[e.id];
+  if (s) { acc.total += s.total; acc.passed += s.passed; acc.failed += s.failed; }
+  return acc;
+}, { total: 0, passed: 0, failed: 0 });
+---
+
+<Base title={`${RADAR.name.tr} — Cemal Önder`} description={RADAR.blurb.tr} lang={lang}>
+  <div class="wrap">
+    <header class="head">
+      <p class="kicker"><span class="count">{entries.length}</span><a href="/">Ana sayfa</a></p>
+      <h1>{RADAR.name.tr}</h1>
+      <p class="blurb">{RADAR.blurb.tr}</p>
+      <p class="lead">
+        Metni bir ajan üretiyor. Yayından önce her iddianın kaynağı çekiliyor ve
+        beklenen değerin gerçekten o metinde geçip geçmediğine bakılıyor —
+        ajanın kendi beyanına güvenilmiyor. Toplamda{' '}
+        <strong>{totals.passed}/{totals.total}</strong>{' '}iddia doğrulandı,{' '}
+        <strong>{totals.failed}</strong>{' '}tanesi doğrulanamadı ve öyle işaretlendi.
+        Yöntemin tamamı <a href="/ai">/ai</a> sayfasında.
+      </p>
+      <p class="feed meta">
+        <a href="/radar/rss.xml">Radar RSS</a> — ana beslemeye karışmaz,
+        makine üretimi içeriğe istemeden abone olmazsın.
+      </p>
+    </header>
+
+    <ul class="list">
+      {entries.map((e) => {
+        const s = v[e.id];
+        return (
+          <li>
+            <p class="meta line">
+              <time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time>
+              {s && (
+                <><span aria-hidden="true">·</span>
+                <span class="score" data-clean={String(s.failed === 0)}>
+                  {s.passed}/{s.total} doğrulandı{s.failed > 0 ? `, ${s.failed} değil` : ''}
+                </span></>
+              )}
+            </p>
+            <h2><a href={`/radar/${e.id}`}>{e.data.title}</a></h2>
+            <p class="dek">{e.data.summary}</p>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .head { margin-block-end: var(--s-2xl); }
+  .kicker {
+    display: flex; align-items: baseline; gap: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark); font-variant-numeric: tabular-nums; }
+  .kicker a { text-decoration: none; }
+  h1 {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-3xl);
+    line-height: var(--lh-tight); letter-spacing: -0.02em;
+  }
+  .blurb {
+    margin-block-start: var(--s-2xs); max-inline-size: 38ch;
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-size: var(--t-lg); line-height: 1.25; color: var(--c-muted);
+  }
+  .lead {
+    margin-block-start: var(--s-s); max-inline-size: 62ch;
+    font-family: var(--f-sans); font-size: var(--t-sm); line-height: 1.55;
+  }
+  .lead a { color: var(--c-accent); }
+
+  .feed { margin-block-start: var(--s-2xs); }
+  .feed a { color: var(--c-accent); }
+
+  .list { list-style: none; padding: 0; display: grid; gap: var(--s-m); max-inline-size: 66ch; }
+  .list li { padding-block-start: var(--s-s); border-block-start: 1px solid var(--c-border); }
+  .line { display: flex; flex-wrap: wrap; gap: .5em; }
+  .score[data-clean='false'] { color: var(--c-accent); }
+  .score[data-clean='true'] { color: var(--c-mark); }
+  h2 {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-md); line-height: var(--lh-snug);
+  }
+  h2 a { text-decoration: none; }
+  h2 a:hover { color: var(--c-accent); }
+  .dek {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    line-height: 1.5; color: var(--c-muted);
+  }
+</style>

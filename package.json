@@ -12,7 +12,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check && node scripts/check-build.mjs",
-    "verify": "astro build && astro check && node scripts/check-build.mjs"
+    "verify": "node scripts/verify-radar.mjs && astro build && astro check && node scripts/check-build.mjs",
+    "verify:radar": "node scripts/verify-radar.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

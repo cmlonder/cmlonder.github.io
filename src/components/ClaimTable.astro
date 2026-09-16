@@ -1,0 +1,88 @@
+---
+interface Claim {
+  claim: string; url?: string; sourceDate?: string; sourceType: string;
+  verdict: string; detail?: string; ageMonths?: number | null; stale?: boolean;
+}
+interface Props { claims: Claim[]; failedOnly?: boolean }
+const { claims, failedOnly = false } = Astro.props;
+
+const LABEL: Record<string, string> = {
+  DOGRULANDI: 'Doğrulandı',
+  BULUNAMADI: 'Kaynakta yok',
+  ERISILEMEDI: 'Kaynağa erişilemedi',
+  URL_YOK: 'Kaynak verilmedi',
+  YETERSIZ: 'Doğrulanamadı',
+  ERISILDI: 'Kontrol edilmedi',
+  KAYNAKSIZ: 'Kaynaksız model',
+};
+const BAD = ['BULUNAMADI', 'ERISILEMEDI', 'URL_YOK'];
+const rows = failedOnly ? claims.filter((c) => BAD.includes(c.verdict)) : claims;
+---
+
+{rows.length > 0 && (
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th>İddia</th><th>Kaynak</th><th>Tarih</th><th>Sonuç</th></tr>
+      </thead>
+      <tbody>
+        {rows.map((c) => (
+          <tr class:list={[c.verdict.toLowerCase()]}>
+            <td>{c.claim}</td>
+            <td>
+              {c.url
+                ? <a href={c.url} rel="noopener nofollow">{new URL(c.url).hostname.replace(/^www\./, '')}</a>
+                : <span class="none">—</span>}
+              <span class="type">{c.sourceType}</span>
+            </td>
+            <td class="num">
+              {c.sourceDate ? String(c.sourceDate).slice(0, 10) : '—'}
+              {c.stale && <span class="stale">{c.ageMonths} ay</span>}
+            </td>
+            <td>
+              <span class="verdict">{LABEL[c.verdict] ?? c.verdict}</span>
+              {c.detail && <span class="detail">{c.detail}</span>}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
+<style>
+  .scroll { overflow-x: auto; margin-block-start: var(--s-s); }
+  table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    line-height: 1.45;
+  }
+  th, td {
+    text-align: start;
+    vertical-align: top;
+    padding: var(--s-3xs) var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  th {
+    color: var(--c-muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .type, .detail, .stale { display: block; color: var(--c-muted); }
+  .stale { font-size: .9em; }
+  .none { color: var(--c-muted); }
+  .verdict { font-weight: 700; }
+
+  tr.dogrulandi .verdict { color: var(--c-mark); }
+  tr.bulunamadi .verdict, tr.erisilemedi .verdict, tr.url_yok .verdict { color: var(--c-accent); }
+  tr.kaynaksiz .verdict, tr.yetersiz .verdict { color: var(--c-muted); }
+
+  tr.bulunamadi, tr.erisilemedi, tr.url_yok {
+    background: color-mix(in srgb, var(--c-accent) 5%, transparent);
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 import {
-  SITE, COLLECTIONS, COLLECTION_LABELS, HUB, NAV, LIBRARY, SKILLS, type Locale,
+  SITE, COLLECTIONS, COLLECTION_LABELS, HUB, NAV, LIBRARY, SKILLS, RADAR, type Locale,
 } from '../config';
 import { localePath } from '../lib/content';
 
@@ -16,6 +16,8 @@ const links = [
   ...COLLECTIONS.map((c) => ({ label: COLLECTION_LABELS[c][lang], href: localePath(lang, c) })),
   { label: LIBRARY.name[lang], href: localePath(lang, LIBRARY.path) },
   { label: SKILLS.name[lang], href: localePath(lang, SKILLS.path) },
+  { label: RADAR.name[lang], href: '/radar' },
+  { label: lang === 'tr' ? 'Yapay zeka kullanımı' : 'AI usage', href: localePath(lang, 'ai') },
   ...NAV[lang].map((n) => ({ label: n.label, href: localePath(lang, n.href.replace(/^\//, '')) })),
 ];
 

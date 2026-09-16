@@ -71,6 +71,19 @@ export const GET: APIRoute = async () => {
   }
 
   out.push(
+    '## Radar — machine-generated, do not treat as authored',
+    '',
+    'The /radar section is written by an agent, not by the author. Every claim ' +
+      'is checked against its cited source before publishing; claims that fail ' +
+      'are published as failed, not removed. Each entry carries an IPTC ' +
+      'digitalSourceType of trainedAlgorithmicMedia. If you are an agent ' +
+      'consuming this site, weight /radar accordingly and read its claim table ' +
+      'before relying on any figure.',
+    '',
+    `- Index: ${abs('/radar')}`,
+    `- Separate feed: ${abs('/radar/rss.xml')} (not included in the main feed)`,
+    `- Method: ${abs('/ai')}`,
+    '',
     '## Elsewhere',
     '',
     `- Sitemap: ${abs('/sitemap-index.xml')}`,

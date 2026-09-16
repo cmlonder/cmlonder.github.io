@@ -80,8 +80,42 @@ const skills = defineCollection({
   }),
 });
 
+/**
+ * Radar — makine üretimi günlük bülten.
+ *
+ * Diğer koleksiyonlardan kategorik olarak farklı: metni bir ajan yazıyor,
+ * ben yazmıyorum. Bu yüzden eşit bir bölüm değil, ayrı bir bölge.
+ *
+ * `claims` alanı ajanın kendi iddia tablosudur. Güven derecesi BURADA YOK —
+ * onu `pnpm verify:radar` dolduruyor: her URL'i çekip beklenen değerin
+ * metinde geçip geçmediğine bakıyor. Ajanın kendi beyanına güvenmiyoruz.
+ */
+const radar = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/radar' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    summary: z.string(),
+    /** Metni üreten sistem. Künyede ve JSON-LD'de görünür. */
+    generator: z.string(),
+    /** Yayınlanan prompt sürümü — /ai sayfasından okunabilir. */
+    promptVersion: z.string(),
+    claims: z.array(z.object({
+      claim: z.string(),
+      /** Ajan URL bulamadıysa boş bırakır; kapı bunu ERİŞİLEMEDİ sayar. */
+      url: z.string().url().optional(),
+      sourceDate: z.coerce.date().optional(),
+      sourceType: z.string(),
+      /** Kaynak metninde aranacak değer (sayı, tarih, isim). */
+      expect: z.string().optional(),
+    })).min(1),
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   site,
+  radar,
   library,
   skills,
   essays: collection(

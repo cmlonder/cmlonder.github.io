@@ -1,0 +1,116 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import RadarBadge from '../../components/RadarBadge.astro';
+import ClaimTable from '../../components/ClaimTable.astro';
+import { RADAR, SITE, type Locale } from '../../config';
+import { formatDate } from '../../lib/content';
+import verification from '../../data/radar-verification.json';
+
+export async function getStaticPaths() {
+  const all = await getCollection('radar');
+  return all
+    .filter((e) => !e.data.draft || import.meta.env.DEV)
+    .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const lang: Locale = 'tr';
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const v = (verification as Record<string, any>)[entry.id];
+const stats = v ?? { total: entry.data.claims.length, passed: 0, failed: 0, inconclusive: 0, unsourced: 0, staleCount: 0, checkedAt: '—' };
+const claims = v?.claims ?? entry.data.claims.map((c: any) => ({ ...c, verdict: 'ERISILDI' }));
+const failed = claims.filter((c: any) => ['BULUNAMADI', 'ERISILEMEDI', 'URL_YOK'].includes(c.verdict));
+---
+
+<Base title={`${entry.data.title} — ${RADAR.name.tr}`} description={entry.data.summary}
+      lang={lang} ogImage="/og/radar.png">
+  <article class="narrow">
+    <header>
+      <p class="kicker meta">
+        <a href="/radar">{RADAR.name.tr}</a>
+        <span aria-hidden="true">·</span>
+        <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date, lang)}</time>
+      </p>
+      <h1>{entry.data.title}</h1>
+      <p class="standfirst">{entry.data.summary}</p>
+    </header>
+
+    <RadarBadge generator={entry.data.generator} stats={stats} />
+
+    {failed.length > 0 && (
+      <section class="failed">
+        <h2 class="section-title">Doğrulanamayan iddialar</h2>
+        <p class="note meta">
+          Aşağıdaki iddialar metinde geçiyor ama kaynağından teyit edilemedi.
+          Okurken bunları doğru kabul etme.
+        </p>
+        <ClaimTable claims={claims} failedOnly />
+      </section>
+    )}
+
+    <div class="prose"><Content /></div>
+
+    <section class="audit">
+      <h2 class="section-title">İddia ve kaynak tablosu</h2>
+      <p class="note meta">
+        Ajanın ürettiği iddia listesi, {stats.checkedAt} tarihinde
+        <code>scripts/verify-radar.mjs</code> ile kontrol edildi. Her satır için
+        kaynak çekildi ve beklenen değerin metinde geçip geçmediğine bakıldı.
+      </p>
+      <ClaimTable claims={claims} />
+    </section>
+
+    <p class="prompt meta">
+      Prompt sürümü: <code>{entry.data.promptVersion}</code> ·
+      Üreten: <code>{entry.data.generator}</code> ·
+      <a href="/ai">yöntem</a>
+    </p>
+  </article>
+</Base>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: entry.data.title,
+  description: entry.data.summary,
+  datePublished: entry.data.date.toISOString(),
+  inLanguage: 'tr',
+  url: new URL(`/radar/${entry.id}`, SITE.url).href,
+  // IPTC'nin standart terimi: içerik üretken bir modelle oluşturuldu.
+  digitalSourceType: 'http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia',
+  creativeWorkStatus: 'Machine-generated, machine-audited',
+  creator: { '@type': 'SoftwareApplication', name: entry.data.generator },
+  editor: { '@type': 'Person', name: SITE.author, url: SITE.url },
+})} is:inline />
+
+<style>
+  .kicker {
+    display: flex; flex-wrap: wrap; gap: var(--s-3xs);
+    text-transform: uppercase; letter-spacing: .08em;
+    margin-block-end: var(--s-2xs);
+  }
+  .kicker a { text-decoration: none; color: var(--c-accent); font-weight: 700; }
+  h1 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-2xl);
+    line-height: var(--lh-tight); text-wrap: balance;
+  }
+  .standfirst {
+    margin-block: var(--s-2xs) var(--s-s);
+    color: var(--c-muted); font-style: italic;
+    font-size: 1.0625rem; text-wrap: pretty;
+  }
+  .failed {
+    margin-block-end: var(--s-m);
+    padding: var(--s-xs);
+    border: 1px solid var(--c-accent);
+    border-radius: var(--radius-lg);
+  }
+  .failed .section-title { color: var(--c-accent); }
+  .note { margin-block-start: var(--s-3xs); max-inline-size: 60ch; }
+  .audit { margin-block-start: var(--s-xl); padding-block-start: var(--s-s); border-block-start: 1px solid var(--c-border); }
+  .prompt { margin-block-start: var(--s-m); }
+  .prompt code { font-family: var(--f-mono); }
+</style>

@@ -1,0 +1,56 @@
+---
+import { RADAR } from '../config';
+import { localePath } from '../lib/content';
+
+interface Props {
+  generator: string;
+  stats: { total: number; passed: number; failed: number; inconclusive: number; unsourced: number; staleCount: number; checkedAt: string };
+}
+const { generator, stats } = Astro.props;
+const { total, passed, failed, inconclusive, unsourced } = stats;
+---
+
+<aside class="badge" role="note">
+  <p class="head">
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+           stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9" /><path d="M12 3v9l6 3" />
+      </svg>
+    </span>
+    Makine üretimi
+  </p>
+
+  <p class="body">
+    Bu bülteni <strong>{generator}</strong> yazdı, ben yazmadım.{' '}
+    {total} iddiadan <strong>{passed}&apos;i</strong> kaynağı çekilerek doğrulandı.{' '}
+    {failed > 0 && <><strong>{failed}&apos;i doğrulanamadı</strong>{'. '}</>}
+    {inconclusive > 0 && <>{inconclusive}&apos;i sonuçsuz kaldı{'. '}</>}
+    {unsourced > 0 && <>{unsourced}&apos;i kaynaksız bir model önerisi{'. '}</>}
+    Yöntem: <a href="/ai">nasıl çalışıyor</a>.
+  </p>
+</aside>
+
+<style>
+  .badge {
+    margin-block-end: var(--s-m);
+    padding: var(--s-xs);
+    border: 1px solid var(--c-accent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--c-accent) 6%, var(--c-surface));
+  }
+  .head {
+    display: flex; align-items: center; gap: .45em;
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--c-accent);
+  }
+  .mark { display: inline-flex; }
+  .body {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+    line-height: 1.55;
+  }
+  .body a { color: var(--c-accent); }
+</style>
