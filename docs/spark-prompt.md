@@ -1,4 +1,4 @@
-# Solo Kurucu Bülteni — Spark prompt (v8.1)
+# Solo Kurucu Bülteni — Spark prompt (v9)
 
 > Şablon sabittir. Her gün AYNI iskelet gelir, sadece içerik değişir.
 > Böylece siteye yerleştirme deterministik olur.
@@ -32,7 +32,7 @@ Başka hiçbir şey yok. Ne ön bilgi, ne kontrol listesi, ne özet kutusu.
 date: YYYY-MM-DD
 title: Solo Kurucu Bülteni — <D Ay YYYY>
 summary: <tek cümle, yüklemli, en fazla 25 kelime>
-promptVersion: v8.1
+promptVersion: v9
 
 <GİRİŞ — 2 paragraf, ~150 kelime>
 En çarpıcı SOMUT olguyla aç. Bugün ne yazacağını anlatan gündem
@@ -64,18 +64,26 @@ yukarıdaki iki vakadan çıkan somut şeyi söyle.
 
 **Tam olarak 3 başlık.** Ne eksik ne fazla.
 
-## Bağlantılar — en zayıf tarafın burası
+## Kaynak gösterimi — numaralı atıf
 
-Her vaka bölümünde **en az 4 farklı kaynağa** bağlantı ver. Bağlantıyı
-cümlenin içine göm, normal markdown:
+Cümlenin içine markdown bağlantısı **gömme**. Bunun yerine, iddia
+bloğundaki satırın sırasına karşılık gelen numarayı köşeli parantezle yaz:
 
-    Roshardt [Starter Story'ye anlattığına göre](https://…) ürünü iki
-    haftada çıkardı.
+    Levels platformu tek bir index.php dosyası ve yalın jQuery ile
+    kurdu [2]. Portföyünün yıllık cirosu 3 milyon dolar bandında [1].
 
-- Aynı kaynağı iki kez saymaz. Dört **farklı** alan adı hedefle.
-- Bağlantı metni anlamlı olsun — "buraya tıklayın" veya çıplak URL değil.
-- Bir bölümde 4 kaynak bulamıyorsan o vaka yeterince belgelenmemiş
-  demektir; **başka vaka seç.**
+Site bu numaraları yazının altındaki kaynak listesine bağlıyor.
+
+- Numara, **iddia bloğundaki satır sırasıdır**. İlk satır [1], ikinci [2].
+- Her vaka bölümünde **en az 4 farklı alan adı** kullan. Dört ayrı
+  kaynağa dayanmayan vakayı yazma, başkasını seç.
+- Aynı kaynağı birden çok yerde gösterebilirsin — aynı numarayı tekrar
+  kullan.
+- Numarayı cümlenin sonuna, noktadan önce koy.
+
+Neden böyle: Google Docs markdown'a çevirirken bağlantıları yer yer
+bozuyor. Numara düz metin olduğu için hiç bozulmuyor, ve URL zaten
+iddia bloğunda tam hâliyle duruyor.
 
 ## Yasak
 
@@ -97,6 +105,7 @@ Yasak biçimler:
 - `(URL YOK)` gibi işaretler. Kaynağın yoksa cümlede söyle:
   ✅ `Bu rakamı sadece TrustMRR'da gördüm, başka yerde teyit edemedim.`
 - Madde işaretli listeler. Bu bir makale.
+- Cümle içi markdown bağlantısı. Numaralı atıf kullan (yukarı bak).
 
 ## Dürüstlük — kural aynı, ifadesi cümlede
 
@@ -142,7 +151,7 @@ olarak, kaynağına bağlantıyla:
 
     > i'm selling because i got burned out and i'm exploring new projects.
 
-    diye yazmış [satış notunda](https://trustmrr.com/startup/appalchemy).
+    diye yazmış satış notunda [8].
 
 Kurallar:
 
@@ -154,23 +163,18 @@ Kurallar:
 - Hatırlamadığın, "böyle demiş olmalı" dediğin cümleyi yazma. Alıntı
   uydurmak en ağır hatadır ve script bunu kesin yakalar.
 
-## İsteğe bağlı: grafik
+## Kapak görseli
 
-Bir vakanın ciro seyri iki veya daha fazla doğrulanmış rakamla
-gösterilebiliyorsa, iddia bloğundan sonra ikinci bir blok ekle:
+Belgenin **en başına**, metadata satırlarından önce **tek bir görsel**
+ekle. Yazının konusunu çağrıştıran, geniş (yatay) bir görsel olsun.
 
-```
-grafik | başlık | seri
-appalchemy-ciro | AppAlchemy aylık ciro | 2025-02:0, 2025-08:17000, 2026-09:6441
-```
+- **İnsan yüzü veya tanınabilir kişi olmasın.**
+- Metin, logo, marka içermesin.
+- Gerçek bir ekran görüntüsü gibi görünmesin — bu dekoratif bir kapak,
+  kanıt değil. Soyut, atmosferik, kavramsal olsun.
+- Tek görsel. Yazının içine ayrıca görsel serpiştirme.
 
-Mümkün olduğunca **çok nokta** ver — lansman, ilk gelir, zirve, bugün.
-İki noktalı bir çizgi az şey anlatır; dört noktalı bir eğri hikâyeyi
-anlatır. Her noktanın iddia bloğunda doğrulanmış karşılığı olmalı.
-
-Yazıda grafiğin gelmesini istediğin yere `[grafik: appalchemy-ciro]`
-yaz. Her veri noktası iddia bloğunda **doğrulanmış** bir satıra
-karşılık gelmeli — gelmeyen nokta çizilmez.
+Görsel yoksa da bülten yayınlanır; kapak isteğe bağlıdır.
 
 ## Nasıl değerlendirileceğini bil
 

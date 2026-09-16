@@ -47,10 +47,21 @@ function yeniBultenleriGonder() {
     const guncel = String(file.getLastUpdated().getTime());
     if (damga === guncel) continue;
 
-    const md = docuMarkdownOlarakAl(id);
+    let md = docuMarkdownOlarakAl(id);
     if (!md || md.length < 200) {
       Logger.log('atlandı (çok kısa): ' + file.getName());
       continue;
+    }
+
+    // Doc'a gömülü ilk görsel varsa kapak olarak kullanılıyor.
+    // Docs'un markdown export'u görselleri süreli googleusercontent
+    // bağlantısına çeviriyor — o yüzden ikili veriyi biz taşıyoruz.
+    const gorsel = ilkGorsel(id);
+    if (gorsel) {
+      const yol = 'public/radar/' + id + '.' + gorsel.uzanti;
+      githubaYaz(yol, gorsel.bytes, file.getName() + ' (kapak)', true);
+      md = 'image: /radar/' + id + '.' + gorsel.uzanti + '\n' + md;
+      Logger.log('  kapak: ' + yol + ' (' + Math.round(gorsel.bytes.length / 1024) + ' KB)');
     }
 
     githubaYaz('inbox/radar/' + SERI + '/' + id + '.md', md, file.getName());
@@ -60,6 +71,22 @@ function yeniBultenleriGonder() {
   }
 
   Logger.log(gonderilen + ' bülten gönderildi.');
+}
+
+/**
+ * Doc'un içindeki ilk gömülü görseli ikili olarak döndürür.
+ * Yoksa null — kapak isteğe bağlı.
+ */
+function ilkGorsel(fileId) {
+  const body = DocumentApp.openById(fileId).getBody();
+  const imgs = body.getImages();
+  if (!imgs.length) return null;
+  const blob = imgs[0].getBlob();
+  const tip = blob.getContentType() || '';
+  const uzanti = tip.indexOf('png') >= 0 ? 'png'
+               : tip.indexOf('webp') >= 0 ? 'webp'
+               : tip.indexOf('gif') >= 0 ? 'gif' : 'jpg';
+  return { bytes: blob.getBytes(), uzanti: uzanti };
 }
 
 /** Google Doc -> markdown. Drive v3 export, Docs'un kendi dönüştürücüsü. */
@@ -78,7 +105,7 @@ function docuMarkdownOlarakAl(fileId) {
 }
 
 /** GitHub Contents API ile dosyayı yaz (varsa üzerine). */
-function githubaYaz(yol, icerik, docAdi) {
+function githubaYaz(yol, icerik, docAdi, ikili) {
   const token = PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
   if (!token) throw new Error('GITHUB_TOKEN script property tanımlı değil');
 
@@ -95,7 +122,7 @@ function githubaYaz(yol, icerik, docAdi) {
 
   const govde = {
     message: 'Radar kuyruğu: ' + docAdi,
-    content: Utilities.base64Encode(Utilities.newBlob(icerik).getBytes()),
+    content: Utilities.base64Encode(ikili ? icerik : Utilities.newBlob(icerik).getBytes()),
     branch: BRANCH,
   };
   if (sha) govde.sha = sha;

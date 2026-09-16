@@ -41,7 +41,9 @@ const claims = v?.claims ?? entry.data.claims.map((c: any) => ({ ...c, verdict: 
       <p class="standfirst">{entry.data.summary}</p>
     </header>
 
-    {v?.cover && <div class="cover" set:html={v.cover} />}
+    {entry.data.image && (
+      <img class="cover" src={entry.data.image} alt="" width="1200" height="630" loading="eager" />
+    )}
 
     <div class="prose"><Content /></div>
     <Sources claims={claims} checkedAt={stats.checkedAt} />
@@ -69,36 +71,14 @@ const claims = v?.claims ?? entry.data.claims.map((c: any) => ({ ...c, verdict: 
 })} is:inline />
 
 <style>
-  /* Kapak: verify-radar.mjs'in ürettiği deterministik SVG.
-     Doğrulanmış grafik verisi varsa o günün rakamlarını gösterir,
-     yoksa tarih ve doğrulama oranıyla sade bir kapak. */
   .cover {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
     margin-block: var(--s-l) var(--s-xl);
-    border: 1px solid var(--c-border);
     border-radius: var(--radius);
-    background: var(--c-surface);
-    overflow: hidden;
-    aspect-ratio: 1200 / 420;
+    background: var(--c-tinted);
   }
-  .cover :global(.cv) { display: block; inline-size: 100%; block-size: 100%; }
-  .cover :global(.cv-kick) {
-    font-family: var(--f-sans); font-size: 21px;
-    letter-spacing: .14em; text-transform: uppercase; fill: var(--c-muted);
-  }
-  .cover :global(.cv-rule) { stroke: var(--c-border); stroke-width: 1.5; }
-  .cover :global(.cv-big)  {
-    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
-    font-size: 104px; font-weight: 600; fill: var(--c-text);
-  }
-  .cover :global(.cv-to)   { fill: var(--c-accent); }
-  .cover :global(.cv-arr)  { font-family: var(--f-sans); font-size: 56px; fill: var(--c-muted); }
-  .cover :global(.cv-pct)  { font-family: var(--f-sans); font-size: 40px; font-weight: 700; fill: var(--c-accent); }
-  .cover :global(.cv-ln)   { fill: none; stroke: var(--c-accent); stroke-width: 2.5;
-                             stroke-linecap: round; stroke-linejoin: round; }
-  .cover :global(.cv-d)    { fill: var(--c-accent); }
-  .cover :global(.cv-tk)   { font-family: var(--f-sans); font-size: 20px; fill: var(--c-muted); }
-  .cover :global(.cv-m)    { fill: var(--c-accent); }
-  .cover :global(.cv-mo)   { fill: none; stroke: var(--c-border); stroke-width: 2; }
 
   .kicker {
     display: flex; flex-wrap: wrap; gap: var(--s-3xs);

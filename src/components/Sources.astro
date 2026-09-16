@@ -13,20 +13,15 @@ const sourced = claims.filter((c) => c.url);
 const passed  = claims.filter((c) => c.verdict === 'DOGRULANDI').length;
 const missed  = claims.filter((c) => ['BULUNAMADI', 'ERISILEMEDI'].includes(c.verdict));
 
-// Aynı URL birden çok iddiaya kaynaklık ediyorsa tek satır göster.
-const byUrl = new Map<string, any[]>();
-for (const c of sourced) {
-  const k = c.url as string;
-  byUrl.set(k, [...(byUrl.get(k) ?? []), c]);
-}
-const rows = [...byUrl.entries()].map(([url, cs], i) => ({
+// Numaralandırma iddia SIRASINI takip eder: yazıdaki [1], buradaki 1.
+// satırdır. URL tekrar edebilir — akademik atıfta da öyle.
+const rows = claims.map((c, i) => ({
   n: i + 1,
-  url,
-  host: new URL(url).hostname.replace(/^www\./, ''),
-  claim: cs[0].claim,
-  date: cs[0].sourceDate ? String(cs[0].sourceDate).slice(0, 10) : null,
-  ok: cs.some((c) => c.verdict === 'DOGRULANDI'),
-  miss: cs.every((c) => ['BULUNAMADI', 'ERISILEMEDI'].includes(c.verdict)),
+  url: c.url as string | undefined,
+  host: c.url ? new URL(c.url).hostname.replace(/^www\./, '') : null,
+  claim: c.claim,
+  date: c.sourceDate ? String(c.sourceDate).slice(0, 10) : null,
+  miss: ['BULUNAMADI', 'ERISILEMEDI'].includes(c.verdict),
 }));
 ---
 
@@ -35,9 +30,14 @@ const rows = [...byUrl.entries()].map(([url, cs], i) => ({
     <h2>Kaynaklar</h2>
     <ol>
       {rows.map((r) => (
-        <li class:list={[r.miss && 'miss']}>
-          <a href={r.url} rel="noopener nofollow">{r.claim}</a>
-          <span class="host">{r.host}{r.date && <> · {r.date}</>}</span>
+        <li id={`k${r.n}`} class:list={[r.miss && 'miss']}>
+          {r.url
+            ? <a href={r.url} rel="noopener nofollow">{r.claim}</a>
+            : <span>{r.claim}</span>}
+          <span class="host">
+            {r.host ?? 'kaynak verilmedi'}{r.date && <> · {r.date}</>}
+            <a class="back" href={`#r${r.n}`} aria-label="metne dön">↩</a>
+          </span>
           {r.miss && <span class="flag">bu kaynakta aranan değer bulunamadı</span>}
         </li>
       ))}
@@ -71,6 +71,8 @@ const rows = [...byUrl.entries()].map(([url, cs], i) => ({
   }
   .sources li { margin-block-end: var(--s-xs); }
   .sources li::marker { color: var(--c-muted); }
+  .sources li:target { background: color-mix(in srgb, var(--c-mark) 14%, transparent); }
+  .back { margin-inline-start: .5em; text-decoration: none; }
   .sources a { overflow-wrap: anywhere; }
   .host {
     display: block;
