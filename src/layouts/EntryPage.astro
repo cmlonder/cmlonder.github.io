@@ -5,6 +5,8 @@ import {
   COLLECTION_LABELS, TOPIC_LABELS, STATUS_LABELS,
   type CollectionName, type Locale,
 } from '../config';
+import GrowthBadge from '../components/GrowthBadge.astro';
+import Backlinks from '../components/Backlinks.astro';
 import EntryCard from '../components/EntryCard.astro';
 import Comments from '../components/Comments.astro';
 import { formatDate, localePath, entryPath, getTranslations, parseId, getRelated, getNeighbours } from '../lib/content';
@@ -54,8 +56,8 @@ const t = {
         <a href={localePath(lang, collection)}>{COLLECTION_LABELS[collection][lang]}</a>
         <span aria-hidden="true">·</span>
         <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
-        {collection === 'notes' && (
-          <><span aria-hidden="true">·</span><span>{STATUS_LABELS[d.status as keyof typeof STATUS_LABELS][lang]}</span></>
+        {d.status && (
+          <><span aria-hidden="true">·</span><GrowthBadge status={d.status} lang={lang} /></>
         )}
         {d.updatedDate && (
           <><span aria-hidden="true">·</span><span>{t.updated} {formatDate(d.updatedDate, lang)}</span></>
@@ -106,6 +108,7 @@ const t = {
         </nav>
       )}
     </footer>
+    <Backlinks entryId={entry.id} lang={lang} />
   </article>
 
   {related.length > 0 && (

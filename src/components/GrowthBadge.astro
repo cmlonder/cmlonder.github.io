@@ -1,0 +1,49 @@
+---
+/**
+ * Olgunluk rozeti — Maggie'nin bahçesindeki seedling/budding/evergreen.
+ *
+ * Eskiden yalnızca notes'ta ve düz metin olarak görünüyordu ("· Fidan").
+ * Bu sistemin asıl işi listede "bu yazı daha pişmemiş" sinyalini bir
+ * bakışta vermek; onun için metin değil işaret gerekiyor.
+ *
+ * Üç dilim: dolu dilim sayısı olgunluğu gösteriyor. Emoji yerine SVG,
+ * çünkü emoji platformdan platforma değişiyor ve sitenin tonuna oturmuyor.
+ */
+import { STATUS_LABELS, type Locale } from '../config';
+
+interface Props { status?: string; lang: Locale; compact?: boolean }
+const { status = 'seedling', lang, compact = false } = Astro.props as Props;
+
+const LEVEL: Record<string, number> = { seedling: 1, budding: 2, evergreen: 3 };
+const n = LEVEL[status] ?? 1;
+const label = STATUS_LABELS[status as keyof typeof STATUS_LABELS]?.[lang] ?? status;
+---
+
+<span class="growth" data-g={status} title={label}>
+  <svg viewBox="0 0 16 12" width="16" height="12" aria-hidden="true">
+    <rect x="0"  y="8" width="4" height="4"  rx="1" class:list={[n >= 1 && 'on']} />
+    <rect x="6"  y="5" width="4" height="7"  rx="1" class:list={[n >= 2 && 'on']} />
+    <rect x="12" y="1" width="4" height="11" rx="1" class:list={[n >= 3 && 'on']} />
+  </svg>
+  {!compact && <span class="lbl">{label}</span>}
+  <span class="sr">{label}</span>
+</span>
+
+<style>
+  .growth {
+    display: inline-flex;
+    align-items: center;
+    gap: .4em;
+    vertical-align: baseline;
+  }
+  svg rect { fill: var(--c-border); }
+  svg rect.on { fill: var(--c-muted); }
+  .growth[data-g='budding']   svg rect.on { fill: var(--c-mark); }
+  .growth[data-g='evergreen'] svg rect.on { fill: var(--c-accent-lo); }
+  .lbl { color: var(--c-muted); }
+  .sr {
+    position: absolute; inline-size: 1px; block-size: 1px;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+  }
+  .growth:has(.lbl) .sr { display: none; }
+</style>

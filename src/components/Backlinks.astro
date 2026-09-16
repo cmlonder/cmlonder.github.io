@@ -1,0 +1,41 @@
+---
+/** "Buraya bağlananlar" — bağlantı yoksa hiç görünmüyor. */
+import { getBacklinks, type Backlink } from '../lib/content';
+import { COLLECTION_LABELS, type Locale } from '../config';
+
+interface Props { entryId: string; lang: Locale }
+const { entryId, lang } = Astro.props as Props;
+const links: Backlink[] = (await getBacklinks(lang)).get(entryId) ?? [];
+---
+
+{links.length > 0 && (
+  <nav class="backlinks" aria-label={lang === 'tr' ? 'Buraya bağlananlar' : 'Linked from'}>
+    <h2>{lang === 'tr' ? 'Buraya bağlananlar' : 'Linked from'}</h2>
+    <ul>
+      {links.map((b) => (
+        <li>
+          <a href={b.href}>{b.title}</a>
+          <span class="coll">{COLLECTION_LABELS[b.collection][lang]}</span>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  .backlinks { margin-block-start: var(--s-2xl); }
+  .backlinks h2 {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--c-muted); font-weight: 400;
+    padding-block-end: var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .backlinks ul { list-style: none; padding: 0; margin-block-start: var(--s-s); }
+  .backlinks li { margin-block-end: var(--s-2xs); }
+  .backlinks a { font-family: var(--f-sans); font-size: var(--t-sm); }
+  .coll {
+    display: block; font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted);
+  }
+</style>

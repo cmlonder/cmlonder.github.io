@@ -145,3 +145,59 @@ export async function getNeighbours(
     older: i >= 0 && i < list.length - 1 ? list[i + 1] : null,
   };
 }
+
+/**
+ * Backlink haritası — "buraya bağlananlar".
+ *
+ * Digital garden'ın ikinci imzası. Yazıların gövdesindeki iç bağlantılar
+ * taranıp ters indeks kuruluyor. Şu an içerikte tek bir iç bağlantı var,
+ * dolayısıyla çoğu yazıda bölüm hiç görünmüyor — ilk bağlantıyı yazdığın
+ * an kendiliğinden dolmaya başlar.
+ *
+ * Yalnızca aynı dildeki yazılar eşleşiyor; /tr/ ve kök ayrı ağlar.
+ */
+export type Backlink = { collection: CollectionName; id: string; title: string; href: string };
+
+// Dile göre ayrı: /tr/ ve kök ayrı ağlar. Tek bir önbellek
+// kullanınca ilk çağıran dilin haritası diğerine de dönüyordu.
+const _backlinks = new Map<Locale, Map<string, Backlink[]>>();
+
+export async function getBacklinks(lang: Locale): Promise<Map<string, Backlink[]>> {
+  const cached = _backlinks.get(lang);
+  if (cached) return cached;
+
+  const map = new Map<string, Backlink[]>();
+  const all = await getAllEntries(lang);
+
+  // Hedef yolu -> giriş. Yol, sitenin gerçek URL'i.
+  const byHref = new Map<string, { collection: CollectionName; entry: any }>();
+  for (const { collection, entry } of all) {
+    byHref.set(entryPath(lang, collection, parseId(entry.id).slug), { collection, entry });
+  }
+
+  for (const { collection, entry } of all) {
+    const body: string = (entry as any).body ?? '';
+    const kaynak: Backlink = {
+      collection,
+      id: entry.id,
+      title: (entry.data as any).title,
+      href: entryPath(lang, collection, parseId(entry.id).slug),
+    };
+    // Markdown bağlantılarındaki site içi yolları topla.
+    const hedefler = new Set(
+      [...body.matchAll(/\]\((\/[^)\s#?]+)/g)].map((m) => m[1].replace(/\/$/, '')),
+    );
+    for (const h of hedefler) {
+      const hedef = byHref.get(h) ?? byHref.get(h + '/');
+      if (!hedef) continue;
+      const anahtar = hedef.entry.id;
+      if (anahtar === entry.id) continue;               // kendine bağlantı sayılmaz
+      const liste = map.get(anahtar) ?? [];
+      if (!liste.some((b) => b.id === kaynak.id)) liste.push(kaynak);
+      map.set(anahtar, liste);
+    }
+  }
+
+  _backlinks.set(lang, map);
+  return map;
+}

@@ -1,4 +1,5 @@
 ---
+import GrowthBadge from './GrowthBadge.astro';
 import { COLLECTION_LABELS, STATUS_LABELS, TOPIC_LABELS,
          type CollectionName, type Locale, type Topic } from '../config';
 import TypeMark from './TypeMark.astro';
@@ -59,8 +60,8 @@ const coverTopic = TOPIC_LABELS[(d.topics as Topic[])[0]][lang];
       <p class="foot meta">
         {showCollection && <><span class="coll">{typeLabel}</span><span aria-hidden="true">·</span></>}
         <time datetime={d.pubDate.toISOString()} title={formatDate(d.pubDate, lang)}>{relativeDate(d.pubDate, lang)}</time>
-        {collection === 'notes' && (
-          <><span aria-hidden="true">·</span><span>{STATUS_LABELS[d.status as keyof typeof STATUS_LABELS][lang]}</span></>
+        {d.status && (
+          <><span aria-hidden="true">·</span><GrowthBadge status={d.status} lang={lang} /></>
         )}
         {collection === 'signals' && (<><span aria-hidden="true">·</span><span>{d.source}</span></>)}
       </p>
