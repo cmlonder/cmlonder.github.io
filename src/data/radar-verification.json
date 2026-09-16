@@ -118,10 +118,10 @@
     "failed": 4,
     "inconclusive": 1,
     "unsourced": 0,
-    "staleCount": 6,
+    "staleCount": 5,
     "claims": [
       {
-        "claim": "Pieter Levels ~3M $ ARR portföy cirosu",
+        "claim": "Pieter Levels portföy cirosu 3M $ ARR",
         "url": "https://www.fast-saas.com/blog/pieter-levels-success-story/",
         "sourceDate": "2025-10-29",
         "sourceType": "İkincil vaka analizi",
@@ -132,7 +132,7 @@
         "stale": false
       },
       {
-        "claim": "Pieter Levels tek kurucu ve sıfır çalışan",
+        "claim": "Pieter Levels lansman ve altyapı",
         "url": "https://levels.io/nomad-list-founder",
         "sourceDate": "2017-01-07",
         "sourceType": "Kurucunun resmi blogu",
@@ -143,18 +143,18 @@
         "stale": true
       },
       {
-        "claim": "Pieter Levels mülakatı",
+        "claim": "Pieter Levels mülakat alıntısı",
         "url": "https://www.indiehackers.com/podcast/043-pieter-levels-of-nomad-list",
         "sourceDate": "2018-01-17",
         "sourceType": "Podcast mülakatı",
-        "expect": "Nomad List and Remote OK",
+        "expect": "only Nomad List and Remote OK make the real money",
         "verdict": "DOGRULANDI",
         "detail": "",
         "ageMonths": 104,
         "stale": true
       },
       {
-        "claim": "Pieter Levels Nomads.com ücretsiz yapıldı",
+        "claim": "Pieter Levels Nomad List ücretsiz yapıldı",
         "url": "https://levels.io/tag/nomad-list",
         "sourceDate": "2026-09-05",
         "sourceType": "Kurucunun resmi blog arşivi",
@@ -176,7 +176,7 @@
         "stale": false
       },
       {
-        "claim": "Diego Roshardt (AppAlchemy) lansman Şubat 2025",
+        "claim": "Diego Roshardt (AppAlchemy) lansman Şubat 2025 ve 17K ciro",
         "url": "https://www.starterstory.com/appalchemy-breakdown",
         "sourceDate": "2025-08-19",
         "sourceType": "Kurucu mülakatı",
@@ -187,24 +187,24 @@
         "stale": true
       },
       {
-        "claim": "Diego Roshardt (AppAlchemy) zirve dönem 17K",
-        "url": "https://www.starterstory.com/appalchemy-breakdown",
-        "sourceDate": "2025-08-19",
-        "sourceType": "Kurucu mülakatı",
-        "expect": "17K",
-        "verdict": "DOGRULANDI",
-        "detail": "",
-        "ageMonths": 13,
-        "stale": true
-      },
-      {
-        "claim": "Diego Roshardt (AppAlchemy) canlı ciro 6,441",
+        "claim": "Diego Roshardt (AppAlchemy) canlı ciro 6.441",
         "url": "https://trustmrr.com/startup/appalchemy",
         "sourceDate": "2026-09-16",
         "sourceType": "Doğrulanmış gelir platformu",
         "expect": "6,441",
         "verdict": "BULUNAMADI",
         "detail": "\"6,441\" kaynakta yok — kaynakta en yakın: \"$6,491\"",
+        "ageMonths": 0,
+        "stale": false
+      },
+      {
+        "claim": "Diego Roshardt (AppAlchemy) satılık ilanı alıntısı",
+        "url": "https://trustmrr.com/startup/appalchemy",
+        "sourceDate": "2026-09-16",
+        "sourceType": "Satılık ilanı notu",
+        "expect": "Priced to close by Sept 30",
+        "verdict": "DOGRULANDI",
+        "detail": "",
         "ageMonths": 0,
         "stale": false
       },
@@ -242,6 +242,6 @@
         "stale": true
       }
     ],
-    "claimsHash": "bab35de6222c"
+    "claimsHash": "6555a92ab0f3"
   }
 }
