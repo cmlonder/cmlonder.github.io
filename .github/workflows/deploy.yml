@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # radar.yml buradan çağırır (bot push'u kendi başına deploy tetiklemiyor)
+  workflow_call:
 
 permissions:
   contents: read

@@ -1,0 +1,84 @@
+name: Radar
+
+# Spark -> Google Doc -> (Apps Script) -> inbox/ -> burası -> site
+# Zincirde insan yok. inbox'a düşen her dosya işlenir ve silinir.
+on:
+  push:
+    paths: ['inbox/radar/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: radar
+  cancel-in-progress: false
+
+jobs:
+  isle:
+    runs-on: ubuntu-latest
+    outputs:
+      degisti: ${{ steps.isle.outputs.degisti }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - id: isle
+        name: Kuyruğu işle
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          islenen=0
+          for f in inbox/radar/*/*.md; do
+            seri=$(basename "$(dirname "$f")")
+            echo "::group::$seri <- $f"
+            # Ayrıştırma başarısızsa dosyayı kuyrukta bırak, diğerlerine devam et.
+            if node scripts/parse-radar.mjs "$seri" "$f" --force; then
+              rm "$f"
+              islenen=$((islenen+1))
+            else
+              echo "::warning::$f ayrıştırılamadı, kuyrukta bırakıldı"
+            fi
+            echo "::endgroup::"
+          done
+          echo "islenen=$islenen" >> "$GITHUB_OUTPUT"
+          [ "$islenen" -gt 0 ] || { echo "degisti=false" >> "$GITHUB_OUTPUT"; exit 0; }
+
+          # Doğrulama kapısı: her iddianın kaynağı çekilir, aranan değer aranır.
+          # Eşleşmeyen satır yayını ENGELLEMEZ — sonuç tabloya basılır.
+          node scripts/verify-radar.mjs
+
+          # Yayınlanabilir mi: build + tip + link kontrolü
+          pnpm astro check
+          pnpm build
+          node scripts/check-build.mjs
+
+          echo "degisti=true" >> "$GITHUB_OUTPUT"
+
+      - name: Sonucu commit'le
+        if: steps.isle.outputs.degisti == 'true'
+        run: |
+          git config user.name  "radar-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/content/radar src/data/radar-verification.json inbox
+          git commit -m "Radar: ${{ steps.isle.outputs.islenen }} bülten yayınlandı
+
+          Spark -> Drive -> inbox -> parse-radar -> verify-radar.
+          Otomatik; elle dokunulmadı."
+          git push
+
+  # GITHUB_TOKEN ile atılan push başka workflow tetiklemez (döngü koruması),
+  # bu yüzden deploy'u buradan çağırıyoruz.
+  yayinla:
+    needs: isle
+    if: needs.isle.outputs.degisti == 'true'
+    uses: ./.github/workflows/deploy.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
