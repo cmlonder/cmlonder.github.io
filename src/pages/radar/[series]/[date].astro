@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
+import { Image } from 'astro:assets';
 import { RADAR, RADAR_SERIES, SITE, type Locale } from '../../../config';
 import { formatDate } from '../../../lib/content';
 
@@ -23,8 +24,17 @@ export async function getStaticPaths() {
   });
 }
 
+// Kapak konvansiyonla bulunuyor: src/assets/radar/<seri>-<tarih>.png
+// Frontmatter'a "image:" yazdırmıyoruz — Spark'ın dosyasına dokunmamak
+// için. Dosya varsa kapak var, yoksa yok.
+const kapaklar = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/radar/*.{png,jpg,jpeg,webp}', { eager: true });
+
 const lang: Locale = 'tr';
 const { entry, series, prev, next } = Astro.props;
+const kapakYolu = Object.keys(kapaklar).find((k) =>
+  k.includes(`/${series}-${entry.id.split('/')[1]}.`));
+const kapak = kapakYolu ? kapaklar[kapakYolu].default : null;
 const meta = RADAR_SERIES[series as keyof typeof RADAR_SERIES];
 const { Content } = await render(entry);
 
@@ -45,8 +55,9 @@ const { Content } = await render(entry);
       <p class="standfirst">{entry.data.summary}</p>
     </header>
 
-    {entry.data.image && (
-      <img class="cover" src={entry.data.image} alt="" width="1200" height="630" loading="eager" />
+    {kapak && (
+      <Image class="cover" src={kapak} alt="" widths={[640, 960, 1280]}
+             sizes="(max-width: 46rem) 100vw, 46rem" loading="eager" />
     )}
 
     <div class="prose"><Content /></div>

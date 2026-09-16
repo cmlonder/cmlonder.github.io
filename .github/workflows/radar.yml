@@ -30,12 +30,18 @@ jobs:
 
       - id: isle
         name: Kuyruğu işle
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           set -euo pipefail
           # Spark yayına hazır markdown yazıyor. check-radar dönüştürmüyor,
           # sadece frontmatter'ın sağlam olduğunu doğrulayıp yerine taşıyor.
           node scripts/check-radar.mjs | tee /tmp/radar.log
           grep -q '^✓' /tmp/radar.log || { echo "degisti=false" >> "$GITHUB_OUTPUT"; exit 0; }
+
+          # Kapak: GEMINI_API_KEY sırrı tanımlıysa üretilir, değilse
+          # atlanır. Kapak isteğe bağlı, yayını asla engellemiyor.
+          node scripts/make-cover.mjs || echo "::warning::kapak üretilemedi"
 
           # Yayınlanabilir mi: build + tip + link kontrolü
           pnpm astro check
@@ -49,7 +55,7 @@ jobs:
         run: |
           git config user.name  "radar-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/content/radar inbox
+          git add src/content/radar src/assets/radar inbox
           git commit -m "Radar: yeni bülten yayınlandı
 
           Spark -> Drive -> inbox -> check-radar -> site.
