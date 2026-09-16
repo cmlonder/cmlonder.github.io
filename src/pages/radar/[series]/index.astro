@@ -36,11 +36,6 @@ const t = entries.reduce((acc, e) => {
       </p>
       <h1>{meta.name}</h1>
       <p class="blurb">{meta.blurb}</p>
-      <p class="lead">
-        Makine üretimi. {t.passed}/{t.total} iddia kaynağı çekilerek doğrulandı
-        {t.failed > 0 && <>, <strong>{t.failed}</strong> tanesi doğrulanamadı ve öyle işaretlendi</>}.
-        Yöntem: <a href="/ai">/ai</a>
-      </p>
     </header>
 
     <ul class="list">
@@ -48,15 +43,10 @@ const t = entries.reduce((acc, e) => {
         const s = v[e.id];
         return (
           <li>
-            <p class="meta line">
-              <time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time>
-              {s && (<><span aria-hidden="true">·</span>
-                <span data-clean={String(s.failed === 0)}>
-                  {s.passed}/{s.total} doğrulandı{s.failed > 0 ? `, ${s.failed} değil` : ''}
-                </span></>)}
-            </p>
-            <h2><a href={`/radar/${e.id}`}>{e.data.title}</a></h2>
-            <p class="dek">{e.data.summary}</p>
+            <a class="row" href={`/radar/${e.id}`}>
+              <h2><time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time></h2>
+              <p class="dek">{e.data.summary}</p>
+            </a>
           </li>
         );
       })}
@@ -65,6 +55,15 @@ const t = entries.reduce((acc, e) => {
 </Base>
 
 <style>
+  .list a.row {
+    display: block;
+    text-decoration: none;
+    padding-block: var(--s-s);
+  }
+  .list a.row h2 { margin: 0 0 var(--s-3xs); }
+  .list a.row:hover h2 { color: var(--c-accent); }
+  .list a.row .dek { color: var(--c-muted); margin: 0; }
+
   .head { margin-block-end: var(--s-2xl); }
   .kicker {
     display: flex; align-items: baseline; gap: var(--s-2xs);

@@ -29,7 +29,6 @@ const series = Object.entries(RADAR_SERIES).map(([id, meta]) => {
     <header class="head">
       <p class="kicker"><span class="count">{all.length}</span><a href="/">Ana sayfa</a></p>
       <h1>{RADAR.name.tr}</h1>
-      <p class="blurb">{RADAR.blurb.tr}</p>
       <p class="lead">
           Buradaki bültenleri <strong>Gemini Spark</strong> ile üretiyorum, tek
           tek ben yazmıyorum. Yayınlanmadan önce her iddianın kaynağını çekip
@@ -47,20 +46,14 @@ const series = Object.entries(RADAR_SERIES).map(([id, meta]) => {
       <section class="series">
         <h2><a href={`/radar/${s.id}`}>{s.meta.name}</a></h2>
         <p class="sblurb">{s.meta.blurb}</p>
-        <p class="stats meta">
-          {s.entries.length} bülten · {s.passed}/{s.total} iddia doğrulandı
-          {s.failed > 0 && <>, <span class="bad">{s.failed} doğrulanamadı</span></>}
-        </p>
+        <p class="stats meta">{s.entries.length} bülten</p>
         <ul class="list">
           {s.entries.slice(0, 5).map((e) => {
             const st = v[e.id];
             return (
               <li>
-                <a href={`/radar/${e.id}`}>{e.data.title}</a>
-                <span class="meta">
-                  {formatDate(e.data.date, lang)}
-                  {st && <> · <span data-clean={String(st.failed === 0)}>{st.passed}/{st.total}</span></>}
-                </span>
+                <a href={`/radar/${e.id}`}>{formatDate(e.data.date, lang)}</a>
+                <span class="meta">{e.data.summary}</span>
               </li>
             );
           })}
@@ -74,6 +67,17 @@ const series = Object.entries(RADAR_SERIES).map(([id, meta]) => {
 </Base>
 
 <style>
+  .list .meta {
+    color: var(--c-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  @media (max-width: 34rem) {
+    .list li { grid-template-columns: 1fr; gap: var(--s-3xs); }
+  }
+
   .head { margin-block-end: var(--s-2xl); }
   .kicker {
     display: flex; align-items: baseline; gap: var(--s-2xs);
@@ -117,9 +121,12 @@ const series = Object.entries(RADAR_SERIES).map(([id, meta]) => {
 
   .list { list-style: none; padding: 0; margin-block-start: var(--s-2xs); display: grid; }
   .list li {
-    display: flex; flex-wrap: wrap; gap: var(--s-2xs);
-    align-items: baseline; justify-content: space-between;
-    padding-block: var(--s-3xs);
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--s-xs);
+    align-items: baseline;
+    padding-block: var(--s-2xs);
+    border-block-start: 1px solid var(--c-border);
   }
   .list li + li { border-block-start: 1px solid var(--c-border); }
   .list a { text-decoration: none; }

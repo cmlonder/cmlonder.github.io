@@ -7,17 +7,26 @@ import { formatDate } from '../../../lib/content';
 import verification from '../../../data/radar-verification.json';
 
 export async function getStaticPaths() {
-  const all = await getCollection('radar');
-  return all
-    .filter((e) => !e.data.draft || import.meta.env.DEV)
-    .map((entry) => {
-      const [series, date] = entry.id.split('/');
-      return { params: { series, date }, props: { entry, series } };
-    });
+  const all = (await getCollection('radar'))
+    .filter((e) => !e.data.draft || import.meta.env.DEV);
+
+  return all.map((entry) => {
+    const [series, date] = entry.id.split('/');
+    // Aynı serinin bültenleri tarih sırasında; komşuları burada bul,
+    // sayfada gezinme bağlantısı olarak kullan.
+    const sibs = all
+      .filter((e) => e.id.startsWith(`${series}/`))
+      .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+    const i = sibs.findIndex((e) => e.id === entry.id);
+    return {
+      params: { series, date },
+      props: { entry, series, prev: sibs[i - 1] ?? null, next: sibs[i + 1] ?? null },
+    };
+  });
 }
 
 const lang: Locale = 'tr';
-const { entry, series } = Astro.props;
+const { entry, series, prev, next } = Astro.props;
 const meta = RADAR_SERIES[series as keyof typeof RADAR_SERIES];
 const { Content } = await render(entry);
 
@@ -46,12 +55,21 @@ const claims = v?.claims ?? entry.data.claims.map((c: any) => ({ ...c, verdict: 
     )}
 
     <div class="prose"><Content /></div>
-    <Sources claims={claims} checkedAt={stats.checkedAt} />
-
-    <p class="prompt meta">
-      <a href={`/radar/${series}`}>{meta?.name ?? series}</a> ·
-      {entry.data.generator} · <code>{entry.data.promptVersion}</code>
-    </p>
+    <Sources claims={claims} />
+    <nav class="daynav" aria-label="Diğer bültenler">
+      {prev ? (
+        <a class="prev" href={`/radar/${prev.id}`}>
+          <span class="dir">← Önceki</span>
+          <span class="day">{formatDate(prev.data.date, lang)}</span>
+        </a>
+      ) : <span />}
+      {next && (
+        <a class="next" href={`/radar/${next.id}`}>
+          <span class="dir">Sonraki →</span>
+          <span class="day">{formatDate(next.data.date, lang)}</span>
+        </a>
+      )}
+    </nav>
   </article>
 </Base>
 
@@ -71,6 +89,26 @@ const claims = v?.claims ?? entry.data.claims.map((c: any) => ({ ...c, verdict: 
 })} is:inline />
 
 <style>
+  .daynav {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-s);
+    margin-block-start: var(--s-2xl);
+    padding-block-start: var(--s-s);
+    border-block-start: 1px solid var(--c-border);
+    font-family: var(--f-sans);
+  }
+  .daynav a {
+    display: grid;
+    gap: .15em;
+    text-decoration: none;
+    min-block-size: 44px;
+  }
+  .daynav .next { text-align: end; }
+  .daynav .dir { font-size: var(--t-sm); color: var(--c-accent); }
+  .daynav .day { font-size: var(--t-xs); color: var(--c-muted); }
+  .daynav a:hover .day { color: var(--c-text); }
+
   .cover {
     display: block;
     inline-size: 100%;

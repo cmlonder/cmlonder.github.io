@@ -6,12 +6,9 @@
  * Doğrulama hâlâ çalışıyor, ama burada gürültü yapmadan duruyor:
  * eşleşmeyen satır işaretleniyor, gerisi sade bir kaynak listesi.
  */
-interface Props { claims: any[]; checkedAt?: string }
-const { claims, checkedAt } = Astro.props as Props;
+interface Props { claims: any[] }
+const { claims } = Astro.props as Props;
 
-const sourced = claims.filter((c) => c.url);
-const passed  = claims.filter((c) => c.verdict === 'DOGRULANDI').length;
-const missed  = claims.filter((c) => ['BULUNAMADI', 'ERISILEMEDI'].includes(c.verdict));
 
 // Numaralandırma iddia SIRASINI takip eder: yazıdaki [1], buradaki 1.
 // satırdır. URL tekrar edebilir — akademik atıfta da öyle.
@@ -42,10 +39,6 @@ const rows = claims.map((c, i) => ({
         </li>
       ))}
     </ol>
-    <p class="note">
-      {passed}/{claims.length} iddia kaynağından makineyle teyit edildi{checkedAt && checkedAt !== '—' ? `, ${checkedAt}` : ''}.
-      {' '}<a href="/ai">Nasıl çalışıyor</a>.
-    </p>
   </section>
 )}
 
@@ -83,11 +76,5 @@ const rows = claims.map((c, i) => ({
     display: block;
     font-size: var(--t-xs);
     color: var(--c-accent);
-  }
-  .note {
-    margin-block-start: var(--s-m);
-    font-family: var(--f-sans);
-    font-size: var(--t-xs);
-    color: var(--c-muted);
   }
 </style>
