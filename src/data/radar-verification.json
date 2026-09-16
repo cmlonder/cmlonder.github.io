@@ -118,9 +118,9 @@
     "total": 11,
     "passed": 6,
     "failed": 4,
-    "inconclusive": 0,
-    "unsourced": 1,
-    "staleCount": 5,
+    "inconclusive": 1,
+    "unsourced": 0,
+    "staleCount": 6,
     "claims": [
       {
         "claim": "Pieter Levels ~3M $ ARR portföy cirosu",
@@ -145,6 +145,17 @@
         "stale": true
       },
       {
+        "claim": "Pieter Levels mülakatı",
+        "url": "https://www.indiehackers.com/podcast/043-pieter-levels-of-nomad-list",
+        "sourceDate": "2018-01-17",
+        "sourceType": "Podcast mülakatı",
+        "expect": "Nomad List and Remote OK",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 104,
+        "stale": true
+      },
+      {
         "claim": "Pieter Levels Nomads.com ücretsiz yapıldı",
         "url": "https://levels.io/tag/nomad-list",
         "sourceDate": "2026-09-05",
@@ -153,6 +164,17 @@
         "verdict": "DOGRULANDI",
         "detail": "",
         "ageMonths": 0,
+        "stale": false
+      },
+      {
+        "claim": "Pieter Levels dijital göçebe portföy analizi",
+        "url": "https://thebusinesslegacy.com/pieter-levels-the-digital-nomad-who-built-a-3m-business-from-a-backpack/",
+        "sourceDate": "2025-10-13",
+        "sourceType": "Vaka analizi",
+        "expect": "3M",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 11,
         "stale": false
       },
       {
@@ -211,38 +233,18 @@
         "stale": true
       },
       {
-        "claim": "Post Bridge kuruluş Eylül 2024 ve 35K MRR",
-        "url": "https://www.indiehackers.com/post/tech/hitting-35k-mrr-after-struggling-to-make-money-online-for-four-years-CNVpxrwIVqxcsfZ4fERw",
-        "sourceDate": "2026-06-17",
-        "sourceType": "Kurucu mülakatı",
-        "expect": "35K",
-        "verdict": "DOGRULANDI",
-        "detail": "",
-        "ageMonths": 3,
-        "stale": false
-      },
-      {
-        "claim": "GenPPT ilk dönem ciro 701",
-        "url": "https://www.starterstory.com/genppt-breakdown",
-        "sourceDate": "2024-10-25",
-        "sourceType": "Kurucu mülakatı",
-        "expect": "701",
-        "verdict": "DOGRULANDI",
-        "detail": "",
-        "ageMonths": 23,
+        "claim": "Diego Roshardt video röportajı",
+        "url": "https://www.youtube.com/watch?v=zUZFovKRCo0",
+        "sourceDate": "2025-07-11",
+        "sourceType": "Video mülakatı",
+        "expect": "AppAlchemy",
+        "verdict": "YETERSIZ",
+        "detail": "sayfa istemci tarafında render ediliyor",
+        "ageMonths": 14,
         "stale": true
-      },
-      {
-        "claim": "Mac Studio yerel token arbitraj modeli",
-        "sourceDate": "2026-09-16",
-        "sourceType": "Kurgusal teknik model",
-        "verdict": "KAYNAKSIZ",
-        "detail": "Kurgusal teknik model",
-        "ageMonths": 0,
-        "stale": false
       }
     ],
-    "claimsHash": "708fef9c9535",
+    "claimsHash": "bab35de6222c",
     "cover": "<svg class=\"cv\" viewBox=\"0 0 1200 420\" preserveAspectRatio=\"xMidYMid slice\" role=\"presentation\" aria-hidden=\"true\">\n  <text class=\"cv-kick\" x=\"70\" y=\"78\">Solo Kurucu Bülteni</text>\n  <line class=\"cv-rule\" x1=\"70\" y1=\"100\" x2=\"1130\" y2=\"100\"/>\n  <text class=\"cv-big\" x=\"70\" y=\"214\">16 Eylül 2026</text>\n  <circle class=\"cv-m\" cx=\"80\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"112\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"144\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"176\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"208\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"240\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"272\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"304\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"336\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"368\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"400\" cy=\"300\" r=\"10\"/>\n  <text class=\"cv-tk\" x=\"70\" y=\"366\">6/11 iddia kaynağıyla eşleşti</text>\n</svg>"
   }
 }
