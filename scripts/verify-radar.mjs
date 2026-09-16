@@ -221,14 +221,6 @@ for (const file of files) {
   };
   console.log(`  → ${pass}/${checked.length} doğrulandı, ${fail} başarısız, ${inconclusive} sonuçsuz`);
 
-  // Grafikler: doğrulama sonuçları hazır, yer tutucuları doldur.
-  const cizilen = injectCharts(join(DIR, file), fm.charts, checked);
-  if (cizilen) {
-    const toplam = fm.charts.reduce((n, g) => n + g.points.length, 0);
-    const backed = fm.charts.reduce(
-      (n, g) => n + g.points.filter((pt) => pointBacked(pt.value, checked)).length, 0);
-    console.log(`  ▪ ${cizilen} grafik — ${backed}/${toplam} nokta doğrulanmış iddiaya dayanıyor`);
-  }
 }
 
 mkdirSync('src/data', { recursive: true });
