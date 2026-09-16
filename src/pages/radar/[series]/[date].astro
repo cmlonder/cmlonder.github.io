@@ -1,8 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
-import RadarBadge from '../../../components/RadarBadge.astro';
-import ClaimTable from '../../../components/ClaimTable.astro';
+import Sources from '../../../components/Sources.astro';
 import { RADAR, RADAR_SERIES, SITE, type Locale } from '../../../config';
 import { formatDate } from '../../../lib/content';
 import verification from '../../../data/radar-verification.json';
@@ -25,7 +24,6 @@ const { Content } = await render(entry);
 const v = (verification as Record<string, any>)[entry.id];
 const stats = v ?? { total: entry.data.claims.length, passed: 0, failed: 0, inconclusive: 0, unsourced: 0, staleCount: 0, checkedAt: '—' };
 const claims = v?.claims ?? entry.data.claims.map((c: any) => ({ ...c, verdict: 'ERISILDI' }));
-const failed = claims.filter((c: any) => ['BULUNAMADI', 'ERISILEMEDI', 'URL_YOK'].includes(c.verdict));
 ---
 
 <Base title={`${entry.data.title} — ${RADAR.name.tr}`} description={entry.data.summary}
@@ -43,39 +41,13 @@ const failed = claims.filter((c: any) => ['BULUNAMADI', 'ERISILEMEDI', 'URL_YOK'
       <p class="standfirst">{entry.data.summary}</p>
     </header>
 
-    <RadarBadge generator={entry.data.generator} stats={stats} />
-
-    {failed.length > 0 && (
-      <section class="failed">
-        <h2 class="section-title">Kaynağıyla eşleşmeyenler</h2>
-        <p class="note meta">
-          Script bu satırlarda aranan değeri kaynak metninde bulamadı. Kaynak
-          o gün değişmiş, sayıyı farklı biçimde yazmış ya da iddia yanlış
-          olabilir — hangisi olduğunu ayırt etmiyor, sadece eşleşmediğini
-          söylüyor.
-        </p>
-        <ClaimTable claims={claims} failedOnly />
-      </section>
-    )}
-
     <div class="prose"><Content /></div>
-
-    <section class="audit">
-      <h2 class="section-title">İddialar ve kaynakları</h2>
-      <p class="note meta">
-        Ajanın ürettiği iddia listesi. {stats.checkedAt} tarihinde her satırın
-        kaynağı çekildi ve aranan değer metinde arandı —
-        <code>scripts/verify-radar.mjs</code>.
-      </p>
-      <ClaimTable claims={claims} />
-    </section>
+    <Sources claims={claims} checkedAt={stats.checkedAt} />
 
     <p class="prompt meta">
-      Seri: <a href={`/radar/${series}`}>{meta?.name ?? series}</a> ·
-      Prompt sürümü: <code>{entry.data.promptVersion}</code> ·
-      Üreten: <code>{entry.data.generator}</code> ·
-      <a href="/ai">yöntem</a>
-    </p>
+        <a href={`/radar/${series}`}>{meta?.name ?? series}</a> ·
+        {entry.data.generator} · <code>{entry.data.promptVersion}</code>
+      </p>
   </article>
 </Base>
 
@@ -111,11 +83,6 @@ const failed = claims.filter((c: any) => ['BULUNAMADI', 'ERISILEMEDI', 'URL_YOK'
     color: var(--c-muted); font-style: italic;
     font-size: 1.0625rem; text-wrap: pretty;
   }
-  .failed {
-    margin-block-end: var(--s-m); padding: var(--s-xs);
-    border: 1px solid var(--c-accent); border-radius: var(--radius-lg);
-  }
-  .failed .section-title { color: var(--c-accent); }
   .note { margin-block-start: var(--s-3xs); max-inline-size: 60ch; }
   .audit { margin-block-start: var(--s-xl); padding-block-start: var(--s-s); border-block-start: 1px solid var(--c-border); }
   .prompt { margin-block-start: var(--s-m); }

@@ -51,11 +51,41 @@ function fences(text) {
  * bile export ```  olarak geliyor. Etikete güvenmek boru hattını Docs'un
  * biçimlendirme davranışına bağımlı kılar.
  */
+/**
+ * "appalchemy-ciro | AppAlchemy aylık ciro | 2025-08:17000, 2026-09:6441"
+ * -> { id, title, points:[{label,value}] }
+ *
+ * Nokta değerleri burada DOĞRULANMAZ. verify-radar.mjs her noktayı
+ * doğrulanmış bir iddiayla eşleştirir; eşleşmeyen nokta çizilmez.
+ */
+function parseCharts(block) {
+  const out = [];
+  for (const line of block.split('\n')) {
+    const cells = line.split('|').map((c) => c.trim());
+    if (cells.length < 3) continue;
+    if (/^grafik$/i.test(cells[0])) continue;          // başlık satırı
+    const [id, title, series] = cells;
+    if (!id || !series) continue;
+    const points = [];
+    for (const raw of series.split(',')) {
+      const m = /^\s*([^:]+?)\s*:\s*([-\d.]+)\s*$/.exec(raw);
+      if (!m) continue;
+      const value = Number(m[2]);
+      if (!Number.isFinite(value)) continue;
+      points.push({ label: m[1], value });
+    }
+    if (points.length >= 2) out.push({ id, title, points });
+    else if (points.length) console.warn(`  ! grafik "${id}" tek noktalı, atlandı`);
+  }
+  return out;
+}
+
 function classify(text) {
-  let meta = null, claims = null;
+  let meta = null, claims = null, charts = null;
   for (const block of fences(text)) {
     const lines = block.split('\n').map((l) => l.trim()).filter(Boolean);
     if (!lines.length) continue;
+    if (!charts && /^grafik\s*\|/i.test(lines[0])) { charts = block; continue; }
     const pipey = lines.filter((l) => (l.match(/\|/g) ?? []).length >= 3).length;
     if (!claims && pipey >= Math.max(2, lines.length * 0.6)) { claims = block; continue; }
     if (!meta && lines.some((l) => /^date:\s*\d{4}-\d{2}-\d{2}/.test(l))) { meta = block; continue; }
@@ -76,7 +106,7 @@ function classify(text) {
     if (run.some(r => /^date:\s*\d{4}-\d{2}-\d{2}/.test(r))) meta = run.join('\n');
   }
 
-  return { meta, claims };
+  return { meta, claims, charts };
 }
 
 /** key: value — değer satır sonuna kadar aynen alınır, tırnak yok. */
@@ -135,7 +165,7 @@ if (!existsSync(`src/content/radar/${series}`)) {
 }
 const text = src === '-' ? readFileSync(0, 'utf8') : readFileSync(src, 'utf8');
 
-const { meta: metaBlock, claims: claimsBlock } = classify(text);
+const { meta: metaBlock, claims: claimsBlock, charts: chartsBlock } = classify(text);
 if (!metaBlock) die('metadata bloğu bulunamadı — "date: YYYY-MM-DD" satırı olan çitli bir blok gerekiyor.');
 if (!claimsBlock) die('claims bloğu bulunamadı — boru ile ayrılmış satırlar içeren çitli bir blok gerekiyor.');
 
@@ -146,11 +176,37 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(meta.date)) die(`date "YYYY-MM-DD" olmalı, gele
 const claims = parseClaims(claimsBlock);
 if (!claims.length) die('claims bloğunda hiç satır yok');
 
-// Gövde: çitli blokların dışında kalan metin
-const body = text
-  .replace(/```[^\n]*\n[\s\S]*?```/g, '')
-  .replace(/^#[^\n]*\n/, '')          // ajanın kendi H1'i — başlık frontmatter'da
-  .trim();
+/**
+ * Gövde: çitli blokların dışında kalan metin, ön bilgi atılmış.
+ *
+ * Metadata çitlenmemiş olabiliyor (v7 şablonu). O zaman "date:",
+ * "title:" gibi satırlar gövdede kalıp sayfada görünüyordu. Yazının
+ * başındaki Doc başlığı + metadata öbeğini burada kesiyoruz.
+ */
+const META_KEYS = /^(date|title|summary|generator|promptVersion|slug|tags?)\s*:/i;
+
+function stripPreamble(md) {
+  const lines = md.split('\n');
+  let i = 0;
+  let gordu = false;
+  while (i < lines.length) {
+    const l = lines[i].trim();
+    if (l === '') { i++; continue; }
+    if (META_KEYS.test(l)) { gordu = true; i++; continue; }
+    // Metadata'dan ÖNCE gelen tek satırlık Doc başlığı da atılır —
+    // başlık frontmatter'dan geliyor.
+    if (!gordu && i < 4 && !/^[#>*\-]/.test(l) && l.length < 120) { i++; continue; }
+    break;
+  }
+  return lines.slice(i).join('\n').trim();
+}
+
+const body = stripPreamble(
+  text
+    .replace(/```[^\n]*\n[\s\S]*?```/g, '')
+    .replace(/^#[^\n]*\n/, '')        // ajanın kendi H1'i
+    .trim()
+);
 if (body.length < 200) die(`gövde çok kısa (${body.length} karakter) — ayrıştırma hatalı olabilir`);
 
 /**
@@ -244,6 +300,9 @@ function normalise(md) {
   return levelled.join('\n').replace(/\n{3,}/g, '\n\n');
 }
 
+const charts = chartsBlock ? parseCharts(chartsBlock) : [];
+if (charts.length) console.log(`  ${charts.length} grafik bulundu: ${charts.map((g) => g.id).join(', ')}`);
+
 const fm = [
   '---',
   `title: ${yamlStr(meta.title)}`,
@@ -259,15 +318,51 @@ const fm = [
     `    sourceType: ${yamlStr(c.sourceType)}`,
     ...(c.expect ? [`    expect: ${yamlStr(c.expect)}`] : []),
   ]),
+  ...(charts.length
+    ? ['charts:', ...charts.flatMap((g) => [
+        `  - id: ${yamlStr(g.id)}`,
+        `    title: ${yamlStr(g.title)}`,
+        '    points:',
+        ...g.points.flatMap((pt) => [
+          `      - label: ${yamlStr(pt.label)}`,
+          `        value: ${pt.value}`,
+        ]),
+      ])]
+    : []),
   '---',
   '',
 ].join('\n');
+
+/**
+ * Grafik yer tutucusu. Açılış etiketi KENDİ SATIRINDA olmalı — CommonMark
+ * tip-7 HTML bloğu kuralı; aksi halde markdown bunu <p> içine sarıyor ve
+ * geçersiz HTML çıkıyor. İçini verify-radar.mjs dolduruyor (doğrulanmış
+ * noktalar belli olduktan sonra).
+ */
+const figure = (id) => `\n<figure class="chart" data-chart="${id}">\n</figure>\n`;
+
+function placeCharts(md, charts) {
+  if (!charts.length) return md;
+  let out = md;
+  const yerlesen = new Set();
+  // Ajan "[grafik: id]" yazdıysa oraya koy.
+  out = out.replace(/^[ \t]*\[grafik:\s*([^\]]+)\][ \t]*$/gim, (m, id) => {
+    const g = charts.find((c) => c.id === id.trim());
+    if (!g) { console.warn(`  ! "${id.trim()}" işaretçisi var ama grafik verisi yok`); return ''; }
+    yerlesen.add(g.id);
+    return figure(g.id);
+  });
+  // İşaretlenmeyenler yazının sonuna.
+  const kalan = charts.filter((g) => !yerlesen.has(g.id));
+  if (kalan.length) out += '\n\n' + kalan.map((g) => figure(g.id)).join('\n\n');
+  return out;
+}
 
 const out = `src/content/radar/${series}/${meta.date}.md`;
 if (existsSync(out) && !process.argv.includes('--force')) {
   die(`${out} zaten var. Üzerine yazmak için --force ekle.`);
 }
-writeFileSync(out, fm + normalise(body) + '\n');
+writeFileSync(out, fm + placeCharts(normalise(body), charts) + '\n');
 
 const withUrl = claims.filter((c) => c.url).length;
 const withExpect = claims.filter((c) => c.expect).length;

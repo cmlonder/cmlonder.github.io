@@ -256,3 +256,35 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
   .prose pre { overflow-x: auto; }
   .prose a { overflow-wrap: anywhere; }
 }
+
+/* — Radar grafikleri —
+   İçini verify-radar.mjs dolduruyor; doğrulanmış iddiaya dayanmayan
+   veri noktası hiç çizilmiyor. */
+.prose .chart {
+  margin-block: var(--s-xl);
+  padding: var(--s-s) var(--s-s) var(--s-xs);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  background: var(--c-surface);
+}
+.prose .chart-svg {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  overflow: visible;
+}
+.prose .chart .base   { stroke: var(--c-border); stroke-width: 1; }
+.prose .chart .line   { fill: none; stroke: var(--c-accent); stroke-width: 2.5;
+                        stroke-linecap: round; stroke-linejoin: round; }
+.prose .chart .dot    { fill: var(--c-accent); }
+.prose .chart .val    { fill: var(--c-text);  font-family: var(--f-sans);
+                        font-size: 15px; font-weight: 700; }
+.prose .chart .lbl    { fill: var(--c-muted); font-family: var(--f-sans);
+                        font-size: 13px; }
+.prose .chart figcaption,
+.prose .chart .chart-empty {
+  margin-block-start: var(--s-2xs);
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  color: var(--c-muted);
+}

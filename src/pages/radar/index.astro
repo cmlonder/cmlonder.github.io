@@ -31,11 +31,13 @@ const series = Object.entries(RADAR_SERIES).map(([id, meta]) => {
       <h1>{RADAR.name.tr}</h1>
       <p class="blurb">{RADAR.blurb.tr}</p>
       <p class="lead">
-        Metni bir ajan üretiyor. Yayından önce her iddianın kaynağı çekiliyor ve
-        beklenen değerin gerçekten o metinde geçip geçmediğine bakılıyor —
-        ajanın kendi beyanına güvenilmiyor. Doğrulanamayan iddialar silinmiyor,
-        işaretleniyor. Yöntemin tamamı <a href="/ai">/ai</a> sayfasında.
-      </p>
+          Buradaki bültenleri <strong>Gemini Spark</strong> ile üretiyorum, tek
+          tek ben yazmıyorum. Yayınlanmadan önce her iddianın kaynağını çekip
+          aranan değerin gerçekten o metinde geçip geçmediğine bakan bir script
+          çalıştırıyorum — ajanın kendi beyanına güvenmiyorum. Eşleşmeyen iddia
+          silinmiyor, her bültenin kaynak listesinde işaretli duruyor.
+          Yöntemin tamamı <a href="/ai">/ai</a> sayfasında.
+        </p>
       <p class="feed meta">
         <a href="/radar/rss.xml">Radar RSS</a> — ana beslemeye karışmaz.
       </p>

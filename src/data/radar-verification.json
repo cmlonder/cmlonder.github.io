@@ -201,8 +201,8 @@
         "sourceDate": "2025-07-21",
         "sourceType": "Kurucu mülakatı analizi",
         "expect": "Cursor",
-        "verdict": "ERISILEMEDI",
-        "detail": "HTTP 403",
+        "verdict": "BULUNAMADI",
+        "detail": "\"Cursor\" kaynakta yok",
         "ageMonths": 14,
         "stale": true
       },

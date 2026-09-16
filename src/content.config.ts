@@ -111,6 +111,16 @@ const radar = defineCollection({
       /** Kaynak metninde aranacak değer (sayı, tarih, isim). */
       expect: z.string().optional(),
     })).min(1),
+    // Grafik verisi. Noktalar burada doğrulanmaz — verify-radar.mjs her
+    // noktayı doğrulanmış bir iddiayla eşleştirir, eşleşmeyeni çizmez.
+    charts: z.array(z.object({
+      id: z.string(),
+      title: z.string(),
+      points: z.array(z.object({
+        label: z.string(),
+        value: z.number(),
+      })).min(2),
+    })).optional(),
     draft: z.boolean().default(false),
   }),
 });

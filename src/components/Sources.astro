@@ -1,0 +1,91 @@
+---
+/**
+ * Kaynaklar — makale sonu referans listesi.
+ *
+ * Eski hâli dört kolonluk bir denetim tablosuydu; okuru boğuyordu.
+ * Doğrulama hâlâ çalışıyor, ama burada gürültü yapmadan duruyor:
+ * eşleşmeyen satır işaretleniyor, gerisi sade bir kaynak listesi.
+ */
+interface Props { claims: any[]; checkedAt?: string }
+const { claims, checkedAt } = Astro.props as Props;
+
+const sourced = claims.filter((c) => c.url);
+const passed  = claims.filter((c) => c.verdict === 'DOGRULANDI').length;
+const missed  = claims.filter((c) => ['BULUNAMADI', 'ERISILEMEDI'].includes(c.verdict));
+
+// Aynı URL birden çok iddiaya kaynaklık ediyorsa tek satır göster.
+const byUrl = new Map<string, any[]>();
+for (const c of sourced) {
+  const k = c.url as string;
+  byUrl.set(k, [...(byUrl.get(k) ?? []), c]);
+}
+const rows = [...byUrl.entries()].map(([url, cs], i) => ({
+  n: i + 1,
+  url,
+  host: new URL(url).hostname.replace(/^www\./, ''),
+  claim: cs[0].claim,
+  date: cs[0].sourceDate ? String(cs[0].sourceDate).slice(0, 10) : null,
+  ok: cs.some((c) => c.verdict === 'DOGRULANDI'),
+  miss: cs.every((c) => ['BULUNAMADI', 'ERISILEMEDI'].includes(c.verdict)),
+}));
+---
+
+{rows.length > 0 && (
+  <section class="sources">
+    <h2>Kaynaklar</h2>
+    <ol>
+      {rows.map((r) => (
+        <li class:list={[r.miss && 'miss']}>
+          <a href={r.url} rel="noopener nofollow">{r.claim}</a>
+          <span class="host">{r.host}{r.date && <> · {r.date}</>}</span>
+          {r.miss && <span class="flag">bu kaynakta aranan değer bulunamadı</span>}
+        </li>
+      ))}
+    </ol>
+    <p class="note">
+      {passed}/{claims.length} iddia kaynağından makineyle teyit edildi{checkedAt && checkedAt !== '—' ? `, ${checkedAt}` : ''}.
+      {' '}<a href="/ai">Nasıl çalışıyor</a>.
+    </p>
+  </section>
+)}
+
+<style>
+  .sources { margin-block-start: var(--s-2xl); }
+  .sources h2 {
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--c-muted);
+    font-weight: 400;
+    padding-block-end: var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .sources ol {
+    list-style: decimal;
+    padding-inline-start: 1.6em;
+    margin-block: var(--s-s) 0;
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+    line-height: 1.5;
+  }
+  .sources li { margin-block-end: var(--s-xs); }
+  .sources li::marker { color: var(--c-muted); }
+  .sources a { overflow-wrap: anywhere; }
+  .host {
+    display: block;
+    font-size: var(--t-xs);
+    color: var(--c-muted);
+  }
+  .flag {
+    display: block;
+    font-size: var(--t-xs);
+    color: var(--c-accent);
+  }
+  .note {
+    margin-block-start: var(--s-m);
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    color: var(--c-muted);
+  }
+</style>
