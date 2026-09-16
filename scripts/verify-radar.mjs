@@ -23,6 +23,8 @@
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse as parseYaml } from 'yaml';
+import { createHash } from 'node:crypto';
+import { coverSvg } from './lib/cover.mjs';
 
 const DIR = 'src/content/radar';
 const OUT = 'src/data/radar-verification.json';
@@ -198,6 +200,24 @@ function injectCharts(file, charts, checks) {
   return n;
 }
 
+/*
+ * Yayın anındaki sonuç DONDURULUR.
+ *
+ * Gözlenen: TrustMRR canlı bir ciro takipçisi; dün "$6,441" yazan sayfa
+ * bugün "$6,491" yazıyor. Her çalıştırmada her şeyi yeniden kontrol
+ * edersek yayınlanmış bülten, kaynağı değiştikçe kendiliğinden
+ * "doğrulanmamış"a dönüşür. Oysa iddia O GÜN doğruydu ve sonucun
+ * yanında tarihi duruyor.
+ *
+ * Bu yüzden: iddialar değişmediyse saklanan sonuç korunur. Tam yeniden
+ * kontrol isteniyorsa --recheck.
+ */
+const RECHECK = process.argv.includes('--recheck');
+let previous = {};
+try { previous = JSON.parse(readFileSync(OUT, 'utf8')); } catch {}
+const claimsHash = (claims) =>
+  createHash('sha1').update(JSON.stringify(claims)).digest('hex').slice(0, 12);
+
 const results = {};
 // src/content/radar/<seri>/<tarih>.md
 const files = readdirSync(DIR)
@@ -212,6 +232,16 @@ for (const file of files) {
   const slug = file.replace(/\.md$/, '');
   const fm = parseFrontmatter(readFileSync(join(DIR, file), 'utf8'));
   if (!fm) { console.error(`  frontmatter okunamadı: ${file}`); continue; }
+
+  const hash = claimsHash(fm.claims);
+  const prev = previous[slug];
+  if (!RECHECK && prev?.claimsHash === hash && prev.claims?.length) {
+    // İddialar değişmemiş; yayın anındaki sonuç geçerli.
+    results[slug] = prev;
+    console.log(`\n${slug}  (${fm.claims.length} iddia)`);
+    console.log(`  → ${prev.passed}/${prev.total} — ${prev.checkedAt} tarihinde dondurulmuş`);
+    continue;
+  }
 
   console.log(`\n${slug}  (${fm.claims.length} iddia)`);
   const checked = [];
@@ -289,6 +319,23 @@ for (const file of files) {
     unsourced: checked.filter((c) => c.verdict === 'KAYNAKSIZ').length,
     staleCount: checked.filter((c) => c.stale).length,
     claims: checked,
+    claimsHash: hash,
+    // Kapak: o günün DOĞRULANMIŞ grafik verisinden türeyen deterministik
+    // SVG. Rastgelelik yok, dış servis yok, AI yok — aynı bülten her
+    // zaman birebir aynı görseli verir.
+    cover: coverSvg(
+      (fm.charts ?? [])
+        .map((g) => ({
+          title: g.title,
+          points: g.points.filter((pt) => pointBacked(pt.value, checked)),
+        }))
+        .find((g) => g.points.length >= 2) ?? null,
+      {
+        date: fm.date ? String(fm.date).slice(0, 10) : slug.split('/').pop(),
+        passed: pass,
+        total: checked.length,
+      },
+    ),
   };
   console.log(`  → ${pass}/${checked.length} doğrulandı, ${fail} başarısız, ${inconclusive} sonuçsuz`);
 

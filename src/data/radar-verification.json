@@ -52,13 +52,15 @@
         "ageMonths": 1,
         "stale": false
       }
-    ]
+    ],
+    "claimsHash": "58b9f29418ce",
+    "cover": "<svg class=\"cv\" viewBox=\"0 0 1200 420\" preserveAspectRatio=\"xMidYMid slice\" role=\"presentation\" aria-hidden=\"true\">\n  <text class=\"cv-kick\" x=\"70\" y=\"78\">Solo Kurucu Bülteni</text>\n  <line class=\"cv-rule\" x1=\"70\" y1=\"100\" x2=\"1130\" y2=\"100\"/>\n  <text class=\"cv-big\" x=\"70\" y=\"214\">14 Eylül 2026</text>\n  <circle class=\"cv-m\" cx=\"80\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"112\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"144\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"176\" cy=\"300\" r=\"10\"/>\n  <text class=\"cv-tk\" x=\"70\" y=\"366\">3/4 iddia kaynağıyla eşleşti</text>\n</svg>"
   },
   "solo-founder/2026-09-15": {
     "checkedAt": "2026-09-16",
     "total": 4,
-    "passed": 3,
-    "failed": 1,
+    "passed": 2,
+    "failed": 2,
     "inconclusive": 0,
     "unsourced": 0,
     "staleCount": 2,
@@ -102,18 +104,20 @@
         "sourceDate": "2026-09-15",
         "sourceType": "Doğrulanmış gelir platformu",
         "expect": "6,441",
-        "verdict": "DOGRULANDI",
-        "detail": "",
+        "verdict": "BULUNAMADI",
+        "detail": "\"6,441\" kaynakta yok — kaynakta en yakın: \"$6,491\"",
         "ageMonths": 0,
         "stale": false
       }
-    ]
+    ],
+    "claimsHash": "782207244103",
+    "cover": "<svg class=\"cv\" viewBox=\"0 0 1200 420\" preserveAspectRatio=\"xMidYMid slice\" role=\"presentation\" aria-hidden=\"true\">\n  <text class=\"cv-kick\" x=\"70\" y=\"78\">Solo Kurucu Bülteni</text>\n  <line class=\"cv-rule\" x1=\"70\" y1=\"100\" x2=\"1130\" y2=\"100\"/>\n  <text class=\"cv-big\" x=\"70\" y=\"214\">15 Eylül 2026</text>\n  <circle class=\"cv-m\" cx=\"80\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"112\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"144\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"176\" cy=\"300\" r=\"10\"/>\n  <text class=\"cv-tk\" x=\"70\" y=\"366\">2/4 iddia kaynağıyla eşleşti</text>\n</svg>"
   },
   "solo-founder/2026-09-16": {
     "checkedAt": "2026-09-16",
     "total": 11,
-    "passed": 7,
-    "failed": 3,
+    "passed": 6,
+    "failed": 4,
     "inconclusive": 0,
     "unsourced": 1,
     "staleCount": 5,
@@ -179,8 +183,8 @@
         "sourceDate": "2026-09-16",
         "sourceType": "Doğrulanmış gelir platformu",
         "expect": "6,441",
-        "verdict": "DOGRULANDI",
-        "detail": "",
+        "verdict": "BULUNAMADI",
+        "detail": "\"6,441\" kaynakta yok — kaynakta en yakın: \"$6,491\"",
         "ageMonths": 0,
         "stale": false
       },
@@ -237,6 +241,8 @@
         "ageMonths": 0,
         "stale": false
       }
-    ]
+    ],
+    "claimsHash": "708fef9c9535",
+    "cover": "<svg class=\"cv\" viewBox=\"0 0 1200 420\" preserveAspectRatio=\"xMidYMid slice\" role=\"presentation\" aria-hidden=\"true\">\n  <text class=\"cv-kick\" x=\"70\" y=\"78\">Solo Kurucu Bülteni</text>\n  <line class=\"cv-rule\" x1=\"70\" y1=\"100\" x2=\"1130\" y2=\"100\"/>\n  <text class=\"cv-big\" x=\"70\" y=\"214\">16 Eylül 2026</text>\n  <circle class=\"cv-m\" cx=\"80\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"112\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"144\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"176\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"208\" cy=\"300\" r=\"10\"/><circle class=\"cv-m\" cx=\"240\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"272\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"304\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"336\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"368\" cy=\"300\" r=\"10\"/><circle class=\"cv-mo\" cx=\"400\" cy=\"300\" r=\"10\"/>\n  <text class=\"cv-tk\" x=\"70\" y=\"366\">6/11 iddia kaynağıyla eşleşti</text>\n</svg>"
   }
 }
