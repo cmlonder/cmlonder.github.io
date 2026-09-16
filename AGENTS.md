@@ -122,13 +122,41 @@ Neden böyle: ajan URL çekemiyor. Çekemediği bir sayfanın adresini tahmin ed
 Google arama linkine sarıp "profilden çekildi" dediği gözlendi. Bu bir talimat
 sorunu değil, yetenek sınırı. Detay: `/ai` sayfası.
 
-Yeni bülten eklerken:
-1. `src/content/radar/<YYYY-MM-DD>.md` — frontmatter'ı **yaml ile** üret,
-   elle tırnaklama. Türkçe kesme işareti (`BuiltWith'in`) YAML'ı bozar.
-2. `claims` her iddia için: `claim`, `url`, `sourceDate`, `sourceType`, `expect`.
-   `expect` kaynak metninde aranacak değerdir.
-3. `pnpm verify:radar` çalıştır, sonucu oku.
-4. `pnpm verify` (build + tip + link) ve commit.
+### Yeni bülten ekleme
+
+```bash
+pnpm radar <spark-ciktisi.txt>   # ayrıştır -> src/content/radar/<tarih>.md
+pnpm verify:radar                 # her kaynağı çek, iddiayı test et
+pnpm verify                       # build + tip + link
+```
+
+**Frontmatter'ı elle yazma.** `parse-radar.mjs` yazıyor, çünkü Türkçe kesme
+işareti (`BuiltWith'in`) elle tırnaklanan YAML'ı bozuyor — bu hata hem ajanda
+hem bu repoda ayrı ayrı gerçekleşti.
+
+Ajanın sözleşmesi: iki çitli blok, arada serbest metin.
+
+````
+```radar
+date: 2026-09-16
+title: ...
+summary: ...
+```
+
+... gövde ...
+
+```claims
+iddia | url | tarih | tür | aranacak
+Pieter Levels ~3M $ ARR | https://... | 2025-10-29 | İkincil analiz | 3M
+Post Bridge 55.175 $ MRR |  |  | TrustMRR — derin link yok |
+```
+````
+
+`aranacak` = kaynak metninde aranacak değer. Boşsa kapı doğrulayamaz.
+
+Ayrıştırıcı **sessizce devam etmez**: blok eksikse, alan sayısı tutmazsa,
+URL geçersizse veya Google arama linkiyse durur. Yarım ayrıştırıp yanlış veri
+üretmektense hata vermeyi tercih eder.
 
 ## Ne nereye yazılır
 
