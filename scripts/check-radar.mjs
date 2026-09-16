@@ -19,7 +19,15 @@ import { parse as parseYaml } from 'yaml';
 const IN  = 'inbox/radar';
 const OUT = 'src/content/radar';
 
-const die = (m) => { console.error(`\n✗ ${m}\n`); process.exitCode = 1; };
+/*
+ * Bozuk dosya İŞİ DÜŞÜRMEZ — karantinanın bütün amacı bu. Dosya
+ * kuyrukta kalır, uyarı basılır, diğer bültenler yayınlanır.
+ * Workflow "en az bir ✓ var mı" diye bakıp karar veriyor.
+ */
+const die = (m) => {
+  console.error(`\n✗ ${m}\n`);
+  if (process.env.GITHUB_ACTIONS) console.log(`::warning::${m.split('\n')[0]}`);
+};
 
 if (!existsSync(IN)) { console.log('kuyruk yok, yapacak bir şey yok.'); process.exit(0); }
 
