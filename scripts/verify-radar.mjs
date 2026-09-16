@@ -225,7 +225,27 @@ for (const file of files) {
       verdict = /taslak|kaynaksız|model/i.test(c.sourceType || '') ? 'KAYNAKSIZ' : 'URL_YOK';
       detail = c.sourceType || '';
     } else {
-      const r = await fetchText(c.url);
+      let r = await fetchText(c.url);
+      /*
+       * Bot duvarları yaygın (gözlenen: Medium HTTP 403). Kaynağın
+       * kendisine erişilemiyorsa iddia hâlâ kontrol edilebilir — sadece
+       * nereden baktığımız değişir, ve bunu sonuçta SÖYLÜYORUZ.
+       *
+       * Doğrudan erişilemezse Wayback arşivine düşüyoruz. Arşiv de
+       * yoksa ERISILEMEDI diyoruz — tahmin etmiyoruz.
+       * (r.jina.ai denendi, artık 403 veriyor; eklenmedi.)
+       */
+      let via = null;
+      if (!r.ok) {
+        const w = await fetchText(
+          `https://archive.org/wayback/available?url=${encodeURIComponent(c.url)}`);
+        let snap = null;
+        try { snap = JSON.parse(w.text ?? '{}')?.archived_snapshots?.closest?.url; } catch {}
+        if (snap) {
+          const s2 = await fetchText(snap);
+          if (s2.ok) { r = s2; via = 'arşiv kopyası'; }
+        }
+      }
       if (!r.ok) { verdict = 'ERISILEMEDI'; detail = r.reason; }
       else if (!c.expect) { verdict = 'ERISILDI'; detail = 'beklenen değer tanımlanmamış'; }
       else if (r.text.replace(/\s+/g, ' ').trim().length < 600) {
@@ -237,10 +257,13 @@ for (const file of files) {
       else {
         const hay = normalise(r.text);
         const needle = normalise(c.expect);
-        if (hay.includes(needle)) verdict = 'DOGRULANDI';
+        if (hay.includes(needle)) {
+          verdict = 'DOGRULANDI';
+          if (via) detail = `kaynağa erişilemedi, ${via} üzerinden teyit edildi`;
+        }
         else {
           verdict = 'BULUNAMADI';
-          detail = `"${c.expect}" kaynakta yok`;
+          detail = `"${c.expect}" kaynakta yok${via ? ` (${via})` : ''}`;
           const near = nearestNumber(r.text, c.expect);
           if (near) detail += ` — kaynakta en yakın: "${near}"`;
         }

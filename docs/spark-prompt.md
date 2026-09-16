@@ -1,4 +1,4 @@
-# Solo Kurucu Bülteni — Spark prompt (v8)
+# Solo Kurucu Bülteni — Spark prompt (v8.1)
 
 > Şablon sabittir. Her gün AYNI iskelet gelir, sadece içerik değişir.
 > Böylece siteye yerleştirme deterministik olur.
@@ -32,7 +32,7 @@ Başka hiçbir şey yok. Ne ön bilgi, ne kontrol listesi, ne özet kutusu.
 date: YYYY-MM-DD
 title: Solo Kurucu Bülteni — <D Ay YYYY>
 summary: <tek cümle, yüklemli, en fazla 25 kelime>
-promptVersion: v8
+promptVersion: v8.1
 
 <GİRİŞ — 2 paragraf, ~150 kelime>
 En çarpıcı SOMUT olguyla aç. Bugün ne yazacağını anlatan gündem
@@ -135,6 +135,25 @@ iddia | url | tarih | tür | aranacak
   Bir script bu metni kaynak sayfada **harfiyen** arıyor. Yeniden
   yazarsan doğru iddia bile eşleşmiyor.
 
+## Alıntı — her vaka bölümünde en az bir tane
+
+Kurucunun **kendi ağzından** bir cümle al ve yazıya göm. Blok alıntı
+olarak, kaynağına bağlantıyla:
+
+    > i'm selling because i got burned out and i'm exploring new projects.
+
+    diye yazmış [satış notunda](https://trustmrr.com/startup/appalchemy).
+
+Kurallar:
+
+- Alıntı **birebir** olacak. Çevirme, kısaltma, düzeltme. Kaynak
+  İngilizceyse İngilizce kalır; Türkçe açıklamasını cümlende verirsin.
+- Alıntı için iddia bloğuna satır ekle ve `aranacak` sütununa
+  **alıntının kendisini** (ya da en ayırt edici 5-8 kelimesini) yaz.
+  Script onu kaynak sayfada harfiyen arayacak.
+- Hatırlamadığın, "böyle demiş olmalı" dediğin cümleyi yazma. Alıntı
+  uydurmak en ağır hatadır ve script bunu kesin yakalar.
+
 ## İsteğe bağlı: grafik
 
 Bir vakanın ciro seyri iki veya daha fazla doğrulanmış rakamla
@@ -142,8 +161,12 @@ gösterilebiliyorsa, iddia bloğundan sonra ikinci bir blok ekle:
 
 ```
 grafik | başlık | seri
-appalchemy-ciro | AppAlchemy aylık ciro | 2025-08:17000, 2026-09:6441
+appalchemy-ciro | AppAlchemy aylık ciro | 2025-02:0, 2025-08:17000, 2026-09:6441
 ```
+
+Mümkün olduğunca **çok nokta** ver — lansman, ilk gelir, zirve, bugün.
+İki noktalı bir çizgi az şey anlatır; dört noktalı bir eğri hikâyeyi
+anlatır. Her noktanın iddia bloğunda doğrulanmış karşılığı olmalı.
 
 Yazıda grafiğin gelmesini istediğin yere `[grafik: appalchemy-ciro]`
 yaz. Her veri noktası iddia bloğunda **doğrulanmış** bir satıra
