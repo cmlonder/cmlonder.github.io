@@ -28,6 +28,56 @@ function kur() {
   yeniBultenleriGonder();
 }
 
+/**
+ * ELLE TEST — günlük tetikleyiciyi beklemeden çalıştır.
+ *
+ * "Gönderildi" damgalarını temizler, böylece daha önce gönderilmiş
+ * Doc'lar da yeniden gönderilir. Editörde fonksiyon listesinden
+ * testGonder seç -> Çalıştır -> Yürütmeler sekmesinden sonucu izle.
+ */
+function testGonder() {
+  const props = PropertiesService.getScriptProperties();
+  const hepsi = props.getProperties();
+  let n = 0;
+  for (const k of Object.keys(hepsi)) {
+    if (k.indexOf('gonderildi_') === 0) { props.deleteProperty(k); n++; }
+  }
+  Logger.log(n + ' damga temizlendi, yeniden gönderiliyor…');
+  yeniBultenleriGonder();
+}
+
+/**
+ * Bağlantıları sınar; hiçbir şey göndermez.
+ * Token ve klasör doğru mu, Doc'ta görsel var mı — hepsini söyler.
+ */
+function kontrolEt() {
+  const props = PropertiesService.getScriptProperties();
+  const token = props.getProperty('GITHUB_TOKEN');
+  const folderId = props.getProperty('FOLDER_ID');
+  Logger.log('GITHUB_TOKEN : ' + (token ? 'tanımlı (' + token.length + ' karakter)' : 'YOK'));
+  Logger.log('FOLDER_ID    : ' + (folderId || 'YOK'));
+  if (!token || !folderId) return;
+
+  const res = UrlFetchApp.fetch('https://api.github.com/repos/' + REPO, {
+    headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' },
+    muteHttpExceptions: true,
+  });
+  Logger.log('GitHub erişimi: HTTP ' + res.getResponseCode() +
+             (res.getResponseCode() === 200 ? ' — tamam' : ' — token veya izin hatalı'));
+
+  const files = DriveApp.getFolderById(folderId).getFilesByType(MimeType.GOOGLE_DOCS);
+  let n = 0;
+  while (files.hasNext()) {
+    const f = files.next();
+    const g = ilkGorsel(f.getId());
+    Logger.log('  Doc: ' + f.getName() +
+               ' | güncellendi: ' + f.getLastUpdated().toISOString().slice(0, 16) +
+               ' | görsel: ' + (g ? g.uzanti + ' ' + Math.round(g.bytes.length / 1024) + ' KB' : 'YOK'));
+    n++;
+  }
+  Logger.log(n + ' Doc bulundu.');
+}
+
 function yeniBultenleriGonder() {
   const props    = PropertiesService.getScriptProperties();
   const folderId = props.getProperty('FOLDER_ID');
