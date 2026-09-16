@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import { Image } from 'astro:assets';
+import RadarMeta from '../../../components/RadarMeta.astro';
 import { RADAR, RADAR_SERIES, SITE, type Locale } from '../../../config';
 import { formatDate } from '../../../lib/content';
 
@@ -53,6 +54,7 @@ const { Content } = await render(entry);
       </p>
       <h1>{entry.data.title}</h1>
       <p class="standfirst">{entry.data.summary}</p>
+      <RadarMeta data={entry.data} />
     </header>
 
     {kapak && (

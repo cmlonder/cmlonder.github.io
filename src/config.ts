@@ -139,6 +139,58 @@ export const COMMENTS = {
  * Radar — makine üretimi bölge. Bilerek ayrı tutuluyor: ana RSS'e karışmaz,
  * anasayfada Essays kartlarıyla aynı ızgarada durmaz.
  */
+/**
+ * Radar sınıflandırma etiketleri.
+ * Anahtarlar Spark'ın frontmatter'a yazdığı değerler; burada yalnızca
+ * Türkçe karşılıkları duruyor. Bilinmeyen değer sessizce gizleniyor —
+ * yeni bir kategori bülteni yayınlanmaktan alıkoymasın.
+ */
+export const RADAR_CATEGORY: Record<string, string> = {
+  kernel: 'Derin sistemler',
+  ebpf: 'Derin sistemler',
+  'low-level': 'Derin sistemler',
+  'indie-game': 'Bağımsız oyun',
+  trivia: 'Bağımsız oyun',
+  'ip-monetization': 'IP gelirleştirme',
+  'tech-media': 'Teknik medya',
+  architecture: 'Mimari',
+  'asset-library': 'Görsel varlık',
+  'prompt-engineering': 'Prompt mühendisliği',
+  'dev-tools': 'Geliştirici araçları',
+  debugging: 'Hata ayıklama',
+  'physical-tech': 'Fiziksel teknoloji',
+  chemistry: 'Kimya',
+  b2b: 'Görünmez B2B',
+  'micro-saas': 'Mikro SaaS',
+  'legal-tech': 'Yasal altyapı',
+  compliance: 'Uyum',
+  'post-mortem': 'Post-mortem',
+  failure: 'Post-mortem',
+  'cash-cow': 'Çirkin ama kârlı',
+  bootstrapped: 'Bootstrapped',
+  wildcard: 'Joker',
+};
+
+export const RADAR_DEFENSIBILITY: Record<string, string> = {
+  deep_tech: 'Derin teknoloji',
+  distribution: 'Dağıtım',
+  creative_ip: 'Yaratıcı IP',
+  operational: 'Operasyon',
+};
+
+export const RADAR_STATUS: Record<string, string> = {
+  active: 'Faal',
+  acquired: 'Satıldı',
+  graveyard: 'Kapandı',
+};
+
+export const RADAR_REVENUE_SOURCE: Record<string, string> = {
+  platform: 'Platform verisi',
+  interview: 'Kurucu mülakatı',
+  self_reported: 'Kurucu beyanı',
+  unknown: 'Kaynağı belirsiz',
+};
+
 export const RADAR = {
   path: 'radar',
   name:  { en: 'Radar', tr: 'Radar' } as Record<Locale, string>,

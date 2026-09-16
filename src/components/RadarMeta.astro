@@ -1,0 +1,68 @@
+---
+/**
+ * Bültenin künyesi — vaka bazlı, toplu istatistik değil.
+ * Tek bir bültenle bile anlamlı; alan yoksa hiç görünmüyor.
+ */
+import { RADAR_CATEGORY, RADAR_DEFENSIBILITY, RADAR_STATUS, RADAR_REVENUE_SOURCE } from '../config';
+
+interface Props { data: any }
+const { data } = Astro.props as Props;
+
+const cat = data.category ? (RADAR_CATEGORY[data.category] ?? data.category) : null;
+const rows = [
+  data.status        && { k: 'Durum',       v: RADAR_STATUS[data.status] ?? data.status,
+                          mod: data.status },
+  data.defensibility && { k: 'Savunma hattı', v: RADAR_DEFENSIBILITY[data.defensibility] ?? data.defensibility },
+  data.revenue_source && { k: 'Ciro kaynağı', v: RADAR_REVENUE_SOURCE[data.revenue_source] ?? data.revenue_source },
+].filter(Boolean) as { k: string; v: string; mod?: string }[];
+
+const stack: string[] = data.core_stack ?? [];
+---
+
+{(cat || rows.length || stack.length) && (
+  <aside class="rmeta">
+    {cat && <a class="cat" href={`/radar/kategori/${data.category}`}>{cat}</a>}
+    {rows.map((r) => (
+      <span class="row"><span class="k">{r.k}</span><span class="v" data-s={r.mod}>{r.v}</span></span>
+    ))}
+    {stack.length > 0 && (
+      <span class="row stack">
+        <span class="k">Yığın</span>
+        <span class="v">{stack.map((t, i) => <><code>{t}</code>{i < stack.length - 1 && ' '}</>)}</span>
+      </span>
+    )}
+  </aside>
+)}
+
+<style>
+  .rmeta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-2xs) var(--s-s);
+    margin-block: var(--s-m) 0;
+    padding-block: var(--s-2xs);
+    border-block: 1px solid var(--c-border);
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+  }
+  .cat {
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--c-accent);
+    text-decoration: none;
+  }
+  .cat:hover { text-decoration: underline; }
+  .row { display: inline-flex; gap: .45em; align-items: baseline; }
+  .k { color: var(--c-muted); }
+  .v { color: var(--c-text); }
+  .v[data-s='graveyard'] { color: var(--c-accent); }
+  .v code {
+    font-family: var(--f-mono);
+    font-size: .92em;
+    padding: .1em .35em;
+    border-radius: var(--radius-sm);
+    background: var(--c-tinted);
+  }
+  .stack .v { display: inline-flex; flex-wrap: wrap; gap: .3em; }
+</style>
