@@ -214,12 +214,25 @@ if (body.length < 200) die(`gövde çok kısa (${body.length} karakter) — ayr�
  * eskiden burada 79 satır v6 tamiri vardı, hepsi silindi.
  */
 function normalise(md) {
-  return md
-    .replace(/^(#{1,4})\s+\*\*(.*?)\*\*\s*$/gm, '$1 $2')
-    // "[1]" -> Kaynaklar listesindeki 1. satıra üst simge bağlantı.
-    // Markdown bağlantısını ("[1](url)") bozmamak için ( gelirse atla.
-    .replace(/\[(\d{1,2})\](?!\()/g,
-             (_m, n) => `<sup class="ref"><a href="#k${n}" id="r${n}">${n}</a></sup>`);
+  let out = md.replace(/^(#{1,4})\s+\*\*(.*?)\*\*\s*$/gm, '$1 $2');
+
+  // Başlık seviyesi: sayfada zaten bir h1 var (bültenin adı). Docs
+  // bölüm başlıklarını "#" olarak veriyor; olduğu gibi bırakırsak
+  // sayfada dört h1 oluşuyor. En sığ başlık h2 olacak şekilde kaydır.
+  const levels = [...out.matchAll(/^(#{1,6})\s+\S/gm)].map((m) => m[1].length);
+  const shift = levels.length ? 2 - Math.min(...levels) : 0;
+  if (shift > 0) {
+    out = out.replace(/^(#{1,6})(\s+\S)/gm,
+      (_m, h, rest) => '#'.repeat(Math.min(6, h.length + shift)) + rest);
+  }
+
+  // Numaralı atıf. Docs export'u köşeli parantezi KAÇIRIYOR: "\[1\]".
+  // Kaçışsız hali de kabul ediliyor. Markdown bağlantısını bozmamak
+  // için "(" gelirse atlanıyor.
+  out = out.replace(/\\?\[(\d{1,2})\\?\](?!\()/g,
+    (_m, n) => `<sup class="ref"><a href="#k${n}" id="r${n}">${n}</a></sup>`);
+
+  return out;
 }
 
 
