@@ -44,6 +44,21 @@ O kategoride yeterli derinlikte vaka bulamazsan **matristen başka bir
 kategori seç** ve onun etiketini yaz. "Joker" diye bir kategori yok —
 okur arkadaki rotasyonu bilmek zorunda değil.
 
+## Konu sınırları
+
+Şu alanlardaki girişimleri **hiç yazma** — kârlı olsalar, teknik olarak
+ilginç olsalar, kategoriye uysalar bile:
+
+- Kumar, bahis, şans oyunları, kripto/hisse "sinyal" ve kaldıraç ürünleri
+- Faiz/kredi üzerinden kazanç sağlayan finansal ürünler
+- Yetişkin içeriği, cinsellik, flört/eşleşme uygulamaları
+- Alkol, tütün, nikotin ürünleri
+- Aldatmaya dayalı işler: sahte takipçi/yorum, sınav kopyası,
+  intihal araçları, tıklama sahtekârlığı
+
+O günün kategorisinde geriye yeterli vaka kalmazsa **başka bir kategori
+seç**. Bu liste kategoriden önce gelir.
+
 ## Anti-klişe kalkanı
 
 - Arama motorundaki ilk 3 genel geçer sonucu reddet.

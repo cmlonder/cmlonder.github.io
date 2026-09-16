@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import { Image } from 'astro:assets';
 import RadarMeta from '../../../components/RadarMeta.astro';
-import { RADAR, RADAR_SERIES, SITE, type Locale } from '../../../config';
+import { RADAR, RADAR_SERIES, RADAR_REVENUE_SOURCE, SITE, type Locale } from '../../../config';
 import { formatDate } from '../../../lib/content';
 
 export async function getStaticPaths() {
@@ -63,6 +63,13 @@ const { Content } = await render(entry);
     )}
 
     <div class="prose"><Content /></div>
+    {entry.data.revenue_source && (
+      <p class="kaynak-notu">
+        Ciro rakamlarının kaynağı:{' '}
+        <strong>{RADAR_REVENUE_SOURCE[entry.data.revenue_source] ?? entry.data.revenue_source}</strong>.
+      </p>
+    )}
+
     <nav class="daynav" aria-label="Diğer bültenler">
       {prev ? (
         <a class="prev" href={`/radar/${prev.id}`}>
@@ -96,6 +103,14 @@ const { Content } = await render(entry);
 })} is:inline />
 
 <style>
+  .kaynak-notu {
+    margin-block-start: var(--s-s);
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    color: var(--c-muted);
+  }
+  .kaynak-notu strong { font-weight: 600; color: var(--c-text); }
+
   .daynav {
     display: flex;
     justify-content: space-between;

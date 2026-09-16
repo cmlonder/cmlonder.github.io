@@ -1,63 +1,65 @@
 ---
 /**
- * Bültenin künyesi — vaka bazlı, toplu istatistik değil.
- * Tek bir bültenle bile anlamlı; alan yoksa hiç görünmüyor.
+ * Bültenin gezinme şeridi: kategori + etiketler, hepsi tıklanabilir.
+ *
+ * Eskiden burada "Durum / Savunma hattı / Yığın / Ciro kaynağı" diye bir
+ * künye tablosu vardı — künye tabelası gibi duruyordu ve çoğu tıklanamıyordu.
+ * Artık yalnızca GEZİNME var; ciro kaynağı kaynak listesinin yanına taşındı,
+ * çünkü o bir künye değil, kaynak bilgisi.
  */
-import { RADAR_CATEGORY, RADAR_REVENUE_SOURCE } from '../config';
+import { RADAR_CATEGORY } from '../config';
 
 interface Props { data: any }
 const { data } = Astro.props as Props;
 
-const cat = data.category ? (RADAR_CATEGORY[data.category] ?? data.category) : null;
-const rows = [
-  data.revenue_source && { k: 'Ciro kaynağı', v: RADAR_REVENUE_SOURCE[data.revenue_source] ?? data.revenue_source },
-].filter(Boolean) as { k: string; v: string }[];
-
+const cat: string | null = data.category ?? null;
 const tags: string[] = data.tags ?? [];
 ---
 
-{(cat || rows.length || tags.length) && (
-  <aside class="rmeta">
-    {cat && <a class="cat" href={`/radar/kategori/${data.category}`}>{cat}</a>}
-    {rows.map((r) => (
-      <span class="row"><span class="k">{r.k}</span><span class="v">{r.v}</span></span>
-    ))}
-    {tags.length > 0 && (
-      <span class="row tags">
-        <span class="k">Etiket</span>
-        <span class="v">{tags.map((t) => <span class="tag">{t}</span>)}</span>
-      </span>
+{(cat || tags.length > 0) && (
+  <nav class="chips" aria-label="Kategori ve etiketler">
+    {cat && (
+      <a class="chip cat" href={`/radar/kategori/${cat}`}>
+        {RADAR_CATEGORY[cat] ?? cat}
+      </a>
     )}
-  </aside>
+    {tags.map((t) => (
+      <a class="chip tag" href={`/radar/etiket/${t}`}>{t}</a>
+    ))}
+  </nav>
 )}
 
 <style>
-  .rmeta {
+  .chips {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--s-2xs) var(--s-s);
-    margin-block: var(--s-m) 0;
-    padding-block: var(--s-2xs);
-    border-block: 1px solid var(--c-border);
+    gap: .4rem;
+    margin-block: var(--s-m) var(--s-l);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 32px;
+    padding-inline: .85em;
+    border-radius: 999px;
     font-family: var(--f-sans);
     font-size: var(--t-xs);
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
   }
   .cat {
-    text-transform: uppercase;
-    letter-spacing: .08em;
     color: var(--c-accent);
-    text-decoration: none;
+    background: color-mix(in srgb, var(--c-accent) 11%, transparent);
+    font-weight: 600;
+    letter-spacing: .01em;
   }
-  .cat:hover { text-decoration: underline; }
-  .row { display: inline-flex; gap: .45em; align-items: baseline; }
-  .k { color: var(--c-muted); }
-  .v { color: var(--c-text); }
-  .tags .v { display: inline-flex; flex-wrap: wrap; gap: .3em; }
+  .cat:hover { background: color-mix(in srgb, var(--c-accent) 20%, transparent); }
   .tag {
-    padding: .1em .5em;
-    border: 1px solid var(--c-border);
-    border-radius: 99px;
     color: var(--c-muted);
+    border: 1px solid var(--c-border);
   }
+  .tag::before { content: '#'; opacity: .5; margin-inline-end: .15em; }
+  .tag:hover { color: var(--c-accent); border-color: currentColor; }
 </style>
