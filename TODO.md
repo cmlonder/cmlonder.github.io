@@ -126,3 +126,30 @@ Kalan:
   değişirse yeniden üretilmeli; üretici script commit'te yok.
 - **Chrome eklentisi** — `claude.ai/chrome`. Bağlanırsa ajan etkileşimli
   durumları (açık dropdown, hover) doğrudan doğrulayabilir.
+
+
+## Radar zinciri hakkında yazı (backlog)
+
+Spark → Google Doc → Apps Script → GitHub Actions → site zincirini uçtan
+uca anlatan bir yazı. `docs/radar-kurulum.md` ve `docs/spark-prompt.md`
+zaten iskeleti taşıyor.
+
+Yazının asıl değeri kurulum adımları değil, yol boyunca çıkan gerçek
+bulgular:
+
+- Spark URL çekemiyor. Kanıt: var olmayan bir slug uydurup
+  "profilden çekildi" dedi. Doğrulama koda taşındı.
+- Uydurmaya karşı eklenen her prompt koruması çıktıda GÖRÜNÜR bir
+  bölüme dönüştü. 1538 kelimede 44 başlık. İskele metne değil,
+  iddia bloğuna ait.
+- Google Docs export'u: prose bağlantılarını koruyor, TABLO HÜCRESİ
+  bağlantılarını siliyor, kod bloklarını olduğu gibi geçiriyor, fence
+  dil etiketini düşürüyor. Bu yüzden iddialar kod bloğunda taşınıyor.
+- Canlı kaynaklar kayıyor. TrustMRR'da "$6,441" bir gün sonra "$6,491"
+  oldu. Doğrulama yayın anında dondurulmalı, yoksa yayınlanmış yazı
+  zamanla kendiliğinden "doğrulanmamış"a dönüşüyor.
+- GITHUB_TOKEN ile atılan push başka workflow tetiklemiyor; çağrılan
+  workflow da TETİKLEYEN commit'i checkout ediyor. İkisi birleşince
+  zincir "başarılı" görünüp bir gün eski içeriği yayınlıyordu.
+- Ajan gerçek bir satılık ilanını doğru aktardı ama fiyatı uydurdu.
+  Sayfada ilan var, fiyat yok. Script yakaladı.
