@@ -39,10 +39,28 @@ const REQUIRED_META = ['date', 'title', 'summary'];
 
 const die = (msg) => { console.error(`\n✗ ${msg}\n`); process.exit(1); };
 
-function fence(text, name) {
-  const re = new RegExp('```' + name + '\\s*\\n([\\s\\S]*?)```', 'm');
-  const m = re.exec(text);
-  return m ? m[1] : null;
+/** Belgedeki tüm çitli blokların içeriği. */
+function fences(text) {
+  return [...text.matchAll(/```[^\n]*\n([\s\S]*?)```/g)].map((m) => m[1]);
+}
+
+/**
+ * Blokları ETİKETE değil İÇERİĞE göre tanı.
+ *
+ * Google Docs kod bloklarında dil etiketi taşımıyor — Spark ```radar yazsa
+ * bile export ```  olarak geliyor. Etikete güvenmek boru hattını Docs'un
+ * biçimlendirme davranışına bağımlı kılar.
+ */
+function classify(text) {
+  let meta = null, claims = null;
+  for (const block of fences(text)) {
+    const lines = block.split('\n').map((l) => l.trim()).filter(Boolean);
+    if (!lines.length) continue;
+    const pipey = lines.filter((l) => (l.match(/\|/g) ?? []).length >= 3).length;
+    if (!claims && pipey >= Math.max(2, lines.length * 0.6)) { claims = block; continue; }
+    if (!meta && lines.some((l) => /^date:\s*\d{4}-\d{2}-\d{2}/.test(l))) { meta = block; continue; }
+  }
+  return { meta, claims };
 }
 
 /** key: value — değer satır sonuna kadar aynen alınır, tırnak yok. */
@@ -83,11 +101,13 @@ function parseClaims(block) {
   return rows;
 }
 
-/** YAML'ı biz yazıyoruz — blok skaler ile kaçış sorunu tamamen yok. */
-const yamlStr = (v) => {
-  const s = String(v);
-  return /[:#\-?{}[\]&*!|>'"%@`\n]/.test(s) ? `"${s.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"` : s;
-};
+/**
+ * YAML'ı biz yazıyoruz. Her değer tırnaklanır — "701" gibi çıplak bir sayı
+ * tırnaksız bırakılırsa YAML onu number yapar ve şema doğrulaması patlar.
+ * Seçici tırnaklamak yerine hepsini tırnaklamak daha az düşünce gerektiriyor.
+ */
+const yamlStr = (v) =>
+  `"${String(v).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 
 const series = process.argv[2];
 const src = process.argv[3];
@@ -99,10 +119,9 @@ if (!existsSync(`src/content/radar/${series}`)) {
 }
 const text = src === '-' ? readFileSync(0, 'utf8') : readFileSync(src, 'utf8');
 
-const metaBlock = fence(text, 'radar');
-const claimsBlock = fence(text, 'claims');
-if (!metaBlock) die('```radar bloğu yok. Spark prompt\'u güncellenmeli.');
-if (!claimsBlock) die('```claims bloğu yok. Spark prompt\'u güncellenmeli.');
+const { meta: metaBlock, claims: claimsBlock } = classify(text);
+if (!metaBlock) die('metadata bloğu bulunamadı — "date: YYYY-MM-DD" satırı olan çitli bir blok gerekiyor.');
+if (!claimsBlock) die('claims bloğu bulunamadı — boru ile ayrılmış satırlar içeren çitli bir blok gerekiyor.');
 
 const meta = parseMeta(metaBlock);
 for (const k of REQUIRED_META) if (!meta[k]) die(`radar bloğunda "${k}" eksik`);
@@ -111,10 +130,9 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(meta.date)) die(`date "YYYY-MM-DD" olmalı, gele
 const claims = parseClaims(claimsBlock);
 if (!claims.length) die('claims bloğunda hiç satır yok');
 
-// Gövde: iki blok arasında kalan metin
+// Gövde: çitli blokların dışında kalan metin
 const body = text
-  .replace(/```radar\s*\n[\s\S]*?```/m, '')
-  .replace(/```claims\s*\n[\s\S]*?```/m, '')
+  .replace(/```[^\n]*\n[\s\S]*?```/g, '')
   .replace(/^#[^\n]*\n/, '')          // ajanın kendi H1'i — başlık frontmatter'da
   .trim();
 if (body.length < 200) die(`gövde çok kısa (${body.length} karakter) — ayrıştırma hatalı olabilir`);

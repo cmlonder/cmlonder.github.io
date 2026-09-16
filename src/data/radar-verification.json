@@ -111,18 +111,18 @@
   },
   "solo-founder/2026-09-16": {
     "checkedAt": "2026-09-16",
-    "total": 9,
-    "passed": 5,
-    "failed": 3,
+    "total": 12,
+    "passed": 6,
+    "failed": 5,
     "inconclusive": 0,
     "unsourced": 1,
-    "staleCount": 2,
+    "staleCount": 4,
     "claims": [
       {
         "claim": "Pieter Levels ~3M $ ARR portföy cirosu",
         "url": "https://www.fast-saas.com/blog/pieter-levels-success-story/",
         "sourceDate": "2025-10-29",
-        "sourceType": "İkincil vaka analizi (portföy toplamı)",
+        "sourceType": "İkincil vaka analizi (Portföy toplamı)",
         "expect": "3M",
         "verdict": "DOGRULANDI",
         "detail": "",
@@ -130,29 +130,29 @@
         "stale": false
       },
       {
-        "claim": "Pieter Levels: tek kurucu, sıfır VC",
+        "claim": "Pieter Levels tek kurucu ve sıfır çalışan",
         "url": "https://levels.io/nomad-list-founder",
         "sourceDate": "2017-01-07",
-        "sourceType": "Kurucunun resmi blogu (tarihsel referans)",
-        "expect": "Nomad List",
+        "sourceType": "Kurucunun resmi blogu",
+        "expect": "levels.io",
         "verdict": "DOGRULANDI",
         "detail": "",
         "ageMonths": 116,
         "stale": true
       },
       {
-        "claim": "Nomads.com ücretsiz yapıldı (1$ kayıt ücreti hariç)",
+        "claim": "Pieter Levels Nomads.com ücretsiz yapıldı",
         "url": "https://levels.io/tag/nomad-list",
         "sourceDate": "2026-09-05",
         "sourceType": "Kurucunun resmi blog arşivi",
-        "expect": "free",
+        "expect": "nomads.com free",
         "verdict": "DOGRULANDI",
         "detail": "",
         "ageMonths": 0,
         "stale": false
       },
       {
-        "claim": "AppAlchemy canlı ciro 6.441 $ MRR",
+        "claim": "Diego Roshardt (AppAlchemy) canlı ciro $6.441 MRR / $5.890 son 30 gün",
         "url": "https://trustmrr.com/startup/appalchemy",
         "sourceDate": "2026-09-16",
         "sourceType": "Doğrulanmış gelir platformu canlı profili",
@@ -163,21 +163,32 @@
         "stale": false
       },
       {
-        "claim": "AppAlchemy son 30 gün 5.890 $",
+        "claim": "Diego Roshardt (AppAlchemy) satılık ilanı ($45k, 0.46x TTM)",
         "url": "https://trustmrr.com/startup/appalchemy",
         "sourceDate": "2026-09-16",
-        "sourceType": "Doğrulanmış gelir platformu canlı profili",
-        "expect": "5,890",
+        "sourceType": "Doğrulanmış gelir platformu ilanı ve notu",
+        "expect": "45,000",
         "verdict": "BULUNAMADI",
-        "detail": "\"5,890\" kaynakta yok — kaynakta en yakın: \"$5,889\"",
+        "detail": "\"45,000\" kaynakta yok",
         "ageMonths": 0,
         "stale": false
       },
       {
-        "claim": "AppAlchemy zirve dönem 17K $ MRR",
+        "claim": "Diego Roshardt (AppAlchemy) lansman 1 Şubat 2025",
         "url": "https://www.starterstory.com/appalchemy-breakdown",
         "sourceDate": "2025-08-19",
-        "sourceType": "Kurucu mülakatı (tarihsel zirve)",
+        "sourceType": "Kurucu mülakatı",
+        "expect": "February 1, 2025",
+        "verdict": "BULUNAMADI",
+        "detail": "\"February 1, 2025\" kaynakta yok — kaynakta en yakın: \"11,885\"",
+        "ageMonths": 13,
+        "stale": true
+      },
+      {
+        "claim": "Diego Roshardt zirve dönem $17K MRR",
+        "url": "https://www.starterstory.com/appalchemy-breakdown",
+        "sourceDate": "2025-08-19",
+        "sourceType": "Kurucu mülakatı (Tarihsel zirve)",
         "expect": "17K",
         "verdict": "DOGRULANDI",
         "detail": "",
@@ -185,19 +196,19 @@
         "stale": true
       },
       {
-        "claim": "Post Bridge 55.175 $ MRR",
+        "claim": "Near-Miss: Jack Friks (Post Bridge) 55.175 $ MRR",
         "sourceDate": "2026-09-16",
-        "sourceType": "TrustMRR platform verisi — ajan derin link bulamadı",
+        "sourceType": "TrustMRR platform verisi",
         "verdict": "URL_YOK",
-        "detail": "TrustMRR platform verisi — ajan derin link bulamadı",
+        "detail": "TrustMRR platform verisi",
         "ageMonths": 0,
         "stale": false
       },
       {
-        "claim": "Post Bridge kuruluş Eylül 2024 / 35k $ MRR röportajı",
+        "claim": "Near-Miss: Jack Friks (Post Bridge) kuruluş Eylül 2024 / $35k MRR",
         "url": "https://www.indiehackers.com/post/tech/hitting-35k-mrr-after-struggling-to-make-money-online-for-four-years-CNVpxrwIVqxcsfZ4fERw",
         "sourceDate": "2026-06-17",
-        "sourceType": "Kurucu röportajı",
+        "sourceType": "Kurucu röportajı (Başlık 2'den elendi)",
         "expect": "35K",
         "verdict": "DOGRULANDI",
         "detail": "",
@@ -205,11 +216,31 @@
         "stale": false
       },
       {
+        "claim": "Near-Miss: Siyabend Özdemir (GenPPT) $6.670 son 30 gün ciro",
+        "sourceDate": "2026-09-16",
+        "sourceType": "TrustMRR platform verisi",
+        "verdict": "URL_YOK",
+        "detail": "TrustMRR platform verisi",
+        "ageMonths": 0,
+        "stale": false
+      },
+      {
+        "claim": "Near-Miss: Siyabend Özdemir (GenPPT) lansman Ekim 2024 / $701 ilk dönem",
+        "url": "https://www.starterstory.com/genppt-breakdown",
+        "sourceDate": "2024-10-25",
+        "sourceType": "Kurucu mülakatı (Başlık 2'den elendi)",
+        "expect": "701",
+        "verdict": "DOGRULANDI",
+        "detail": "",
+        "ageMonths": 23,
+        "stale": true
+      },
+      {
         "claim": "Mac Studio token arbitraj modeli",
         "sourceDate": "2026-09-16",
-        "sourceType": "Teknik mimari taslak — doğrulanmış vaka değildir",
+        "sourceType": "Teknik mimari taslak",
         "verdict": "KAYNAKSIZ",
-        "detail": "Teknik mimari taslak — doğrulanmış vaka değildir",
+        "detail": "Teknik mimari taslak",
         "ageMonths": 0,
         "stale": false
       }
