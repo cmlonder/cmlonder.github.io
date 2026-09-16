@@ -78,6 +78,8 @@ jobs:
     needs: isle
     if: needs.isle.outputs.degisti == 'true'
     uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ github.ref_name }}   # bot commit'i push edildikten SONRA çekilir
     permissions:
       contents: read
       pages: write

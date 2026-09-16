@@ -6,6 +6,12 @@ on:
   workflow_dispatch:
   # radar.yml buradan çağırır (bot push'u kendi başına deploy tetiklemiyor)
   workflow_call:
+    inputs:
+      ref:
+        description: Build edilecek ref. Boşsa tetikleyen commit kullanılır.
+        type: string
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -22,6 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          # radar.yml çağırdığında bot'un yeni commit'i build edilmeli;
+          # varsayılan davranış TETİKLEYEN commit'i alır ve bayat yayınlar.
+          ref: ${{ inputs.ref || github.ref }}
       # pnpm sürümü package.json'daki packageManager alanından okunur.
       # Burada da belirtmek "Multiple versions of pnpm specified" hatası verir.
       - uses: withastro/action@v6
