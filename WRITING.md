@@ -207,6 +207,60 @@ Serbest etiket gerekiyorsa `tags` alanı var (`kafka`, `postgres`,
 
 ---
 
+## Bağlantı kurmak
+
+Bu bir bahçe, arşiv değil. Bahçeyi bahçe yapan şey yazıların birbirine
+bağlanması — yoksa elinde tarih sırasına dizilmiş bağımsız yazılar kalır.
+
+**Yeni yazı yazarken en az bir eski yazıya bağlan.** Zorlama; doğal bir
+yer yoksa bağlanma. Ama genellikle vardır:
+
+- Bir iddiayı savunurken daha önce anlattığın somut vakaya
+- Bir kararı anlatırken o kararın çıktığı playbook'a
+- Bir sinyali paylaşırken o konudaki kendi denemene
+
+Bağlantı **site içi yol** olarak yazılır, tam URL olarak değil:
+
+    ✅ [okuma replikaları](/playbooks/read-replicas-before-sharding)
+    ❌ [okuma replikaları](https://cmlonder.com/playbooks/read-replicas-before-sharding)
+
+Site içi yol, `Buraya bağlananlar` bölümünü besliyor: bağlandığın yazının
+altında senin yazın görünüyor. Tam URL yazarsan bu bağ kurulmuyor.
+
+**Türkçe yazı Türkçe yazıya bağlanır.** `/tr/` ile başlayan yollar ayrı bir
+ağ; Türkçe bir nottan `/essays/...` (İngilizce) adresine bağlanırsan
+backlink oluşmaz.
+
+Eski bir yazıya geri dönüp yeni yazına bağlantı eklemek de meşru — bahçede
+yazılar donmuyor. `updatedDate` alanını güncellemeyi unutma.
+
+---
+
+## Olgunluk (status) — yalnızca Notes
+
+Notlarda bir olgunluk seviyesi var ve listede üç çubuklu bir rozetle
+görünüyor. Varsayılan `seedling`.
+
+| Seviye | Ne demek | Ne zaman yükseltilir |
+|---|---|---|
+| `seedling` (Fidan) | Ham. Fikir var, savunma yok. Yanlış olabilir | — |
+| `budding` (Filiz) | Bir kez gözden geçirildi, örnekleri oturdu | Geri dönüp düzelttiğinde |
+| `evergreen` (Kökleşmiş) | Arkasında duruyorsun, bir yıl sonra da geçerli | Zaman testinden geçtiğinde |
+
+**Neden sadece notlarda:** koleksiyonların kendisi zaten bir olgunluk
+ekseni — sinyal (link + iki cümle) → not (sesli düşünme) → playbook
+(tekrar eden karar) → deneme (savunmaya hazır iddia). Bir denemeye
+"Fidan" demek çelişki olurdu; deneme tanımı gereği bitmiş. Olgunluk
+seviyesi notların *içindeki* ikinci eksen, çünkü not olgunlaşır ve
+olgunlaştığında ya playbook'a ya denemeye dönüşür.
+
+Rozet okura dürüst bir uyarı. **Yükseltmek için geri dönüp notu gerçekten
+düzeltmen gerekiyor** — tarih geçmesi yetmez. Çoğu not Fidan olarak kalır
+ve bu normal; bahçenin tamamı Kökleşmiş olsaydı sesli düşünmeye yer
+kalmazdı.
+
+---
+
 ## Dil
 
 İngilizce varsayılan, Türkçe opsiyonel. **Her yazının Türkçesi olmak zorunda

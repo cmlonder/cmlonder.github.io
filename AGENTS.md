@@ -286,3 +286,20 @@ kullanır. pnpm 10'a geçerken dikkat: build script onayı (`esbuild`, `sharp`)
 artık `package.json` içindeki `pnpm.onlyBuiltDependencies` alanından değil,
 `pnpm-workspace.yaml` içindeki `allowBuilds` alanından okunuyor. Sürümü
 yükseltirken o dosyayı geri getir, yoksa CI `ERR_PNPM_IGNORED_BUILDS` ile durur.
+
+## Backlink'ler
+
+`getBacklinks(lang)` yazıların gövdesindeki **site içi** markdown
+bağlantılarını tarayıp ters indeks kuruyor; `Backlinks.astro` her yazının
+altında gösteriyor. Bağlantı yoksa bölüm hiç render edilmiyor.
+
+İki kural:
+
+- Önbellek **dile göre** ayrılmalı. Tek önbellek kullanınca ilk çağıran
+  dilin haritası diğerine de dönüyordu; `/tr/` ve kök ayrı ağlar.
+- Yalnızca `/` ile başlayan yollar sayılıyor. Tam URL (`https://cmlonder.com/...`)
+  bağ kurmuyor — `WRITING.md` bunu yazarlara söylüyor.
+
+Olgunluk seviyesi (`seedling`/`budding`/`evergreen`) **yalnızca notes
+şemasında**. Koleksiyonların kendisi zaten bir olgunluk ekseni olduğu için
+denemelere veya playbook'lara ayrıca seviye vermek çelişki üretiyor.
