@@ -137,6 +137,97 @@ const body = text
   .trim();
 if (body.length < 200) die(`gövde çok kısa (${body.length} karakter) — ayrıştırma hatalı olabilir`);
 
+/**
+ * Yapısal normalleştirme. KELİME DEĞİŞTİRMEZ — yalnızca markdown yapısını
+ * düzeltir, çünkü Spark'ın çıktısı bir rapor ama deneme yazısı gibi
+ * biçimlenmiş geliyor.
+ *
+ *  - Docs export başlıkları ** ile sarıyor: "## **Başlık**" -> "## Başlık"
+ *  - "Başlık 1:" / "2\. " gibi iskele önekleri başlık değil, kategori
+ *    etiketi. Kickers olarak ayrılıyor.
+ *  - "- **Etiket:** değer" dizileri aslında tanım listesi. 32 tanesi
+ *    madde işareti olarak dizilince okunmuyor.
+ */
+function normalise(md) {
+  const lines = md.split('\n');
+  const out = [];
+  const caseHeads = new Set();   // 'Başlık N:' iskelesinden gelen satır indeksleri
+  let dl = null;
+
+  // <dl> bir HTML bloğu; CommonMark içinde markdown ÇALIŞMAZ, bu yüzden
+  // satır içi biçimlendirmeyi burada HTML'e çeviriyoruz. Aksi halde
+  // "**GEÇTİ**" ekranda yıldızlarıyla görünüyor.
+  const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Docs export'u markdown kaçışı koyuyor ("2015\\)", "\\~3.000.000").
+  // Normal markdown'da görünmez; HTML bloğu içinde harfiyen çıkar.
+  const unesc = (t) => t.replace(/\\([\\`*_{}\[\]()#+\-.!~>|])/g, '$1');
+  const inline = (t) => esc(unesc(t))
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2" rel="noopener">$1</a>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/(?<![\w*])\*([^*]+)\*(?![\w*])/g, '<em>$1</em>');
+
+  const flushDl = () => {
+    if (!dl?.length) { dl = null; return; }
+    out.push('<dl class="facts">');
+    for (const [k, v] of dl) out.push(`<dt>${inline(k)}</dt><dd>${inline(v).split('\u0001').join('<br>').replace(/^(<br>)+/, '')}</dd>`);
+    out.push('</dl>', '');
+    dl = null;
+  };
+
+  for (let raw of lines) {
+    // "- **Etiket:** değer" -> tanım listesi satırı
+    const fact = /^\s*[-*]\s+\*\*([^*]+?):\*\*\s*(.+)$/.exec(raw);
+    if (fact) { (dl ??= []).push([fact[1].trim(), fact[2].trim()]); continue; }
+    // Girintili alt maddeler, açık bir dl'in devamı sayılır
+    if (dl && /^\s{2,}[-*]\s+/.test(raw)) {
+      const last = dl[dl.length - 1];
+      last[1] += '\u0001' + raw.replace(/^\s*[-*]\s+/, '').trim();   // sonra <br>'e dönüşür
+      continue;
+    }
+    if (raw.trim() === '' && dl) continue;
+    flushDl();
+
+    const h = /^(#{1,4})\s+(.*)$/.exec(raw);
+    if (h) {
+      let text = h[2].replace(/^\*\*(.*)\*\*$/, '$1').trim();   // Docs'un kalın sarmalı
+      text = text.replace(/^\d+\\?\.\s*/, '');                  // "1\. Donanım"
+      const scaffold = /^Başlık\s*\d+\s*[:—-]\s*(.*)$/i.exec(text);
+      if (scaffold) {
+        let rest = scaffold[1].trim();
+        // "Uzun kategori adı (Kurucu — Ürün)" -> başlık isim, kategori kicker
+        const named = /^(.*?)\s*\(([^()]*[—-][^()]*)\)\s*$/.exec(rest);
+        if (named) {
+          out.push(`<p class="kicker">${named[1].trim()}</p>`, '');
+          rest = named[2].trim();
+        }
+        caseHeads.add(out.length);
+        out.push(`## ${rest}`);
+        continue;
+      }
+      out.push(`${h[1] === '#' ? '##' : h[1]} ${text}`);   // sayfada zaten h1 var
+      continue;
+    }
+    out.push(raw);
+  }
+  flushDl();
+
+  // Hiyerarşi: bir kicker+h2 bir VAKA başlatır; sonraki h2'ler o vakanın
+  // alt bölümleridir ("Dürüst Değerlendirme" gibi), h3'e inmeli. Yoksa
+  // her alt bölüm vaka başlığıyla aynı ağırlıkta görünüyor.
+  let inCase = false;
+  const levelled = out.map((l, i) => {
+    if (/^<p class="kicker"/.test(l)) { inCase = false; return l; }
+    const m = /^##\s+(.*)$/.exec(l);
+    if (!m) return l;
+    if (caseHeads.has(i)) { inCase = true; return l; }   // iskele = her zaman yeni vaka
+    if (!inCase) { inCase = true; return l; }
+    return `### ${m[1]}`;                        // alt bölüm
+  });
+
+  return levelled.join('\n').replace(/\n{3,}/g, '\n\n');
+}
+
 const fm = [
   '---',
   `title: ${yamlStr(meta.title)}`,
@@ -160,7 +251,7 @@ const out = `src/content/radar/${series}/${meta.date}.md`;
 if (existsSync(out) && !process.argv.includes('--force')) {
   die(`${out} zaten var. Üzerine yazmak için --force ekle.`);
 }
-writeFileSync(out, fm + body + '\n');
+writeFileSync(out, fm + normalise(body) + '\n');
 
 const withUrl = claims.filter((c) => c.url).length;
 const withExpect = claims.filter((c) => c.expect).length;

@@ -192,3 +192,67 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
   font-family: var(--f-sans); font-size: var(--t-xs);
   line-height: 1.45; color: var(--c-muted);
 }
+
+
+/* — Radar bülteni: rapor tipografisi —
+   Ajan çıktısı bir rapor, deneme değil. '**Etiket:** değer' madde işaretleri
+   parse-radar.mjs tarafından <dl class="facts"> yapısına çevriliyor;
+   burada da tarama yapılabilir bir ızgara olarak diziliyor. */
+.prose .facts {
+  display: grid;
+  grid-template-columns: minmax(8rem, 15ch) 1fr;
+  gap: var(--s-3xs) var(--s-s);
+  margin-block: var(--s-s);
+  font-family: var(--f-sans);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+}
+.prose .facts dt {
+  color: var(--c-muted);
+  font-weight: 400;
+  text-wrap: balance;
+}
+.prose .facts dd { margin: 0; }
+.prose .facts dd + dt {
+  padding-block-start: var(--s-3xs);
+  border-block-start: 1px solid var(--c-border);
+}
+.prose .facts dd:not(:last-child) {
+  padding-block-start: var(--s-3xs);
+  border-block-start: 1px solid var(--c-border);
+}
+@media (max-width: 34rem) {
+  /* Telefonda 2 kolon 8rem etiketle sıkışıyor — üst üste diz */
+  .prose .facts { grid-template-columns: 1fr; gap: 0; }
+  .prose .facts dt {
+    padding-block-start: var(--s-2xs);
+    border-block-start: 1px solid var(--c-border);
+    font-size: var(--t-xs);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .prose .facts dd { padding-block-end: var(--s-3xs); }
+  .prose .facts dd:not(:last-child) { border-block-start: 0; padding-block-start: 0; }
+}
+
+/* Kategori etiketi — 'Başlık 2: <uzun kategori>' başlık değil, üst etiket */
+.prose .kicker {
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--c-muted);
+  margin-block: var(--s-l) 0;
+  text-wrap: balance;
+}
+.prose .kicker + h2 { margin-block-start: var(--s-3xs); }
+
+/* — Telefon geneli —
+   Ölçüldü: 390px'te uzun URL/kod/başlık taşması. Hiçbir şey yatay
+   kaydırma üretmemeli; taşabilecek bloklar kendi içinde kaysın. */
+@media (max-width: 40rem) {
+  .prose :is(h1, h2, h3, h4) { text-wrap: balance; overflow-wrap: break-word; }
+  .prose :is(pre, table) { max-inline-size: 100%; }
+  .prose pre { overflow-x: auto; }
+  .prose a { overflow-wrap: anywhere; }
+}

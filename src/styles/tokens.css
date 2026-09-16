@@ -16,15 +16,18 @@
     (var(--fluid-max-width) - var(--fluid-min-width))
   );
 
-  /* — Tipografi adımları (min px -> max px) — */
-  --f--2-min: 13.33;  --f--2-max: 15;
-  --f--1-min: 16;     --f--1-max: 16.5;
-  --f-0-min:  20;     --f-0-max:  22;    /* gövde */
-  --f-1-min:  25;     --f-1-max:  28.6;
-  --f-2-min:  30;     --f-2-max:  36;
-  --f-3-min:  39.06;  --f-3-max:  44;
-  --f-4-min:  46.87;  --f-4-max:  56;
-  --f-5-min:  57.6;   --f-5-max:  81.8;  /* hero */
+  /* — Tipografi adımları (min px @320 -> max px @1200) —
+     min değerler TELEFON boyutlarıdır, masaüstünün küçültülmüşü değil.
+     Ölçüldü: eski minimumlar (gövde 20, hero 57.6) masaüstü değerleriydi;
+     390px ekranda hero satır başına 12 karaktere düşüyordu. */
+  --f--2-min: 12.5;   --f--2-max: 15;
+  --f--1-min: 14;     --f--1-max: 16.5;
+  --f-0-min:  17;     --f-0-max:  22;    /* gövde */
+  --f-1-min:  19;     --f-1-max:  28.6;
+  --f-2-min:  22;     --f-2-max:  36;
+  --f-3-min:  26;     --f-3-max:  44;
+  --f-4-min:  30;     --f-4-max:  56;
+  --f-5-min:  34;     --f-5-max:  81.8;  /* hero */
 
   --t-xs:   calc(((var(--f--2-min) / 16) * 1rem) + (var(--f--2-max) - var(--f--2-min)) * var(--fluid-bp));
   --t-sm:   calc(((var(--f--1-min) / 16) * 1rem) + (var(--f--1-max) - var(--f--1-min)) * var(--fluid-bp));
@@ -36,7 +39,7 @@
   --t-3xl:  calc(((var(--f-5-min)  / 16) * 1rem) + (var(--f-5-max)  - var(--f-5-min))  * var(--fluid-bp));
 
   /* — Boşluk: gövde satırından türer (s = 20 -> 22px) — */
-  --sc-min: 20;  --sc-max: 22;
+  --sc-min: 17;  --sc-max: 22;
   --s-3xs: calc(((var(--sc-min) * 0.25 / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 0.25 * var(--fluid-bp));
   --s-2xs: calc(((var(--sc-min) * 0.5  / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 0.5  * var(--fluid-bp));
   --s-xs:  calc(((var(--sc-min) * 0.75 / 16) * 1rem) + (var(--sc-max) - var(--sc-min)) * 0.75 * var(--fluid-bp));
@@ -59,7 +62,7 @@
   --axis-display: 'SOFT' 0, 'WONK' 0, 'opsz' 144;
 
   --lh-body:  1.6;
-  --lh-tight: 1.05;
+  --lh-tight: 1.12;   /* telefonda 1.05 çok sıkışık; masaüstünde fark edilmiyor */
   --lh-snug:  1.2;
 
   /* — Ölçü — */

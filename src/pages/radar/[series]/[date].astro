@@ -47,10 +47,12 @@ const failed = claims.filter((c: any) => ['BULUNAMADI', 'ERISILEMEDI', 'URL_YOK'
 
     {failed.length > 0 && (
       <section class="failed">
-        <h2 class="section-title">Doğrulanamayan iddialar</h2>
+        <h2 class="section-title">Kaynağıyla eşleşmeyenler</h2>
         <p class="note meta">
-          Aşağıdaki iddialar metinde geçiyor ama kaynağından teyit edilemedi.
-          Okurken bunları doğru kabul etme.
+          Script bu satırlarda aranan değeri kaynak metninde bulamadı. Kaynak
+          o gün değişmiş, sayıyı farklı biçimde yazmış ya da iddia yanlış
+          olabilir — hangisi olduğunu ayırt etmiyor, sadece eşleşmediğini
+          söylüyor.
         </p>
         <ClaimTable claims={claims} failedOnly />
       </section>
@@ -59,11 +61,11 @@ const failed = claims.filter((c: any) => ['BULUNAMADI', 'ERISILEMEDI', 'URL_YOK'
     <div class="prose"><Content /></div>
 
     <section class="audit">
-      <h2 class="section-title">İddia ve kaynak tablosu</h2>
+      <h2 class="section-title">İddialar ve kaynakları</h2>
       <p class="note meta">
-        Ajanın ürettiği iddia listesi, {stats.checkedAt} tarihinde
-        <code>scripts/verify-radar.mjs</code> ile kontrol edildi. Her satır için
-        kaynak çekildi ve beklenen değerin metinde geçip geçmediğine bakıldı.
+        Ajanın ürettiği iddia listesi. {stats.checkedAt} tarihinde her satırın
+        kaynağı çekildi ve aranan değer metinde arandı —
+        <code>scripts/verify-radar.mjs</code>.
       </p>
       <ClaimTable claims={claims} />
     </section>

@@ -18,16 +18,18 @@ const { total, passed, failed, inconclusive, unsourced } = stats;
         <circle cx="12" cy="12" r="9" /><path d="M12 3v9l6 3" />
       </svg>
     </span>
-    Makine üretimi
+    Ajanla üretildi
   </p>
 
   <p class="body">
-    Bu bülteni <strong>{generator}</strong> yazdı, ben yazmadım.{' '}
-    {total} iddiadan <strong>{passed}&apos;i</strong> kaynağı çekilerek doğrulandı.{' '}
-    {failed > 0 && <><strong>{failed}&apos;i doğrulanamadı</strong>{'. '}</>}
-    {inconclusive > 0 && <>{inconclusive}&apos;i sonuçsuz kaldı{'. '}</>}
-    {unsourced > 0 && <>{unsourced}&apos;i kaynaksız bir model önerisi{'. '}</>}
-    Yöntem: <a href="/ai">nasıl çalışıyor</a>.
+    Bu bülteni <strong>{generator}</strong> ile üretiyorum. Yayınlamadan önce
+    her iddianın kaynağını çekip aranan değerin o metinde geçip geçmediğine
+    bakan bir script çalıştırıyorum.{' '}
+    Bugün {total} iddiadan <strong>{passed} tanesi</strong> kaynağıyla birebir eşleşti
+    {failed > 0 && <>, <strong>{failed} tanesi</strong> eşleşmedi</>}
+    {inconclusive > 0 && <>, {inconclusive} tanesi okunamadı</>}
+    {unsourced > 0 && <>, {unsourced} tanesi zaten kaynaksız bir model önerisi</>}.
+    Hepsi aşağıda tek tek duruyor. <a href="/ai">Yöntem</a>.
   </p>
 </aside>
 
