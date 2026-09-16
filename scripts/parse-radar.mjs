@@ -60,6 +60,22 @@ function classify(text) {
     if (!claims && pipey >= Math.max(2, lines.length * 0.6)) { claims = block; continue; }
     if (!meta && lines.some((l) => /^date:\s*\d{4}-\d{2}-\d{2}/.test(l))) { meta = block; continue; }
   }
+  // Metadata çitlenmemiş olabilir (v7 şablonunda tüm yazı tek blok
+  // gösterildiği için ajan metadata'yı ayrıca çitlemiyor). Çit şartı
+  // koşmak yerine, metnin başındaki bitişik "anahtar: değer" öbeğini
+  // bul. Claims bloğu çitli KALMALI — Docs orada dönüşüm yapmıyor.
+  if (!meta) {
+    const lines = text.split('\n');
+    let run = [];
+    for (const l of lines.slice(0, 40)) {
+      if (/^\s*\w+:\s*\S/.test(l)) { run.push(l.trim()); continue; }
+      if (run.length && l.trim() === '') continue;
+      if (run.some(r => /^date:\s*\d{4}-\d{2}-\d{2}/.test(r))) break;
+      run = [];
+    }
+    if (run.some(r => /^date:\s*\d{4}-\d{2}-\d{2}/.test(r))) meta = run.join('\n');
+  }
+
   return { meta, claims };
 }
 

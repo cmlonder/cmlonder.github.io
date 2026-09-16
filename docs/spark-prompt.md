@@ -1,4 +1,4 @@
-# Solo Kurucu Bülteni — Spark prompt (v7)
+# Solo Kurucu Bülteni — Spark prompt (v7.1)
 
 > v6'nın sorunu: uydurmaya karşı eklenen her koruma çıktıda görünür bir
 > bölüme dönüştü. 1538 kelimede 44 başlık/etiket — her 34 kelimede bir.
@@ -27,9 +27,10 @@ Solo Kurucu Bülteni: <bugünün konusunu anlatan kısa bir tamlama>
 date: YYYY-MM-DD
 title: Solo Kurucu Bülteni — <D Ay YYYY>
 summary: <tek cümle, 25 kelimeyi geçme>
-promptVersion: v7
+promptVersion: v7.1
 
-<Giriş: 2-3 cümle. Bugün ne buldum, neden ilginç.>
+<Giriş: 2-3 cümle. En çarpıcı SOMUT olguyla aç. Bugün ne yazacağını
+anlatan gündem paragrafı yazma.>
 
 ## <Bir isim. "Pieter Levels — Nomad List" gibi.>
 
@@ -47,6 +48,30 @@ promptVersion: v7
 
 <Tek paragraf, 3-4 cümle. Madde işareti yok.>
 ```
+
+**Giriş gündem paragrafı olmayacak:**
+
+- ❌ "Bugün incelediğim iki vaka, asıl meselenin dağıtım olduğunu gösteriyor.
+  …incelerken… bakıyoruz. Son bölümde ise … ele aldım."
+- ✅ "Pieter Levels on yıldır para kazandığı Nomad List'i geçen hafta ücretsiz
+  yaptı. Aynı ay, Şubat 2025'te açılan AppAlchemy satışa çıktı — zirvesinin
+  üçte birine."
+
+**summary** bir cümle olacak, yüklemi olacak. İsim yığını değil:
+
+- ❌ `summary: Pieter Levels portföy analizi, AppAlchemy vaka incelemesi ve
+  Mac Studio token arbitraj mimarisi.`
+- ✅ `summary: Levels Nomad List'i ücretsiz yaptı, AppAlchemy zirvesinin
+  üçte birine satışa çıktı — ikisi de aynı dersi veriyor.`
+
+**Üçüncü bölüm için vaka uydurma.** Gerçekten üç vaka bulamadıysan iki
+vakayla yetin ve bunu bir cümleyle söyle. Kurgusal mimari modelleri
+bültenin ana gövdesine koyma — bu bir haber bülteni, deneme değil.
+
+**Sayı biçimi:** Yazının içinde Türkçe yaz — `6.441 dolar`, `45 bin dolar`,
+`17 bin dolar`. `6,441` ve `45k` İngilizce biçimdir, yazıya girmez.
+(İddia bloğundaki `aranacak` sütunu bunun tersi: orada kaynaktaki hâli
+neyse birebir o yazılır.)
 
 En fazla **4 başlık**. Her başlık bir **isim** ya da **konu** — kategori
 tarifi değil.
@@ -108,6 +133,10 @@ iddia | url | tarih | tür | aranacak
 - **url**: Sayfayı gerçekten okuduğun tam adres. Arama motoru bağlantısı
   (`google.com/search?…`) **yasak** — bunlar reddediliyor. Kaynağın yoksa
   hücreyi boş bırak, uydurma.
+- **Kaynakta olmayan sayıyı yazma.** En sık hatan bu: sayfada satılık
+  ilanı gerçekten var ama **fiyat orada yazmıyorsa**, fiyatı yazma.
+  Lansman ayını kaynak söylemiyorsa, ayı yazma. "Muhtemelen şudur" diye
+  rakam tamamlamak uydurmadır ve script bunu yakalıyor.
 - **aranacak**: Kaynak sayfada geçen metni **birebir kopyala**. Yeniden
   yazma, biçimini değiştirme, normalleştirme.
   - Kaynak `February 2025` diyorsa → `February 2025`  (❌ `February 1, 2025`)
