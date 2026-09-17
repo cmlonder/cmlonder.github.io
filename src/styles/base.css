@@ -227,3 +227,16 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
 }
 .prose sup.ref a::before { content: '['; }
 .prose sup.ref a::after  { content: ']'; }
+
+
+/* Başlık içindeki bağlantılar tek başına birer hedef (cümle içi değil),
+   ama satır yüksekliği onları 21px'te bırakıyordu. WCAG 2.2 AA 2.5.8. */
+h2.section-title a,
+.group h2 a,
+.entry-card h3 a,
+.card h2 a,
+.card h3 a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 24px;
+}

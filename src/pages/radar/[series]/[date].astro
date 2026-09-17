@@ -103,6 +103,11 @@ const { Content } = await render(entry);
 })} is:inline />
 
 <style>
+  /* Bülten gövdesi essay'lerle aynı 736px sütunda ama 17px punto ile
+     diziliyordu: satırda ~87 karakter. Okunur aralık 65-75.
+     Sütun daralıyor, punto değil — bülten yoğun bir metin. */
+  .prose { max-inline-size: var(--w-prose); }
+
   .kaynak-notu {
     margin-block-start: var(--s-s);
     font-family: var(--f-sans);

@@ -92,6 +92,8 @@ const capraz = entry.data.crossRef;
 
 <style>
   .book {
+    inline-size: min(100% - var(--s-l), calc(15rem + var(--w-narrow) + 6rem));
+    margin-inline: auto;
     display: grid;
     grid-template-columns: minmax(0, 15rem) minmax(0, var(--w-narrow));
     gap: var(--s-2xl);
@@ -141,7 +143,8 @@ const capraz = entry.data.crossRef;
   }
   .cross .lbl {
     font-family: var(--f-sans); font-size: var(--t-xs);
-    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+    /* Tonlu zeminde: --c-muted burada 3.86:1'e düşüyordu. */
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted-on-tint);
     margin-block-end: .3em;
   }
   .cross a { font-family: var(--f-serif); font-size: var(--t-sm); }
@@ -158,8 +161,9 @@ const capraz = entry.data.crossRef;
   .chapnav a:hover .ttl { color: var(--c-text); }
   /* Sıradaki bölüm henüz yazılmadıysa da gösteriliyor — söz açıkta duruyor. */
   .chapnav .soon .dir { color: var(--c-muted); }
+  /* opacity .8 bunu 3.13:1'e düşürüyordu. Solgunluk italikle taşınıyor. */
   .chapnav .soonlbl {
-    font-size: var(--t-xs); font-style: italic; color: var(--c-muted); opacity: .8;
+    font-size: var(--t-xs); font-style: italic; color: var(--c-muted);
   }
 
   @media (max-width: 62rem) {

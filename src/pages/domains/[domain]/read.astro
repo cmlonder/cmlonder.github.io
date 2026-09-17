@@ -91,6 +91,8 @@ const render_ = await Promise.all(bolumler.map(async (b) => ({ ...b, C: (await r
 
 <style>
   .read {
+    inline-size: min(100% - var(--s-l), calc(15rem + var(--w-narrow) + 6rem));
+    margin-inline: auto;
     display: grid;
     grid-template-columns: minmax(0, 15rem) minmax(0, var(--w-narrow));
     gap: var(--s-2xl);

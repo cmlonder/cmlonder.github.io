@@ -120,6 +120,15 @@ const social = [
     font-family: var(--f-sans);
     font-size: var(--t-sm);
   }
+  /* İkonlar 18x18'di; başlık şeridindeki düğmeler sertleştirilirken
+     altbilgi atlanmıştı. WCAG 2.2 AA 2.5.8 en az 24x24 istiyor. */
+  .social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 24px;
+    min-block-size: 24px;
+  }
   .social {
     display: flex;
     gap: var(--s-2xs);

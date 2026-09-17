@@ -56,7 +56,10 @@ const ilk = entry.data.outline.find((b) => yazilan.has(b.slug));
 </Base>
 
 <style>
-  .spine { max-inline-size: var(--w-narrow); margin-inline: auto; }
+  /* max-inline-size tek başına 390px'te sıfır oluk bırakıyordu: gövde
+     metni x=0'dan başlayıp sağ kenara 8px kalana kadar akıyordu.
+     .narrow'ın kalıbı (width: min(100% - oluk, ölçü)) doğru olan. */
+  .spine { inline-size: min(100% - var(--s-l), var(--w-narrow)); margin-inline: auto; }
   .kicker { font-family: var(--f-sans); font-size: var(--t-xs);
             text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted); }
   .kicker a { color: var(--c-accent); text-decoration: none; }

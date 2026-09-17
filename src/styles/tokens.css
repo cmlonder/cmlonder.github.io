@@ -80,7 +80,9 @@
   --c-surface:   #fcfbf7;  /* light cream — kartlar */
   --c-tinted:    #e6e3e1;  /* tinted cream */
   --c-text:      #353534;  /* 11.3:1 */
-  --c-muted:     #73706d;  /*  4.5:1 */
+  /* #73706d idi: krem zeminde 4.511 — AA'yı 0.011 farkla geçiyor ve
+     tonlu her yüzeyde düşüyordu. Bu koyuluk her iki zeminde de geçiyor. */
+  --c-muted:     #666360;  /* krem 5.5:1 · tonlu 4.7:1 */
   --c-border:    #e3e3e0;
   --c-accent:    #5f023e;  /* crimson      12.3:1 */
   --c-accent-lo: #960462;  /* bright crimson 7.7:1 */
