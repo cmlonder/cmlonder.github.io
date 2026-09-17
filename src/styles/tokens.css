@@ -84,6 +84,12 @@
   --c-accent:    #5f023e;  /* crimson      12.3:1 */
   --c-accent-lo: #960462;  /* bright crimson 7.7:1 */
   --c-mark:      #04a5bb;  /* sea blue — SADECE ikon/süs, metin değil (2.7:1) */
+  /* Aynı mavinin metin olabilen hali. Sayaç ve rozet gibi KÜÇÜK metinler
+     --c-mark ile yazılıyordu: krem zeminde 2.71:1, AA'nın çok altında. */
+  --c-mark-ink:  #00707f;  /* 5.3:1 */
+  /* --c-muted krem zeminde 4.5:1 ama TONLU yüzeyde 3.85'e düşüyor.
+     Kart kapağı gibi tonlu zeminlerde ikincil metin bunu kullanıyor. */
+  --c-muted-on-tint: #5f5c59;  /* tonlu zeminde 5.2:1 */
 
   color-scheme: light;
 }
@@ -99,6 +105,8 @@
   --c-accent:    #e85aab;  /* 5.3:1 */
   --c-accent-lo: #ff7ac4;  /* 7.2:1 */
   --c-mark:      #2bc4da;
+  --c-mark-ink:  #45d3e6;  /* 9.6:1 */
+  --c-muted-on-tint: #b6b2ad;  /* koyu tonlu zeminde okunur */
 
   color-scheme: dark;
 }
@@ -115,6 +123,8 @@
     --c-accent:    #e85aab;
     --c-accent-lo: #ff7ac4;
     --c-mark:      #2bc4da;
+  --c-mark-ink:  #45d3e6;  /* 9.6:1 */
+  --c-muted-on-tint: #b6b2ad;  /* koyu tonlu zeminde okunur */
 
     color-scheme: dark;
   }

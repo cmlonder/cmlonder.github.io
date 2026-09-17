@@ -113,11 +113,12 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
 <style>
   .site-header { padding-block: var(--s-s); }
 
-  .bar { display: flex; align-items: center; gap: var(--s-s); }
+  .bar { display: flex; align-items: center; gap: var(--s-s); flex-wrap: wrap; }
 
   .wordmark {
     display: inline-flex;
     align-items: center;
+    min-block-size: 24px;
     gap: var(--s-3xs);
     font-family: var(--f-serif);
     font-variation-settings: var(--axis-display);
@@ -135,7 +136,18 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
     font-family: var(--f-sans);
     font-size: var(--t-sm);
   }
-  nav a.top { text-decoration: none; }
+  /* WCAG 2.2 AA 2.5.8: en küçük hedef 24x24. Bağlantılar 23px'ti. */
+  /* WCAG 2.2 AA 2.5.8: dil anahtarı 25x21 idi. */
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 24px;
+    min-inline-size: 28px;
+    text-decoration: none;
+  }
+  nav a.top { text-decoration: none; display: inline-flex; align-items: center; min-block-size: 24px; }
+  .hub summary { min-block-size: 24px; }
 
   /* — Megamenu — */
   .hub { position: relative; }
@@ -233,6 +245,12 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
       inline-size: calc(100vw - var(--s-m));
       max-inline-size: none;
     }
+  }
+  @media (max-width: 40rem) {
+    /* 390px'te sözcük markası + dört bağlantı + üç düğme tek satıra
+       sığmıyordu; sayfa 402px'e taşıyordu. Gezinme ikinci satıra iniyor. */
+    .bar > nav { order: 3; flex-basis: 100%; justify-content: flex-start; gap: var(--s-s); }
+    .wordmark { margin-inline-end: auto; }
   }
   @media (max-width: 34rem) {
     .menu { grid-template-columns: 1fr; }

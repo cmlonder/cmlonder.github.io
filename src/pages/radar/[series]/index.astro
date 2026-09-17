@@ -94,7 +94,7 @@ const entries = (await getCollection('radar'))
     font-family: var(--f-sans); font-size: var(--t-xs);
     text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
   }
-  .kicker .count { color: var(--c-mark); font-variant-numeric: tabular-nums; }
+  .kicker .count { color: var(--c-mark-ink); font-variant-numeric: tabular-nums; }
   .kicker a { text-decoration: none; }
   h1 {
     margin-block-start: var(--s-3xs);
@@ -116,7 +116,7 @@ const entries = (await getCollection('radar'))
   .list li { padding-block-start: var(--s-s); border-block-start: 1px solid var(--c-border); }
   .line { display: flex; flex-wrap: wrap; gap: .5em; }
   .line [data-clean='false'] { color: var(--c-accent); }
-  .line [data-clean='true'] { color: var(--c-mark); }
+  .line [data-clean='true'] { color: var(--c-mark-ink); }
   h2 {
     margin-block-start: var(--s-3xs);
     font-family: var(--f-serif); font-variation-settings: var(--axis-display);
