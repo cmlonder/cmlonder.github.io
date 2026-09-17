@@ -261,6 +261,29 @@ kalmazdı.
 
 ---
 
+## Şu An (/now) — silme, ekle
+
+`/now` bir "şu anda ne yapıyorum" sayfası değil, bir **dikkat arşivi**.
+Klasik now sayfaları güncellenince eskisini siler; bu sayfa siler değil,
+üstüne ekler. Zamanla neye baktığının kaydı oluyor.
+
+Yeni girdi eklerken:
+
+1. Giriş paragrafından **hemen sonra** yeni bir ay başlığı aç:
+   `## Ekim 2026`
+2. Altına `###` ile kısa bölümler yaz. Başlıklar sabit değil — o ay ne
+   varsa o: `Ne yapıyorum`, `Okuduğum`, `Takıldığım şey`, `Vazgeçtiğim`.
+3. **Eski ayları silme.** Aşağıda kalsınlar.
+4. Frontmatter'daki `updated` tarihini güncelle.
+
+En üstteki ay otomatik olarak vurgulu renkte görünüyor; alt taraf
+soluklaşıyor. Yani hiçbir şey yapmadan "en yeni bu" sinyali veriliyor.
+
+Girdiler kısa olsun — iki üç cümle. Uzun bir şey yazacaksan o zaten bir
+not ya da deneme.
+
+---
+
 ## Dil
 
 İngilizce varsayılan, Türkçe opsiyonel. **Her yazının Türkçesi olmak zorunda

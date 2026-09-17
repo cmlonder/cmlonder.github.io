@@ -31,7 +31,7 @@ const updatedLabel = PAGE[lang].updated;
   <article class="narrow">
     <h1>{entry.data.title}</h1>
     <p class="meta">{updatedLabel} {formatDate(entry.data.updated, lang)}</p>
-    <div class="prose"><Content /></div>
+    <div class:list={['prose', slug === 'now' && 'timeline']}><Content /></div>
   </article>
 </Base>
 
@@ -45,4 +45,58 @@ const updatedLabel = PAGE[lang].updated;
   }
   .meta { margin-block-start: var(--s-3xs); }
   .prose { margin-block-start: var(--s-l); }
+
+  /*
+   * /now bir "şu an ne yapıyorum" sayfası değil, bir DİKKAT ARŞİVİ:
+   * her güncelleme öncekini silmiyor, üstüne ekleniyor. Ay başlıkları
+   * dikey bir rayın üzerinde işaretçiye dönüşüyor.
+   */
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    inset-block: 0 0;
+    inset-inline-start: 0;
+    inline-size: 1px;
+    background: var(--c-border);
+  }
+  .timeline :global(> *) { margin-inline-start: var(--s-xl); }
+  /* Giriş paragrafı bir günlük girdisi değil; raya hizalanmasın. */
+  .timeline :global(> p:first-child) {
+    margin-inline-start: 0;
+    margin-block-end: var(--s-xl);
+  }
+  .timeline :global(h2) {
+    position: relative;
+    margin-block: var(--s-2xl) var(--s-s);
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--c-muted);
+  }
+  .timeline :global(h2::before) {
+    content: '';
+    position: absolute;
+    inset-inline-start: calc(-1 * var(--s-xl));
+    inset-block-start: .35em;
+    inline-size: 9px;
+    block-size: 9px;
+    border-radius: 50%;
+    background: var(--c-bg);
+    border: 2px solid var(--c-border);
+    transform: translateX(-4px);
+  }
+  /* En yeni ay vurgulu — okur nereye bakacağını bilsin. */
+  .timeline :global(h2:first-of-type) { color: var(--c-accent); }
+  .timeline :global(h2:first-of-type::before) {
+    background: var(--c-accent);
+    border-color: var(--c-accent);
+  }
+  .timeline :global(h3) {
+    margin-block: var(--s-m) var(--s-2xs);
+    font-size: var(--t-md);
+  }
+  .timeline :global(h2 + h3) { margin-block-start: 0; }
 </style>
