@@ -1,6 +1,9 @@
 ---
 import Base from './Base.astro';
 import EntryCard from '../components/EntryCard.astro';
+import GardenState from '../components/GardenState.astro';
+import DomainStrip from '../components/DomainStrip.astro';
+import RadarStrip from '../components/RadarStrip.astro';
 import BookCard from '../components/BookCard.astro';
 import { getCollection } from 'astro:content';
 import {
@@ -46,6 +49,10 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
     </p>
   </section>
 
+  <GardenState lang={lang} yazi={essays.length + notes.length + playbooks.length + signals.length} />
+
+  <DomainStrip lang={lang} />
+
   <section class="wrap hub">
     <h2>{HUB.name[lang]}</h2>
     <p class="hub-blurb">
@@ -59,7 +66,7 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
       {essays.length > 0 && (
         <section class="block">
           <h2 class="section-title">
-            <a href={localePath(lang, 'essays')}>{COLLECTION_LABELS.essays[lang]} <span aria-hidden="true">&#8594;</span></a>
+            <a href={localePath(lang, 'essays')}>{COLLECTION_LABELS.essays[lang]} <span class="arrow" aria-hidden="true">&#8594;</span></a>
           </h2>
           <p class="blurb">{COLLECTION_BLURBS.essays[lang]}</p>
           <div class="cards">
@@ -75,7 +82,7 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
       {notes.length > 0 && (
         <section class="block">
           <h2 class="section-title">
-            <a href={localePath(lang, 'notes')}>{COLLECTION_LABELS.notes[lang]} <span aria-hidden="true">&#8594;</span></a>
+            <a href={localePath(lang, 'notes')}>{COLLECTION_LABELS.notes[lang]} <span class="arrow" aria-hidden="true">&#8594;</span></a>
           </h2>
           <p class="blurb">{COLLECTION_BLURBS.notes[lang]}</p>
           <ul class="rows">
@@ -93,7 +100,7 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
       {playbooks.length > 0 && (
         <section class="block">
           <h2 class="section-title">
-            <a href={localePath(lang, 'playbooks')}>{COLLECTION_LABELS.playbooks[lang]} <span aria-hidden="true">&#8594;</span></a>
+            <a href={localePath(lang, 'playbooks')}>{COLLECTION_LABELS.playbooks[lang]} <span class="arrow" aria-hidden="true">&#8594;</span></a>
           </h2>
           <p class="blurb">{COLLECTION_BLURBS.playbooks[lang]}</p>
           <ul class="rows two-up">
@@ -109,7 +116,7 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
       {signals.length > 0 && (
         <section class="block">
           <h2 class="section-title">
-            <a href={localePath(lang, 'signals')}>{COLLECTION_LABELS.signals[lang]} <span aria-hidden="true">&#8594;</span></a>
+            <a href={localePath(lang, 'signals')}>{COLLECTION_LABELS.signals[lang]} <span class="arrow" aria-hidden="true">&#8594;</span></a>
           </h2>
           <p class="blurb">{COLLECTION_BLURBS.signals[lang]}</p>
           <ul class="rows">
@@ -129,9 +136,11 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
   </div>
 
   {books.length > 0 && (
+    <div class="wrap"><RadarStrip lang={lang} limit={2} /></div>
+
     <section class="wrap block library">
       <h2 class="section-title">
-        <a href={localePath(lang, 'library')}>{LIBRARY.name[lang]} <span aria-hidden="true">&#8594;</span></a>
+        <a href={localePath(lang, 'library')}>{LIBRARY.name[lang]} <span class="arrow" aria-hidden="true">&#8594;</span></a>
       </h2>
       <p class="blurb">{LIBRARY.blurb[lang]}</p>
       <ul class="books">
@@ -143,8 +152,11 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
 </Base>
 
 <style>
+  .arrow { margin-inline-start: .4em; }
   /* — Hero — */
-  .hero { padding-block: var(--s-l) var(--s-2xl); }
+  /* Şerit kendi üst boşluğunu getiriyor; ikisi üst üste binince
+     hero ile ilk bilgi arasında boş bir bant kalıyordu. */
+  .hero { padding-block: var(--s-l) var(--s-m); }
   h1 {
     font-family: var(--f-serif);
     font-variation-settings: var(--axis-display);

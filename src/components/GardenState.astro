@@ -1,0 +1,136 @@
+---
+/**
+ * Bahçenin hâli — ana sayfanın ilk gerçek bilgisi.
+ *
+ * Eskiden ana sayfa doğrudan kart duvarına giriyordu: on sekiz eşit
+ * ağırlıkta bağlantı, vurgu yok, "buradan başla" yok. Sitenin en
+ * ayırt edici iki şeyi (Radar ve Domain) ise hiç görünmüyordu.
+ *
+ * Bu şerit onun yerine ÖLÇÜ veriyor — ve ölçünün içinde eksik de var.
+ * Delikli iskelet fikri sitenin tamamının ilkesi; ana sayfa da onu
+ * söylemeli, gizlememeli.
+ */
+import { getCollection } from 'astro:content';
+import { DOMAINS, type Locale } from '../config';
+import { localePath } from '../lib/content';
+
+interface Props { lang: Locale; yazi: number }
+const { lang, yazi } = Astro.props as Props;
+
+const domains = (await getCollection('domains')).filter((d) => d.id.startsWith('tr/'));
+const chapters = await getCollection('chapters');
+const planlanan = domains.reduce((n, d) => n + d.data.outline.length, 0);
+const yazilan = chapters.length;
+
+const radar = (await getCollection('radar'))
+  .filter((e) => !e.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const son = radar[0];
+
+const T = {
+  en: { written: 'pieces written', chapters: 'chapters planned, {n} written',
+        bulletins: 'machine bulletins', machine: 'machine' },
+  tr: { written: 'yazı yazıldı', chapters: 'bölüm planlandı, {n} tanesi yazıldı',
+        bulletins: 'makine bülteni', machine: 'makine' },
+}[lang];
+---
+
+<section class="state wrap">
+  <dl>
+    <div>
+      <dt>{yazi}</dt>
+      <dd>{T.written}</dd>
+    </div>
+    <div class="hole">
+      <dt>{planlanan}</dt>
+      <dd>{T.chapters.replace('{n}', String(yazilan))}</dd>
+      <span class="bar" aria-hidden="true">
+        <span class="fill" style={`--p:${(yazilan / Math.max(1, planlanan)) * 100}%`} />
+      </span>
+    </div>
+    <div>
+      <dt>{radar.length}</dt>
+      <dd>{T.bulletins} <span class="tag">{T.machine}</span></dd>
+    </div>
+  </dl>
+
+  {son && (
+    <a class="latest" href={`/radar/${son.id}`}>
+      <span class="lbl">{DOMAINS.name[lang] === 'Domain' ? 'Radar' : 'Radar'}</span>
+      <span class="sum">{son.data.summary}</span>
+    </a>
+  )}
+</section>
+
+<style>
+  .state {
+    margin-block: var(--s-xl) var(--s-2xl);
+    padding-block: var(--s-m);
+    border-block: 1px solid var(--c-border);
+  }
+  dl {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-l);
+    margin: 0;
+  }
+  dl > div { display: grid; gap: .1em; align-content: start; }
+  dt {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-xl);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  dd {
+    margin: 0;
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    color: var(--c-muted);
+    line-height: 1.4;
+  }
+  /* Eksiği olan sütun vurguluyu alıyor — gizlenecek bir şey değil. */
+  .hole dt { color: var(--c-accent); }
+  .bar {
+    margin-block-start: var(--s-3xs);
+    display: block;
+    block-size: 2px;
+    border-radius: 2px;
+    background: var(--c-border);
+    overflow: hidden;
+  }
+  .fill { display: block; block-size: 100%; inline-size: var(--p); background: var(--c-accent); }
+  .tag {
+    font-size: .9em;
+    padding: .05em .45em;
+    border-radius: 999px;
+    color: var(--c-accent);
+    background: color-mix(in srgb, var(--c-accent) 11%, transparent);
+  }
+
+  .latest {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-xs);
+    align-items: baseline;
+    margin-block-start: var(--s-m);
+    padding-block-start: var(--s-s);
+    border-block-start: 1px solid var(--c-border);
+    text-decoration: none;
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+  }
+  .latest .lbl {
+    font-size: var(--t-xs);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--c-accent);
+  }
+  .latest .sum { color: var(--c-muted); }
+  .latest:hover .sum { color: var(--c-text); }
+
+  @media (max-width: 40rem) {
+    dl { grid-template-columns: 1fr; gap: var(--s-m); }
+    .latest { grid-template-columns: 1fr; gap: .2em; }
+  }
+</style>

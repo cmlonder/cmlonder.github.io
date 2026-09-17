@@ -29,7 +29,7 @@ const back = lang === 'tr' ? 'Tezgâha dön' : 'Back to the workbench';
       </p>
       <h1>{title}</h1>
       <p class="blurb">{blurb}</p>
-      {action && <p class="action"><a href={action.href}>{action.label} <span aria-hidden="true">&#8594;</span></a></p>}
+      {action && <p class="action"><a href={action.href}>{action.label} <span class="arrow" aria-hidden="true">&#8594;</span></a></p>}
     </header>
 
     {items.length === 0 ? (
@@ -49,6 +49,7 @@ const back = lang === 'tr' ? 'Tezgâha dön' : 'Back to the workbench';
 </Base>
 
 <style>
+  .arrow { margin-inline-start: .4em; }
   .head { margin-block-end: var(--s-2xl); }
 
   .kicker {

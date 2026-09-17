@@ -23,7 +23,7 @@ const son = all.slice(0, limit);
 {son.length > 0 && (
   <section class="strip">
     <h2 class="section-title">
-      <a href="/radar">{RADAR.name[lang]} <span aria-hidden="true">&#8594;</span></a>
+      <a href="/radar">{RADAR.name[lang]}{' '}<span class="arrow" aria-hidden="true">&#8594;</span></a>
     </h2>
     <p class="blurb">
       {lang === 'tr'
@@ -50,6 +50,7 @@ const son = all.slice(0, limit);
 )}
 
 <style>
+  .arrow { margin-inline-start: .4em; }
   .strip { margin-block-start: var(--s-2xl); }
   .section-title a { text-decoration: none; }
   .section-title a:hover { color: var(--c-accent); }

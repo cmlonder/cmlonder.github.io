@@ -1,0 +1,104 @@
+---
+/**
+ * Domain şeridi — ana sayfada.
+ *
+ * Sitenin imzası buydu ve ana sayfada hiç görünmüyordu; iki seviye
+ * derinde, megamenüde saklıydı. Burada tez ve ilerleme birlikte
+ * duruyor: okur neyin planlandığını ve ne kadarının yazıldığını
+ * kartı açmadan görüyor.
+ */
+import { getCollection } from 'astro:content';
+import { DOMAINS, DOMAIN_UI, type Locale } from '../config';
+import { localePath } from '../lib/content';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props as Props;
+const t = DOMAIN_UI[lang];
+
+const domains = (await getCollection('domains'))
+  .filter((d) => d.id.startsWith('tr/'))
+  .sort((a, b) => a.data.order - b.data.order);
+const chapters = await getCollection('chapters');
+
+const satir = domains.map((d) => {
+  const slug = d.id.split('/').pop()!;
+  return {
+    d, slug,
+    yazilan: chapters.filter((c) => c.data.domain === slug).length,
+    toplam: d.data.outline.length,
+  };
+});
+---
+
+{satir.length > 0 && (
+  <section class="wrap dstrip">
+    <h2 class="section-title">
+      <a href={localePath(lang, DOMAINS.path)}>{DOMAINS.name[lang]}{' '}<span aria-hidden="true">&#8594;</span></a>
+    </h2>
+    <p class="blurb">{DOMAINS.blurb[lang]}</p>
+
+    <ul>
+      {satir.map(({ d, slug, yazilan, toplam }) => (
+        <li>
+          <a href={localePath(lang, DOMAINS.path, slug)}>
+            <h3>{d.data.title}</h3>
+            <p class="thesis">{d.data.thesis}</p>
+            <p class="prog">
+              <span class="bar"><span class="fill" style={`--p:${(yazilan / toplam) * 100}%`} /></span>
+              <span class="n">{yazilan}/{toplam} {t.chapters}</span>
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .dstrip { margin-block: var(--s-2xl); }
+  .arrow { margin-inline-start: .4em; }
+  .blurb {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted); max-inline-size: 60ch;
+  }
+  ul {
+    list-style: none; padding: 0;
+    margin-block-start: var(--s-m);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--s-s);
+  }
+  li a {
+    display: block;
+    text-decoration: none;
+    padding: var(--s-m);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background: var(--c-surface);
+    block-size: 100%;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  li a:hover {
+    border-color: color-mix(in srgb, var(--c-accent) 40%, var(--c-border));
+    transform: translateY(-2px);
+  }
+  @media (prefers-reduced-motion: reduce) { li a, li a:hover { transition: none; transform: none; } }
+  h3 {
+    margin: 0;
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-md); line-height: var(--lh-snug);
+  }
+  .thesis {
+    margin-block-start: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted); line-height: 1.5;
+  }
+  .prog { display: flex; align-items: center; gap: var(--s-xs); margin-block-start: var(--s-s); }
+  .bar { flex: 1; block-size: 2px; border-radius: 2px; background: var(--c-border); overflow: hidden; }
+  .fill { display: block; block-size: 100%; inline-size: var(--p); background: var(--c-accent); }
+  .n {
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+</style>
