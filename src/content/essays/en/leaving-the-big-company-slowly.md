@@ -1,7 +1,7 @@
 ---
 title: 'Leaving the Big Company, Slowly'
 description: 'Notes on building something of your own without a dramatic exit, and why the slow version might be better.'
-pubDate: 2026-09-15
+pubDate: 2026-06-12
 topics: [solo-company]
 tags: [independence]
 featured: false

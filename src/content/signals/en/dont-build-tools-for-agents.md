@@ -1,7 +1,7 @@
 ---
 title: 'Don''t build tools for AI agents'
 description: 'An argument that agents should use the tools humans already use, rather than getting bespoke ones.'
-pubDate: 2026-09-15
+pubDate: 2026-08-11
 url: https://seangoedecke.com/dont-build-tools-for-ai-agents/
 source: 'Sean Goedecke'
 topics: [agentic-development]

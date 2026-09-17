@@ -1,7 +1,7 @@
 ---
 title: 'Architecture Is a Story About Trust'
 description: 'Every boundary in a system is a statement about which team you trust to not break you.'
-pubDate: 2026-09-15
+pubDate: 2026-07-19
 topics: [solution-architecture]
 tags: [boundaries, teams]
 featured: true

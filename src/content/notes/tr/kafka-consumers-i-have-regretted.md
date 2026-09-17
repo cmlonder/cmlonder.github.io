@@ -1,7 +1,8 @@
 ---
 title: 'Pişman olduğum Kafka consumer''ları'
 description: 'Kendi hatalarımın kataloğu; yarısı kefaret, yarısı kontrol listesi.'
-pubDate: 2026-09-15
+pubDate: 2026-02-24
+updatedDate: 2026-07-28
 status: evergreen
 topics: [scale-and-performance]
 tags: [kafka, kuyruk]

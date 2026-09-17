@@ -1,7 +1,7 @@
 ---
 title: 'Slop''u mühendislikle çözmek'
 description: 'Düşük kaliteli ajan çıktısını model sorunu değil mühendislik sorunu olarak ele almak üzerine.'
-pubDate: 2026-09-15
+pubDate: 2026-07-25
 url: https://ghuntley.com/slop/
 source: 'Geoffrey Huntley'
 topics: [agentic-development]

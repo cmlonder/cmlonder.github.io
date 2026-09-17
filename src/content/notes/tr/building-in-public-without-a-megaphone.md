@@ -1,7 +1,7 @@
 ---
 title: 'Megafon olmadan açıkta inşa etmek'
 description: 'Kendi şeyini sessizce kurmak mümkün mü, ve bu işin amacını baltalıyor mu?'
-pubDate: 2026-09-15
+pubDate: 2026-09-13
 status: seedling
 topics: [solo-company]
 tags: [bağımsızlık]

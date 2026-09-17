@@ -1,7 +1,7 @@
 ---
 title: 'AGENTS.md yeni README'
 description: 'README bir kere göz gezdirecek insan için yazılmıştı. Bu dosya her çalıştırmada baştan sona okunuyor.'
-pubDate: 2026-09-15
+pubDate: 2026-07-29
 status: budding
 topics: [agentic-development]
 tags: [konvansiyon]

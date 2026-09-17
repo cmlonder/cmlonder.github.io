@@ -1,7 +1,7 @@
 ---
 title: 'Workflow or agent, and why the distinction matters'
 description: 'The clearest public writing on when an agent loop beats a fixed workflow.'
-pubDate: 2026-09-15
+pubDate: 2026-08-28
 url: https://www.anthropic.com/engineering/building-effective-agents
 source: 'Anthropic Engineering'
 topics: [agentic-development, ai-news]

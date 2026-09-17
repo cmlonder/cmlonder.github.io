@@ -1,7 +1,7 @@
 ---
 title: 'Budget the context before adding tools'
 description: 'Every tool definition costs tokens on every turn. Most agent slowdowns are a context problem, not a model problem.'
-pubDate: 2026-09-15
+pubDate: 2026-08-23
 problem: 'An agent is slow, expensive, or losing the plot mid-task.'
 context: 'Any tool-using agent with more than a handful of tools in its definition list.'
 symptoms:

@@ -1,7 +1,7 @@
 ---
 title: 'Sharding''den önce read replica'
 description: 'Darboğaz okuma yüküyse en ucuz doğru cevap neredeyse hiçbir zaman sharding değildir.'
-pubDate: 2026-09-15
+pubDate: 2026-02-19
 problem: 'Veritabanı doyuyor ve ekip bir sharding projesi öneriyor.'
 context: 'Tek bölgeli OLTP Postgres/MySQL, ~2 TB altı, okuma ağırlıklı (>%80 okuma).'
 symptoms:

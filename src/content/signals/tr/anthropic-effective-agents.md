@@ -1,7 +1,7 @@
 ---
 title: 'Workflow mu agent mı, ve bu ayrım neden önemli'
 description: 'Bir ajan döngüsünün sabit bir akıştan ne zaman iyi olduğuna dair en net yazı.'
-pubDate: 2026-09-15
+pubDate: 2026-08-28
 url: https://www.anthropic.com/engineering/building-effective-agents
 source: 'Anthropic Engineering'
 topics: [agentic-development, ai-news]

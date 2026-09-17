@@ -1,7 +1,7 @@
 ---
 title: 'Outbox before dual writes'
 description: 'If a write has to land in two places, put it in one place and let a reader fan it out.'
-pubDate: 2026-09-15
+pubDate: 2026-03-28
 problem: 'A service must update its database and publish an event, and sometimes only one happens.'
 context: 'Any service with a transactional store and a message broker. Especially Kafka.'
 symptoms:

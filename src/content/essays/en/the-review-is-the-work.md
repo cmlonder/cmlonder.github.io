@@ -1,7 +1,7 @@
 ---
 title: 'The Review Is the Work'
 description: 'When generation is free, the scarce resource is judgement. That reframes what a senior engineer is for.'
-pubDate: 2026-09-15
+pubDate: 2026-02-22
 topics: [agentic-development, solution-architecture]
 tags: [code-review, craft]
 featured: false
