@@ -7,10 +7,13 @@
  * Artık yalnızca GEZİNME var; ciro kaynağı kaynak listesinin yanına taşındı,
  * çünkü o bir künye değil, kaynak bilgisi.
  */
-import { RADAR_CATEGORY } from '../config';
+import { RADAR_CATEGORY, TAG_LABELS } from '../config';
 
 interface Props { data: any }
 const { data } = Astro.props as Props;
+
+// Slug URL'de yaşıyor, etiket ekranda. Sözlükte yoksa slug ham gösteriliyor.
+const etiket = (t: string) => TAG_LABELS[t]?.tr ?? t;
 
 const cat: string | null = data.category ?? null;
 const tags: string[] = data.tags ?? [];
