@@ -1,0 +1,119 @@
+---
+/**
+ * İçindekiler — yazılmamış bölümler dahil.
+ *
+ * Asıl fikir bu: iskelet ilk günden tam yayınlanıyor. Yazılmış bölüm
+ * bağlantı, yazılmamış bölüm bir SÖZ — ne anlatacağını tek cümleyle
+ * ilan ediyor. Boşluk saklanmıyor; hem okura harita hem yazara taahhüt.
+ */
+import { DOMAINS, type Locale } from '../config';
+import { localePath } from '../lib/content';
+
+interface Props {
+  outline: { slug: string; title: string; promise: string; part?: string }[];
+  yazilan: Map<string, any>;
+  domain: string;
+  lang: Locale;
+  aktif?: string;
+  compact?: boolean;
+}
+const { outline, yazilan, domain, lang, aktif, compact = false } = Astro.props as Props;
+
+// Bölümleri "part" başlıklarına göre grupla, sırayı koru.
+const gruplar: { part?: string; items: typeof outline }[] = [];
+for (const b of outline) {
+  const son = gruplar[gruplar.length - 1];
+  if (son && son.part === b.part) son.items.push(b);
+  else gruplar.push({ part: b.part, items: [b] });
+}
+const no = (slug: string) => outline.findIndex((b) => b.slug === slug) + 1;
+---
+
+<ol class:list={['outline', compact && 'compact']}>
+  {gruplar.map((g) => (
+    <>
+      {g.part && <li class="part" role="presentation">{g.part}</li>}
+      {g.items.map((b) => {
+        const var_ = yazilan.has(b.slug);
+        const simdiki = aktif === b.slug;
+        return (
+          <li class:list={['row', !var_ && 'todo', simdiki && 'now']}>
+            <span class="n">{String(no(b.slug)).padStart(2, '0')}</span>
+            {var_ ? (
+              <span class="txt">
+                <a href={localePath(lang, DOMAINS.path, domain, b.slug)}
+                   aria-current={simdiki ? 'page' : undefined}>{b.title}</a>
+                {!compact && <span class="dek">{yazilan.get(b.slug).data.summary}</span>}
+              </span>
+            ) : (
+              <span class="txt">
+                <span class="t">{b.title}</span>
+                {!compact && <span class="dek">{b.promise}</span>}
+              </span>
+            )}
+          </li>
+        );
+      })}
+    </>
+  ))}
+</ol>
+
+<style>
+  .outline { list-style: none; padding: 0; margin: 0; }
+
+  .part {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--c-muted);
+    margin-block: var(--s-m) var(--s-2xs);
+    padding-block-end: var(--s-3xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .part:first-child { margin-block-start: 0; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+    gap: var(--s-2xs);
+    align-items: baseline;
+    padding-block: var(--s-2xs);
+    position: relative;
+  }
+  .n {
+    font-family: var(--f-mono); font-size: var(--t-xs);
+    color: var(--c-muted); font-variant-numeric: tabular-nums;
+  }
+  .txt { display: grid; gap: .15em; }
+  .txt a, .txt .t {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-text);
+    font-size: var(--t-sm); font-weight: 600; line-height: 1.3;
+    text-decoration: none;
+  }
+  .txt a:hover { color: var(--c-accent); }
+  .dek {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted); line-height: 1.45;
+  }
+
+  /* Yazılmamış bölüm: solgun, italik söz, başlık bağlantı değil. */
+  .todo .n { opacity: .45; }
+  .todo .txt .t { color: var(--c-muted); font-weight: 400; }
+  .todo .dek { font-style: italic; }
+
+  .now { }
+  .now .n { color: var(--c-accent); }
+  .now .txt a { color: var(--c-accent); }
+  .now::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: -.8rem;
+    inset-block: .55em auto;
+    inline-size: 3px; block-size: 1em;
+    border-radius: 2px;
+    background: var(--c-accent);
+  }
+
+  .compact .row { padding-block: .3em; grid-template-columns: 2rem 1fr; }
+  .compact .txt a, .compact .txt .t { font-size: var(--t-xs); font-weight: 400; }
+  .compact .part { margin-block: var(--s-s) var(--s-3xs); }
+</style>

@@ -1,0 +1,169 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../../layouts/Base.astro';
+import Outline from '../../../../components/Outline.astro';
+import { DOMAINS, DOMAIN_UI, type Locale } from '../../../../config';
+import { localePath, formatDate } from '../../../../lib/content';
+
+export async function getStaticPaths() {
+  const domains = (await getCollection('domains')).filter((e) => e.id.startsWith('tr/'));
+  const chapters = await getCollection('chapters');
+
+  return domains.flatMap((dm) => {
+    const slug = dm.id.split('/').pop()!;
+    const yazilan = new Map(
+      chapters.filter((c) => c.data.domain === slug).map((c) => [c.id.split('/').pop()!, c]));
+    // Sıra İÇİNDEKİLERDEN gelir, tarihten değil — kitap sırası budur.
+    const sirali = dm.data.outline.filter((b) => yazilan.has(b.slug));
+
+    return sirali.map((b, i) => ({
+      params: { domain: slug, chapter: b.slug },
+      props: {
+        dm, entry: yazilan.get(b.slug)!,
+        no: dm.data.outline.findIndex((x) => x.slug === b.slug) + 1,
+        toplam: dm.data.outline.length,
+        onceki: sirali[i - 1] ?? null,
+        sonraki: sirali[i + 1] ?? null,
+        // Yazılmamış bir sonraki bölüm varsa onun sözünü göster.
+        sozVerilen: dm.data.outline[dm.data.outline.findIndex((x) => x.slug === b.slug) + 1] ?? null,
+        yazilan,
+      },
+    }));
+  });
+}
+
+const lang: Locale = 'tr';
+const { dm, entry, no, toplam, onceki, sonraki, sozVerilen, yazilan } = Astro.props;
+const dSlug = dm.id.split('/').pop()!;
+const t = DOMAIN_UI[lang];
+const { Content } = await render(entry);
+const capraz = entry.data.crossRef;
+---
+
+<Base title={`${entry.data.title} — ${dm.data.title}`} description={entry.data.summary} lang={lang}>
+  <div class="book">
+    <aside class="rail">
+      <a class="up" href={localePath(lang, DOMAINS.path, dSlug)}>{dm.data.title}</a>
+      <Outline outline={dm.data.outline} yazilan={yazilan} domain={dSlug}
+               lang={lang} aktif={entry.id.split('/').pop()} compact />
+      <a class="one" href={localePath(lang, DOMAINS.path, dSlug, 'oku')}>{t.onePage} &#8594;</a>
+    </aside>
+
+    <article class="chapter">
+      <p class="kicker">
+        <a href={localePath(lang, DOMAINS.path, dSlug)}>{dm.data.title}</a>
+        <span aria-hidden="true">·</span>
+        <span>{t.chapter} {no} {t.of} {toplam}</span>
+      </p>
+      <h1>{entry.data.title}</h1>
+      <p class="standfirst">{entry.data.summary}</p>
+      <p class="meta"><time datetime={entry.data.pubDate.toISOString()}>{formatDate(entry.data.pubDate, lang)}</time></p>
+
+      <div class="prose"><Content /></div>
+
+      {capraz && (
+        <aside class="cross">
+          <p class="lbl">{t.crossRef}</p>
+          <a href={localePath(lang, DOMAINS.path, capraz.domain, capraz.slug)}>{capraz.why}</a>
+        </aside>
+      )}
+
+      <nav class="chapnav">
+        {onceki
+          ? <a class="prev" href={localePath(lang, DOMAINS.path, dSlug, onceki.slug)}>
+              <span class="dir">&#8592;</span><span class="ttl">{onceki.title}</span>
+            </a>
+          : <span />}
+        {sonraki
+          ? <a class="next" href={localePath(lang, DOMAINS.path, dSlug, sonraki.slug)}>
+              <span class="dir">{t.nextUp} &#8594;</span><span class="ttl">{sonraki.title}</span>
+            </a>
+          : sozVerilen && (
+            <span class="next soon">
+              <span class="dir">{t.nextUp}</span>
+              <span class="ttl">{sozVerilen.title}</span>
+              <span class="soonlbl">{t.notYet}</span>
+            </span>
+          )}
+      </nav>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .book {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, var(--w-narrow));
+    gap: var(--s-2xl);
+    justify-content: center;
+    align-items: start;
+  }
+  .rail { position: sticky; inset-block-start: var(--s-l); }
+  .up {
+    display: block; font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--c-accent); text-decoration: none;
+    padding-block-end: var(--s-2xs);
+    margin-block-end: var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .one {
+    display: inline-block; margin-block-start: var(--s-m);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  .one:hover { color: var(--c-accent); }
+
+  .kicker {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+    display: flex; gap: .55em; flex-wrap: wrap;
+  }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; line-height: var(--lh-tight); margin-block-start: var(--s-2xs);
+  }
+  .standfirst {
+    margin-block-start: var(--s-s); font-family: var(--f-serif);
+    font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: balance;
+  }
+  .meta { margin-block-start: var(--s-2xs); font-family: var(--f-sans);
+          font-size: var(--t-xs); color: var(--c-muted); }
+  .prose { margin-block-start: var(--s-l); }
+
+  /* Çapraz gönderme — domainler arası örüntü, bu yapının asıl iddiası. */
+  .cross {
+    margin-block-start: var(--s-xl);
+    padding: var(--s-s) var(--s-m);
+    border-inline-start: 2px solid var(--c-mark);
+    background: color-mix(in srgb, var(--c-mark) 7%, transparent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .cross .lbl {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+    margin-block-end: .3em;
+  }
+  .cross a { font-family: var(--f-serif); font-size: var(--t-sm); }
+
+  .chapnav {
+    display: flex; justify-content: space-between; gap: var(--s-s);
+    margin-block-start: var(--s-2xl); padding-block-start: var(--s-s);
+    border-block-start: 1px solid var(--c-border); font-family: var(--f-sans);
+  }
+  .chapnav a, .chapnav .soon { display: grid; gap: .15em; text-decoration: none; max-inline-size: 20ch; }
+  .chapnav .next { text-align: end; }
+  .chapnav .dir { font-size: var(--t-sm); color: var(--c-accent); }
+  .chapnav .ttl { font-size: var(--t-xs); color: var(--c-muted); }
+  .chapnav a:hover .ttl { color: var(--c-text); }
+  /* Sıradaki bölüm henüz yazılmadıysa da gösteriliyor — söz açıkta duruyor. */
+  .chapnav .soon .dir { color: var(--c-muted); }
+  .chapnav .soonlbl {
+    font-size: var(--t-xs); font-style: italic; color: var(--c-muted); opacity: .8;
+  }
+
+  @media (max-width: 62rem) {
+    .book { grid-template-columns: minmax(0, var(--w-narrow)); }
+    .rail { display: none; }
+  }
+</style>

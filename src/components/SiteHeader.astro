@@ -3,8 +3,9 @@ import ThemeToggle from './ThemeToggle.astro';
 import Search from './Search.astro';
 import {
   SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  HUB, NAV, SHELVES, SHELF_NAMES, SKILLS, RADAR, type Locale,
+  HUB, NAV, SHELVES, SHELF_NAMES, SKILLS, RADAR, DOMAINS, type Locale,
 } from '../config';
+import NavIcon from './NavIcon.astro';
 import { localePath } from '../lib/content';
 
 interface Props {
@@ -39,34 +40,57 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
           </svg>
         </summary>
         <div class="menu">
-          <a class="all" href={localePath(lang, HUB.path)}>
-            <strong>{HUB.name[lang]}</strong>
-            <span>{HUB.blurb[lang]}</span>
+          <a class="item all" href={localePath(lang, HUB.path)}>
+            <NavIcon name="workbench" />
+            <span class="txt">
+              <strong>{HUB.name[lang]}</strong>
+              <span class="dek">{HUB.blurb[lang]}</span>
+            </span>
           </a>
+
           {COLLECTIONS.map((c) => (
-            <a href={localePath(lang, c)}>
-              <strong>{COLLECTION_LABELS[c][lang]}</strong>
-              <span>{COLLECTION_BLURBS[c][lang]}</span>
+            <a class="item" href={localePath(lang, c)}>
+              <NavIcon name={c} />
+              <span class="txt">
+                <strong>{COLLECTION_LABELS[c][lang]}</strong>
+                <span class="dek">{COLLECTION_BLURBS[c][lang]}</span>
+              </span>
             </a>
           ))}
+
           {SHELF_NAMES.map((s) => (
-            <a href={localePath(lang, SHELVES[s].path)}>
-              <strong>{SHELVES[s].name[lang]}</strong>
-              <span>{SHELVES[s].blurb[lang]}</span>
+            <a class="item" href={localePath(lang, SHELVES[s].path)}>
+              <NavIcon name={s} />
+              <span class="txt">
+                <strong>{SHELVES[s].name[lang]}</strong>
+                <span class="dek">{SHELVES[s].blurb[lang]}</span>
+              </span>
             </a>
           ))}
-          <a hidden href={localePath(lang, SHELVES.library.path)}>
-            <strong>{SHELVES.library.name[lang]}</strong>
-            <span>{SHELVES.library.blurb[lang]}</span>
+
+          <a class="item wide" href={localePath(lang, DOMAINS.path)}>
+            <NavIcon name="domains" />
+            <span class="txt">
+              <strong>{DOMAINS.name[lang]}</strong>
+              <span class="dek">{DOMAINS.blurb[lang]}</span>
+            </span>
           </a>
-          <a href={localePath(lang, SKILLS.path)}>
-            <strong>{SKILLS.name[lang]}</strong>
-            <span>{SKILLS.blurb[lang]}</span>
+
+          <a class="item" href={localePath(lang, SKILLS.path)}>
+            <NavIcon name="skills" />
+            <span class="txt">
+              <strong>{SKILLS.name[lang]}</strong>
+              <span class="dek">{SKILLS.blurb[lang]}</span>
+            </span>
           </a>
+
           {/* Radar makine üretimi — menüde de ayrılıyor, dil bağımsız tek adres. */}
-          <a class="machine" href="/radar">
-            <strong>{RADAR.name[lang]}<span class="tag">makine</span></strong>
-            <span>{RADAR.blurb[lang]}</span>
+          <a class="item machine" href="/radar">
+            <NavIcon name="radar" />
+            <span class="txt">
+              <strong>{RADAR.name[lang]}<span class="tag">makine</span></strong>
+              <span class="dek">{RADAR.blurb[lang]}</span>
+            </span>
           </a>
         </div>
       </details>
@@ -128,60 +152,90 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
   .hub[open] summary svg { transform: rotate(180deg); }
   .hub summary svg { transition: transform 150ms ease; }
 
+  /* — Menü ızgarası —
+     Eskiden dikey bir listeydi ve on bir öğeyle aşağı doğru uzayıp
+     gidiyordu. Izgara hem daha az yer kaplıyor hem de bölümleri yan yana
+     karşılaştırılabilir hale getiriyor. */
   .menu {
     position: absolute;
-    inset-inline-end: 0;
     inset-block-start: calc(100% + var(--s-2xs));
-    z-index: 20;
-    inline-size: min(88vw, 26rem);
+    /* Tetikleyici sağ tarafta; sola çapalanınca menü ekrandan taşıyordu. */
+    inset-inline-end: 0;
+    z-index: 40;
     display: grid;
+    grid-template-columns: repeat(3, minmax(14rem, 1fr));
     gap: var(--s-3xs);
-    padding: var(--s-2xs);
+    padding: var(--s-xs);
+    inline-size: max-content;
+    max-inline-size: min(52rem, calc(100vw - var(--s-m)));
     background: var(--c-surface);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-lg);
-    box-shadow:
-      .8px 1.8px 3.8px -10px rgb(0 0 0 / .038),
-      2.5px 5.8px 12.5px -10px rgb(0 0 0 / .06),
-      6px 14px 30px -10px rgb(0 0 0 / .08);
+    box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--c-text) 55%, transparent);
   }
-  .menu a {
+
+  .item {
     display: grid;
-    gap: 2px;
-    padding: var(--s-3xs) var(--s-2xs);
+    grid-template-columns: auto 1fr;
+    gap: var(--s-2xs);
+    align-items: start;
+    padding: var(--s-2xs);
     border-radius: var(--radius);
     text-decoration: none;
+    color: var(--c-text);
+    transition: background-color .14s ease, color .14s ease;
   }
-  .menu a:hover { background: var(--c-tinted); color: inherit; }
-  .menu a.all { border-block-end: 1px solid var(--c-border); border-radius: 0; margin-block-end: var(--s-3xs); padding-block-end: var(--s-2xs); }
-  .menu a.all strong { color: var(--c-accent); }
-  .menu a.machine { border-block-start: 1px solid var(--c-border); border-radius: 0; margin-block-start: var(--s-3xs); padding-block-start: var(--s-2xs); }
-  .menu .tag {
-    margin-inline-start: .5em; padding: .1em .45em;
-    border: 1px solid var(--c-accent); border-radius: 999px;
-    font-size: .75em; font-weight: 400; color: var(--c-accent);
-    text-transform: uppercase; letter-spacing: .06em;
+  .item:hover, .item:focus-visible { background: var(--c-tinted); }
+  .item :global(svg) {
+    color: var(--c-muted);
+    margin-block-start: 1px;
+    transition: color .14s ease;
   }
-  .menu strong { font-weight: 700; font-size: var(--t-sm); }
-  .menu span { color: var(--c-muted); font-size: var(--t-xs); line-height: 1.45; }
+  .item:hover :global(svg) { color: var(--c-accent); }
 
-  .controls { display: flex; align-items: center; gap: var(--s-3xs); }
-  .lang {
+  .txt { display: grid; gap: .1em; min-inline-size: 0; }
+  .item strong {
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: .5em;
+  }
+  .item .dek {
     font-family: var(--f-sans);
     font-size: var(--t-xs);
     color: var(--c-muted);
-    text-decoration: none;
-    padding: 2px 8px;
-    border: 1px solid var(--c-border);
-    border-radius: 999px;
+    line-height: 1.4;
   }
 
-  @media (max-width: 40rem) {
-    .bar { flex-wrap: wrap; }
-    .wordmark { margin-inline-end: 0; }
-    nav { order: 3; inline-size: 100%; }
-    .controls { margin-inline-start: auto; }
-    .menu { inset-inline-start: 0; inset-inline-end: auto; }
+  /* Tezgâh bütün akışı topluyor — ızgaranın tamamını kaplasın. */
+  .item.wide { grid-column: 1 / -1; }
+  .item.all { grid-column: 1 / -1; background: var(--c-tinted); }
+  .item.all:hover { background: color-mix(in srgb, var(--c-accent) 9%, var(--c-tinted)); }
+
+  /* Radar makine üretimi; menüde de ayrı dursun. */
+  .item.machine { grid-column: 1 / -1; border-block-start: 1px solid var(--c-border); border-radius: 0 0 var(--radius) var(--radius); }
+  .tag {
+    font-size: var(--t-xs);
+    font-weight: 400;
+    padding: .1em .5em;
+    border-radius: 999px;
+    color: var(--c-accent);
+    background: color-mix(in srgb, var(--c-accent) 11%, transparent);
+  }
+
+  @media (max-width: 52rem) {
+    .menu {
+      grid-template-columns: 1fr 1fr;
+      inline-size: calc(100vw - var(--s-m));
+      max-inline-size: none;
+    }
+  }
+  @media (max-width: 34rem) {
+    .menu { grid-template-columns: 1fr; }
+    .item .dek { display: none; }
+    .item { min-block-size: 44px; align-items: center; }
   }
 </style>
 

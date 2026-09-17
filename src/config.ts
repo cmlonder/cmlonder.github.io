@@ -111,6 +111,64 @@ export const UI: Record<Locale, Record<string, string>> = {
  * içindeki `queued` durumu. Böylece fikir üç ortama da genelleşiyor:
  * okunmamış kitap, izlenmemiş film, oynanmamış oyun.
  */
+/**
+ * Domain'ler — tek bir alanda parça parça yazılan, ama bütün olarak
+ * okunabilen gövdeler.
+ *
+ * Koleksiyonlar (yazı/not/playbook) bir BİÇİM ekseni, konular bir KONU
+ * ekseni. Domain üçüncü bir eksen: aynı zanaatın belirli bir sektöre
+ * uygulanması. Havacılıkta overbooking ile e-ticarette oversell aynı
+ * problem — bunu görebilmek tek alan uzmanlığından zor taklit edilir.
+ *
+ * Omurga dosyası yazılmamış bölümleri de tanımlıyor: içindekiler ilk
+ * günden tam yayınlanıyor, yazılmamışlar söz olarak duruyor.
+ */
+export const DOMAINS = {
+  path: 'domains',
+  name:  { en: 'Domains', tr: 'Domain' } as Record<Locale, string>,
+  blurb: {
+    en: 'One domain at a time, written in chapters. The outline is public from day one — including what is not written yet.',
+    tr: 'Tek bir alan, bölüm bölüm. İçindekiler ilk günden açık — yazılmamış bölümler dahil.',
+  } as Record<Locale, string>,
+  readAll: { en: 'read', tr: 'oku' },
+};
+
+/**
+ * Domain sayfa metinleri. Sayfa dosyaları tek dilli olduğu için içlerinde
+ * `lang === 'tr' ? ... : ...` yazmak ölü dal üretiyor ve astro check
+ * hata veriyor — bu projede daha önce aynı sorun PAGE sözlüğüyle çözüldü.
+ */
+export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
+  en: {
+    chapters: 'chapters',
+    written: 'chapters written',
+    contents: 'Contents',
+    note: 'Unwritten chapters are listed too. The line beneath each is a promise of what it will cover.',
+    readAll: 'Read written chapters on one page',
+    chapter: 'Chapter',
+    of: 'of',
+    nextUp: 'Next chapter',
+    notYet: 'Not written yet',
+    backToSpine: 'All chapters',
+    onePage: 'One page',
+    crossRef: 'Related, in another domain',
+  },
+  tr: {
+    chapters: 'bölüm',
+    written: 'bölüm yazıldı',
+    contents: 'İçindekiler',
+    note: 'Yazılmamış bölümler de listede. Altlarındaki cümle, ne anlatacaklarına dair söz.',
+    readAll: 'Yazılmış bölümleri tek sayfada oku',
+    chapter: 'Bölüm',
+    of: '/',
+    nextUp: 'Sıradaki bölüm',
+    notYet: 'Henüz yazılmadı',
+    backToSpine: 'Tüm bölümler',
+    onePage: 'Tek sayfa',
+    crossRef: 'Başka bir domainde, aynı problem',
+  },
+};
+
 export const SHELVES = {
   library: {
     path: 'library',

@@ -59,6 +59,44 @@ const site = defineCollection({
  * Ortak alanlar `rafBase`'te; her ortamın kendine özgü alanı ayrı.
  * Gövde metni İNCELEMEDİR: tekil sayfada o render ediliyor.
  */
+/**
+ * Domain omurgası. `outline` yazılmamış bölümleri de içeriyor: dosyası
+ * olan bölüm bağlanıyor, olmayan "söz" olarak duruyor. İskeleti dosya
+ * sistemine bağlamamak kasıtlı — plan içerikten önce var olmalı.
+ */
+const domains = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/domains' }),
+  schema: z.object({
+    title: z.string(),
+    /** Tek cümle: bu domainin tezi. */
+    thesis: z.string(),
+    blurb: z.string(),
+    order: z.number().default(0),
+    outline: z.array(z.object({
+      slug: z.string(),
+      title: z.string(),
+      /** Yazılmamış bölümün vaadi — ne anlatacak. */
+      promise: z.string(),
+      part: z.string().optional(),
+    })).min(1),
+  }),
+});
+
+const chapters = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/chapters' }),
+  schema: z.object({
+    title: z.string(),
+    domain: z.string(),
+    summary: z.string(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    /** Başka bir domaindeki kardeş bölüme çapraz gönderme. */
+    crossRef: z.object({ domain: z.string(), slug: z.string(), why: z.string() }).optional(),
+    topics: z.array(z.enum(TOPICS)).default([]),
+    placeholder: z.boolean().default(false),
+  }),
+});
+
 const rafBase = {
   title: z.string(),
   year: z.number().optional(),
@@ -150,6 +188,8 @@ const radar = defineCollection({
 export const collections = {
   site,
   radar,
+  domains,
+  chapters,
   library,
   films,
   games,

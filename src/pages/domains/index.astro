@@ -1,0 +1,66 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { DOMAINS, DOMAIN_UI, type Locale } from '../../config';
+import { localePath } from '../../lib/content';
+
+const lang: Locale = 'en';
+const domains = (await getCollection('domains'))
+  .filter((e) => e.id.startsWith('tr/'))   // İngilizce domain içeriği henüz yok
+  .sort((a, b) => a.data.order - b.data.order);
+const chapters = await getCollection('chapters');
+
+const satirlar = domains.map((dm) => {
+  const slug = dm.id.split('/').pop()!;
+  const yazilan = chapters.filter((c) => c.data.domain === slug);
+  return { dm, slug, yazilan: yazilan.length, toplam: dm.data.outline.length };
+});
+---
+
+<Base title={`${DOMAINS.name[lang]} — Cemal Önder`} description={DOMAINS.blurb[lang]} lang={lang}>
+  <div class="wrap">
+    <header class="head">
+      <h1>{DOMAINS.name[lang]}</h1>
+      <p class="blurb">{DOMAINS.blurb[lang]}</p>
+    </header>
+
+    <ul class="list">
+      {satirlar.map(({ dm, slug, yazilan, toplam }) => (
+        <li>
+          <a href={localePath(lang, DOMAINS.path, slug)}>
+            <h2>{dm.data.title}</h2>
+            <p class="thesis">{dm.data.thesis}</p>
+            <p class="prog">
+              <span class="bar"><span class="fill" style={`--p:${(yazilan / toplam) * 100}%`} /></span>
+              <span class="n">{yazilan}/{toplam} {DOMAIN_UI[lang].chapters}</span>
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .wrap { max-inline-size: var(--w-narrow); margin-inline: auto; }
+  .head { margin-block-end: var(--s-2xl); }
+  h1 { font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+       font-weight: 400; line-height: var(--lh-tight); }
+  .blurb { margin-block-start: var(--s-2xs); font-family: var(--f-serif);
+           font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: balance; }
+  .list { list-style: none; padding: 0; display: grid; gap: var(--s-s); }
+  .list a { display: block; text-decoration: none; padding: var(--s-m);
+            border: 1px solid var(--c-border); border-radius: var(--radius-lg);
+            background: var(--c-surface); transition: border-color .15s ease, transform .15s ease; }
+  .list a:hover { border-color: color-mix(in srgb, var(--c-accent) 40%, var(--c-border));
+                  transform: translateY(-2px); }
+  .list h2 { font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+             font-weight: 400; font-size: var(--t-lg); margin: 0; }
+  .thesis { margin-block-start: var(--s-2xs); font-family: var(--f-sans);
+            font-size: var(--t-sm); color: var(--c-muted); line-height: 1.5; }
+  .prog { display: flex; align-items: center; gap: var(--s-xs); margin-block-start: var(--s-s); }
+  .bar { flex: 1; block-size: 3px; border-radius: 2px; background: var(--c-border); overflow: hidden; }
+  .fill { display: block; block-size: 100%; inline-size: var(--p); background: var(--c-accent); }
+  .n { font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+       font-variant-numeric: tabular-nums; white-space: nowrap; }
+</style>

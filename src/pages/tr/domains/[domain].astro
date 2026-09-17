@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Outline from '../../../components/Outline.astro';
+import { DOMAINS, DOMAIN_UI, type Locale } from '../../../config';
+import { localePath } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const domains = await getCollection('domains');
+  return domains
+    .filter((e) => e.id.startsWith('tr/') || !e.id.includes('/'))
+    .map((entry) => ({ params: { domain: entry.id.split('/').pop()! }, props: { entry } }));
+}
+
+const lang: Locale = 'tr';
+const { entry } = Astro.props;
+const slug = entry.id.split('/').pop()!;
+const { Content } = await render(entry);
+
+const chapters = (await getCollection('chapters')).filter((c) => c.data.domain === slug);
+const yazilan = new Map(chapters.map((c) => [c.id.split('/').pop()!, c]));
+const toplam = entry.data.outline.length;
+const ilk = entry.data.outline.find((b) => yazilan.has(b.slug));
+---
+
+<Base title={`${entry.data.title} — ${DOMAINS.name[lang]}`} description={entry.data.blurb} lang={lang}>
+  <article class="spine">
+    <p class="kicker"><a href={localePath(lang, DOMAINS.path)}>{DOMAINS.name[lang]}</a></p>
+    <h1>{entry.data.title}</h1>
+    <p class="thesis">{entry.data.thesis}</p>
+
+    <p class="prog">
+      <span class="bar"><span class="fill" style={`--p:${(yazilan.size / toplam) * 100}%`} /></span>
+      <span class="n">{yazilan.size}/{toplam} {DOMAIN_UI[lang].written}</span>
+    </p>
+
+    <div class="prose"><Content /></div>
+
+    <section class="toc">
+      <h2>{DOMAIN_UI[lang].contents}</h2>
+      <p class="note">
+        {DOMAIN_UI[lang].note}
+      </p>
+      <Outline outline={entry.data.outline} yazilan={yazilan} domain={slug} lang={lang} />
+    </section>
+
+    {yazilan.size > 0 && (
+      <p class="readall">
+        <a href={localePath(lang, DOMAINS.path, slug, 'oku')}>
+          {DOMAIN_UI[lang].readAll}
+          <span aria-hidden="true">&#8594;</span>
+        </a>
+      </p>
+    )}
+  </article>
+</Base>
+
+<style>
+  .spine { max-inline-size: var(--w-narrow); margin-inline: auto; }
+  .kicker { font-family: var(--f-sans); font-size: var(--t-xs);
+            text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted); }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 { font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+       font-weight: 400; line-height: var(--lh-tight); margin-block-start: var(--s-2xs); }
+  .thesis { margin-block-start: var(--s-s); font-family: var(--f-serif);
+            font-size: var(--t-md); line-height: 1.35; text-wrap: balance; }
+  .prog { display: flex; align-items: center; gap: var(--s-xs); margin-block: var(--s-m) 0; }
+  .bar { flex: 1; max-inline-size: 16rem; block-size: 3px; border-radius: 2px;
+         background: var(--c-border); overflow: hidden; }
+  .fill { display: block; block-size: 100%; inline-size: var(--p); background: var(--c-accent); }
+  .n { font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+       font-variant-numeric: tabular-nums; }
+  .prose { margin-block: var(--s-l); }
+  .toc { margin-block-start: var(--s-2xl); padding-block-start: var(--s-l);
+         border-block-start: 1px solid var(--c-border); }
+  .toc h2 { font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+            font-weight: 400; font-size: var(--t-lg); }
+  .note { font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+          margin-block: var(--s-2xs) var(--s-m); max-inline-size: 52ch; }
+  .readall { margin-block-start: var(--s-xl); font-family: var(--f-sans); font-size: var(--t-sm); }
+</style>

@@ -1,0 +1,154 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../../layouts/Base.astro';
+import { DOMAINS, DOMAIN_UI, type Locale } from '../../../../config';
+import { localePath } from '../../../../lib/content';
+
+export async function getStaticPaths() {
+  const domains = (await getCollection('domains')).filter((e) => e.id.startsWith('tr/'));
+  const chapters = await getCollection('chapters');
+
+  return domains.map((dm) => {
+    const slug = dm.id.split('/').pop()!;
+    const yazilan = new Map(
+      chapters.filter((c) => c.data.domain === slug).map((c) => [c.id.split('/').pop()!, c]));
+    return {
+      params: { domain: slug },
+      props: {
+        dm,
+        // Kitap sırası içindekilerden gelir.
+        bolumler: dm.data.outline
+          .filter((b) => yazilan.has(b.slug))
+          .map((b) => ({
+            slug: b.slug,
+            no: dm.data.outline.findIndex((x) => x.slug === b.slug) + 1,
+            entry: yazilan.get(b.slug)!,
+          })),
+        toplam: dm.data.outline.length,
+      },
+    };
+  });
+}
+
+const lang: Locale = 'tr';
+const { dm, bolumler, toplam } = Astro.props;
+const dSlug = dm.id.split('/').pop()!;
+const t = DOMAIN_UI[lang];
+
+const render_ = await Promise.all(bolumler.map(async (b) => ({ ...b, C: (await render(b.entry)).Content })));
+---
+
+<Base title={`${dm.data.title} — ${t.onePage}`} description={dm.data.thesis} lang={lang}>
+  <div class="read" data-progress>
+    <div class="bar" aria-hidden="true"><span class="fill" /></div>
+
+    <aside class="rail">
+      <a class="up" href={localePath(lang, DOMAINS.path, dSlug)}>{t.backToSpine}</a>
+      <ol class="mini">
+        {render_.map((b) => (
+          <li><a href={`#b${b.no}`}>
+            <span class="n">{String(b.no).padStart(2, '0')}</span>{b.entry.data.title}
+          </a></li>
+        ))}
+      </ol>
+    </aside>
+
+    <article class="body">
+      <header class="head">
+        <p class="kicker"><a href={localePath(lang, DOMAINS.path, dSlug)}>{DOMAINS.name[lang]}</a></p>
+        <h1>{dm.data.title}</h1>
+        <p class="thesis">{dm.data.thesis}</p>
+        <p class="n">{bolumler.length}/{toplam} {t.written}</p>
+      </header>
+
+      {render_.map((b) => (
+        <section class="ch" id={`b${b.no}`}>
+          <p class="chno">{t.chapter} {b.no}</p>
+          <h2>{b.entry.data.title}</h2>
+          <div class="prose"><b.C /></div>
+        </section>
+      ))}
+    </article>
+  </div>
+</Base>
+
+<script>
+  // Okuma ilerlemesi. Tek iş yapıyor; başka sayfada çalışmasın diye
+  // data-progress ile sınırlı.
+  const kok = document.querySelector('[data-progress]');
+  const fill = kok?.querySelector('.fill') as HTMLElement | null;
+  if (kok && fill) {
+    const guncelle = () => {
+      const h = document.documentElement;
+      const oran = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight);
+      fill.style.transform = `scaleX(${Math.min(1, Math.max(0, oran))})`;
+    };
+    addEventListener('scroll', guncelle, { passive: true });
+    addEventListener('resize', guncelle);
+    guncelle();
+  }
+</script>
+
+<style>
+  .read {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, var(--w-narrow));
+    gap: var(--s-2xl);
+    justify-content: center;
+    align-items: start;
+  }
+  .bar {
+    position: fixed; inset-block-start: 0; inset-inline: 0;
+    block-size: 2px; z-index: 50; pointer-events: none;
+  }
+  .fill {
+    display: block; block-size: 100%; inline-size: 100%;
+    background: var(--c-accent);
+    transform: scaleX(0); transform-origin: left center;
+  }
+  .rail { position: sticky; inset-block-start: var(--s-l); }
+  .up {
+    display: block; font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-accent);
+    text-decoration: none; padding-block-end: var(--s-2xs);
+    margin-block-end: var(--s-2xs); border-block-end: 1px solid var(--c-border);
+  }
+  .mini { list-style: none; padding: 0; margin: 0; display: grid; gap: .3em; }
+  .mini a {
+    display: grid; grid-template-columns: 2rem 1fr; gap: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted); text-decoration: none; line-height: 1.4;
+  }
+  .mini a:hover { color: var(--c-accent); }
+  .mini .n { font-family: var(--f-mono); opacity: .6; }
+
+  .head { margin-block-end: var(--s-2xl); }
+  .kicker { font-family: var(--f-sans); font-size: var(--t-xs);
+            text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted); }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 { font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+       font-weight: 400; line-height: var(--lh-tight); margin-block-start: var(--s-2xs); }
+  .thesis { margin-block-start: var(--s-s); font-family: var(--f-serif);
+            font-size: var(--t-md); line-height: 1.35; text-wrap: balance; }
+  .head .n { margin-block-start: var(--s-s); font-family: var(--f-sans);
+             font-size: var(--t-xs); color: var(--c-muted); }
+
+  .ch { margin-block-start: var(--s-4xl); scroll-margin-block-start: var(--s-l); }
+  .ch:first-of-type { margin-block-start: 0; }
+  .chno {
+    font-family: var(--f-mono); font-size: var(--t-xs);
+    color: var(--c-muted); letter-spacing: .06em;
+  }
+  .ch h2 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-xl); line-height: var(--lh-snug);
+    margin-block: var(--s-2xs) var(--s-m);
+    padding-block-end: var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+
+  @media (max-width: 62rem) {
+    .read { grid-template-columns: minmax(0, var(--w-narrow)); }
+    .rail { display: none; }
+  }
+</style>
