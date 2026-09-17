@@ -107,6 +107,13 @@ export function relativeDate(date: Date, lang: Locale, now = new Date()): string
     numeric: 'auto',
   });
   if (days < 1) return lang === 'tr' ? 'bugün' : 'today';
+  /*
+   * Türkçe ICU verisi -2 gün için "evvelsi gün" üretiyor. Doğru bir
+   * kelime ama günlük Türkçede kullanılmıyor; okur duraksıyor.
+   * Sadece bu durumu ele alıyoruz — "dün", "geçen ay", "geçen yıl"
+   * gibi diğer 'auto' karşılıkları doğal, onlara dokunmuyoruz.
+   */
+  if (lang === 'tr' && days === 2) return '2 gün önce';
   if (days < 30) return rtf.format(-days, 'day');
   if (days < 365) return rtf.format(-Math.round(days / 30), 'month');
   return rtf.format(-Math.round(days / 365), 'year');
