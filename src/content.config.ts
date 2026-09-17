@@ -97,6 +97,36 @@ const chapters = defineCollection({
   }),
 });
 
+/**
+ * Projeler.
+ *
+ * Sitenin tüm konumlandırması "kendi işini kuruyor" ama yapılmış tek
+ * bir şey görünmüyordu. Bu bölüm, yazılanların değil KURULANLARIN
+ * kaydı — ve diğerlerinden farklı olarak gerçek içerikle başlıyor.
+ *
+ * `status` bir vitrin değil, dürüst durum: canlı, bitti, terk edildi.
+ * Terk edilmiş projeyi göstermek, göstermemekten daha çok şey anlatır.
+ */
+const projects = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/projects' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    /** Ne işe yarıyor — tek cümle, teknik değil sonuç odaklı. */
+    what: z.string(),
+    status: z.enum(['live', 'shipped', 'building', 'archived']),
+    started: z.coerce.date(),
+    updated: z.coerce.date().optional(),
+    stack: z.array(z.string()).default([]),
+    url: z.string().url().optional(),
+    repo: z.string().url().optional(),
+    /** Ölçülebilir sonuç: "189 sayfa", "günde 1 bülten, insan yok". */
+    metrics: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
+    order: z.number().default(0),
+    placeholder: z.boolean().default(false),
+  }),
+});
+
 const rafBase = {
   title: z.string(),
   year: z.number().optional(),
@@ -188,6 +218,7 @@ const radar = defineCollection({
 export const collections = {
   site,
   radar,
+  projects,
   domains,
   chapters,
   library,

@@ -1,6 +1,6 @@
 ---
 import {
-  SITE, CONTACT, COLLECTIONS, COLLECTION_LABELS, HUB, NAV, SHELVES, SHELF_NAMES, SKILLS, RADAR, DOMAINS, type Locale,
+  SITE, CONTACT, COLLECTIONS, COLLECTION_LABELS, HUB, NAV, SHELVES, SHELF_NAMES, SKILLS, RADAR, DOMAINS, PROJECTS, type Locale,
 } from '../config';
 import { localePath } from '../lib/content';
 
@@ -14,6 +14,7 @@ const t = lang === 'tr'
 const links = [
   { label: HUB.name[lang], href: localePath(lang, HUB.path) },
   ...COLLECTIONS.map((c) => ({ label: COLLECTION_LABELS[c][lang], href: localePath(lang, c) })),
+  { label: PROJECTS.name[lang], href: localePath(lang, PROJECTS.path) },
   { label: DOMAINS.name[lang], href: localePath(lang, DOMAINS.path) },
   ...SHELF_NAMES.map((s) => ({ label: SHELVES[s].name[lang], href: localePath(lang, SHELVES[s].path) })),
   { label: SKILLS.name[lang], href: localePath(lang, SKILLS.path) },

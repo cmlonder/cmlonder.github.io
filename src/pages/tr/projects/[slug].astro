@@ -1,0 +1,95 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { PROJECTS, PROJECT_STATUS, PROJECT_UI, type Locale } from '../../../config';
+import { localePath, formatDate } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const all = await getCollection('projects');
+  const liste = all.filter((e) => e.id.startsWith('tr/')).sort((a, b) => a.data.order - b.data.order);
+  return liste.map((entry) => ({ params: { slug: entry.id.split('/').pop()! }, props: { entry } }));
+}
+
+const lang: Locale = 'tr';
+const { entry } = Astro.props;
+const t = PROJECT_UI[lang];
+const d = entry.data;
+const { Content } = await render(entry);
+---
+
+<Base title={`${d.title} — ${PROJECTS.name[lang]}`} description={d.summary} lang={lang}>
+  <article class="proj">
+    <p class="kicker"><a href={localePath(lang, PROJECTS.path)}>{PROJECTS.name[lang]}</a></p>
+
+    <div class="head">
+      <h1>{d.title}</h1>
+      <span class="st" data-s={d.status}>{PROJECT_STATUS[d.status][lang]}</span>
+    </div>
+    <p class="summary">{d.summary}</p>
+
+    {d.metrics.length > 0 && (
+      <dl class="m">
+        {d.metrics.map((m) => (<div><dt>{m.value}</dt><dd>{m.label}</dd></div>))}
+      </dl>
+    )}
+
+    <dl class="facts">
+      <dt>{t.started}</dt>
+      <dd><time datetime={d.started.toISOString()}>{formatDate(d.started, lang)}</time></dd>
+      {d.updated && (<><dt>{t.updated}</dt>
+        <dd><time datetime={d.updated.toISOString()}>{formatDate(d.updated, lang)}</time></dd></>)}
+      {d.stack.length > 0 && (<><dt>{t.stack}</dt>
+        <dd class="stack">{d.stack.map((s) => <code>{s}</code>)}</dd></>)}
+      {d.url && (<><dt>{t.live}</dt>
+        <dd><a href={d.url} rel="noopener">{d.url.replace(/^https?:\/\//, '')}</a></dd></>)}
+      {d.repo && (<><dt>{t.source}</dt>
+        <dd><a href={d.repo} rel="noopener">{d.repo.replace(/^https?:\/\/(www\.)?/, '')}</a></dd></>)}
+    </dl>
+
+    <div class="prose"><Content /></div>
+  </article>
+</Base>
+
+<style>
+  .proj { inline-size: min(100% - var(--s-l), var(--w-narrow)); margin-inline: auto; }
+  .kicker { font-family: var(--f-sans); font-size: var(--t-xs);
+            text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted); }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  .head { display: flex; align-items: baseline; gap: var(--s-s); flex-wrap: wrap;
+          margin-block-start: var(--s-2xs); }
+  h1 { font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+       font-weight: 400; line-height: var(--lh-tight); margin: 0; }
+  .st {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    padding: .2em .7em; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: .06em;
+  }
+  .st[data-s='live']     { color: var(--c-mark-ink); background: color-mix(in srgb, var(--c-mark) 13%, transparent); }
+  .st[data-s='shipped']  { color: var(--c-accent);   background: color-mix(in srgb, var(--c-accent) 11%, transparent); }
+  .st[data-s='building'] { color: var(--c-muted);    border: 1px solid var(--c-border); }
+  .st[data-s='archived'] { color: var(--c-muted);    background: var(--c-tinted); }
+
+  .summary { margin-block-start: var(--s-s); font-family: var(--f-serif);
+             font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: pretty; }
+
+  .m {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+    gap: var(--s-m); margin-block: var(--s-l);
+    padding-block: var(--s-s); border-block: 1px solid var(--c-border);
+  }
+  .m dt { font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+          font-size: var(--t-lg); line-height: 1; font-variant-numeric: tabular-nums; }
+  .m dd { margin: 0; margin-block-start: .25em; font-family: var(--f-sans);
+          font-size: var(--t-xs); color: var(--c-muted); }
+
+  .facts { display: grid; grid-template-columns: max-content 1fr;
+           gap: .3em var(--s-m); font-family: var(--f-sans); font-size: var(--t-xs);
+           margin-block-end: var(--s-l); }
+  .facts dt { color: var(--c-muted); }
+  .facts dd { margin: 0; }
+  .stack { display: flex; flex-wrap: wrap; gap: .3em; }
+  .stack code { font-family: var(--f-mono); padding: .1em .45em;
+                border-radius: var(--radius-sm); background: var(--c-tinted); }
+
+  @media (max-width: 34rem) { .m { grid-auto-flow: row; gap: var(--s-s); } }
+</style>

@@ -150,6 +150,28 @@ export const CONTACT = {
   } as Record<Locale, string>,
 };
 
+export const PROJECTS = {
+  path: 'projects',
+  name:  { en: 'Projects', tr: 'Projeler' } as Record<Locale, string>,
+  blurb: {
+    en: 'Things I built, with what they actually do and where they stand.',
+    tr: 'Kurduğum şeyler — ne işe yaradıkları ve şu an hangi durumda oldukları.',
+  } as Record<Locale, string>,
+};
+
+export const PROJECT_STATUS: Record<string, Record<Locale, string>> = {
+  live:     { en: 'Live',      tr: 'Canlı' },
+  shipped:  { en: 'Shipped',   tr: 'Yayında' },
+  building: { en: 'Building',  tr: 'Yapılıyor' },
+  archived: { en: 'Archived',  tr: 'Arşivde' },
+};
+
+/** Proje sayfası metinleri — sayfa dosyaları tek dilli, ölü dal olmasın. */
+export const PROJECT_UI: Record<Locale, Record<string, string>> = {
+  en: { started: 'Started', updated: 'Updated', stack: 'Stack', live: 'Live', source: 'Source' },
+  tr: { started: 'Başladı', updated: 'Güncellendi', stack: 'Yığın', live: 'Adres', source: 'Kaynak' },
+};
+
 export const DOMAINS = {
   path: 'domains',
   name:  { en: 'Domains', tr: 'Domain' } as Record<Locale, string>,
