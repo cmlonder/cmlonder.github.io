@@ -89,18 +89,28 @@ const no = (slug: string) => outline.findIndex((b) => b.slug === slug) + 1;
     font-size: var(--t-sm); font-weight: 600; line-height: 1.3;
     text-decoration: none;
   }
-  .txt a:hover { color: var(--c-accent); }
+  /* Yazılmış bölüm yalnızca renk ve kalınlıkla ayrışıyordu — WCAG 1.4.1
+     rengi tek ayırt edici işaret olarak kullanmayı yasaklıyor. Altı
+     çizili bir taban çizgisi ekleniyor. */
+  .txt a {
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--c-accent) 35%, transparent);
+    text-underline-offset: .18em;
+    text-decoration-thickness: 1px;
+  }
+  .txt a:hover { color: var(--c-accent); text-decoration-color: currentColor; }
   .dek {
     font-family: var(--f-sans); font-size: var(--t-xs);
     color: var(--c-muted); line-height: 1.45;
   }
 
   /* Yazılmamış bölüm: solgun, italik söz, başlık bağlantı değil. */
-  .todo .n { opacity: .45; }
+  /* .45 opaklık numarayı 1.81:1'e düşürüyordu; ayrım renkle değil
+     dolgusuz nokta ve italik sözle taşınıyor. */
+  .todo .n { color: var(--c-muted); }
   .todo .txt .t { color: var(--c-muted); font-weight: 400; }
   .todo .dek { font-style: italic; }
 
-  .now { }
   .now .n { color: var(--c-accent); }
   .now .txt a { color: var(--c-accent); }
   .now::before {

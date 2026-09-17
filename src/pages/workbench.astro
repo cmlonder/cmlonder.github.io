@@ -14,6 +14,15 @@ const byType = await Promise.all(
   COLLECTIONS.map(async (c) => ({ c, entries: await getEntries(c, lang) }))
 );
 
+/*
+ * Akış ile koleksiyon bölümleri aynı girdileri iki kez gösteriyordu:
+ * on sekiz girdinin on ikisi sayfada çift görünüyordu ve okur hangi
+ * bölümde yeni bir şey olduğunu ancak başlıkları karşılaştırarak
+ * anlayabiliyordu. Akış kısaldı ve bölümler onu tekrarlamıyor.
+ */
+const AKIS = 5;
+const gorulen = new Set(all.slice(0, AKIS).map(({ entry }) => entry.id));
+
 const recentLabel = PAGE[lang].recently;
 ---
 
@@ -32,7 +41,7 @@ const recentLabel = PAGE[lang].recently;
     <section class="recent">
       <h2 class="section-title">{recentLabel}</h2>
       <ul class="stream">
-        {all.slice(0, 12).map(({ collection, entry }) => (
+        {all.slice(0, AKIS).map(({ collection, entry }) => (
           <li>
             <EntryCard collection={collection} entry={entry} lang={lang}
                        variant="row" showCollection showDescription />
@@ -48,7 +57,7 @@ const recentLabel = PAGE[lang].recently;
         </h2>
         <p class="group-blurb">{COLLECTION_BLURBS[c][lang]} <span class="n">{countLabel(entries.length, lang)}</span></p>
         <ul class="stream">
-          {entries.slice(0, 6).map((entry) => (
+          {entries.filter((e) => !gorulen.has(e.id)).slice(0, 6).map((entry) => (
             <li><EntryCard collection={c} entry={entry} lang={lang} variant="row" /></li>
           ))}
         </ul>

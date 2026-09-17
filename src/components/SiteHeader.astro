@@ -115,6 +115,16 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
 
   .bar { display: flex; align-items: center; gap: var(--s-s); flex-wrap: wrap; }
 
+  /* Arama, dil ve tema düğmeleri. Bu kuralın yokluğu üçünü üst üste
+     diziyordu: .search blok seviyesinde, .controls varsayılan block.
+     Başlık şeridi her sayfada 145px'e şişiyordu. */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2xs);
+    flex-shrink: 0;
+  }
+
   .wordmark {
     display: inline-flex;
     align-items: center;
