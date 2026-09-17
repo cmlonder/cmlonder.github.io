@@ -19,8 +19,8 @@ Dört format, konuya göre değil düşüncenin ne kadar bittiğine göre:
 
 - **Yazılar** savunmaya hazır olduğum argümanlar.
 - **Notlar** sesli düşünme, çoğu zaman yanlış.
-- **Playbook'lar** birden fazla kez verdiğim kararlar.
-- **Sinyaller** tam iki cümleye değen linkler.
+- **Kılavuzlar** birden fazla kez verdiğim kararlar.
+- **Bulduklarım** tam iki cümleye değen linkler.
 
 Konular dördünü de kesiyor. Bir mesele bugün sinyal, bir yıl sonra yazı olabilir —
 anlamak zaten kabaca böyle işliyor.

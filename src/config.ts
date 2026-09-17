@@ -34,8 +34,8 @@ type Dict = Record<Locale, string>;
 export const COLLECTION_LABELS: Record<CollectionName, Dict> = {
   essays:    { en: 'Essays',    tr: 'Yazılar' },
   notes:     { en: 'Notes',     tr: 'Notlar' },
-  playbooks: { en: 'Playbooks', tr: "Playbook'lar" },
-  signals:   { en: 'Signals',   tr: 'Sinyaller' },
+  playbooks: { en: 'Playbooks', tr: "Kılavuzlar" },
+  signals:   { en: 'Signals',   tr: 'Bulduklarım' },
 };
 
 /** Makine tarafı için tekil tip adı (.md aynası, llms.txt, JSON-LD). */
@@ -57,7 +57,7 @@ export const COLLECTION_BLURBS: Record<CollectionName, Dict> = {
   },
   playbooks: {
     en: 'Repeatable decisions. Problem, context, approach, tradeoffs.',
-    tr: 'Tekrarlanabilir kararlar. Problem, bağlam, yaklaşım, tradeoff.',
+    tr: 'Tekrarlanabilir kararlar. Problem, bağlam, yaklaşım, ödünleşim.',
   },
   signals: {
     en: 'A link and why it matters. Two sentences, no more.',
@@ -66,18 +66,20 @@ export const COLLECTION_BLURBS: Record<CollectionName, Dict> = {
 };
 
 export const TOPIC_LABELS: Record<Topic, Dict> = {
-  'agentic-development':   { en: 'Agentic Development',   tr: 'Agentic Geliştirme' },
+  'agentic-development':   { en: 'Agentic Development',   tr: 'Ajanlarla Geliştirme' },
   'solution-architecture': { en: 'Solution Architecture',  tr: 'Çözüm Mimarisi' },
   'scale-and-performance': { en: 'Scale & Performance',    tr: 'Ölçek & Performans' },
   'solo-company':          { en: 'Solo Company',           tr: 'Tek Kişilik Şirket' },
-  'ai-news':               { en: 'AI News',                tr: 'AI Haberleri' },
+  'ai-news':               { en: 'AI News',                tr: 'Yapay Zeka Haberleri' },
   'use-case':              { en: 'Use Cases',              tr: "Use-Case'ler" },
 };
 
 /** Notların olgunluk aşaması (digital garden konvansiyonu). */
 export const STATUS_LABELS = {
-  seedling: { en: 'Seedling', tr: 'Fidan' },
-  budding:  { en: 'Budding',  tr: 'Filiz' },
+  /* Türkçede sıra: filiz (yeni sürgün) -> fidan (genç ağaç).
+     Önceden ters yazılmıştı. */
+  seedling: { en: 'Seedling', tr: 'Filiz' },
+  budding:  { en: 'Budding',  tr: 'Fidan' },
   evergreen:{ en: 'Evergreen',tr: 'Kökleşmiş' },
 } as const;
 
@@ -343,7 +345,7 @@ export const SHELF_NAMES = Object.keys(SHELVES) as ShelfName[];
 /** Skill kütüphanesi — agentic kimliğin kanıtı. */
 export const SKILLS = {
   path: 'skills',
-  name:  { en: 'Skills', tr: 'Skill\'ler' } as Record<Locale, string>,
+  name:  { en: 'Skills', tr: 'Skill dosyaları' } as Record<Locale, string>,
   blurb: {
     en: 'The actual agent instructions this site runs on. Copy them.',
     tr: 'Bu sitenin üzerinde çalıştığı gerçek ajan talimatları. Kopyalayabilirsin.',
@@ -434,10 +436,10 @@ export type RadarSeries = keyof typeof RADAR_SERIES;
 
 export const HUB = {
   path: 'workbench',
-  name:  { en: 'The Workbench', tr: 'Tezgâh' } as Record<Locale, string>,
+  name:  { en: 'The Workbench', tr: 'Bahçe' } as Record<Locale, string>,
   blurb: {
     en: 'A workbench of half-built ideas, finished arguments, and notes to myself — kept in the open.',
-    tr: 'Yarım kalmış fikirler, bitmiş argümanlar ve kendime notlar — açıkta duran bir tezgâh.',
+    tr: 'Yarım kalmış fikirler, bitmiş argümanlar ve kendime notlar — açıkta büyüyen bir bahçe.',
   } as Record<Locale, string>,
 };
 
@@ -460,7 +462,7 @@ export const HERO: Record<Locale, { name: string; rest: string; role: string; no
 /** Üst navigasyon — Maggie gibi 3 öğe, biri dropdown. */
 export const NAV: Record<Locale, { label: string; href: string }[]> = {
   en: [{ label: 'Uses', href: '/uses' }, { label: 'Now', href: '/now' }, { label: 'About', href: '/about' }],
-  tr: [{ label: 'Kullandıklarım', href: '/uses' }, { label: 'Şu An', href: '/now' }, { label: 'Hakkında', href: '/about' }],
+  tr: [{ label: 'Kullandıklarım', href: '/uses' }, { label: 'Şu Sıralar', href: '/now' }, { label: 'Hakkında', href: '/about' }],
 };
 
 /**
@@ -518,7 +520,7 @@ export const PAGE: Record<Locale, {
     findAction: 'Which playbook? Find it by symptom',
   },
   tr: {
-    back: 'Tezgâha dön',
+    back: 'Bahçeye dön',
     home: 'Ana sayfa',
     updated: 'Güncellendi',
     tools: 'İzinli araçlar',

@@ -1,5 +1,5 @@
 ---
-title: 'Şu An'
+title: 'Şu Sıralar'
 description: 'Neye baktığımın günlüğü — düzensiz aralıklarla eklenir, silinmez.'
 updated: 2026-09-15
 ---

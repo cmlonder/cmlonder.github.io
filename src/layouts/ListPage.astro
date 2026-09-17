@@ -1,7 +1,7 @@
 ---
 import Base from './Base.astro';
 import EntryCard from '../components/EntryCard.astro';
-import { HUB, UI, type CollectionName, type Locale } from '../config';
+import { HUB, UI, PAGE, type CollectionName, type Locale } from '../config';
 import { localePath } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const { title, blurb, lang, items, altLocale = null, showCollection = false, action = null } = Astro.props;
-const back = lang === 'tr' ? 'Tezgâha dön' : 'Back to the workbench';
+const back = PAGE[lang].back;
 ---
 
 <Base title={`${title} — Cemal Önder`} description={blurb} lang={lang} altLocale={altLocale}>

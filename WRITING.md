@@ -28,7 +28,7 @@ Elinde ne var?
 └─ Okuduğun ve tavsiye ettiğin bir kitap             →  LIBRARY
 ```
 
-**Emin değilsen aşağıdan başla.** Sinyal yazmak beş dakika, yazı yazmak bir
+**Emin değilsen aşağıdan başla.** Bulgu yazmak beş dakika, yazı yazmak bir
 hafta. Yanlış bölüme koymanın maliyeti, hiç yazmamanın maliyetinden düşük.
 
 ---
@@ -288,8 +288,8 @@ görünüyor. Varsayılan `seedling`.
 
 | Seviye | Ne demek | Ne zaman yükseltilir |
 |---|---|---|
-| `seedling` (Fidan) | Ham. Fikir var, savunma yok. Yanlış olabilir | — |
-| `budding` (Filiz) | Bir kez gözden geçirildi, örnekleri oturdu | Geri dönüp düzelttiğinde |
+| `seedling` (Filiz) | Ham. Fikir var, savunma yok. Yanlış olabilir | — |
+| `budding` (Fidan) | Bir kez gözden geçirildi, örnekleri oturdu | Geri dönüp düzelttiğinde |
 | `evergreen` (Kökleşmiş) | Arkasında duruyorsun, bir yıl sonra da geçerli | Zaman testinden geçtiğinde |
 
 **Neden sadece notlarda:** koleksiyonların kendisi zaten bir olgunluk

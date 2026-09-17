@@ -10,7 +10,7 @@ Kısa cevap: **Yazılar bana ait. [Radar](/radar) bana ait değil.**
 
 | Bölüm | Kim yazıyor |
 |---|---|
-| Yazılar, Notlar, Playbook'lar, Sinyaller, Kitaplık | Ben |
+| Yazılar, Notlar, Kılavuzlar, Bulduklarım, Kitaplık | Ben |
 | [Radar](/radar) | Bir ajan (Gemini Spark). Ben yazmıyorum. |
 
 Yazılarımı yazarken ajan kullanıyorum — düzeltme, araştırma, kod. Ama cümleler
