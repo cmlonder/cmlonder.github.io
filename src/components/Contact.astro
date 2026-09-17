@@ -1,0 +1,82 @@
+---
+/**
+ * İletişim bloğu — /about sayfasının sonunda.
+ *
+ * Boş alanlar render edilmiyor: yer tutucu bir "CV" bağlantısı, hiç
+ * olmamasından kötü. İçerik geldikçe kendiliğinden beliriyor.
+ */
+import { CONTACT, type Locale } from '../config';
+interface Props { lang: Locale }
+const { lang } = Astro.props as Props;
+const t = CONTACT.label[lang];
+const acik = (CONTACT.open[lang] ?? []).filter(Boolean);
+---
+
+<section class="contact">
+  <h2>{t.write}</h2>
+  <p class="blurb">{CONTACT.blurb[lang]}</p>
+
+  <p class="mail">
+    <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+  </p>
+
+  {acik.length > 0 && (
+    <>
+      <h3>{t.open}</h3>
+      <ul class="open">{acik.map((x) => <li>{x}</li>)}</ul>
+    </>
+  )}
+
+  <h3>{t.elsewhere}</h3>
+  <ul class="links">
+    <li><a href={CONTACT.github} rel="me noopener">GitHub</a></li>
+    <li><a href={CONTACT.linkedin} rel="me noopener">LinkedIn</a></li>
+    {CONTACT.cv && <li><a href={CONTACT.cv} rel="noopener">{t.cv}</a></li>}
+  </ul>
+</section>
+
+<style>
+  .contact {
+    margin-block-start: var(--s-2xl);
+    padding-block-start: var(--s-l);
+    border-block-start: 1px solid var(--c-border);
+  }
+  .contact h2 {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-weight: 400;
+    font-size: var(--t-lg);
+    margin: 0;
+  }
+  .contact h3 {
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--c-muted);
+    font-weight: 400;
+    margin-block: var(--s-m) var(--s-2xs);
+  }
+  .blurb {
+    margin-block-start: var(--s-2xs);
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+    color: var(--c-muted);
+    max-inline-size: 52ch;
+  }
+  .mail {
+    margin-block-start: var(--s-s);
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-md);
+  }
+  .mail a { text-decoration-thickness: 1px; text-underline-offset: .18em; }
+  .open, .links { list-style: none; padding: 0; margin: 0; }
+  .open li, .links li {
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+    padding-block: .2em;
+  }
+  .links { display: flex; flex-wrap: wrap; gap: var(--s-s); }
+  .links a { min-block-size: 24px; display: inline-flex; align-items: center; }
+</style>

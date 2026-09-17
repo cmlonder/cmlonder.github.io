@@ -17,7 +17,7 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
 ---
 
 <header class="site-header">
-  <div class="wrap bar">
+  <div class="bar">
     <a class="wordmark" href={localePath(lang, '')}>
       <span class="leaf" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none"
@@ -113,6 +113,24 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
 <style>
   .site-header { padding-block: var(--s-s); }
 
+  /*
+   * Şerit içerikle AYNI kaba kilitliydi: 1920px'te kontroller sağ
+   * kenardan 384px içeride kalıyordu. Başlık bir kılıf, içerikse okuma
+   * ölçüsü — ikisinin aynı genişlikte olması gerekmiyor. Şerit kenara
+   * yaklaşıyor, gövde ölçüsünü koruyor.
+   */
+  .bar {
+    /* Menü buna göre konumlanıyor: tetikleyiciye değil ŞERİDİN SAĞ
+       KENARINA yaslanıyor, yoksa geniş ekranda sağında boşluk kalıyor. */
+    position: relative;
+    /* Üst sınır yok: şerit ekranla birlikte genişliyor, kenardan
+       yalnızca akışkan bir boşluk bırakıyor. Kontroller böylece her
+       genişlikte sağ kenara yakın duruyor. */
+    inline-size: 100%;
+    padding-inline: clamp(var(--s-s), 3vw, var(--s-xl));
+    box-sizing: border-box;
+  }
+
   .bar { display: flex; align-items: center; gap: var(--s-s); flex-wrap: wrap; }
 
   /* Arama, dil ve tema düğmeleri. Bu kuralın yokluğu üçünü üst üste
@@ -160,7 +178,7 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
   .hub summary { min-block-size: 24px; }
 
   /* — Megamenu — */
-  .hub { position: relative; }
+  .hub { position: static; }
   .hub summary {
     display: inline-flex;
     align-items: center;
@@ -180,9 +198,9 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
      karşılaştırılabilir hale getiriyor. */
   .menu {
     position: absolute;
+    /* Şeridin altına, sağ kenar boşluğuyla hizalı. */
     inset-block-start: calc(100% + var(--s-2xs));
-    /* Tetikleyici sağ tarafta; sola çapalanınca menü ekrandan taşıyordu. */
-    inset-inline-end: 0;
+    inset-inline-end: clamp(var(--s-s), 3vw, var(--s-xl));
     z-index: 40;
     display: grid;
     grid-template-columns: repeat(2, minmax(15rem, 1fr));

@@ -1,6 +1,6 @@
 ---
 import {
-  SITE, COLLECTIONS, COLLECTION_LABELS, HUB, NAV, SHELVES, SHELF_NAMES, SKILLS, RADAR, DOMAINS, type Locale,
+  SITE, CONTACT, COLLECTIONS, COLLECTION_LABELS, HUB, NAV, SHELVES, SHELF_NAMES, SKILLS, RADAR, DOMAINS, type Locale,
 } from '../config';
 import { localePath } from '../lib/content';
 
@@ -50,6 +50,10 @@ const social = [
         </svg>
         {t.rss}
       </a>
+
+      <p class="mail">
+        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+      </p>
 
       <ul class="social">
         {social.map((s) => (
@@ -111,6 +115,11 @@ const social = [
   }
   .rss:hover { border-color: var(--c-accent); }
 
+  .mail {
+    margin-block-start: var(--s-s);
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+  }
   .social {
     display: flex;
     gap: var(--s-2xs);

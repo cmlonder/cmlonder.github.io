@@ -123,6 +123,33 @@ export const UI: Record<Locale, Record<string, string>> = {
  * Omurga dosyası yazılmamış bölümleri de tanımlıyor: içindekiler ilk
  * günden tam yayınlanıyor, yazılmamışlar söz olarak duruyor.
  */
+/**
+ * İletişim. Sitede ikna olmuş bir okurun gidecek yeri yoktu: ne e-posta,
+ * ne ne yaptığına dair bir cümle. Tek çağrı "RSS ile takip et"ti.
+ *
+ * `open` alanları şimdilik yer tutucu — doldurulunca sayfada görünürler,
+ * boşken hiç render edilmiyorlar.
+ */
+export const CONTACT = {
+  email: 'cemalonder1@gmail.com',
+  github: 'https://github.com/cmlonder',
+  linkedin: 'https://www.linkedin.com/in/cmlonder/',
+  /** Boş bırakılan alanlar sayfada görünmez. */
+  open: {
+    en: ['', ''],
+    tr: ['', ''],
+  } as Record<Locale, string[]>,
+  cv: '',
+  label: {
+    en: { write: 'Write to me', elsewhere: 'Elsewhere', open: 'What I am up for', cv: 'CV' },
+    tr: { write: 'Bana yaz', elsewhere: 'Başka yerlerde', open: 'Ne yapmaya açığım', cv: 'CV' },
+  } as Record<Locale, Record<string, string>>,
+  blurb: {
+    en: 'The fastest way to reach me is email. I read everything; I answer what I can.',
+    tr: 'Bana ulaşmanın en hızlı yolu e-posta. Hepsini okuyorum, elimden geleni yanıtlıyorum.',
+  } as Record<Locale, string>,
+};
+
 export const DOMAINS = {
   path: 'domains',
   name:  { en: 'Domains', tr: 'Domain' } as Record<Locale, string>,

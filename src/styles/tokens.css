@@ -67,7 +67,8 @@
 
   /* — Ölçü — */
   --w-prose: 66ch;
-  --w-page:  72rem;   /* geniş iki kolonlu ızgara */
+  --w-page:  78rem;   /* geniş ızgara. Okuma ölçüsü (--w-narrow) DEĞİŞMEZ:
+                         satır uzunluğu tipografik bir kısıt, ekran genişliği değil. */
   --w-narrow: 46rem;  /* okuma sayfası */
 
   --radius-sm: 0.2rem;

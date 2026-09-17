@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import type { Locale } from '../config';
+import Contact from '../components/Contact.astro';
 import Base from '../layouts/Base.astro';
 import { localePath, formatDate } from '../lib/content';
 import { PAGE } from '../config';
@@ -32,6 +33,7 @@ const updatedLabel = PAGE[lang].updated;
     <h1>{entry.data.title}</h1>
     <p class="meta">{updatedLabel} {formatDate(entry.data.updated, lang)}</p>
     <div class:list={['prose', slug === 'now' && 'timeline']}><Content /></div>
+    {slug === 'about' && <Contact lang={lang} />}
   </article>
 </Base>
 
