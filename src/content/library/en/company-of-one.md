@@ -7,14 +7,5 @@ order: 8
 placeholder: true
 status: "done"
 rating: 3
-tags: ["tek-kişi", "ölçek"]
+tags: ["solo", "scale"]
 ---
-
-Küçük kalmanın bir strateji olabileceğini savunuyor ve bu savunmaya
-ihtiyacım vardı.
-
-Ama kitap kendi tezini fazla tekrar ediyor; iki yüz sayfada elli sayfalık
-fikir var. Radar'da yazdığım vakalar bu tezi kitaptan daha iyi
-kanıtlıyor.
-
-Üç yıldız. Fikir doğru, kitap uzun.

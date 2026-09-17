@@ -7,15 +7,5 @@ order: 3
 placeholder: true
 status: "done"
 rating: 4
-tags: ["üretim", "dayanıklılık"]
+tags: ["production", "resilience"]
 ---
-
-Üretimin kaç farklı şekilde bozulduğunun kataloğu. Devre kesici, bulkhead,
-zaman aşımı kalıpları buradan yayıldı.
-
-Bende kalan şey kalıplar değil, **hikâyeler** oldu. Havayolu rezervasyon
-sisteminin tek bir bağlantı sızıntısıyla çökmesi bölümünü nöbet
-yazılarında hâlâ örnek veriyorum.
-
-İkinci baskı bulut tarafını ekliyor ama ilk baskının keskinliği daha
-fazla.

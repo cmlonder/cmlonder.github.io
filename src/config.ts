@@ -169,6 +169,73 @@ export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
   },
 };
 
+/**
+ * Etiket sözlüğü.
+ *
+ * Kural: SLUG HER ZAMAN ASCII/İngilizce, gösterim yerelleştirilmiş.
+ * Sebebi basit — slug URL'de yaşıyor. "tek-kişi" gibi bir slug hem
+ * yüzde-kodlanmış çirkin bir adres üretiyor hem de dil değiştirince
+ * bağlantı kırılıyor.
+ *
+ * Sözlükte olmayan slug ham haliyle gösteriliyor; yeni etiket eklemek
+ * için burayı güncellemek ZORUNLU değil.
+ */
+export const TAG_LABELS: Record<string, Record<Locale, string>> = {
+  'abstraction': { en: 'abstraction', tr: 'soyutlama' },
+  'automation': { en: 'automation', tr: 'otomasyon' },
+  'bottleneck': { en: 'bottleneck', tr: 'darboğaz' },
+  'career': { en: 'career', tr: 'kariyer' },
+  'combinatorics': { en: 'combinatorics', tr: 'bileşim' },
+  'communication': { en: 'communication', tr: 'iletişim' },
+  'complexity': { en: 'complexity', tr: 'karmaşıklık' },
+  'cost': { en: 'cost', tr: 'bedel' },
+  'craft': { en: 'craft', tr: 'zanaat' },
+  'data': { en: 'data', tr: 'veri' },
+  'deduction': { en: 'deduction', tr: 'çıkarım' },
+  'depth': { en: 'depth', tr: 'derinlik' },
+  'design': { en: 'design', tr: 'tasarım' },
+  'determinism': { en: 'determinism', tr: 'belirlilik' },
+  'discovery': { en: 'discovery', tr: 'keşif' },
+  'distributed': { en: 'distributed', tr: 'dağıtık' },
+  'distribution': { en: 'distribution', tr: 'dağıtım' },
+  'documentary': { en: 'documentary', tr: 'belgesel' },
+  'ethics': { en: 'ethics', tr: 'etik' },
+  'failure': { en: 'failure', tr: 'başarısızlık' },
+  'feedback': { en: 'feedback', tr: 'geribesleme' },
+  'form': { en: 'form', tr: 'biçim' },
+  'foundational': { en: 'foundational', tr: 'temel' },
+  'founding': { en: 'founding', tr: 'kuruluş' },
+  'games': { en: 'games', tr: 'oyun' },
+  'habit': { en: 'habit', tr: 'alışkanlık' },
+  'institutions': { en: 'institutions', tr: 'kurum' },
+  'ip': { en: 'ip', tr: 'ip monetization' },
+  'knowledge': { en: 'knowledge', tr: 'bilgi' },
+  'language': { en: 'language', tr: 'dil' },
+  'longform': { en: 'longform', tr: 'uzun soluklu' },
+  'mastery': { en: 'mastery', tr: 'ustalık' },
+  'method': { en: 'method', tr: 'yöntem' },
+  'models': { en: 'models', tr: 'model' },
+  'optimization': { en: 'optimization', tr: 'optimizasyon' },
+  'partnership': { en: 'partnership', tr: 'ortaklık' },
+  'patterns': { en: 'patterns', tr: 'örüntü' },
+  'production': { en: 'production', tr: 'üretim' },
+  'puzzles': { en: 'puzzles', tr: 'bulmaca' },
+  'repetition': { en: 'repetition', tr: 'tekrar' },
+  'resilience': { en: 'resilience', tr: 'dayanıklılık' },
+  'risk': { en: 'risk', tr: 'risk' },
+  'rules': { en: 'rules', tr: 'kural' },
+  'scale': { en: 'scale', tr: 'ölçek' },
+  'scope': { en: 'scope', tr: 'kapsam' },
+  'simulation': { en: 'simulation', tr: 'simülasyon' },
+  'solo': { en: 'solo', tr: 'tek kişi' },
+  'systems': { en: 'systems', tr: 'sistem' },
+  'teaching': { en: 'teaching', tr: 'öğretme' },
+  'team': { en: 'team', tr: 'ekip' },
+  'time': { en: 'time', tr: 'süre' },
+  'timing': { en: 'timing', tr: 'zamanlama' },
+  'tradeoffs': { en: 'tradeoffs', tr: 'ödün' },
+};
+
 export const SHELVES = {
   library: {
     path: 'library',

@@ -5,11 +5,12 @@
  */
 import Base from './Base.astro';
 import ShelfCard from '../components/ShelfCard.astro';
+import LangNote from '../components/LangNote.astro';
 import { SHELVES, UI, PAGE, type ShelfName, type Locale } from '../config';
 import { localePath } from '../lib/content';
 
-interface Props { shelf: ShelfName; lang: Locale; items: any[]; altHref: string }
-const { shelf, lang, items, altHref } = Astro.props as Props;
+interface Props { shelf: ShelfName; lang: Locale; shown?: Locale; items: any[]; altHref: string }
+const { shelf, lang, shown = lang, items, altHref } = Astro.props as Props;
 
 const meta = SHELVES[shelf];
 const other = lang === 'tr' ? 'en' : 'tr';
@@ -30,6 +31,8 @@ const sirada = items.filter((e) => e.data.status === 'queued');
       <h1>{meta.name[lang]}</h1>
       <p class="blurb">{meta.blurb[lang]}</p>
     </header>
+
+    <LangNote lang={lang} shown={shown} />
 
     {bitmis.length === 0 ? <p class="meta">{UI[lang].empty}</p> : (
       <ul class="grid">

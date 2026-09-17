@@ -46,7 +46,7 @@ const ilk = entry.data.outline.find((b) => yazilan.has(b.slug));
 
     {yazilan.size > 0 && (
       <p class="readall">
-        <a href={localePath(lang, DOMAINS.path, slug, 'oku')}>
+        <a href={localePath(lang, DOMAINS.path, slug, 'read')}>
           {DOMAIN_UI[lang].readAll}
           <span aria-hidden="true">&#8594;</span>
         </a>

@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { RADAR, TAG_LABELS, type Locale } from '../../../config';
+import { formatDate } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('radar')).filter((e) => !e.data.draft);
+  const tags = new Set(all.flatMap((e) => e.data.tags ?? []));
+  return [...tags].map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      entries: all
+        .filter((e) => (e.data.tags ?? []).includes(tag))
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
+    },
+  }));
+}
+
+const lang: Locale = 'tr';
+const { tag, entries } = Astro.props;
+const ad = TAG_LABELS[tag]?.tr ?? tag;
+---
+
+<Base title={`${ad} — ${RADAR.name.tr}`} description={`${tag} etiketli bültenler.`}
+      lang={lang} ogImage="/og/radar.png">
+  <div class="wrap">
+    <header class="head">
+      <p class="kicker"><a href="/radar">{RADAR.name.tr}</a></p>
+      <h1>{ad}</h1>
+      <p class="blurb">{entries.length} bülten</p>
+    </header>
+
+    <ul class="list">
+      {entries.map((e) => (
+        <li>
+          <a class="row" href={`/radar/${e.id}`}>
+            <h2><time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time></h2>
+            <p class="dek">{e.data.summary}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .wrap { max-inline-size: var(--w-narrow); margin-inline: auto; }
+  .head { margin-block-end: var(--s-xl); }
+  .kicker {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+  }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 { font-family: var(--f-serif); font-variation-settings: var(--axis-display); }
+  .blurb { font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted); }
+  .list { list-style: none; padding: 0; }
+  .list li + li { border-block-start: 1px solid var(--c-border); }
+  .list a.row { display: block; text-decoration: none; padding-block: var(--s-s); }
+  .list a.row h2 {
+    margin: 0 0 var(--s-3xs);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-md);
+  }
+  .list a.row:hover h2 { color: var(--c-accent); }
+  .list a.row .dek {
+    margin: 0; font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted);
+  }
+</style>

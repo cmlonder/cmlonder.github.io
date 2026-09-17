@@ -6,17 +6,18 @@ import { type Locale } from '../../config';
 export async function getStaticPaths() {
   const all = await getCollection('films');
   const kendi = all.filter((e) => e.id.startsWith('en/'));
-  const liste = (kendi.length ? kendi : all.filter((e) => e.id.startsWith('en/')))
+  const yedek = all.filter((e) => e.id.startsWith('tr/')).length ? 'tr/' : 'en/';
+  const liste = (kendi.length ? kendi : all.filter((e) => e.id.startsWith(yedek)))
     .sort((a, b) => a.data.order - b.data.order);
 
   return liste.map((entry, i) => ({
     params: { slug: entry.id.split('/').pop()! },
-    props: { entry, prev: liste[i - 1] ?? null, next: liste[i + 1] ?? null },
+    props: { entry, shown: entry.id.split('/')[0] as Locale, prev: liste[i - 1] ?? null, next: liste[i + 1] ?? null },
   }));
 }
 
 const lang: Locale = 'en';
-const { entry, prev, next } = Astro.props;
+const { entry, shown, prev, next } = Astro.props;
 ---
 
-<ShelfEntry entry={entry} shelf="films" lang={lang} prev={prev} next={next} />
+<ShelfEntry entry={entry} shown={shown} shelf="films" lang={lang} prev={prev} next={next} />

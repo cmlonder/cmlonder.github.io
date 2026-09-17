@@ -4,7 +4,7 @@ author: "Richard Hamming"
 year: 1997
 status: "queued"
 note: "Hamming'in ünlü \"You and Your Research\" dersinin kitap hali. Yıllardır rafta."
-tags: ["kariyer", "yöntem"]
+tags: ["career", "method"]
 order: 22
 placeholder: true
 ---

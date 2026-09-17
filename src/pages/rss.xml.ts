@@ -8,6 +8,15 @@ export async function GET(context: APIContext) {
   const lang = 'en' as const;
   const items = await getAllEntries(lang);
 
+  // Domain bölümleri de beslemede: bunlar tam yazı, liste değil.
+  const chapters = (await getCollection('chapters')).map((c) => ({
+    title: c.data.title,
+    description: c.data.summary,
+    pubDate: c.data.pubDate,
+    link: `/domains/${c.data.domain}/${c.id.split('/').pop()}`,
+    categories: ['Domain', c.data.domain],
+  }));
+
   // Radar bültenleri ayrı beslemedeydi; tek beslemede toplandı.
   const radar = (await getCollection('radar'))
     .filter((e) => !e.data.draft)
@@ -36,6 +45,7 @@ export async function GET(context: APIContext) {
           categories: [ENTRY_TYPE[collection], ...d.topics],
         };
       }),
+      ...chapters,
       ...radar,
     ].sort((a, b) => b.pubDate.valueOf() - a.pubDate.valueOf()),
   });

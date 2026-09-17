@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import {
   SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  ENTRY_TYPE, TOPICS, TOPIC_LABELS, HERO, LIBRARY,
+  ENTRY_TYPE, TOPICS, TOPIC_LABELS, HERO, LIBRARY, SHELVES, DOMAINS,
 } from '../config';
 import { getCollection } from 'astro:content';
 import { getEntries, parseId, entryPath, getTopicCounts } from '../lib/content';
@@ -59,13 +59,45 @@ export const GET: APIRoute = async () => {
     out.push('');
   }
 
-  const books = (await getCollection('library'))
-    .filter((b) => b.id.startsWith('en/'))
-    .sort((a, b) => a.data.order - b.data.order);
-  if (books.length) {
-    out.push(`## ${LIBRARY.name.en}`, '', LIBRARY.blurb.en, '');
-    for (const b of books) {
-      out.push(`- **${b.data.title}** — ${b.data.author}${b.data.year ? ` (${b.data.year})` : ''}: ${b.data.note}`);
+  /*
+   * Domain'ler — ajan için en değerli kısım burası: her domainin
+   * İÇİNDEKİLERİ, yazılmamış bölümler dahil. Neyin var olduğu kadar
+   * neyin planlandığı da bilgi.
+   */
+  const domains = (await getCollection('domains')).filter((d) => d.id.startsWith('tr/'));
+  const chapters = await getCollection('chapters');
+  if (domains.length) {
+    out.push(`## ${DOMAINS.name.en}`, '', DOMAINS.blurb.en, '');
+    for (const dm of domains) {
+      const slug = dm.id.split('/').pop()!;
+      const yazilan = new Set(
+        chapters.filter((c) => c.data.domain === slug).map((c) => c.id.split('/').pop()!));
+      out.push(`### ${dm.data.title} — ${abs(`/domains/${slug}`)}`, '', dm.data.thesis, '');
+      for (const [i, b] of dm.data.outline.entries()) {
+        const n = String(i + 1).padStart(2, '0');
+        out.push(yazilan.has(b.slug)
+          ? `- ${n}. [${b.title}](${abs(`/domains/${slug}/${b.slug}`)})`
+          : `- ${n}. ${b.title} — not written yet: ${b.promise}`);
+      }
+      out.push('');
+    }
+  }
+
+  // Raflar: kitap, film, oyun
+  for (const name of ['library', 'films', 'games'] as const) {
+    const meta = SHELVES[name];
+    const all = await getCollection(name);
+    const items = all
+      .filter((b) => b.id.startsWith('en/')).length
+        ? all.filter((b) => b.id.startsWith('en/'))
+        : all.filter((b) => b.id.startsWith('tr/'));
+    if (!items.length) continue;
+    out.push(`## ${meta.name.en}`, '', meta.blurb.en, '');
+    for (const b of items.sort((a, c) => a.data.order - c.data.order)) {
+      const d = b.data as any;
+      const who = d.author ?? d.director ?? d.developer ?? '';
+      const durum = d.status === 'queued' ? ` [${meta.queued.en.toLowerCase()}]` : '';
+      out.push(`- **${d.title}** — ${who}${d.year ? ` (${d.year})` : ''}${durum}: ${d.note}`);
     }
     out.push('');
   }

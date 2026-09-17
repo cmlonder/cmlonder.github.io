@@ -1,0 +1,36 @@
+---
+/**
+ * Dil geri düşüşü uyarısı.
+ *
+ * Site iki dilli ama her içerik iki dilde yok. Sessizce diğer dili
+ * göstermek okuru şaşırtıyor — özellikle İngilizce sayfada Türkçe
+ * inceleme görünce. Bu şerit ne olduğunu söylüyor.
+ */
+import { type Locale } from '../config';
+interface Props { lang: Locale; shown: Locale }
+const { lang, shown } = Astro.props as Props;
+
+const AD: Record<Locale, Record<Locale, string>> = {
+  en: { en: 'English', tr: 'Turkish' },
+  tr: { en: 'İngilizce', tr: 'Türkçe' },
+};
+---
+{lang !== shown && (
+  <p class="langnote">
+    {lang === 'tr'
+      ? `Bu bölüm henüz Türkçe yazılmadı; ${AD.tr[shown]} hâli gösteriliyor.`
+      : `This section is not written in English yet; showing the ${AD.en[shown]} version.`}
+  </p>
+)}
+<style>
+  .langnote {
+    margin-block-end: var(--s-l);
+    padding: var(--s-2xs) var(--s-s);
+    border-inline-start: 2px solid var(--c-mark);
+    background: color-mix(in srgb, var(--c-mark) 7%, transparent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    color: var(--c-muted);
+  }
+</style>

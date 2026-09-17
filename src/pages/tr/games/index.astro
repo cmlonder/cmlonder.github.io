@@ -10,9 +10,13 @@ const shelf = 'games' as const;
 // Raf içeriği dile bağlı değil: Türkçesi yoksa İngilizce liste gösterilir.
 const all = await getCollection(shelf);
 const kendi = all.filter((e) => e.id.startsWith(`${lang}/`));
-const items = (kendi.length ? kendi : all.filter((e) => e.id.startsWith('en/')))
+// Hangi dilden gösterdiğimizi ShelfIndex'e bildiriyoruz: sessiz geri
+// düşüş okuru şaşırtıyor.
+const yedek = all.filter((e) => e.id.startsWith('tr/')).length ? 'tr' : 'en';
+const shown: Locale = kendi.length ? lang : (yedek as Locale);
+const items = (kendi.length ? kendi : all.filter((e) => e.id.startsWith(yedek)))
   .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<ShelfIndex shelf={shelf} lang={lang} items={items}
+<ShelfIndex shelf={shelf} lang={lang} shown={shown} items={items}
             altHref={localePath('en', 'games')} />
