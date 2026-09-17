@@ -68,7 +68,7 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
             </a>
           ))}
 
-          <a class="item wide" href={localePath(lang, DOMAINS.path)}>
+          <a class="item" href={localePath(lang, DOMAINS.path)}>
             <NavIcon name="domains" />
             <span class="txt">
               <strong>{DOMAINS.name[lang]}</strong>
@@ -163,11 +163,11 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
     inset-inline-end: 0;
     z-index: 40;
     display: grid;
-    grid-template-columns: repeat(3, minmax(14rem, 1fr));
+    grid-template-columns: repeat(2, minmax(15rem, 1fr));
     gap: var(--s-3xs);
     padding: var(--s-xs);
     inline-size: max-content;
-    max-inline-size: min(52rem, calc(100vw - var(--s-m)));
+    max-inline-size: min(38rem, calc(100vw - var(--s-m)));
     background: var(--c-surface);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-lg);
@@ -209,13 +209,15 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
     line-height: 1.4;
   }
 
-  /* Tezgâh bütün akışı topluyor — ızgaranın tamamını kaplasın. */
-  .item.wide { grid-column: 1 / -1; }
-  .item.all { grid-column: 1 / -1; background: var(--c-tinted); }
+  /* Tezgâh bütün akışı topluyor. Eskiden ızgarayı boydan boya
+     kaplıyordu ama bu ritmi bozuyordu — artık eşit hücre, farkı
+     zeminden anlaşılıyor. */
+  .item.all { background: var(--c-tinted); }
   .item.all:hover { background: color-mix(in srgb, var(--c-accent) 9%, var(--c-tinted)); }
 
-  /* Radar makine üretimi; menüde de ayrı dursun. */
-  .item.machine { grid-column: 1 / -1; border-block-start: 1px solid var(--c-border); border-radius: 0 0 var(--radius) var(--radius); }
+  /* Radar makine üretimi; ayrımı yayılmayla değil kenar çizgisiyle. */
+  .item.machine { box-shadow: inset 2px 0 0 color-mix(in srgb, var(--c-accent) 45%, transparent); }
+  .item.machine :global(svg) { color: var(--c-accent); opacity: .75; }
   .tag {
     font-size: var(--t-xs);
     font-weight: 400;
