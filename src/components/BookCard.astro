@@ -1,5 +1,14 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+/**
+ * Kapak konvansiyonla bulunuyor: src/assets/covers/<slug>.jpg
+ * scripts/fetch-covers.mjs Open Library'den indiriyor ve repoda tutuyor.
+ * Dosya yoksa aşağıdaki tipografik kapağa düşüyoruz.
+ */
+const kapaklar = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/covers/*.{jpg,jpeg,png,webp}', { eager: true });
 
 interface Props {
   entry: CollectionEntry<'library'>;
@@ -10,15 +19,23 @@ const { entry, compact = false } = Astro.props;
 const d = entry.data;
 
 /** Kapak görseli yok — kitap kapağı taramıyoruz. Tipografik kapak üretiyoruz. */
+const slug = entry.id.split('/').pop();
+const kapakYolu = Object.keys(kapaklar).find((k) => k.endsWith(`/${slug}.jpg`)
+  || k.endsWith(`/${slug}.jpeg`) || k.endsWith(`/${slug}.png`) || k.endsWith(`/${slug}.webp`));
+const kapak = kapakYolu ? kapaklar[kapakYolu].default : null;
+
 const tone = [...d.title].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 4;
 const Wrapper = d.url ? 'a' : 'div';
 ---
 
 <article class="book">
   {/* Kapak başlığı taşıyor — altında tekrar etmiyoruz. */}
-  <Wrapper class={`cover tone-${tone}`} {...(d.url ? { href: d.url, rel: 'noopener' } : {})}>
-    <span class="t">{d.title}</span>
-    <span class="a">{d.author}</span>
+  <Wrapper class:list={['cover', !kapak && `tone-${tone}`, kapak && 'has-img']}
+           {...(d.url ? { href: d.url, rel: 'noopener' } : {})}>
+    {kapak
+      ? <Image src={kapak} alt={`${d.title} — ${d.author}`} widths={[180, 360]}
+               sizes="(max-width: 46rem) 40vw, 180px" loading="lazy" />
+      : <><span class="t">{d.title}</span><span class="a">{d.author}</span></>}
   </Wrapper>
   <p class="meta">{d.year}</p>
   {!compact && <p class="note">{d.note}</p>}
@@ -26,6 +43,19 @@ const Wrapper = d.url ? 'a' : 'div';
 
 <style>
   .book { display: grid; gap: var(--s-3xs); }
+
+  .cover.has-img {
+    display: block;
+    padding: 0;
+    border-color: color-mix(in srgb, var(--c-text) 14%, transparent);
+    background: var(--c-tinted);
+  }
+  .cover.has-img :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    display: block;
+  }
 
   .cover {
     aspect-ratio: 2 / 3;

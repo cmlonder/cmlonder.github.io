@@ -174,6 +174,13 @@ değerli, süs olacaksa zararlı. Nasıl ekleneceği AGENTS.md'de.
 
 Beğenmediğin kitabı koyma. Liste bir filtre; her ekleme filtreyi zayıflatır.
 
+Kitap eklendikten sonra `pnpm covers` çalıştır: Open Library'den kapağı
+indirip `src/assets/covers/<slug>.jpg` olarak kaydeder. Zaten varsa
+dokunmaz. Çıktıdaki `~` işaretli satırlar başlığın birebir tutmadığını
+gösterir — onları gözden geçir, yanlış kitabın kapağı gelmiş olabilir.
+
+Kapak bulunamazsa sorun değil: kart tipografik kapağa düşer.
+
 ---
 
 ## Sabit sayfalar

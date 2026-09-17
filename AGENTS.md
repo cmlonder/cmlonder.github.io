@@ -303,3 +303,16 @@ altında gösteriyor. Bağlantı yoksa bölüm hiç render edilmiyor.
 Olgunluk seviyesi (`seedling`/`budding`/`evergreen`) **yalnızca notes
 şemasında**. Koleksiyonların kendisi zaten bir olgunluk ekseni olduğu için
 denemelere veya playbook'lara ayrıca seviye vermek çelişki üretiyor.
+
+## Görseller
+
+`sharp` **zorunlu bir bağımlılık**. Kurulu değilken Astro optimize
+görsel üretemiyor ama build'i düşürmüyor — sadece uyarı basıyor, ve
+`<img>` var olmayan bir `.webp`'yi gösteriyor. Yani build yeşil, sayfa
+kırık. Bu sessiz kırılmayı `check-build.mjs` artık yakalıyor
+("eksik görsel" sayacı).
+
+Kitap kapakları `scripts/fetch-covers.mjs` ile Open Library'den
+indirilip **repoda** tutuluyor: hotlink yok, gizlilik sorunu yok,
+kaynak sitenin kapanması bizi etkilemiyor. Konvansiyon:
+`src/assets/covers/<slug>.jpg`. Frontmatter'a bir şey yazılmıyor.

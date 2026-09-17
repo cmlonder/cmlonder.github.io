@@ -26,6 +26,7 @@ const known = new Set([
 ]);
 
 let broken = 0;
+let missingImg = 0;
 const headingProblems = [];
 
 for (const f of htmls) {
@@ -38,6 +39,19 @@ for (const f of htmls) {
     if (!known.has(target)) {
       console.error(`KIRIK LİNK  ${from}  ->  ${href}`);
       broken++;
+    }
+  }
+
+  /*
+   * Görsel varlığı gerçekten üretilmiş mi.
+   * Gözlenen: sharp kurulu değilken Astro UYARI basıp geçiyor, <img>
+   * var olmayan bir .webp'yi gösteriyor ve build "başarılı" görünüyor.
+   * Sessiz kırılma; burada yakalanmalı.
+   */
+  for (const [, src] of html.matchAll(/<img[^>]+src="(\/_astro\/[^"]+)"/g)) {
+    if (!known.has(src)) {
+      console.error(`EKSİK GÖRSEL  ${from}  ->  ${src}`);
+      missingImg++;
     }
   }
 
@@ -57,11 +71,12 @@ const placeholders = files
 
 console.log(`\n${htmls.length} sayfa tarandı`);
 console.log(`kırık link:        ${broken}`);
+console.log(`eksik görsel:      ${missingImg}`);
 console.log(`başlık atlaması:   ${headingProblems.length}`);
 for (const h of headingProblems.slice(0, 10)) console.error(`  ${h}`);
 if (placeholders) console.log(`yer tutucu içerik: ${placeholders} (bilgi amaçlı)`);
 
-if (broken || headingProblems.length) {
+if (broken || missingImg || headingProblems.length) {
   console.error('\nBuild doğrulaması başarısız.');
   process.exit(1);
 }
