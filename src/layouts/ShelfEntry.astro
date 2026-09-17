@@ -1,0 +1,203 @@
+---
+/**
+ * Tekil inceleme sayfası — kitap, film, oyun için ortak.
+ * Gövde metni incelemedir; yoksa sadece künye ve tek cümlelik not görünür.
+ */
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from './Base.astro';
+import Rating from '../components/Rating.astro';
+import { SHELVES, type ShelfName, type Locale } from '../config';
+import { localePath } from '../lib/content';
+
+const kapaklar = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/covers/*.{jpg,jpeg,png,webp}', { eager: true });
+
+interface Props { entry: any; shelf: ShelfName; lang: Locale; prev: any; next: any }
+const { entry, shelf, lang, prev, next } = Astro.props as Props;
+
+const d = entry.data;
+const meta = SHELVES[shelf];
+const slug = entry.id.split('/').pop();
+const yol = Object.keys(kapaklar).find((k) => /\/([^/]+)\.(jpg|jpeg|png|webp)$/.exec(k)?.[1] === slug);
+const kapak = yol ? kapaklar[yol].default : null;
+
+const yapan = d.author ?? d.director ?? d.developer ?? '';
+const tone = [...d.title].reduce((n: number, ch: string) => n + ch.charCodeAt(0), 0) % 5;
+const { Content } = await render(entry);
+
+// Künye satırları — yalnızca dolu olanlar
+const kunye = [
+  { k: meta.creator[lang], v: yapan },
+  d.year && { k: lang === 'tr' ? 'Yıl' : 'Year', v: String(d.year) },
+  d.pages && { k: lang === 'tr' ? 'Sayfa' : 'Pages', v: String(d.pages) },
+  d.runtime && { k: lang === 'tr' ? 'Süre' : 'Runtime', v: `${d.runtime} dk` },
+  d.hours && { k: lang === 'tr' ? 'Oynadığım' : 'Played', v: `${d.hours} saat` },
+  d.platform && { k: lang === 'tr' ? 'Platform' : 'Platform', v: d.platform },
+].filter(Boolean) as { k: string; v: string }[];
+
+const inceleme = (entry.body ?? '').trim().length > 0;
+---
+
+<Base title={`${d.title} — ${meta.name[lang]}`} description={d.note} lang={lang}>
+  <article class="entry">
+    <p class="kicker">
+      <a href={localePath(lang, meta.path)}>{meta.name[lang]}</a>
+      {d.status === 'queued' && <><span aria-hidden="true">·</span><span class="q">{meta.queued[lang]}</span></>}
+    </p>
+
+    <div class="top">
+      <div class="cover" style={`--ratio:${meta.ratio}`} data-tone={tone}>
+        {kapak
+          ? <Image src={kapak} alt={`${d.title} — ${yapan}`} widths={[240, 480]} sizes="240px" loading="eager" />
+          : <span class="typo"><span class="t">{d.title}</span><span class="a">{yapan}</span></span>}
+      </div>
+
+      <div class="info">
+        <h1>{d.title}</h1>
+        <p class="note">{d.note}</p>
+        {d.rating && <p class="rate"><Rating value={d.rating} /></p>}
+
+        <dl class="kunye">
+          {kunye.map((r) => (<><dt>{r.k}</dt><dd>{r.v}</dd></>))}
+        </dl>
+
+        {d.tags?.length > 0 && (
+          <p class="tags">{d.tags.map((t: string) => <span class="tag">{t}</span>)}</p>
+        )}
+
+        {d.url && (
+          <p class="out">
+            <a href={d.url} rel="noopener">
+              {lang === 'tr' ? 'Kaynağa git' : 'Go to source'} <span aria-hidden="true">&#8599;</span>
+            </a>
+          </p>
+        )}
+      </div>
+    </div>
+
+    {inceleme
+      ? <div class="prose"><Content /></div>
+      : (
+        <p class="bos">
+          {d.status === 'queued'
+            ? (lang === 'tr' ? 'Henüz sırada. Bitirince buraya yazacağım.' : 'Still queued. I will write here once I finish it.')
+            : (lang === 'tr' ? 'Henüz not almadım.' : 'No notes yet.')}
+        </p>
+      )}
+
+    <nav class="around" aria-label={meta.name[lang]}>
+      {prev
+        ? <a class="prev" href={localePath(lang, meta.path, prev.id.split('/').pop())}>
+            <span class="dir">← {lang === 'tr' ? 'Önceki' : 'Previous'}</span>
+            <span class="ttl">{prev.data.title}</span>
+          </a>
+        : <span />}
+      {next && (
+        <a class="next" href={localePath(lang, meta.path, next.id.split('/').pop())}>
+          <span class="dir">{lang === 'tr' ? 'Sonraki' : 'Next'} →</span>
+          <span class="ttl">{next.data.title}</span>
+        </a>
+      )}
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .entry { max-inline-size: var(--w-narrow); margin-inline: auto; }
+  .kicker {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+    display: flex; gap: .55em;
+  }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  .kicker .q { color: var(--c-mark); }
+
+  .top {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: var(--s-l);
+    margin-block: var(--s-m) var(--s-xl);
+    align-items: start;
+  }
+  .cover {
+    aspect-ratio: var(--ratio);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    background: var(--c-tinted);
+    display: grid;
+  }
+  .cover :global(img) { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+  .typo {
+    display: grid; align-content: space-between; gap: var(--s-2xs);
+    padding: var(--s-s); block-size: 100%;
+    background: linear-gradient(160deg,
+      color-mix(in srgb, var(--tint) 24%, var(--c-surface)), var(--c-surface) 78%);
+  }
+  .cover[data-tone='0'] { --tint: var(--c-accent); }
+  .cover[data-tone='1'] { --tint: var(--c-mark); }
+  .cover[data-tone='2'] { --tint: var(--c-accent-lo); }
+  .cover[data-tone='3'] { --tint: var(--c-muted); }
+  .cover[data-tone='4'] { --tint: var(--c-text); }
+  .typo .t {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-size: var(--t-lg); line-height: 1.1; text-wrap: balance;
+  }
+  .typo .a {
+    font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted);
+    padding-block-start: var(--s-2xs);
+    border-block-start: 1px solid color-mix(in srgb, var(--c-text) 12%, transparent);
+  }
+
+  h1 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; line-height: var(--lh-tight); margin: 0;
+  }
+  .note {
+    margin-block-start: var(--s-2xs);
+    font-family: var(--f-serif); font-size: var(--t-md);
+    color: var(--c-muted); line-height: 1.35; text-wrap: balance;
+  }
+  .rate { margin-block-start: var(--s-s); }
+
+  .kunye {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .25em var(--s-s);
+    margin-block-start: var(--s-m);
+    font-family: var(--f-sans); font-size: var(--t-xs);
+  }
+  .kunye dt { color: var(--c-muted); }
+  .kunye dd { margin: 0; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: .35em; margin-block-start: var(--s-s); }
+  .tag {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    padding: .2em .65em; border-radius: 999px;
+    border: 1px solid var(--c-border); color: var(--c-muted);
+  }
+  .out { margin-block-start: var(--s-s); font-family: var(--f-sans); font-size: var(--t-xs); }
+
+  .bos {
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted); font-style: italic;
+  }
+
+  .around {
+    display: flex; justify-content: space-between; gap: var(--s-s);
+    margin-block-start: var(--s-2xl);
+    padding-block-start: var(--s-s);
+    border-block-start: 1px solid var(--c-border);
+    font-family: var(--f-sans);
+  }
+  .around a { display: grid; gap: .15em; text-decoration: none; min-block-size: 44px; max-inline-size: 18ch; }
+  .around .next { text-align: end; }
+  .around .dir { font-size: var(--t-sm); color: var(--c-accent); }
+  .around .ttl { font-size: var(--t-xs); color: var(--c-muted); }
+  .around a:hover .ttl { color: var(--c-text); }
+
+  @media (max-width: 40rem) {
+    .top { grid-template-columns: 148px 1fr; gap: var(--s-s); }
+  }
+</style>

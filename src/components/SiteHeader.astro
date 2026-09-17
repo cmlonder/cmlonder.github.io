@@ -3,7 +3,7 @@ import ThemeToggle from './ThemeToggle.astro';
 import Search from './Search.astro';
 import {
   SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  HUB, NAV, LIBRARY, SKILLS, RADAR, type Locale,
+  HUB, NAV, SHELVES, SHELF_NAMES, SKILLS, RADAR, type Locale,
 } from '../config';
 import { localePath } from '../lib/content';
 
@@ -49,9 +49,15 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
               <span>{COLLECTION_BLURBS[c][lang]}</span>
             </a>
           ))}
-          <a href={localePath(lang, LIBRARY.path)}>
-            <strong>{LIBRARY.name[lang]}</strong>
-            <span>{LIBRARY.blurb[lang]}</span>
+          {SHELF_NAMES.map((s) => (
+            <a href={localePath(lang, SHELVES[s].path)}>
+              <strong>{SHELVES[s].name[lang]}</strong>
+              <span>{SHELVES[s].blurb[lang]}</span>
+            </a>
+          ))}
+          <a hidden href={localePath(lang, SHELVES.library.path)}>
+            <strong>{SHELVES.library.name[lang]}</strong>
+            <span>{SHELVES.library.blurb[lang]}</span>
           </a>
           <a href={localePath(lang, SKILLS.path)}>
             <strong>{SKILLS.name[lang]}</strong>

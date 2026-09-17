@@ -101,14 +101,70 @@ export const UI: Record<Locale, Record<string, string>> = {
  * İSİM GEÇİCİ: beğenilmezse sadece bu iki satır değişir.
  */
 /** Okuma listesi — koleksiyon makinesinin dışında, kendi sayfası var. */
-export const LIBRARY = {
-  path: 'library',
-  name:  { en: 'Library', tr: 'Kitaplık' } as Record<Locale, string>,
-  blurb: {
-    en: 'Books that changed how I think about systems, work, or myself.',
-    tr: 'Sistemler, iş ya da kendim hakkında düşüncemi değiştiren kitaplar.',
-  } as Record<Locale, string>,
-};
+/**
+ * Raflar — kitap, film, oyun.
+ *
+ * Üçü de aynı şablonu paylaşıyor ama alanları kendine özgü: kitabın
+ * yazarı, filmin yönetmeni, oyunun geliştiricisi var.
+ *
+ * Maggie'nin "Antilibrary"si burada ayrı bir koleksiyon değil, her rafın
+ * içindeki `queued` durumu. Böylece fikir üç ortama da genelleşiyor:
+ * okunmamış kitap, izlenmemiş film, oynanmamış oyun.
+ */
+export const SHELVES = {
+  library: {
+    path: 'library',
+    name:  { en: 'Library', tr: 'Kitaplık' },
+    blurb: {
+      en: 'Books that changed how I think about systems, work, or myself.',
+      tr: 'Sistemler, iş ya da kendim hakkında düşüncemi değiştiren kitaplar.',
+    },
+    creator: { en: 'Author', tr: 'Yazar' },
+    queued:  { en: 'Up next', tr: 'Sırada' },
+    queuedBlurb: {
+      en: 'Unread, and kept in sight on purpose — a reminder of how much I do not know.',
+      tr: 'Okumadıklarım burada duruyor — bildiklerimden çok bilmediklerimi hatırlatsın diye.',
+    },
+    ratio: '2 / 3',
+  },
+  films: {
+    path: 'films',
+    name:  { en: 'Films', tr: 'Filmler' },
+    blurb: {
+      en: 'Films about craft, obsession, and systems that outgrow their makers.',
+      tr: 'Zanaat, saplantı ve yapıcısını aşan sistemler üzerine filmler.',
+    },
+    creator: { en: 'Director', tr: 'Yönetmen' },
+    queued:  { en: 'Watchlist', tr: 'İzleme listesi' },
+    queuedBlurb: {
+      en: 'Queued up, not yet watched.',
+      tr: 'Sıraya aldım, henüz izlemedim.',
+    },
+    ratio: '2 / 3',
+  },
+  games: {
+    path: 'games',
+    name:  { en: 'Games', tr: 'Oyunlar' },
+    blurb: {
+      en: 'Mostly built by one or two people. Systems you learn by playing.',
+      tr: 'Çoğu bir ya da iki kişinin işi. Oynayarak öğrenilen sistemler.',
+    },
+    creator: { en: 'Studio', tr: 'Geliştirici' },
+    queued:  { en: 'Backlog', tr: 'Oynanacaklar' },
+    queuedBlurb: {
+      en: 'Bought, installed, not yet played.',
+      tr: 'Aldım, kurdum, henüz oynamadım.',
+    },
+    ratio: '3 / 4',
+  },
+} as const;
+
+/** Eski adlandırma; SHELVES.library ile aynı. */
+export const LIBRARY = SHELVES.library;
+
+export type ShelfName = keyof typeof SHELVES;
+export const SHELF_NAMES = Object.keys(SHELVES) as ShelfName[];
+
 
 /** Skill kütüphanesi — agentic kimliğin kanıtı. */
 export const SKILLS = {

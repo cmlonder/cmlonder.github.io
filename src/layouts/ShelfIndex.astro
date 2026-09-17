@@ -1,0 +1,99 @@
+---
+/**
+ * Raf listesi — /library, /films, /games için ortak.
+ * Bitirdiklerim üstte ızgarada; sırada bekleyenler altta ayrı bölümde.
+ */
+import Base from './Base.astro';
+import ShelfCard from '../components/ShelfCard.astro';
+import { SHELVES, UI, PAGE, type ShelfName, type Locale } from '../config';
+import { localePath } from '../lib/content';
+
+interface Props { shelf: ShelfName; lang: Locale; items: any[]; altHref: string }
+const { shelf, lang, items, altHref } = Astro.props as Props;
+
+const meta = SHELVES[shelf];
+const other = lang === 'tr' ? 'en' : 'tr';
+const yol = (e: any) => localePath(lang, meta.path, e.id.split('/').pop()!);
+
+const bitmis = items.filter((e) => e.data.status !== 'queued');
+const sirada = items.filter((e) => e.data.status === 'queued');
+---
+
+<Base title={`${meta.name[lang]} — Cemal Önder`} description={meta.blurb[lang]}
+      lang={lang} altLocale={{ lang: other as Locale, href: altHref }}>
+  <div class="wrap">
+    <header class="head">
+      <p class="kicker">
+        <span class="count">{bitmis.length}</span>
+        <a href={localePath(lang, '')}>{PAGE[lang].back}</a>
+      </p>
+      <h1>{meta.name[lang]}</h1>
+      <p class="blurb">{meta.blurb[lang]}</p>
+    </header>
+
+    {bitmis.length === 0 ? <p class="meta">{UI[lang].empty}</p> : (
+      <ul class="grid">
+        {bitmis.map((e) => (
+          <li><ShelfCard entry={e} shelf={shelf} lang={lang} href={yol(e)} /></li>
+        ))}
+      </ul>
+    )}
+
+    {sirada.length > 0 && (
+      <section class="queued">
+        <h2>{meta.queued[lang]}</h2>
+        <p class="blurb">{meta.queuedBlurb[lang]}</p>
+        <ul class="grid">
+          {sirada.map((e) => (
+            <li><ShelfCard entry={e} shelf={shelf} lang={lang} href={yol(e)} /></li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+</Base>
+
+<style>
+  .wrap { max-inline-size: var(--w-page); margin-inline: auto; }
+  .head { margin-block-end: var(--s-2xl); max-inline-size: 60ch; }
+  .kicker {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark); margin-inline-end: .7em; }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; line-height: var(--lh-tight);
+  }
+  .blurb {
+    margin-block-start: var(--s-2xs);
+    font-family: var(--f-serif); font-size: var(--t-md);
+    color: var(--c-muted); line-height: 1.35; text-wrap: balance;
+  }
+
+  .grid {
+    list-style: none; padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: var(--s-l) var(--s-m);
+  }
+
+  .queued {
+    margin-block-start: var(--s-4xl);
+    padding-block-start: var(--s-l);
+    border-block-start: 1px solid var(--c-border);
+  }
+  .queued h2 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-lg);
+  }
+  .queued .blurb { font-size: var(--t-sm); margin-block-end: var(--s-l); }
+  /* Sırada bekleyenler soluk — bitirdiklerimle aynı ağırlıkta durmasın. */
+  .queued :global(.card) { opacity: .72; transition: opacity .18s ease; }
+  .queued :global(.card:hover) { opacity: 1; }
+
+  @media (max-width: 34rem) {
+    .grid { grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: var(--s-m) var(--s-s); }
+  }
+</style>

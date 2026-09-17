@@ -1,0 +1,26 @@
+---
+/** 1-5 puan. Beş nokta; dolu olanlar vurgu renginde. Puan yoksa render edilmiyor. */
+interface Props { value?: number; compact?: boolean }
+const { value, compact = false } = Astro.props as Props;
+---
+{value && (
+  <span class="rating" title={`${value}/5`} aria-label={`${value}/5`}>
+    {[1, 2, 3, 4, 5].map((n) => (
+      <span class:list={['dot', n <= value && 'on']} aria-hidden="true" />
+    ))}
+    {!compact && <span class="num">{value}/5</span>}
+  </span>
+)}
+<style>
+  .rating { display: inline-flex; align-items: center; gap: .22em; }
+  .dot {
+    inline-size: 6px; block-size: 6px; border-radius: 50%;
+    background: var(--c-border);
+  }
+  .dot.on { background: var(--c-accent); }
+  .num {
+    margin-inline-start: .5em;
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted); font-variant-numeric: tabular-nums;
+  }
+</style>

@@ -316,3 +316,21 @@ Kitap kapakları `scripts/fetch-covers.mjs` ile Open Library'den
 indirilip **repoda** tutuluyor: hotlink yok, gizlilik sorunu yok,
 kaynak sitenin kapanması bizi etkilemiyor. Konvansiyon:
 `src/assets/covers/<slug>.jpg`. Frontmatter'a bir şey yazılmıyor.
+
+## Raflar
+
+`SHELVES` (config.ts) üç rafı tanımlıyor: `library`, `films`, `games`.
+Şemalar ayrı (`rafBase` + ortama özgü alanlar) ama sayfalar ortak:
+`ShelfIndex.astro`, `ShelfEntry.astro`, `ShelfCard.astro`.
+
+Maggie'nin *antilibrary*'si ayrı bir koleksiyon DEĞİL: her rafın
+içindeki `status: queued`. Böylece fikir üç ortama da genelleşiyor ve
+altı ayrı sayfa yerine üç sayfa yetiyor.
+
+Kapak konvansiyonla bulunuyor: `src/assets/covers/<slug>.jpg`.
+Frontmatter'a `image:` yazılmıyor — dosya varsa kullanılıyor, yoksa
+tipografik kapağa düşülüyor.
+
+Kart başlık seviyesi bağlama göre (`level` prop'u): ana ızgarada `h2`,
+"Sırada" bölümünde `h3`. Sabit `h3` bırakılırsa `check-build.mjs`
+başlık atlaması veriyor.

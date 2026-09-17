@@ -1,0 +1,133 @@
+---
+/**
+ * Raf kartı — kitap, film ve oyun için ortak.
+ *
+ * Kapak görseli KONVANSİYONLA bulunuyor: src/assets/covers/<slug>.jpg
+ * Kitaplarda gerçek kapak var (Open Library). Film ve oyunlarda görsel
+ * kaynağı yok — afiş telifi serbest değil — o yüzden tipografik kapağa
+ * düşüyor. Tipografik kapak bir eksiklik değil, bilinçli bir çözüm:
+ * ortamın oranını ve kendi paletimizi koruyor.
+ */
+import { Image } from 'astro:assets';
+import Rating from './Rating.astro';
+import { SHELVES, type ShelfName, type Locale } from '../config';
+
+const kapaklar = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/covers/*.{jpg,jpeg,png,webp}', { eager: true });
+
+interface Props { entry: any; shelf: ShelfName; lang: Locale; href: string; level?: 2 | 3 }
+const { entry, shelf, lang, href, level = 2 } = Astro.props as Props;
+// Başlık seviyesi bağlama göre: ana ızgarada h2, "Sırada" bölümünde h3.
+const H = `h${level}` as 'h2' | 'h3';
+
+const d = entry.data;
+const meta = SHELVES[shelf];
+const slug = entry.id.split('/').pop();
+const yol = Object.keys(kapaklar).find((k) => /\/([^/]+)\.(jpg|jpeg|png|webp)$/.exec(k)?.[1] === slug);
+const kapak = yol ? kapaklar[yol].default : null;
+
+const yapan = d.author ?? d.director ?? d.developer ?? '';
+// Tipografik kapakta ton, başlıktan türer — aynı kitap hep aynı ton.
+const tone = [...d.title].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 5;
+---
+
+<article class="card">
+  <a class="cover" href={href} style={`--ratio:${meta.ratio}`}
+     data-img={kapak ? 'true' : 'false'} data-tone={tone}>
+    {kapak
+      ? <Image src={kapak} alt="" widths={[200, 400]} sizes="(max-width: 46rem) 42vw, 200px" loading="lazy" />
+      : (
+        <span class="typo">
+          <span class="t">{d.title}</span>
+          <span class="a">{yapan}</span>
+        </span>
+      )}
+  </a>
+
+  <div class="body">
+    <H><a href={href}>{d.title}</a></H>
+    <p class="who">{yapan}{d.year && <> · {d.year}</>}</p>
+    {d.rating && <Rating value={d.rating} compact />}
+    <p class="note">{d.note}</p>
+  </div>
+</article>
+
+<style>
+  .card { display: grid; gap: var(--s-2xs); align-content: start; }
+
+  .cover {
+    position: relative;
+    display: grid;
+    aspect-ratio: var(--ratio);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--c-tinted);
+    border: 1px solid var(--c-border);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .cover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px -12px color-mix(in srgb, var(--c-text) 45%, transparent);
+    border-color: color-mix(in srgb, var(--c-text) 22%, transparent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cover, .cover:hover { transition: none; transform: none; }
+  }
+  .cover[data-img='true'] :global(img) {
+    inline-size: 100%; block-size: 100%; object-fit: cover; display: block;
+  }
+
+  /* — Tipografik kapak: görseli olmayan ortamlar için — */
+  .typo {
+    display: grid;
+    align-content: space-between;
+    gap: var(--s-2xs);
+    padding: var(--s-xs);
+    block-size: 100%;
+    background:
+      linear-gradient(160deg,
+        color-mix(in srgb, var(--tint) 24%, var(--c-surface)),
+        var(--c-surface) 78%);
+  }
+  .cover[data-tone='0'] { --tint: var(--c-accent); }
+  .cover[data-tone='1'] { --tint: var(--c-mark); }
+  .cover[data-tone='2'] { --tint: var(--c-accent-lo); }
+  .cover[data-tone='3'] { --tint: var(--c-muted); }
+  .cover[data-tone='4'] { --tint: var(--c-text); }
+
+  .typo .t {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-md);
+    line-height: 1.12;
+    text-wrap: balance;
+    color: var(--c-text);
+  }
+  .typo .a {
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    color: var(--c-muted);
+    padding-block-start: var(--s-2xs);
+    border-block-start: 1px solid color-mix(in srgb, var(--c-text) 12%, transparent);
+  }
+
+
+  .body { display: grid; gap: .15em; }
+  h2, h3 {
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-text);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0;
+  }
+  h2 a, h3 a { text-decoration: none; }
+  h2 a:hover, h3 a:hover { color: var(--c-accent); }
+  .who, .note {
+    font-family: var(--f-sans);
+    font-size: var(--t-xs);
+    color: var(--c-muted);
+    margin: 0;
+  }
+  .note { margin-block-start: .35em; line-height: 1.5; }
+</style>

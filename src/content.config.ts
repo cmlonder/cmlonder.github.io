@@ -53,17 +53,52 @@ const site = defineCollection({
  * Okuma listesi. Diğer koleksiyonlardan farklı: kendi sayfası yok,
  * sadece anasayfada ve /library'de kart olarak görünür.
  */
+/**
+ * Raf koleksiyonları — kitap, film, oyun.
+ *
+ * Ortak alanlar `rafBase`'te; her ortamın kendine özgü alanı ayrı.
+ * Gövde metni İNCELEMEDİR: tekil sayfada o render ediliyor.
+ */
+const rafBase = {
+  title: z.string(),
+  year: z.number().optional(),
+  /** done: bitirdim · queued: sırada bekliyor (Maggie'nin antilibrary'si) */
+  status: z.enum(['done', 'queued']).default('done'),
+  /** 1-5. Yoksa hiç gösterilmiyor — zorunlu değil. */
+  rating: z.number().int().min(1).max(5).optional(),
+  /** Tek cümle: neden burada. Kartta görünen metin. */
+  note: z.string(),
+  url: z.string().url().optional(),
+  tags: z.array(z.string()).default([]),
+  order: z.number().default(0),
+  placeholder: z.boolean().default(false),
+};
+
 const library = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/library' }),
   schema: z.object({
-    title: z.string(),
+    ...rafBase,
     author: z.string(),
-    year: z.number().optional(),
-    /** Tek cümle: neden burada. */
-    note: z.string(),
-    url: z.string().url().optional(),
-    order: z.number().default(0),
-    placeholder: z.boolean().default(false),
+    pages: z.number().optional(),
+  }),
+});
+
+const films = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/films' }),
+  schema: z.object({
+    ...rafBase,
+    director: z.string(),
+    runtime: z.number().optional(),
+  }),
+});
+
+const games = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/games' }),
+  schema: z.object({
+    ...rafBase,
+    developer: z.string(),
+    platform: z.string().optional(),
+    hours: z.number().optional(),
   }),
 });
 
@@ -116,6 +151,8 @@ export const collections = {
   site,
   radar,
   library,
+  films,
+  games,
   skills,
   essays: collection(
     'essays',

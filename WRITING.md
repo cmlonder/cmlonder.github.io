@@ -162,14 +162,52 @@ değerli, süs olacaksa zararlı. Nasıl ekleneceği AGENTS.md'de.
 
 ---
 
-## Library — tavsiye listesi
+## Raflar — Kitaplık, Filmler, Oyunlar
 
-**Ne için:** Okuduğun **ve tavsiye ettiğin** kitap. Okuma listesi değil.
+Üçü aynı şablonu paylaşıyor, alanları farklı: kitabın `author`'ı,
+filmin `director`'ı, oyunun `developer`'ı var.
 
-**`note` alanı tek cümle ve kitabın özeti değil — sende ne değiştirdiği:**
+```yaml
+---
+title: "Factorio"
+developer: "Wube Software"     # kitapta author, filmde director
+year: 2020
+status: "done"                 # done | queued
+rating: 5                      # 1-5, isteğe bağlı
+note: "Kartta görünen tek cümle: neden burada."
+tags: ["sistem", "darboğaz"]
+platform: "PC"                 # filmde runtime, kitapta pages
+hours: 310
+order: 1
+---
 
-| Kötü | İyi |
-|---|---|
+Gövde metni İNCELEMEDİR. Tekil sayfada bu render ediliyor.
+```
+
+**`note` ile gövde farklı işler yapıyor.** `note` kartta görünen tek
+cümle — neden bu rafta olduğunu söylüyor. Gövde ise incelemenin kendisi;
+tekil sayfada okunuyor. Gövde boş bırakılabilir, kart yine çalışır.
+
+**`status: queued`** öğeyi "Sırada" bölümüne düşürüyor: okumadıkların,
+izlemediklerin, oynamadıkların. Maggie'nin *antilibrary* fikri bu — ama
+ayrı bir koleksiyon yerine her rafın içindeki bir durum, böylece üç
+ortama da genelleşiyor. Sıradakiler soluk gösteriliyor; niyet bir eksik
+listesi değil, **bilmediklerini görünür tutmak**.
+
+`rating` zorunlu değil. Vermezsen hiç gösterilmiyor — emin olmadığın
+şeye puan vermek zorunda değilsin.
+
+Kitap eklendikten sonra `pnpm covers` çalıştır: Open Library'den kapağı
+indirip `src/assets/covers/<slug>.jpg` olarak kaydeder. Zaten varsa
+dokunmaz. Çıktıdaki `~` işaretli satırlar başlığın birebir tutmadığını
+gösterir — gözden geçir, yanlış kitabın kapağı gelmiş olabilir.
+
+**Film ve oyunlarda kapak görseli yok** ve bu bilinçli: afiş telifi
+serbest değil, indirip dağıtmak doğru olmaz. Onlar tipografik kapağa
+düşüyor — başlık, yapımcı ve başlıktan türeyen sabit bir ton. Aynı öğe
+her zaman aynı tonu alıyor.
+
+---|---|
 | "Dağıtık sistemlerin temellerini anlatan klasik bir eser." | "Dağıtık sistemleri folklor değil mühendislik gibi hissettiren tek kitap." |
 
 Beğenmediğin kitabı koyma. Liste bir filtre; her ekleme filtreyi zayıflatır.

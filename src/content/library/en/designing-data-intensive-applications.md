@@ -5,6 +5,18 @@ year: 2017
 note: 'The only book that made distributed systems feel like engineering rather than folklore.'
 order: 0
 placeholder: true
+status: "done"
+rating: 5
+tags: ["dağıtık", "veri", "temel"]
 ---
 
+Bu kitabı bitirdikten sonra mimari tartışmalarında kullandığım kelimeler
+değişti. "Tutarlılık" demeyi bırakıp hangi tutarlılık olduğunu sormaya
+başladım.
 
+En çok işime yarayan bölüm replikasyon değil, **veri kodlaması** bölümü
+oldu. Şema evrimi problemini o bölümden önce hafife alıyordum; sonra üç
+farklı projede tam olarak anlattığı şekilde başımıza geldi.
+
+Eksik yanı: örneklerin çoğu 2016 civarı sistemlerden. Fikirler duruyor,
+ürün adları eskimiş.
