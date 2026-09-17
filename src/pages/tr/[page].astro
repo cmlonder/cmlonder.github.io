@@ -32,7 +32,7 @@ const updatedLabel = PAGE[lang].updated;
   <article class="narrow">
     <h1>{entry.data.title}</h1>
     <p class="meta">{updatedLabel} {formatDate(entry.data.updated, lang)}</p>
-    <div class:list={['prose', slug === 'now' && 'timeline']}><Content /></div>
+    <div class:list={['prose', slug === 'now' && 'timeline', slug === 'uses' && 'spec']}><Content /></div>
     {slug === 'about' && <Contact lang={lang} />}
   </article>
 </Base>
@@ -47,6 +47,46 @@ const updatedLabel = PAGE[lang].updated;
   }
   .meta { margin-block-start: var(--s-3xs); }
   .prose { margin-block-start: var(--s-l); }
+
+  /*
+   * /uses bir envanter, deneme yazısı değil. Bölüm başlıkları sol
+   * sütunda etiket gibi duruyor, içerik sağda — teknik bir föy gibi
+   * okunuyor. Dar ekranda normal akışa dönüyor.
+   */
+  .spec :global(h2) {
+    font-family: var(--f-mono);
+    font-size: var(--t-xs);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--c-muted);
+    margin-block: var(--s-2xl) var(--s-s);
+    padding-block-end: var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .spec :global(h2:first-of-type) { margin-block-start: var(--s-l); }
+  .spec :global(h3) {
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    margin-block: var(--s-m) var(--s-3xs);
+  }
+  /* Liste kalemleri bir donanım föyü gibi: etiket solda, açıklama sağda. */
+  .spec :global(ul) { list-style: none; padding: 0; }
+  .spec :global(ul > li) {
+    padding-block: var(--s-2xs);
+    border-block-start: 1px solid var(--c-border);
+  }
+  .spec :global(ul > li > strong:first-child),
+  .spec :global(ul > li > code:first-child) {
+    display: inline-block;
+    min-inline-size: 12rem;
+    margin-inline-end: var(--s-2xs);
+  }
+  @media (max-width: 40rem) {
+    .spec :global(ul > li > strong:first-child),
+    .spec :global(ul > li > code:first-child) { min-inline-size: 0; display: block; }
+  }
 
   /*
    * /now bir "şu an ne yapıyorum" sayfası değil, bir DİKKAT ARŞİVİ:

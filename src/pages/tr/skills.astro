@@ -16,7 +16,7 @@ const t = PAGE[lang];
 
 <Base title={`${SKILLS.name[lang]} — Cemal Önder`} description={SKILLS.blurb[lang]}
       lang={lang} altLocale={{ lang: other, href: localePath(other, 'skills') }}>
-  <div class="wrap">
+  <div class="wrap manifest">
     <header class="head">
       <p class="kicker"><span class="count">{skills.length}</span><a href={localePath(lang, '')}>{back}</a></p>
       <h1>{SKILLS.name[lang]}</h1>
@@ -43,6 +43,29 @@ const t = PAGE[lang];
 </Base>
 
 <style>
+  /*
+   * Skill'ler makine için yazılmış talimatlar; sayfa da onu söylemeli.
+   * Her skill bir manifest bloğu: mono başlık, kopyalanabilir gövde,
+   * dosya yolu künyesi. Süs değil — içeriğin ne olduğunun işareti.
+   */
+  .manifest :global(article) {
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    background: var(--c-surface);
+    padding: var(--s-m);
+    margin-block-end: var(--s-m);
+  }
+  .manifest :global(article > h2) {
+    font-family: var(--f-mono);
+    font-size: var(--t-sm);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  .manifest :global(article > h2::before) {
+    content: '.claude/skills/';
+    color: var(--c-muted);
+  }
+
   .head { margin-block-end: var(--s-2xl); }
   .kicker {
     display: flex; align-items: baseline; gap: var(--s-2xs);
