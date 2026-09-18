@@ -306,7 +306,7 @@ kalmazdı.
 
 ---
 
-## Şu An (/now) — silme, ekle
+## Şu Sıralar (/now) — silme, ekle
 
 `/now` bir "şu anda ne yapıyorum" sayfası değil, bir **dikkat arşivi**.
 Klasik now sayfaları güncellenince eskisini siler; bu sayfa siler değil,

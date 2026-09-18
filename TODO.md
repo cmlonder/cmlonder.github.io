@@ -9,7 +9,7 @@ kendi başına yapmamalı — hepsi kişisel tercih veya dış sistem erişimi g
 
 | Sabit | Şu anki değer |
 |---|---|
-| `HUB.name` | "The Workbench" / "Tezgâh" |
+| `HUB.name` | "The Workbench" / "Bahçe" |
 | `HERO[lang].rest` | " writes about building software with agents, architecture, and scale." |
 
 İkisi de nav'da ve anasayfada görünüyor. Değiştirmek tek satır.

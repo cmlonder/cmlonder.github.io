@@ -205,6 +205,13 @@ TypeScript o karşılaştırmayı ölü dal olarak işaretler ve iki dilin metni
 dosyada ikizlenir. Metinler `src/config.ts` içindeki `PAGE` sözlüğünde durur,
 sayfa `PAGE[lang].x` der.
 
+Layout ve bileşenlerde aynısı **serbest** — oraya `lang` prop olarak geliyor,
+ölü dal oluşmuyor. Bedeli şu: görünen Türkçe metin config dışında ~30 yere
+dağılmış durumda. **Bir adı değiştirirken config.ts yetmez**, eski dizeyi
+`src/` genelinde grep'le. 2026-09-18'de "Tezgâh -> Bahçe" geçişi tam da bundan
+eksik çıktı: `ListPage.astro` içindeki sabit `'Tezgâha dön'` sözlükte olmadığı
+için taramadan kaçtı ve her liste sayfasında eski adla yayına gitti.
+
 ## İnteraktif açıklayıcılar
 
 Yöntem [samwho.dev](https://samwho.dev/load-balancing/)'den alındı: simülasyon,
