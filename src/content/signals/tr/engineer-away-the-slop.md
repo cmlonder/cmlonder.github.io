@@ -10,4 +10,7 @@ draft: false
 placeholder: true
 ---
 
-Buraya iki cümlelik yorum gelecek. Bu yer tutucu — link ve kaynak gerçek.
+Düşük kaliteli ajan çıktısını model kalitesi sorunu olarak görmek yerine
+bir mühendislik sorunu olarak ele alıyor: kurallar yazılı değilse, kontrol
+otomatik değilse ve geri bildirim döngüsü yoksa çıktının kötü olması
+şaşırtıcı değil. Bende karşılığı, `pnpm verify` komutunun kendisi oldu.

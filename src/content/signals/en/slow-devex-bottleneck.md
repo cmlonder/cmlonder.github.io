@@ -10,4 +10,8 @@ draft: false
 placeholder: true
 ---
 
-Two sentences of commentary go here. This one is a placeholder — the link and source are real.
+The moment the model runs faster than your CI, the constraint on your
+product is no longer the model but the CI, which means the build time you
+have been deferring for years suddenly becomes the priority. After
+reading this I looked seriously at my own pipeline durations for the
+first time.

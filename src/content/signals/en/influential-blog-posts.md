@@ -10,4 +10,8 @@ draft: false
 placeholder: true
 ---
 
-Two sentences of commentary go here. This one is a placeholder — the link and source are real.
+A long thread of the posts that genuinely changed how working engineers
+think, which is a different list from the posts that were popular. Worth
+reading for the pattern as much as the links: almost none of them are
+tutorials, and almost all of them reframe something the reader already
+knew.

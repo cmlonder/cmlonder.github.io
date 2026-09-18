@@ -10,4 +10,8 @@ draft: false
 placeholder: true
 ---
 
-Two sentences of commentary go here. This one is a placeholder — the link and source are real.
+Treats low-quality agent output as an engineering problem rather than a
+model-quality one: if the rules are not written down, the checks are not
+automated, and there is no feedback loop, bad output is not surprising.
+For me the concrete answer to this turned out to be the `pnpm verify`
+command itself.

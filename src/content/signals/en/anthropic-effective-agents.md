@@ -10,4 +10,8 @@ draft: false
 placeholder: true
 ---
 
-Two sentences of commentary go here. This one is a placeholder — the link and source are real.
+The clearest answer I have found to whether something should be an agent
+or a fixed workflow: if the steps are known in advance, write a workflow;
+if the decision tree only opens up at runtime, write an agent. Reading
+this made me realise that half of my own setups were agents for no good
+reason.

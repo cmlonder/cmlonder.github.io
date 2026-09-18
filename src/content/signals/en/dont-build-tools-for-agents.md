@@ -10,4 +10,8 @@ draft: false
 placeholder: true
 ---
 
-Two sentences of commentary go here. This one is a placeholder — the link and source are real.
+The argument is that instead of building agent-specific tools, you should
+let agents use the tools humans already use, because the documentation,
+error messages, and community knowledge for those are already in the
+model's training. Writing your own wrapper throws all of that away and
+replaces it with an interface nobody has ever seen.

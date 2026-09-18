@@ -8,3 +8,8 @@ tags: ["design", "patterns"]
 order: 22
 placeholder: true
 ---
+
+Sırada bekliyor. Yazılımdaki tasarım deseni fikrinin buradan geldiğini
+biliyorum ama kitabın asıl derdinin desen kataloğu olmadığını, bir
+yerin yaşanabilir olmasının ne demek olduğu olduğunu söylüyorlar.
+Kataloğu değil o kısmı merak ediyorum.

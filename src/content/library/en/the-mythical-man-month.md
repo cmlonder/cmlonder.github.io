@@ -9,3 +9,13 @@ status: "done"
 rating: 4
 tags: ["team", "communication"]
 ---
+
+Fifty years old and still correct, which is a little demoralising.
+
+"Adding people to a late project makes it later" has become a cliché,
+but the book's real contribution is the **combinatorial explosion of
+communication paths**. What grows as a team grows is not work, it is
+coordination.
+
+Some chapters read as historical documents; the IBM 360 details can be
+skipped.

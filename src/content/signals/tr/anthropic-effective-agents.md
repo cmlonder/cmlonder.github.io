@@ -10,4 +10,7 @@ draft: false
 placeholder: true
 ---
 
-Buraya iki cümlelik yorum gelecek. Bu yer tutucu — link ve kaynak gerçek.
+Ajan mı yazmalı yoksa sabit bir akış mı kurmalı sorusuna şimdiye kadar
+gördüğüm en net cevap burada: adımlar önceden biliniyorsa akış yaz, karar
+ağacı çalışma anında açılıyorsa ajan yaz. Bu ayrımı okuduktan sonra kendi
+kurulumlarımın yarısının aslında gereksiz yere ajan olduğunu fark ettim.

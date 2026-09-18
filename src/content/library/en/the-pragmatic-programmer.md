@@ -9,3 +9,12 @@ status: "done"
 rating: 3
 tags: ["craft", "habit"]
 ---
+
+I was very impressed the first time I read it and I look at it more
+calmly now. Most of the advice is standard practice today and the book
+does not know that.
+
+What still earns its place are the metaphors, **broken windows** and
+*stone soup*; they are useful when explaining technical debt to a team.
+
+Three stars: not because it is bad, but because it became ordinary.

@@ -10,4 +10,7 @@ draft: false
 placeholder: true
 ---
 
-Buraya iki cümlelik yorum gelecek. Bu yer tutucu — link ve kaynak gerçek.
+Model senin CI'ından hızlı çalışmaya başladığı anda ürünün kısıtı artık
+model değil, CI oluyor; yani yıllardır ertelediğin build süresi işi birden
+bire öncelikli hâle geliyor. Bunu okuduktan sonra kendi pipeline sürelerime
+ilk kez ciddi bir gözle baktım.

@@ -10,4 +10,8 @@ draft: false
 placeholder: true
 ---
 
-Two sentences of commentary go here. This one is a placeholder — the link and source are real.
+The signals we quietly relied on to judge competence, like clean code,
+confident writing, and fast turnaround, used to be expensive enough that
+they carried information; now they are cheap and they carry none. What I
+keep thinking about is that we have not yet replaced them, so hiring and
+review are running on instruments that stopped working.

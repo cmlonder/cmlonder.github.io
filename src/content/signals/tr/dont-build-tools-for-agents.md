@@ -10,4 +10,8 @@ draft: false
 placeholder: true
 ---
 
-Buraya iki cümlelik yorum gelecek. Bu yer tutucu — link ve kaynak gerçek.
+Yazının savı şu: ajanlara özel tool yazmak yerine, insanların zaten
+kullandığı araçları kullandırmak gerekiyor; çünkü o araçların
+dokümantasyonu, hata mesajları ve topluluk bilgisi zaten modelin
+eğitiminde var. Kendi sarmalayıcını yazdığında bunların hepsini
+kaybedip yerine kimsenin bilmediği bir arayüz koymuş oluyorsun.

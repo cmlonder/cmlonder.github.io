@@ -10,4 +10,6 @@ order: 21
 placeholder: true
 ---
 
-
+Sırada bekliyor. Oyunun içindeki el kitabını parça parça toplayarak
+kuralları keşfettiğin bir yapısı varmış; eksik dokümantasyonla çalışmayı
+oyun mekaniğine çevirmek fikri çok hoşuma gitti.

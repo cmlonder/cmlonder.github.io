@@ -49,19 +49,19 @@ export const ENTRY_TYPE: Record<CollectionName, string> = {
 export const COLLECTION_BLURBS: Record<CollectionName, Dict> = {
   essays: {
     en: 'Finished arguments. Long, opinionated, meant to change your mind.',
-    tr: 'Arkasında durduğum argümanlar. Uzun ve iddialı — seni ikna etmeye çalışıyorum.',
+    tr: 'Arkasında durabildiğim argümanlar. Uzun ve iddialılar, çünkü amaçları seni ikna etmek.',
   },
   notes: {
     en: "Thinking out loud. Unfinished, exploratory, often wrong.",
-    tr: 'Sesli düşünüyorum. Bitmemiş, keşif halinde, çoğu da yanlış çıkacak.',
+    tr: 'Sesli düşündüğüm yer. Henüz bitmediler, bir kısmı da muhtemelen yanlış çıkacak.',
   },
   playbooks: {
     en: 'Repeatable decisions. Problem, context, approach, tradeoffs.',
-    tr: 'Birden fazla kez verdiğim kararlar. Problem ne, bağlam ne, ne yaptım, neyi takas ettim.',
+    tr: 'Birden fazla kez verdiğim için artık bir yöntemi oturmuş kararlar. Her birinde problemi, bağlamı ve neyi neye karşı takas ettiğimi yazıyorum.',
   },
   signals: {
     en: 'A link and why it matters. Two sentences, no more.',
-    tr: 'Bir link, bir de neden önemli olduğu. İki cümle, fazlası yok.',
+    tr: 'Okuduğum ve aklımda kalan linkler. Her birine neden önemli olduğunu anlatan iki cümle ekliyorum, fazlasını yazmıyorum.',
   },
 };
 
@@ -157,7 +157,7 @@ export const PROJECTS = {
   name:  { en: 'Projects', tr: 'Projeler' } as Record<Locale, string>,
   blurb: {
     en: 'Things I built, with what they actually do and where they stand.',
-    tr: 'Kurduğum şeyler. Ne işe yarıyorlar, şu an ne durumdalar.',
+    tr: 'Kurduğum şeyler; her birinin ne işe yaradığını ve şu an hangi durumda olduğunu yazdım.',
   } as Record<Locale, string>,
 };
 
@@ -179,7 +179,7 @@ export const DOMAINS = {
   name:  { en: 'Domains', tr: 'Domain' } as Record<Locale, string>,
   blurb: {
     en: 'One domain at a time, written in chapters. The outline is public from day one — including what is not written yet.',
-    tr: 'Tek bir alanı bölüm bölüm yazıyorum. İçindekiler ilk günden açık, daha yazmadıklarım dahil.',
+    tr: 'Tek bir alanı bölüm bölüm yazıyorum. İçindekiler listesi ilk günden açıkta duruyor, daha yazmadığım bölümler de dahil.',
   } as Record<Locale, string>,
   readAll: { en: 'read', tr: 'oku' },
 };
@@ -415,7 +415,7 @@ export const RADAR = {
   name:  { en: 'Radar', tr: 'Radar' } as Record<Locale, string>,
   blurb: {
     en: 'A daily briefing written by an agent, not by me. I do not edit it either — what it writes is what you read.',
-    tr: 'Günlük bülten. Bir ajan yazıyor, ben yazmıyorum — düzeltmiyorum da. Ne yazdıysa onu okuyorsun.',
+    tr: 'Günlük bülteni bir ajan yazıyor, ben yazmıyorum. Sonradan düzeltmiyorum da; ajan ne yazdıysa onu okuyorsunuz.',
   } as Record<Locale, string>,
 };
 
@@ -439,7 +439,7 @@ export const HUB = {
   name:  { en: 'The Workbench', tr: 'Bahçe' } as Record<Locale, string>,
   blurb: {
     en: 'A workbench of half-built ideas, finished arguments, and notes to myself — kept in the open.',
-    tr: 'Yarım kalmış fikirler, bitirdiğim argümanlar, kendime notlar. Hepsi açıkta duruyor, düzelte düzelte büyüyor.',
+    tr: 'Yarım kalmış fikirler, bitirdiğim argümanlar ve kendime aldığım notlar bir arada duruyor. Hepsini açıkta tutuyorum, çünkü ancak düzelte düzelte büyüyorlar.',
   } as Record<Locale, string>,
 };
 

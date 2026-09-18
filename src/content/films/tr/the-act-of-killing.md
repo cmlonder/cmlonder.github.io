@@ -9,4 +9,6 @@ order: 21
 placeholder: true
 ---
 
-
+Sırada bekliyor. Zor bir film olduğunu ve failleri kendi hikâyelerini
+yeniden canlandırmaya davet ettiğini biliyorum. Doğru zamanda izlemek
+gereken türden, o yüzden bekliyor.

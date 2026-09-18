@@ -10,4 +10,6 @@ order: 20
 placeholder: true
 ---
 
-
+Sırada bekliyor. Derinliğiyle ilgili anlatılanlar beni hem çekiyor hem
+korkutuyor; simülasyonun kendi hikâyelerini üretmesi fikri tam olarak
+ilgimi çeken şey. Ama gerektirdiği zamanı henüz ayıramadım.
