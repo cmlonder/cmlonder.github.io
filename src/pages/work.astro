@@ -1,0 +1,126 @@
+---
+import WorkPage from '../layouts/WorkPage.astro';
+import type { Locale } from '../config';
+const lang: Locale = 'en';
+---
+
+<WorkPage
+  lang={lang}
+  altHref="/tr/work"
+  baslik="How I Work"
+  blurb="Over a decade designing distributed systems and making them operable. The method says more than the list of employers does."
+  giris={[
+    'I am a solutions architect. My work sits where architecture meets operations: I design distributed systems, then make sure they can actually be run — measured, scaled, recovered and handed over.',
+    'I have worked across aviation, e-commerce, ride-hailing and telecom. The through-line is always the same: take a system that works in one team’s hands and make it work as a property of the whole organization.',
+    'For the past two years I have also been building the tooling my own discipline runs on, and that increasingly means agents — skills that turn raw engineering input into architecture decision records, review notes and performance analyses.',
+  ]}
+  rakamlar={[
+    { deger: '10+', etiket: 'years in software' },
+    { deger: '100+', etiket: 'service estate under NFR architecture' },
+    { deger: '2M', etiket: 'requests/min sustained' },
+    { deger: '105×', etiket: 'latency improvement in rule evaluation' },
+  ]}
+  ilkeBaslik="How I work"
+  ilkeler={[
+    { baslik: 'Architecture is a decision log, not a diagram',
+      govde: 'Every meaningful choice becomes an ADR with the alternatives and the consequences written down. Diagrams follow the decisions, and they are generated from source wherever possible so they cannot drift.' },
+    { baslik: 'Non-functional requirements need owners, not intentions',
+      govde: 'A quality attribute that is not scored, gated and assigned to someone is a preference. I turn them into checklists with targets and verification methods, then into CI gates.' },
+    { baslik: 'Performance work is forensic, not heroic',
+      govde: 'Baseline first, change one variable at a time, measure again. When total response time far exceeds downstream latency the problem is in an intermediate layer; when memory and CPU look fine but responses are slow it is almost always concurrency, not hardware.' },
+    { baslik: 'Technical success is not enough for adoption',
+      govde: 'A shared library or platform service only lands if it ships with installation, documentation, support and operational guidance. I treat internal platforms as products with users.' },
+    { baslik: 'Teach the principle, not the implementation',
+      govde: 'Educational material aimed at engineers works when it starts from the underlying concept, in a question-driven format, rather than from this quarter’s business case.' },
+  ]}
+  rolBaslik="Where I have worked"
+  roller={[
+    { org: 'Turkish Technology', not: 'Turkish Airlines’ technology arm', unvan: 'Solutions Architect',
+      donem: '07/2025 —', yer: 'Istanbul',
+      ozet: 'An NDC-based airline retailing platform is being built here — offer creation, pricing, basket, order — replacing legacy distribution with a modular, standards-aligned system. I joined to own architecture for the rule engine and promotion domains, and now lead NFR architecture, production readiness and the performance function across the whole estate.',
+      maddeler: [
+        'Derived a company-wide NFR quality framework from ISO/IEC 25010: 11 categories broken into roughly 46 checklist items on a strict one-action-per-item principle, each with a target, a verification method and an owner.',
+        'Designed the go-live checklist and its scoring model, covering pipeline coverage per environment, IaC and Helm completeness, GitOps sync, secret management, canary and blue/green strategy, zero-downtime rolling updates, runbooks per failure scenario, incident process, SLA/SLO definitions and verified horizontal scale-out.',
+        'Drove readiness alignment across 100+ microservices owned by 15+ teams, defining for each quality attribute what evidence counts, who verifies it and how it is tracked — resilience, contract testing, scaling behaviour and SLO targets became per-service tracked properties rather than per-team judgement calls.',
+        'Automated the scoring: a reusable CI workflow evaluates each repository against centrally-owned matchers and emits a versioned readiness report; a central aggregator normalizes across schema versions, applies weights and renders a platform-wide scorecard.',
+        'Separated policy flowing down (gate rules, weights, blocking versus advisory intent) from results flowing up (the report contract), so org-wide standards change in one place rather than through a fan-out of pull requests.',
+        'Cut rule evaluation latency from 3.21 s to 30.6 ms P95 — a 105× improvement — by isolating the true bottlenecks rather than scaling hardware: stateless session pooling, JVM memory leak remediation, and thread-exhaustion analysis under contention.',
+        'Established a three-tier performance testing model (component, service, end-to-end) as an architecture decision, with a shared endpoint-level performance profile contract every service implements and execution environments provisioned as infrastructure rather than hand-built.',
+        'Decomposed the offer, pricing and basket domain into separate microservices, and designed a distributed rule evaluation architecture on Hazelcast that removed the single-node ceiling for a Drools engine carrying 30,000+ rules.',
+        'Established company-wide code review and architecture review processes, and authored ADRs covering Kafka error handling and retry/DLQ strategy, schema governance, observability alerting and database migration rollback.',
+        'Built the agentic toolchain the architecture function runs on: skills that generate MADR-format ADRs, RFCs, work items and architecture-level code reviews, plus a repo-based extraction pipeline regenerating C4 and Structurizr models directly from source with a generated/override file separation.',
+      ],
+      yigin: 'Java · Spring Boot · Drools · Hazelcast · Kafka · PostgreSQL/CNPG · Couchbase · Keycloak · OpenTelemetry · Grafana · Prometheus · K6 · Kubernetes/OpenShift · Terraform · ArgoCD · Backstage · APISIX' },
+
+    { org: 'Trendyol Group', unvan: 'Software Development Engineer', donem: '08/2024 — 07/2025', yer: 'Istanbul',
+      ozet: 'Returned to Trendyol to lead architecture on the international search and content platform.',
+      maddeler: [
+        'Owned services sustaining 2M req/min under campaign-peak traffic — holding consistency across service boundaries with the Outbox pattern so state changes and their events publish atomically, and guarding throughput with circuit breaking, rate limiting and retry.',
+        'Led the architecture for multi-language translation of 200M+ documents, reducing document count by 30% through index-time embedding rather than storing a document per language.',
+        'Implemented custom ArgoCD metrics driving intelligent auto-scaling, replacing static CPU thresholds with signals that reflect actual workload.',
+        'Decoupled services along domain-driven boundaries, reducing cycle time by 25%; delivered DDD and Event Storming workshops.',
+      ],
+      yigin: 'GoLang · Kafka · ElasticSearch · Couchbase · ArgoCD · Kubernetes' },
+
+    { org: 'Heetch', unvan: 'Software Development Engineer', donem: '09/2022 — 08/2024', yer: 'Remote / Paris',
+      ozet: 'Ride-hailing platform operating across Europe and Africa; worked on the driver domain during its multi-country expansion.',
+      maddeler: [
+        'Refactored legacy driver management into a multi-country scalable system, enabling expansion across African markets with country-specific rules isolated from the core lifecycle.',
+        'Introduced an API-First approach at team and then company level, with OpenAPI specifications and contract testing as the integration boundary.',
+        'Integrated Wave as a payment provider for West African markets, including multi-currency transaction flows.',
+        'Designed Avro-based event schemas for driver lifecycle events, and improved observability with Datadog SLOs and alerting.',
+      ],
+      yigin: 'GoLang · gRPC · Avro · Protobuf · Kubernetes · AWS · Datadog' },
+
+    { org: 'Trendyol Group', unvan: 'Software Development Engineer', donem: '01/2021 — 09/2022', yer: 'Istanbul',
+      maddeler: [
+        'Designed scalable data models in the Product domain serving millions of products under high-throughput read and write patterns.',
+        'Scaled Kafka event pipelines and ElasticSearch clusters carrying product search traffic.',
+        'Led CI/CD pipeline development, and mentored the QA team on microservice-compatible testing and contract testing.',
+      ],
+      yigin: 'Spring Boot · Kafka · RabbitMQ · ElasticSearch · Couchbase · SQL Server' },
+
+    { org: 'Easy Software', unvan: 'Software Development Engineer', donem: '05/2019 — 01/2021', yer: 'Istanbul',
+      maddeler: [
+        'Developed common microservices — gateway, configuration server, authentication — used across product teams.',
+        'Maintained the Kubernetes environment and Jenkins pipelines, providing CI/CD for the organization.',
+        'Delivered internal webinars on security, testing, refactoring and clean code.',
+      ],
+      yigin: 'GoLang · Spring Cloud · Kubernetes · Jenkins · Keycloak · OAuth 2.0' },
+
+    { org: 'Adesso', unvan: 'Software Development Engineer', donem: '07/2018 — 05/2019', yer: 'Istanbul',
+      maddeler: [
+        'Contributed to the architecture, reliability and scaling of a greenfield project.',
+        'Wrote design documents, led code reviews, and managed source control, builds and releases.',
+      ],
+      yigin: 'Spring · Hibernate · ReactJS · MSSQL · Docker · Jenkins · Kubernetes' },
+
+    { org: 'Turkcell', unvan: 'Software Development Engineer', donem: '07/2016 — 07/2018', yer: 'Istanbul',
+      maddeler: [
+        'Developed APIs for BiP, a large-scale distributed messaging platform.',
+        'Increased manageable message traffic by 10% by prioritizing third-party service calls.',
+      ],
+      yigin: 'Spring · Kafka · Redis · Coherence · PL/SQL · Angular · Grafana · Prometheus' },
+  ]}
+  bilgiBaslik="What I know"
+  bilgi={[
+    { grup: 'Architecture & design', oge: 'Distributed systems, high-throughput transactional services, distributed consistency and idempotency, Domain-Driven Design, event-driven architecture, microservices patterns (Outbox, Saga, Circuit Breaker, Rate Limiting), Strangler Fig modernization, C4 / ArchiMate / Structurizr modelling, ADR and RFC governance' },
+    { grup: 'Production readiness', oge: 'ISO/IEC 25010-based NFR frameworks, go-live checklists and scoring models, automated readiness gating in CI, SLA/SLO definition, on-call and incident management practice design, runbooks, release gates' },
+    { grup: 'Agentic engineering', oge: 'Custom agent skills for engineering workflows, agentic test generation and analysis, automated architecture and documentation extraction from source, Spec-Driven Development, custom GPT development' },
+    { grup: 'Languages & frameworks', oge: 'Java, Spring Boot, Spring Cloud, GoLang, Kotlin, Python, Node.js / NestJS, gRPC, ReactJS' },
+    { grup: 'Data & messaging', oge: 'Kafka, RabbitMQ, ElasticSearch, Couchbase, PostgreSQL / CNPG, SQL Server, Redis, Hazelcast, Apicurio Schema Registry, Avro / Protobuf' },
+    { grup: 'Rules & decisioning', oge: 'Drools, Rete-based evaluation, GoRules, distributed rule evaluation, stateless session strategies' },
+    { grup: 'Cloud & platform', oge: 'AWS, Kubernetes / OpenShift, Docker, Terraform, ArgoCD, GitHub Actions, GitLab CI, Jenkins, Backstage, Spring Cloud Gateway, APISIX, Keycloak, OAuth 2.0' },
+    { grup: 'Observability', oge: 'OpenTelemetry, Grafana, Prometheus, Datadog, K6, JVM performance forensics (thread stack analysis, GC tuning, connection pool optimization)' },
+    { grup: 'Practices', oge: 'TDD, BDD, contract testing, API-First, Spec-Driven Development, DORA metrics, Event Storming, chaos and resilience testing' },
+    { grup: 'Domain', oge: 'IATA NDC 24.1, ONE Order, offer and order management, airline retailing maturity, PSS / GDS / ATPCO integration' },
+  ]}
+  egitimBaslik="Education"
+  egitim={[
+    { ad: 'M.S., Engineering Management (thesis stage)', yer: 'Yıldız Technical University', ne_zaman: 'expected 2027' },
+    { ad: 'B.S., Computer Science Engineering', yer: 'Yıldız Technical University', ne_zaman: '2015' },
+    { ad: 'TOGAF enterprise architecture training', yer: 'Turkish Technology, in-house programme', ne_zaman: '' },
+  ]}
+  iletisimBaslik="Get in touch"
+  iletisim="The fastest way to reach me is email. I read everything and answer what I can. I am always up for a conversation about architecture, production readiness and engineering with agents."
+/>

@@ -461,8 +461,8 @@ export const HERO: Record<Locale, { name: string; rest: string; role: string; no
 
 /** Üst navigasyon — Maggie gibi 3 öğe, biri dropdown. */
 export const NAV: Record<Locale, { label: string; href: string }[]> = {
-  en: [{ label: 'Uses', href: '/uses' }, { label: 'Now', href: '/now' }, { label: 'About', href: '/about' }],
-  tr: [{ label: 'Kullandıklarım', href: '/uses' }, { label: 'Şu Sıralar', href: '/now' }, { label: 'Hakkında', href: '/about' }],
+  en: [{ label: 'Work', href: '/work' }, { label: 'Uses', href: '/uses' }, { label: 'Now', href: '/now' }, { label: 'About', href: '/about' }],
+  tr: [{ label: 'Mesleğim', href: '/work' }, { label: 'Kullandıklarım', href: '/uses' }, { label: 'Şu Sıralar', href: '/now' }, { label: 'Hakkında', href: '/about' }],
 };
 
 /**

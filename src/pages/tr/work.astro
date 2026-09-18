@@ -1,0 +1,126 @@
+---
+import WorkPage from '../../layouts/WorkPage.astro';
+import type { Locale } from '../../config';
+const lang: Locale = 'tr';
+---
+
+<WorkPage
+  lang={lang}
+  altHref="/work"
+  baslik="Nasıl Çalışıyorum"
+  blurb="On yılı aşkın süredir dağıtık sistemler tasarlıyorum ve işletilebilir hale getiriyorum. Yöntemim, nerede çalıştığımdan daha çok şey anlatıyor."
+  giris={[
+    'Çözüm mimarıyım. İşim mimarinin operasyonla kesiştiği yerde duruyor: dağıtık sistemler tasarlıyorum, sonra o sistemlerin gerçekten işletilebildiğinden emin oluyorum — ölçülebilir, ölçeklenebilir, kurtarılabilir ve devredilebilir olmasından.',
+    'Havacılık, e-ticaret, çağrılı taşımacılık ve telekomda çalıştım. Aradaki ortak çizgi hep aynı: tek bir ekibin elinde çalışan bir sistemi, bütün organizasyonun özelliği haline getirmek.',
+    'Son iki yıldır kendi disiplinimin araçlarını da yazıyorum, ve bu giderek ajanlar üzerinden ilerliyor — ham mühendislik girdisini mimari karar kaydına, inceleme notuna ve performans analizine çeviren beceriler.',
+  ]}
+  rakamlar={[
+    { deger: '10+', etiket: 'yıl yazılım' },
+    { deger: '100+', etiket: 'servisli platformda NFR mimarisi' },
+    { deger: '2M', etiket: 'istek/dakika taşıyan servisler' },
+    { deger: '105×', etiket: 'kural değerlendirmede gecikme iyileştirmesi' },
+  ]}
+  ilkeBaslik="Nasıl çalışıyorum"
+  ilkeler={[
+    { baslik: 'Mimari bir diyagram değil, karar günlüğüdür',
+      govde: 'Anlamlı her tercih, alternatifleri ve sonuçları yazılmış bir ADR’a dönüşüyor. Diyagramlar kararların arkasından geliyor ve mümkün olan her yerde kaynaktan üretiliyor, böylece kaynakla ayrışamıyorlar.' },
+    { baslik: 'Fonksiyonel olmayan gereksinimlerin sahibi olmalı, niyeti değil',
+      govde: 'Puanlanmayan, kapıya bağlanmayan ve birine atanmayan bir kalite özelliği gereksinim değil, tercihtir. Onları hedefi ve doğrulama yöntemi olan kontrol listelerine, sonra da CI kapılarına çeviriyorum.' },
+    { baslik: 'Performans işi kahramanlık değil, adli tıptır',
+      govde: 'Önce taban ölçüm, sonra tek değişken değiştir, sonra tekrar ölç. Toplam yanıt süresi downstream gecikmesini çok aşıyorsa problem aradaki katmandadır; bellek ve CPU iyi görünüp yanıtlar yavaşsa neredeyse her zaman eşzamanlılıktır, donanım değil.' },
+    { baslik: 'Teknik başarı benimsenmeye yetmiyor',
+      govde: 'Ortak bir kütüphane ya da platform servisi ancak kurulumu, dokümantasyonu, desteği ve işletme kılavuzuyla birlikte geldiğinde tutuyor. İç platformlara kullanıcısı olan ürünler gibi davranıyorum.' },
+    { baslik: 'Uygulamayı değil ilkeyi öğret',
+      govde: 'Mühendislere yönelik eğitim içeriği, bu çeyreğin iş vakasından değil alttaki kavramdan başladığında ve soru odaklı kurulduğunda işe yarıyor.' },
+  ]}
+  rolBaslik="Nerede çalıştım"
+  roller={[
+    { org: 'Turkish Technology', not: 'Turkish Airlines’ın teknoloji kolu', unvan: 'Çözüm Mimarı',
+      donem: '07/2025 —', yer: 'İstanbul',
+      ozet: 'NDC tabanlı bir havayolu perakende platformu kuruluyor: teklif üretimi, fiyatlama, sepet, sipariş. Kural motoru ve kampanya alanlarının mimarisini üstlenmek için katıldım; şimdi platformun tamamında NFR mimarisi, üretime hazırlık ve performans fonksiyonunu yürütüyorum.',
+      maddeler: [
+        'ISO/IEC 25010’dan türetilmiş, 11 kategoride ve maddesi tek eylem taşıyan ~46 kontrol maddesinden oluşan şirket çapında bir NFR kalite çerçevesi kurdum; her maddenin hedefi, doğrulama yöntemi ve sahibi var.',
+        'Canlıya çıkış kontrol listesini ve puanlama modelini tasarladım: pipeline kapsamı, IaC ve Helm bütünlüğü, GitOps senkronu, sır yönetimi, canary ve mavi/yeşil stratejisi, kesintisiz güncelleme; ayrıca senaryo bazlı runbook, olay yönetimi, SLA/SLO tanımları ve doğrulanmış yatay ölçeklenme.',
+        '15’ten fazla ekibin sahip olduğu 100’ü aşkın mikroservis için hangi kanıtın sayıldığını, kimin doğruladığını ve nasıl izlendiğini tanımladım; dayanıklılık, sözleşme testi, ölçekleme davranışı ve SLO hedefleri ekip kanaatinden çıkıp servis bazında izlenen özelliklere dönüştü.',
+        'Puanlamayı otomatikleştirdim: yeniden kullanılabilir bir CI akışı her repoyu merkezî eşleştiricilere göre değerlendirip sürümlenmiş bir hazırlık raporu üretiyor, merkezî bir toplayıcı hepsini normalleştirip ağırlıklandırarak platform geneli bir karne çıkarıyor.',
+        'Aşağı akan politikayı (kapı kuralları, ağırlıklar, bloklayıcı mı tavsiye mi) yukarı akan sonuçtan (rapor sözleşmesi) ayırdım; böylece kurum standardı onlarca pull request yerine tek yerden değişiyor.',
+        'Kural değerlendirme gecikmesini 3,21 saniyeden 30,6 milisaniye P95’e indirdim — 105 kat. Donanım büyütmek yerine gerçek darboğazları ayırdım: durumsuz oturum havuzlama, JVM bellek sızıntısı ve çekişme altında thread tükenmesi analizi.',
+        'Üç katmanlı performans testi modelini (bileşen, servis, uçtan uca) mimari karar olarak yerleştirdim; her servisin uyguladığı ortak bir uç nokta performans profili sözleşmesi ve elle kurulmak yerine altyapı olarak sağlanan test ortamlarıyla.',
+        'Teklif, fiyatlama ve sepet alanını ayrı mikroservislere ayırdım; Hazelcast üzerinde dağıtık kural değerlendirme mimarisi tasarlayıp 30.000’den fazla kural taşıyan Drools motorunun tek düğüm tavanını kaldırdım.',
+        'Şirket çapında kod inceleme ve mimari inceleme süreçlerini kurdum; Kafka hata yönetimi, şema yönetişimi, gözlemlenebilirlik alarmları ve veritabanı geri alma konularında ADR’lar yazdım.',
+        'Mimari fonksiyonun çalıştığı ajan araç zincirini kurdum: MADR biçiminde ADR, RFC, iş maddesi ve mimari seviyede kod incelemesi üreten beceriler; ayrıca C4 ve Structurizr modellerini doğrudan kaynaktan yeniden üreten, üretilen ve elle yazılan dosyaları ayıran bir çıkarım hattı.',
+      ],
+      yigin: 'Java · Spring Boot · Drools · Hazelcast · Kafka · PostgreSQL/CNPG · Couchbase · Keycloak · OpenTelemetry · Grafana · Prometheus · K6 · Kubernetes/OpenShift · Terraform · ArgoCD · Backstage · APISIX' },
+
+    { org: 'Trendyol Group', unvan: 'Yazılım Geliştirme Mühendisi', donem: '08/2024 — 07/2025', yer: 'İstanbul',
+      ozet: 'Uluslararası arama ve içerik platformunun mimarisini yürütmek için Trendyol’a döndüm.',
+      maddeler: [
+        'Kampanya zirvesinde dakikada 2 milyon istek taşıyan servislerin sahibiydim; durum değişiklikleriyle olaylarının atomik yayınlanması için Outbox deseni, verimi korumak için devre kesici, hız sınırlama ve retry.',
+        '200 milyondan fazla dokümanın çok dilli çevirisinin mimarisini yürüttüm; dil başına doküman tutmak yerine indeks anında gömme kullanarak doküman sayısını %30 azalttım.',
+        'Statik CPU eşiklerini gerçek iş yükünü yansıtan sinyallerle değiştiren özel ArgoCD metrikleri yazdım.',
+        'Servisleri alan sınırlarına göre ayırarak çevrim süresini %25 düşürdüm; DDD ve Event Storming atölyeleri verdim.',
+      ],
+      yigin: 'GoLang · Kafka · ElasticSearch · Couchbase · ArgoCD · Kubernetes' },
+
+    { org: 'Heetch', unvan: 'Yazılım Geliştirme Mühendisi', donem: '09/2022 — 08/2024', yer: 'Uzaktan / Paris',
+      ozet: 'Avrupa ve Afrika’da çalışan bir çağrılı taşımacılık platformu; çok ülkeye açılma döneminde sürücü alanında çalıştım.',
+      maddeler: [
+        'Eski sürücü yönetimini çok ülkeli ölçeklenebilir bir sisteme dönüştürdüm; ülkeye özgü kurallar çekirdek yaşam döngüsünden ayrıldı ve Afrika pazarlarına açılma mümkün oldu.',
+        'Önce ekip sonra şirket seviyesinde API-First yaklaşımını getirdim; entegrasyon sınırı olarak OpenAPI şartnameleri ve sözleşme testleri.',
+        'Batı Afrika pazarları için Wave ödeme sağlayıcısını çok para birimli işlem akışlarıyla entegre ettim.',
+        'Sürücü yaşam döngüsü olayları için Avro şemaları tasarladım; Datadog SLO ve alarmlarıyla gözlemlenebilirliği iyileştirdim.',
+      ],
+      yigin: 'GoLang · gRPC · Avro · Protobuf · Kubernetes · AWS · Datadog' },
+
+    { org: 'Trendyol Group', unvan: 'Yazılım Geliştirme Mühendisi', donem: '01/2021 — 09/2022', yer: 'İstanbul',
+      maddeler: [
+        'Ürün alanında, yüksek hacimli okuma ve yazma desenleri altında milyonlarca ürüne hizmet veren ölçeklenebilir veri modelleri tasarladım.',
+        'Ürün arama trafiğini taşıyan Kafka olay hatlarını ve ElasticSearch kümelerini ölçekledim.',
+        'CI/CD hattı geliştirmesini yürüttüm; QA ekibine mikroservis uyumlu test ve sözleşme testi konusunda mentorluk yaptım.',
+      ],
+      yigin: 'Spring Boot · Kafka · RabbitMQ · ElasticSearch · Couchbase · SQL Server' },
+
+    { org: 'Easy Software', unvan: 'Yazılım Geliştirme Mühendisi', donem: '05/2019 — 01/2021', yer: 'İstanbul',
+      maddeler: [
+        'Ürün ekiplerinin ortak kullandığı mikroservisleri geliştirdim: ağ geçidi, yapılandırma sunucusu, kimlik doğrulama.',
+        'Kubernetes ortamını ve Jenkins hatlarını işletip organizasyona CI/CD sağladım.',
+        'Güvenlik, test, yeniden düzenleme ve temiz kod üzerine kurum içi web seminerleri verdim.',
+      ],
+      yigin: 'GoLang · Spring Cloud · Kubernetes · Jenkins · Keycloak · OAuth 2.0' },
+
+    { org: 'Adesso', unvan: 'Yazılım Geliştirme Mühendisi', donem: '07/2018 — 05/2019', yer: 'İstanbul',
+      maddeler: [
+        'Sıfırdan başlayan bir projenin mimarisine, güvenilirliğine ve ölçeklenmesine katkıda bulundum.',
+        'Tasarım dokümanları yazdım, kod incelemelerini yürüttüm, kaynak kontrolü ve sürüm yönetimini üstlendim.',
+      ],
+      yigin: 'Spring · Hibernate · ReactJS · MSSQL · Docker · Jenkins · Kubernetes' },
+
+    { org: 'Turkcell', unvan: 'Yazılım Geliştirme Mühendisi', donem: '07/2016 — 07/2018', yer: 'İstanbul',
+      maddeler: [
+        'Büyük ölçekli dağıtık mesajlaşma platformu BiP için API’lar geliştirdim.',
+        'Üçüncü taraf servis çağrılarını önceliklendirerek yönetilebilir mesaj trafiğini %10 artırdım.',
+      ],
+      yigin: 'Spring · Kafka · Redis · Coherence · PL/SQL · Angular · Grafana · Prometheus' },
+  ]}
+  bilgiBaslik="Neyi biliyorum"
+  bilgi={[
+    { grup: 'Mimari ve tasarım', oge: 'Dağıtık sistemler, yüksek hacimli işlemsel servisler, dağıtık tutarlılık ve idempotency, Domain-Driven Design, olay tabanlı mimari, mikroservis desenleri (Outbox, Saga, devre kesici, hız sınırlama), Strangler Fig modernizasyonu, C4 / ArchiMate / Structurizr modelleme, ADR ve RFC yönetişimi' },
+    { grup: 'Üretime hazırlık', oge: 'ISO/IEC 25010 tabanlı NFR çerçeveleri, canlıya çıkış kontrol listeleri ve puanlama modelleri, CI içinde otomatik hazırlık kapıları, SLA/SLO tanımı, nöbet ve olay yönetimi pratiği, runbook, sürüm kapıları' },
+    { grup: 'Ajanlarla mühendislik', oge: 'Mühendislik akışları için özel ajan becerileri, ajanlı test üretimi ve analizi, kaynaktan otomatik mimari ve doküman çıkarımı, Spec-Driven Development, özel GPT geliştirme' },
+    { grup: 'Diller ve çatılar', oge: 'Java, Spring Boot, Spring Cloud, GoLang, Kotlin, Python, Node.js / NestJS, gRPC, ReactJS' },
+    { grup: 'Veri ve mesajlaşma', oge: 'Kafka, RabbitMQ, ElasticSearch, Couchbase, PostgreSQL / CNPG, SQL Server, Redis, Hazelcast, Apicurio Schema Registry, Avro / Protobuf' },
+    { grup: 'Kural ve karar', oge: 'Drools, Rete tabanlı değerlendirme, GoRules, dağıtık kural değerlendirme, durumsuz oturum stratejileri' },
+    { grup: 'Bulut ve platform', oge: 'AWS, Kubernetes / OpenShift, Docker, Terraform, ArgoCD, GitHub Actions, GitLab CI, Jenkins, Backstage, Spring Cloud Gateway, APISIX, Keycloak, OAuth 2.0' },
+    { grup: 'Gözlemlenebilirlik', oge: 'OpenTelemetry, Grafana, Prometheus, Datadog, K6, JVM performans adli incelemesi (thread yığını analizi, GC ayarı, bağlantı havuzu optimizasyonu)' },
+    { grup: 'Pratikler', oge: 'TDD, BDD, sözleşme testi, API-First, Spec-Driven Development, DORA metrikleri, Event Storming, kaos ve dayanıklılık testi' },
+    { grup: 'Alan', oge: 'IATA NDC 24.1, ONE Order, teklif ve sipariş yönetimi, havayolu perakende olgunluğu, PSS / GDS / ATPCO entegrasyonu' },
+  ]}
+  egitimBaslik="Eğitim"
+  egitim={[
+    { ad: 'Mühendislik Yönetimi, Yüksek Lisans (tez aşaması)', yer: 'Yıldız Teknik Üniversitesi', ne_zaman: '2027 bekleniyor' },
+    { ad: 'Bilgisayar Mühendisliği, Lisans', yer: 'Yıldız Teknik Üniversitesi', ne_zaman: '2015' },
+    { ad: 'TOGAF kurumsal mimari eğitimi', yer: 'Turkish Technology, kurum içi program', ne_zaman: '' },
+  ]}
+  iletisimBaslik="İletişim"
+  iletisim="Bana ulaşmanın en hızlı yolu e-posta. Hepsini okuyorum, elimden geleni yanıtlıyorum. Mimari, üretime hazırlık ve ajanlarla mühendislik üzerine konuşmaya her zaman açığım."
+/>

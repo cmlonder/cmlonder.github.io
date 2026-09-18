@@ -1,0 +1,187 @@
+---
+/**
+ * Mesleki geçmiş sayfası.
+ *
+ * Bilerek CV gibi durmuyor. Sıralama da CV'nin tersine: önce NASIL
+ * çalıştığım, sonra kanıt olarak nerede çalıştığım. Bir işveren listesi
+ * okunacak bir şey değil; bir yöntem okunabilir, roller o yöntemin kanıtı
+ * olarak arkasından geliyor.
+ *
+ * İçerik her iki dilde ayrı sayfa dosyasında duruyor; burası sadece düzen.
+ */
+import Base from './Base.astro';
+import { CONTACT, type Locale } from '../config';
+import { localePath } from '../lib/content';
+
+export interface Rol {
+  org: string;
+  not?: string;
+  unvan: string;
+  donem: string;
+  yer: string;
+  ozet?: string;
+  maddeler: string[];
+  yigin?: string;
+}
+
+interface Props {
+  lang: Locale;
+  altHref: string;
+  baslik: string;
+  blurb: string;
+  giris: string[];
+  rakamlar: { deger: string; etiket: string }[];
+  ilkeBaslik: string;
+  ilkeler: { baslik: string; govde: string }[];
+  rolBaslik: string;
+  roller: Rol[];
+  bilgiBaslik: string;
+  bilgi: { grup: string; oge: string }[];
+  egitimBaslik: string;
+  egitim: { ad: string; yer: string; ne_zaman: string }[];
+  iletisimBaslik: string;
+  iletisim: string;
+}
+
+const p = Astro.props as Props;
+const other = p.lang === 'tr' ? 'en' : 'tr';
+---
+
+<Base title={`${p.baslik} — Cemal Önder`} description={p.blurb} lang={p.lang}
+      altLocale={{ lang: other, href: p.altHref }}>
+  <div class="wrap work">
+
+    <header class="head">
+      <h1>{p.baslik}</h1>
+      {p.giris.map((c) => <p class="lead">{c}</p>)}
+    </header>
+
+    <ul class="figures">
+      {p.rakamlar.map((r) => (
+        <li><b>{r.deger}</b><span>{r.etiket}</span></li>
+      ))}
+    </ul>
+
+    <section class="block">
+      <h2>{p.ilkeBaslik}</h2>
+      <ol class="principles">
+        {p.ilkeler.map((i) => (
+          <li><h3>{i.baslik}</h3><p>{i.govde}</p></li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="block">
+      <h2>{p.rolBaslik}</h2>
+      <ol class="roles">
+        {p.roller.map((r) => (
+          <li>
+            <p class="when">{r.donem}</p>
+            <div class="what">
+              <h3>{r.unvan}</h3>
+              <p class="org">{r.org}{r.not && <span class="note"> — {r.not}</span>} · {r.yer}</p>
+              {r.ozet && <p class="sum">{r.ozet}</p>}
+              <ul class="pts">{r.maddeler.map((m) => <li>{m}</li>)}</ul>
+              {r.yigin && <p class="stack">{r.yigin}</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="block">
+      <h2>{p.bilgiBaslik}</h2>
+      <dl class="know">
+        {p.bilgi.map((b) => (<><dt>{b.grup}</dt><dd>{b.oge}</dd></>))}
+      </dl>
+    </section>
+
+    <section class="block">
+      <h2>{p.egitimBaslik}</h2>
+      <ul class="edu">
+        {p.egitim.map((e) => (
+          <li><b>{e.ad}</b><span>{e.yer}</span><em>{e.ne_zaman}</em></li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="block contact">
+      <h2>{p.iletisimBaslik}</h2>
+      <p>{p.iletisim}</p>
+      <p class="links">
+        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+        <a href={CONTACT.linkedin} rel="me">LinkedIn</a>
+        <a href={CONTACT.github} rel="me">GitHub</a>
+      </p>
+    </section>
+
+  </div>
+</Base>
+
+<style>
+  .work { padding-block: var(--s-xl) var(--s-2xl); }
+  .head { max-inline-size: 40rem; margin-block-end: var(--s-xl); }
+  h1 { margin-block-end: var(--s-s); }
+  .lead { color: var(--c-muted); margin-block-end: var(--s-s); }
+
+  /* Rakam şeridi: sayfanın tek "vitrin" öğesi. Fazlası CV'ye döner. */
+  .figures {
+    list-style: none; padding: 0; margin-block-end: var(--s-2xl);
+    display: grid; gap: var(--s-m);
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    border-block: 1px solid var(--c-border); padding-block: var(--s-m);
+  }
+  .figures li { display: flex; flex-direction: column; gap: .15em; }
+  .figures b {
+    font-family: var(--f-serif); font-size: var(--t-xl);
+    font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .figures span { font-size: var(--t-xs); color: var(--c-muted); }
+
+  .block { margin-block-end: var(--s-2xl); }
+  .block > h2 {
+    font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .1em;
+    color: var(--c-muted); margin-block-end: var(--s-m);
+  }
+
+  .principles { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s-l); }
+  .principles > li { max-inline-size: 42rem; }
+  .principles h3 { font-size: var(--t-md); margin-block-end: .3em; }
+  .principles p { color: var(--c-muted); margin: 0; }
+
+  /* Roller: solda dönem, sağda içerik. Dar ekranda alt alta. */
+  .roles { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s-xl); }
+  .roles > li { display: grid; gap: var(--s-2xs) var(--s-l); }
+  .when {
+    font-family: var(--f-mono); font-size: var(--t-xs); color: var(--c-muted);
+    margin: 0; padding-block-start: .35em; white-space: nowrap;
+  }
+  .what h3 { font-size: var(--t-md); margin-block-end: .15em; }
+  .org { font-size: var(--t-xs); color: var(--c-muted); margin-block-end: var(--s-2xs); }
+  .note { font-style: italic; }
+  .sum { max-inline-size: 42rem; margin-block-end: var(--s-2xs); }
+  .pts { margin: 0 0 var(--s-2xs); padding-inline-start: 1.1em; max-inline-size: 42rem; }
+  .pts li { margin-block-end: .35em; }
+  .stack {
+    font-family: var(--f-mono); font-size: var(--t-xs);
+    color: var(--c-muted); margin: 0; max-inline-size: 42rem;
+  }
+
+  .know { display: grid; gap: var(--s-2xs) var(--s-l); margin: 0; max-inline-size: 52rem; }
+  .know dt { font-size: var(--t-xs); font-weight: 600; }
+  .know dd { margin: 0 0 var(--s-s); font-size: var(--t-xs); color: var(--c-muted); }
+
+  .edu { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-s); }
+  .edu li { display: flex; flex-wrap: wrap; gap: .2em var(--s-s); align-items: baseline; }
+  .edu span { color: var(--c-muted); font-size: var(--t-xs); }
+  .edu em { font-family: var(--f-mono); font-size: var(--t-xs); color: var(--c-muted); font-style: normal; }
+
+  .contact p { max-inline-size: 42rem; }
+  .links { display: flex; flex-wrap: wrap; gap: var(--s-m); margin-block-start: var(--s-s); }
+
+  @media (min-width: 46rem) {
+    .roles > li { grid-template-columns: 8.5rem 1fr; }
+    .know { grid-template-columns: 13rem 1fr; }
+    .know dd { margin-block-end: var(--s-2xs); }
+  }
+</style>
