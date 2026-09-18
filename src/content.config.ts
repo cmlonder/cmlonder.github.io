@@ -120,6 +120,12 @@ const projects = defineCollection({
     stack: z.array(z.string()).default([]),
     url: z.string().url().optional(),
     repo: z.string().url().optional(),
+    /**
+     * Hackathon çıktısıysa etkinliğin adı ve gönderim linki. Alan doluysa kart
+     * da proje sayfası da "Hackathon" rozeti gösterir — bir hafta sonunda
+     * yazılmış iş, sürdürdüğüm işlerle aynı rafta sessizce durmasın.
+     */
+    event: z.object({ name: z.string(), url: z.string().url().optional() }).optional(),
     /** Ölçülebilir sonuç: "189 sayfa", "günde 1 bülten, insan yok". */
     metrics: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
     order: z.number().default(0),

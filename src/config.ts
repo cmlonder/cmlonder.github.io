@@ -170,8 +170,10 @@ export const PROJECT_STATUS: Record<string, Record<Locale, string>> = {
 
 /** Proje sayfası metinleri — sayfa dosyaları tek dilli, ölü dal olmasın. */
 export const PROJECT_UI: Record<Locale, Record<string, string>> = {
-  en: { started: 'Started', updated: 'Updated', stack: 'Stack', live: 'Live', source: 'Source' },
-  tr: { started: 'Başladı', updated: 'Güncellendi', stack: 'Yığın', live: 'Adres', source: 'Kaynak' },
+  en: { started: 'Started', updated: 'Updated', stack: 'Stack', live: 'Live', source: 'Source',
+        event: 'Hackathon', badge: 'Hackathon' },
+  tr: { started: 'Başladı', updated: 'Güncellendi', stack: 'Yığın', live: 'Adres', source: 'Kaynak',
+        event: 'Hackathon', badge: 'Hackathon' },
 };
 
 export const DOMAINS = {

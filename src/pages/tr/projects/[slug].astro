@@ -24,6 +24,7 @@ const { Content } = await render(entry);
     <div class="head">
       <h1>{d.title}</h1>
       <span class="st" data-s={d.status}>{PROJECT_STATUS[d.status][lang]}</span>
+      {d.event && <span class="ev">{t.badge}</span>}
     </div>
     <p class="summary">{d.summary}</p>
 
@@ -38,6 +39,10 @@ const { Content } = await render(entry);
       <dd><time datetime={d.started.toISOString()}>{formatDate(d.started, lang)}</time></dd>
       {d.updated && (<><dt>{t.updated}</dt>
         <dd><time datetime={d.updated.toISOString()}>{formatDate(d.updated, lang)}</time></dd></>)}
+      {d.event && (<><dt>{t.event}</dt>
+        <dd>{d.event.url
+          ? <a href={d.event.url} rel="noopener">{d.event.name}</a>
+          : d.event.name}</dd></>)}
       {d.stack.length > 0 && (<><dt>{t.stack}</dt>
         <dd class="stack">{d.stack.map((s) => <code>{s}</code>)}</dd></>)}
       {d.url && (<><dt>{t.live}</dt>
@@ -68,6 +73,15 @@ const { Content } = await render(entry);
   .st[data-s='shipped']  { color: var(--c-accent);   background: color-mix(in srgb, var(--c-accent) 11%, transparent); }
   .st[data-s='building'] { color: var(--c-muted);    border: 1px solid var(--c-border); }
   .st[data-s='archived'] { color: var(--c-muted);    background: var(--c-tinted); }
+
+  /* Hackathon rozeti: kesik çerçeve, çünkü bu bir vitrin değil kayıt.
+     Renk tokens.css'ten; rozet durum pill'iyle aynı ölçüde ama sessiz. */
+  .ev {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    padding: .15em .6em; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: .06em;
+    color: var(--c-muted); border: 1px dashed var(--c-border);
+  }
 
   .summary { margin-block-start: var(--s-s); font-family: var(--f-serif);
              font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: pretty; }

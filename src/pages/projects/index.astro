@@ -23,7 +23,10 @@ const items = (kendi.length ? kendi : all.filter((e) => e.id.startsWith('tr/')))
         <li>
           <a href={localePath(lang, PROJECTS.path, e.id.split('/').pop()!)}>
             <p class="top">
-              <span class="st" data-s={e.data.status}>{PROJECT_STATUS[e.data.status][lang]}</span>
+              <span class="tags">
+                <span class="st" data-s={e.data.status}>{PROJECT_STATUS[e.data.status][lang]}</span>
+                {e.data.event && <span class="ev">{PROJECT_UI[lang].badge}</span>}
+              </span>
               <time datetime={e.data.started.toISOString()}>{formatDate(e.data.started, lang)}</time>
             </p>
             <h2>{e.data.title}</h2>
@@ -69,6 +72,16 @@ const items = (kendi.length ? kendi : all.filter((e) => e.id.startsWith('tr/')))
 
   .top { display: flex; justify-content: space-between; align-items: baseline;
          gap: var(--s-s); font-family: var(--f-sans); font-size: var(--t-xs); }
+  .tags { display: flex; align-items: baseline; gap: .4em; flex-wrap: wrap; }
+  /* Hackathon rozeti: kesik çerçeve, çünkü bu bir vitrin değil kayıt.
+     Renk tokens.css'ten; rozet durum pill'iyle aynı ölçüde ama sessiz. */
+  .ev {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    padding: .15em .6em; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: .06em;
+    color: var(--c-muted); border: 1px dashed var(--c-border);
+  }
+
   .st {
     padding: .15em .6em; border-radius: 999px;
     text-transform: uppercase; letter-spacing: .06em;
