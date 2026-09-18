@@ -24,5 +24,5 @@ daha eski soru: aslında hangi darboğaza, hangi sırayla çarpacaksın.
 
 ### Bir de
 
-Kendime ait bir şeyin parçalarını yavaş yavaş, dramatik bir ayrılık olmadan
-birleştiriyorum. O süreç de burada, oldukça yazılacak.
+Kendime ait bir şeyin parçalarını yavaş yavaş birleştiriyorum. Aceleye
+getirmiyorum. Yazacak bir şey çıktıkça burada olacak.

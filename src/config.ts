@@ -49,19 +49,19 @@ export const ENTRY_TYPE: Record<CollectionName, string> = {
 export const COLLECTION_BLURBS: Record<CollectionName, Dict> = {
   essays: {
     en: 'Finished arguments. Long, opinionated, meant to change your mind.',
-    tr: 'Bitmiş argümanlar. Uzun, iddialı, fikrini değiştirmeyi amaçlayan.',
+    tr: 'Arkasında durduğum argümanlar. Uzun ve iddialı — seni ikna etmeye çalışıyorum.',
   },
   notes: {
     en: "Thinking out loud. Unfinished, exploratory, often wrong.",
-    tr: 'Sesli düşünme. Bitmemiş, keşif halinde, çoğu zaman yanlış.',
+    tr: 'Sesli düşünüyorum. Bitmemiş, keşif halinde, çoğu da yanlış çıkacak.',
   },
   playbooks: {
     en: 'Repeatable decisions. Problem, context, approach, tradeoffs.',
-    tr: 'Tekrarlanabilir kararlar. Problem, bağlam, yaklaşım, ödünleşim.',
+    tr: 'Birden fazla kez verdiğim kararlar. Problem ne, bağlam ne, ne yaptım, neyi takas ettim.',
   },
   signals: {
     en: 'A link and why it matters. Two sentences, no more.',
-    tr: 'Bir link ve neden önemli olduğu. İki cümle, fazlası yok.',
+    tr: 'Bir link, bir de neden önemli olduğu. İki cümle, fazlası yok.',
   },
 };
 
@@ -157,7 +157,7 @@ export const PROJECTS = {
   name:  { en: 'Projects', tr: 'Projeler' } as Record<Locale, string>,
   blurb: {
     en: 'Things I built, with what they actually do and where they stand.',
-    tr: 'Kurduğum şeyler — ne işe yaradıkları ve şu an hangi durumda oldukları.',
+    tr: 'Kurduğum şeyler. Ne işe yarıyorlar, şu an ne durumdalar.',
   } as Record<Locale, string>,
 };
 
@@ -179,7 +179,7 @@ export const DOMAINS = {
   name:  { en: 'Domains', tr: 'Domain' } as Record<Locale, string>,
   blurb: {
     en: 'One domain at a time, written in chapters. The outline is public from day one — including what is not written yet.',
-    tr: 'Tek bir alan, bölüm bölüm. İçindekiler ilk günden açık — yazılmamış bölümler dahil.',
+    tr: 'Tek bir alanı bölüm bölüm yazıyorum. İçindekiler ilk günden açık, daha yazmadıklarım dahil.',
   } as Record<Locale, string>,
   readAll: { en: 'read', tr: 'oku' },
 };
@@ -414,8 +414,8 @@ export const RADAR = {
   path: 'radar',
   name:  { en: 'Radar', tr: 'Radar' } as Record<Locale, string>,
   blurb: {
-    en: 'A daily briefing written by an agent, not by me. Every claim is machine-checked before it publishes.',
-    tr: 'Günlük bülten — bir ajan yazıyor, ben yazmıyorum. Her iddia yayından önce makineyle doğrulanıyor.',
+    en: 'A daily briefing written by an agent, not by me. I do not edit it either — what it writes is what you read.',
+    tr: 'Günlük bülten. Bir ajan yazıyor, ben yazmıyorum — düzeltmiyorum da. Ne yazdıysa onu okuyorsun.',
   } as Record<Locale, string>,
 };
 
@@ -439,23 +439,23 @@ export const HUB = {
   name:  { en: 'The Workbench', tr: 'Bahçe' } as Record<Locale, string>,
   blurb: {
     en: 'A workbench of half-built ideas, finished arguments, and notes to myself — kept in the open.',
-    tr: 'Yarım kalmış fikirler, bitmiş argümanlar ve kendime notlar — açıkta büyüyen bir bahçe.',
+    tr: 'Yarım kalmış fikirler, bitirdiğim argümanlar, kendime notlar. Hepsi açıkta duruyor, düzelte düzelte büyüyor.',
   } as Record<Locale, string>,
 };
 
 /** Anasayfa hero'su. Maggie'nin kalıbı: kalın isim + cümlenin devamı. */
 export const HERO: Record<Locale, { name: string; rest: string; role: string; now: string }> = {
   en: {
-    name: 'Cemal',
-    rest: ' writes about building software with agents, architecture, and scale.',
+    name: 'Cemal Önder',
+    rest: '. I build software with agents, and this is where I work out what I think about it.',
     role: 'Solution architect and software engineer',
-    now: 'Building end to end with agents, and something of my own',
+    now: 'Working end to end with agents, and building something of my own',
   },
   tr: {
-    name: 'Cemal',
-    rest: ' ajanlarla yazılım geliştirmeyi, mimariyi ve ölçeği yazıyor.',
+    name: 'Cemal Önder',
+    rest: '. Ajanlarla yazılım geliştiriyorum, burası da onu anlamaya çalıştığım yer.',
     role: 'Çözüm mimarı ve yazılım mühendisi',
-    now: 'Uçtan uca ajanlarla geliştiriyor, bir yandan da kendi işini kuruyor',
+    now: 'Ajanlarla uçtan uca çalışıyorum, bir yandan kendi işimi kuruyorum',
   },
 };
 

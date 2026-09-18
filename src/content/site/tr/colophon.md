@@ -4,8 +4,9 @@ description: Bu site nasıl kuruldu ve neden böyle kuruldu.
 updated: 2026-09-15
 ---
 
-Bu site kendi tezinin küçük bir savunması: repoda düz dosya olarak duran içerik,
-bir ajanın üzerinde çalışabileceği içeriktir.
+Bu siteyi kurarken tek bir şeyi denedim: içerik repoda düz dosya olarak dursun
+ki bir ajan üzerinde gerçekten çalışabilsin. Aşağıdaki kararların hepsi bunun
+sonucu.
 
 ## Yığın
 

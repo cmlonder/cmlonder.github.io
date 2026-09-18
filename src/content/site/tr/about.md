@@ -4,9 +4,9 @@ description: 'Kim olduğum ve bu sitenin neden var olduğu.'
 updated: 2026-09-15
 ---
 
-Çözüm mimarı ve yazılım mühendisiyim. Zamanımın çoğunu büyüdüğünde de çalışmak
-zorunda olan sistemlere ve bunları ajanlarla birlikte kurmanın pratik sorusuna
-ayırıyorum.
+Çözüm mimarı ve yazılım mühendisiyim. Zamanımın çoğu büyüdüğünde de ayakta
+kalması gereken sistemlere gidiyor. Bir de bunları ajanlarla birlikte kurmanın
+pratiğine — teoride değil, gerçekten nasıl yürüdüğüne.
 
 ## Bu site neden var
 

@@ -4,8 +4,8 @@ description: Gerçekten içinde çalıştığım araçlar ve ajan kurulumunun na
 updated: 2026-09-15
 ---
 
-Bir [/uses](https://uses.tech) sayfası. Donanım kısmı sıkıcı olan — asıl çalışma
-şeklimi değiştiren, altındaki ajan kurulumu.
+Bir [/uses](https://uses.tech) sayfası. Donanım kısmı sıkıcı. Çalışma şeklimi
+değiştiren şey altındaki ajan kurulumu, o yüzden asıl oraya yer ayırdım.
 
 ## Makine
 
@@ -29,7 +29,7 @@ ama işin geçtiği yer artık orası değil.
   Bu sitede üç tane: link ekleme, yazı ekleme, kitap ekleme. Her biri kısa bir
   markdown: *ne zaman* geçerli ve *iyi olan neye benzer*. Script değil.
 - **Bir doğrulama komutu** — burada `pnpm verify`. Bir ajan kendi işini kontrol
-  edemiyorsa kontrol sensin, ve sen ölçeklenmezsin.
+  edemiyorsa kontrol eden sen oluyorsun — sen de ölçeklenmiyorsun.
 
 Yöntemin tamamı bu. Dosyaların kendisi [skills](/skills) sayfasında.
 
