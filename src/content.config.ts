@@ -82,6 +82,38 @@ const domains = defineCollection({
   }),
 });
 
+/**
+ * Sunum. NotebookLM gibi araçlardan çıkan slayt destesi.
+ *
+ * Görseller KONVANSİYONLA bulunuyor: src/assets/decks/<slug>/NN.webp —
+ * `pnpm deck` üretiyor, frontmatter'a yol yazılmıyor. Slayt sayısı ile
+ * görsel sayısı tutmazsa Deck bileşeni build'i durduruyor.
+ *
+ * `transcript` alanı kimin yazdığını söylüyor: NotebookLM sunumlarında
+ * metin katmanı yok, her sayfa tek görsel. Başlık ve notlar slayta
+ * BAKILARAK yazılıyor. Ajan yazdıysa bu sayfada öyle görünür — radar'daki
+ * kuralın aynısı: makinenin kendi beyanına güvenilmez, kaynağı gösterilir.
+ */
+const decks = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/decks' }),
+  schema: z.object({
+    title: z.string(),
+    /** Üreten araç: "NotebookLM", "Keynote", "elle". */
+    source: z.string(),
+    /** Orijinal dosya, public/ altında. */
+    pdf: z.string().optional(),
+    pdfSize: z.string().optional(),
+    transcript: z.enum(['none', 'agent', 'human']).default('none'),
+    slides: z.array(z.object({
+      n: z.number().int().positive(),
+      /** Slaytın başlığı — görselin alt metni olur, boş bırakılmaz. */
+      title: z.string(),
+      /** Slayttaki "Sunucu Notları" bloğu. */
+      notes: z.string().default(''),
+    })).min(1),
+  }),
+});
+
 const chapters = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/chapters' }),
   schema: z.object({
@@ -93,6 +125,18 @@ const chapters = defineCollection({
     /** Başka bir domaindeki kardeş bölüme çapraz gönderme. */
     crossRef: z.object({ domain: z.string(), slug: z.string(), why: z.string() }).optional(),
     topics: z.array(z.enum(TOPICS)).default([]),
+    /** Bağlı sunum: src/content/decks/<dil>/<slug>.md */
+    deck: z.string().optional(),
+    /**
+     * Metin makineden geldiyse kaynağı. Radar'la aynı gerekçe: ajanın
+     * yazdığı metin kardeş bir bölüm gibi sessizce durmaz, nereden
+     * geldiği yazının başında yazar.
+     */
+    origin: z.object({
+      tool: z.string(),
+      kind: z.string(),
+      note: z.string().optional(),
+    }).optional(),
     placeholder: z.boolean().default(false),
   }),
 });
@@ -227,6 +271,7 @@ export const collections = {
   projects,
   domains,
   chapters,
+  decks,
   library,
   films,
   games,

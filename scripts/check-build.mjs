@@ -27,6 +27,7 @@ const known = new Set([
 
 let broken = 0;
 let missingImg = 0;
+let altsizSlayt = 0;
 const headingProblems = [];
 
 for (const f of htmls) {
@@ -55,6 +56,21 @@ for (const f of htmls) {
     }
   }
 
+  /*
+   * Slayt görselinin alt metni. Sunum PDF'lerinde metin katmanı yok —
+   * her sayfa tek görsel. Transcript doldurulmazsa slayt sayfada sessizce
+   * "boş" durur: ekran okuyucu okumaz, pagefind indekslemez. Görsel var
+   * diye build yeşil geçtiği için burada yakalanmalı.
+   */
+  for (const [fig] of html.matchAll(/<figure[^>]+data-n="[^"]*"[^>]*>[\s\S]*?<\/figure>/g)) {
+    const alt = /<img[^>]+alt="([^"]*)"/.exec(fig)?.[1] ?? '';
+    // "Slayt 4: " / "Slide 4: " kalıbından sonrası boşsa transcript yok.
+    if (!alt.replace(/^\s*\S+\s*\d+\s*:?\s*/, '').trim()) {
+      console.error(`ALTSIZ SLAYT  ${from}`);
+      altsizSlayt++;
+    }
+  }
+
   const levels = [...html.matchAll(/<h([1-6])[\s>]/g)].map((m) => +m[1]);
   for (let i = 1; i < levels.length; i++) {
     if (levels[i] - levels[i - 1] > 1) {
@@ -72,11 +88,12 @@ const placeholders = files
 console.log(`\n${htmls.length} sayfa tarandı`);
 console.log(`kırık link:        ${broken}`);
 console.log(`eksik görsel:      ${missingImg}`);
+console.log(`altsız slayt:      ${altsizSlayt}`);
 console.log(`başlık atlaması:   ${headingProblems.length}`);
 for (const h of headingProblems.slice(0, 10)) console.error(`  ${h}`);
 if (placeholders) console.log(`yer tutucu içerik: ${placeholders} (bilgi amaçlı)`);
 
-if (broken || missingImg || headingProblems.length) {
+if (broken || missingImg || altsizSlayt || headingProblems.length) {
   console.error('\nBuild doğrulaması başarısız.');
   process.exit(1);
 }

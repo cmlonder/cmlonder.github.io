@@ -4,6 +4,10 @@ thesis: "Havacılık yazılımı, kırk yıllık bir veri modelinin üzerine kur
 blurb: "Rezervasyon, envanter ve operasyon. Neden hiçbiri göründüğü kadar basit değil."
 order: 1
 outline:
+  - slug: mail-contracts-to-sabre
+    title: "Posta sözleşmesinden SABRE'ye"
+    promise: "Envanterle yolcu kaydı neden ayrı doğdu ve o ayrılık neden hâlâ peşimizi bırakmıyor."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

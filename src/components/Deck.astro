@@ -1,0 +1,133 @@
+---
+/**
+ * Sunum. Bölümün sonunda tam deste, gövdenin içinde <x-slides> ile alıntı.
+ *
+ * Görseller KONVANSİYONLA: src/assets/decks/<slug>/NN.webp — `pnpm deck`
+ * üretiyor. Slayt sayısıyla görsel sayısı tutmazsa build burada durur;
+ * yarım deste yayınlamaktansa hata vermeyi tercih ediyoruz.
+ *
+ * Tam deste HTML olarak sunucuda basılıyor. Gövdedeki <x-slides> bunun
+ * içinden figürleri KOPYALIYOR — ayrıca veri taşımıyoruz, JS kapalıyken
+ * de bütün slaytlar ve notlar sayfada duruyor.
+ */
+import { Image } from 'astro:assets';
+import { DECK_UI, ORIGIN_UI, type Locale } from '../config';
+
+const gorseller = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/decks/*/*.webp', { eager: true });
+
+interface Props { deck: any; lang: Locale }
+const { deck, lang } = Astro.props as Props;
+const t = DECK_UI[lang];
+const o = ORIGIN_UI[lang];
+const slug = deck.id.split('/').pop()!;
+
+const slaytlar = deck.data.slides.map((s: any) => {
+  const n = String(s.n).padStart(2, '0');
+  const yol = `/src/assets/decks/${slug}/${n}.webp`;
+  if (!gorseller[yol]) {
+    throw new Error(`Sunum görseli yok: ${yol} — 'pnpm deck ${slug} <pdf>' çalıştırıldı mı?`);
+  }
+  return { ...s, img: gorseller[yol].default };
+});
+
+const kaynak = deck.data.transcript === 'agent' ? o.transcriptAgent
+  : deck.data.transcript === 'human' ? o.transcriptHuman : '';
+---
+
+<section class="deck" id={`deck-${slug}`} aria-labelledby={`deck-${slug}-h`}>
+  <div class="dhead">
+    <h2 id={`deck-${slug}-h`}>{t.heading}</h2>
+    <p class="dmeta">
+      <span>{deck.data.title}</span>
+      {deck.data.pdf && (
+        <a href={deck.data.pdf} download>{t.download}{deck.data.pdfSize && ` · ${deck.data.pdfSize}`}</a>
+      )}
+    </p>
+    {kaynak && <p class="src">{kaynak}</p>}
+  </div>
+
+  <ol class="strip" tabindex="0" role="group" aria-label={deck.data.title}>
+    {slaytlar.map((s: any) => (
+      <li>
+        <figure data-n={s.n}>
+          <Image src={s.img} alt={`${t.slide} ${s.n}: ${s.title}`}
+                 widths={[700, 1400]} sizes="(max-width: 46rem) 86vw, 42rem" loading="lazy" />
+          <figcaption><b>{s.n}</b> {s.title}</figcaption>
+        </figure>
+      </li>
+    ))}
+  </ol>
+
+  <details class="notes">
+    <summary>{t.notes}</summary>
+    <ol>
+      {slaytlar.map((s: any) => (
+        <li><b>{s.title}</b>{s.notes && <span> — {s.notes}</span>}</li>
+      ))}
+    </ol>
+  </details>
+</section>
+
+<style>
+  .deck { margin-block-start: var(--s-2xl); padding-block-start: var(--s-l);
+          border-block-start: 1px solid var(--c-border); }
+  .dhead h2 { font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+              font-weight: 400; font-size: var(--t-md); margin: 0; }
+  .dmeta { display: flex; flex-wrap: wrap; gap: var(--s-2xs) var(--s-s);
+           margin-block-start: var(--s-3xs); font-family: var(--f-sans);
+           font-size: var(--t-xs); color: var(--c-muted); }
+  .dmeta a { color: var(--c-accent); }
+  /* Kaynak beyanı: radar'daki doğrulama kutusuyla aynı görev. */
+  .src { margin-block-start: var(--s-s); padding: var(--s-s);
+         border-inline-start: 2px solid var(--c-border); background: var(--c-tinted);
+         font-family: var(--f-sans); font-size: var(--t-xs);
+         color: var(--c-muted-on-tint);
+         line-height: 1.5; text-wrap: pretty; }
+
+  .strip {
+    list-style: none; margin-block-start: var(--s-m); padding: 0 0 var(--s-2xs);
+    display: grid; grid-auto-flow: column; grid-auto-columns: min(86%, 42rem);
+    gap: var(--s-m); overflow-x: auto; overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory; scrollbar-width: thin;
+  }
+  .strip > li { scroll-snap-align: start; }
+  .strip:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; }
+</style>
+
+<!-- Figür stilleri: hem tam destede hem <x-slides> kopyalarında geçerli. -->
+<style is:global>
+  /* Gövde içindeki alıntı. JS gelmeden düz paragraf, geldikten sonra ızgara. */
+  x-slides { display: block; margin-block: var(--s-l); }
+  x-slides.exslides {
+    display: grid; gap: var(--s-s);
+    grid-template-columns: repeat(var(--n, 1), minmax(0, 1fr));
+  }
+  x-slides .xcap {
+    grid-column: 1 / -1; margin: 0;
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted); line-height: 1.5;
+  }
+  @media (max-width: 46rem) {
+    x-slides.exslides { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .deck figure, .exslides figure { margin: 0; }
+  .deck figure img, .exslides figure img {
+    inline-size: 100%; block-size: auto; display: block;
+    border: 1px solid var(--c-border); border-radius: var(--radius-sm);
+  }
+  .deck figcaption, .exslides figcaption {
+    margin-block-start: var(--s-3xs); font-family: var(--f-sans);
+    font-size: var(--t-xs); color: var(--c-muted); line-height: 1.4;
+  }
+  .deck figcaption b, .exslides figcaption b {
+    font-variant-numeric: tabular-nums; color: var(--c-accent); font-weight: 400;
+  }
+  .deck .notes { margin-block-start: var(--s-m); font-family: var(--f-sans);
+                 font-size: var(--t-xs); color: var(--c-muted); }
+  .deck .notes summary { cursor: pointer; color: var(--c-accent); }
+  .deck .notes ol { margin-block-start: var(--s-s); padding-inline-start: 1.4em;
+                    display: grid; gap: var(--s-2xs); line-height: 1.55; }
+  .deck .notes b { color: var(--c-text); font-weight: 600; }
+</style>

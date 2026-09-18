@@ -176,6 +176,45 @@ export const PROJECT_UI: Record<Locale, Record<string, string>> = {
         event: 'Hackathon', badge: 'Hackathon' },
 };
 
+/** Sunum bileşeni metinleri. Sayfa dosyaları tek dilli — ölü dal olmasın. */
+export const DECK_UI: Record<Locale, Record<string, string>> = {
+  en: {
+    heading: 'Slides',
+    slide: 'Slide',
+    notes: 'Speaker notes',
+    download: 'Original PDF',
+    excerpt: 'from the deck',
+    full: 'the full deck is at the end of this chapter',
+  },
+  tr: {
+    heading: 'Sunum',
+    slide: 'Slayt',
+    notes: 'Sunucu notları',
+    download: 'Orijinal PDF',
+    excerpt: 'sunumdan',
+    full: 'sunumun tamamı bölümün sonunda',
+  },
+};
+
+/**
+ * Makine kaynaklı metnin künyesi. Cümle kalıbı: araç + ne olduğu + neyin
+ * doğrulanmadığı. "Güven bana" demiyor, nereye bakılacağını söylüyor.
+ */
+export const ORIGIN_UI: Record<Locale, Record<string, string>> = {
+  en: {
+    chapter: 'Written from a {tool} {kind}. I edited it; the argument is mine.',
+    transcriptAgent:
+      'The slides carry no text layer — every page is one image. These titles and notes were read off the slides by an agent and are not verified.',
+    transcriptHuman: 'Slide titles and notes were transcribed by hand.',
+  },
+  tr: {
+    chapter: '{tool} {kind} üzerinden yazıldı. Düzenleyen benim; argüman bana ait.',
+    transcriptAgent:
+      'Sunumda metin katmanı yok — her sayfa tek bir görsel. Buradaki başlık ve notlar slaytlara bakılarak bir ajan tarafından çıkarıldı, doğrulanmadı.',
+    transcriptHuman: 'Slayt başlıkları ve notları elle yazıldı.',
+  },
+};
+
 export const DOMAINS = {
   path: 'domains',
   name:  { en: 'Domains', tr: 'Domain' } as Record<Locale, string>,

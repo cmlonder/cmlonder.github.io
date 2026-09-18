@@ -15,7 +15,8 @@
     "verify": "astro build && astro check && node scripts/check-build.mjs",
     "radar": "node scripts/check-radar.mjs",
     "covers": "node scripts/fetch-covers.mjs",
-    "measure": "node scripts/measure-legacy.mjs"
+    "measure": "node scripts/measure-legacy.mjs",
+    "deck": "node scripts/ingest-deck.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

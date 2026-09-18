@@ -4,6 +4,10 @@ thesis: "Airline software is a real-time negotiation system built on top of a fo
 blurb: "Reservation, inventory, operations. Why none of them is as simple as it looks."
 order: 1
 outline:
+  - slug: mail-contracts-to-sabre
+    title: "From mail contracts to SABRE"
+    promise: "Why inventory and the passenger record were born apart, and why that split still costs us."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."

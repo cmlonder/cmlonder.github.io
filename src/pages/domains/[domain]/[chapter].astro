@@ -1,8 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
+import Deck from '../../../components/Deck.astro';
 import Outline from '../../../components/Outline.astro';
-import { DOMAINS, DOMAIN_UI, type Locale } from '../../../config';
+import { DOMAINS, DOMAIN_UI, ORIGIN_UI, type Locale } from '../../../config';
 import { localePath, formatDate, getDomains, getChapters } from '../../../lib/content';
 
 export async function getStaticPaths() {
@@ -38,6 +39,18 @@ const dSlug = dm.id.split('/').pop()!;
 const t = DOMAIN_UI[lang];
 const { Content } = await render(entry);
 const capraz = entry.data.crossRef;
+
+// Bağlı sunum aynı dilde aranır; yoksa bölüm sunumsuz basılır.
+const deck = entry.data.deck
+  ? (await getCollection('decks')).find((d) => d.id === `${lang}/${entry.data.deck}`) ?? null
+  : null;
+
+// Makine kaynağı künyesi: araç ve tür yerine konur, gövdeden önce görünür.
+const koken = entry.data.origin
+  ? ORIGIN_UI[lang].chapter
+      .replace('{tool}', entry.data.origin.tool)
+      .replace('{kind}', entry.data.origin.kind)
+  : null;
 ---
 
 <Base title={`${entry.data.title} — ${dm.data.title}`} description={entry.data.summary} lang={lang}>
@@ -59,7 +72,16 @@ const capraz = entry.data.crossRef;
       <p class="standfirst">{entry.data.summary}</p>
       <p class="meta"><time datetime={entry.data.pubDate.toISOString()}>{formatDate(entry.data.pubDate, lang)}</time></p>
 
+      {koken && (
+        <p class="origin">
+          {koken}
+          {entry.data.origin?.note && <span> {entry.data.origin.note}</span>}
+        </p>
+      )}
+
       <div class="prose"><Content /></div>
+
+      {deck && <Deck deck={deck} lang={lang} />}
 
       {capraz && (
         <aside class="cross">
@@ -90,7 +112,19 @@ const capraz = entry.data.crossRef;
   </div>
 </Base>
 
+<script>
+  // Sayfada <x-slides> yoksa da zararsız: element tanımlanır, iş yapmaz.
+  import './../../../scripts/slides';
+</script>
+
 <style>
+  .origin {
+    margin-block-start: var(--s-m); padding: var(--s-s);
+    border-inline-start: 2px solid var(--c-border); background: var(--c-tinted);
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted-on-tint); line-height: 1.5; text-wrap: pretty;
+  }
+
   .book {
     inline-size: min(100% - var(--s-l), calc(15rem + var(--w-narrow) + 6rem));
     margin-inline: auto;
