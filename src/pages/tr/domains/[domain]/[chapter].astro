@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../../../layouts/Base.astro';
-import Deck from '../../../../components/Deck.astro';
 import Outline from '../../../../components/Outline.astro';
 import { DOMAINS, DOMAIN_UI, ORIGIN_UI, type Locale } from '../../../../config';
 import { localePath, formatDate, getDomains, getChapters } from '../../../../lib/content';
@@ -40,11 +39,6 @@ const t = DOMAIN_UI[lang];
 const { Content } = await render(entry);
 const capraz = entry.data.crossRef;
 
-// Bağlı sunum aynı dilde aranır; yoksa bölüm sunumsuz basılır.
-const deck = entry.data.deck
-  ? (await getCollection('decks')).find((d) => d.id === `${lang}/${entry.data.deck}`) ?? null
-  : null;
-
 // Makine kaynağı künyesi: araç ve tür yerine konur, gövdeden önce görünür.
 const koken = entry.data.origin
   ? ORIGIN_UI[lang].chapter
@@ -81,8 +75,6 @@ const koken = entry.data.origin
 
       <div class="prose"><Content /></div>
 
-      {deck && <Deck deck={deck} lang={lang} />}
-
       {capraz && (
         <aside class="cross">
           <p class="lbl">{t.crossRef}</p>
@@ -111,11 +103,6 @@ const koken = entry.data.origin
     </article>
   </div>
 </Base>
-
-<script>
-  // Sayfada <x-slides> yoksa da zararsız: element tanımlanır, iş yapmaz.
-  import './../../../../scripts/slides';
-</script>
 
 <style>
   .origin {

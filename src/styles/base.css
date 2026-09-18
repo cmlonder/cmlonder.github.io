@@ -138,6 +138,39 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
    böylece her açıklayıcı aynı çerçeveyi paylaşıyor. */
 .prose :is(c-replicas) { display: block; margin-block: var(--s-m); }
 
+/*
+ * Sunum slaytı — yazının içinde, anlattığı yerin yanında.
+ * Ayrı bir sunum bölümü yok: 16:9 bir desteyi sayfanın altına yığmak
+ * okunmuyor, slayt anlatının parçası olunca okunuyor.
+ *
+ * Metin sütununu biraz taşıyor: slaytın kendi içindeki yazı, gövde
+ * genişliğinde küçülünce okunmaz oluyor. Taşma sadece geniş ekranda.
+ */
+.slide {
+  --tasma: 0px;
+  margin-block: var(--s-l);
+  margin-inline: calc(var(--tasma) * -1);
+  inline-size: calc(100% + var(--tasma) * 2);
+}
+@media (min-width: 62rem) { .slide { --tasma: 3.5rem; } }
+
+.slide img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  background: var(--c-surface);
+}
+.slide figcaption {
+  margin-block-start: var(--s-2xs);
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  color: var(--c-muted);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
 .ex {
   margin: 0;
   border: 1px solid var(--c-border);

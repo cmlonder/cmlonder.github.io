@@ -272,6 +272,35 @@ bunu blok saymaz ve `<p>` içine sarar.
 Örnek: [`replicas.ts`](./src/scripts/explainers/replicas.ts) ve onu kullanan
 `src/content/essays/en/watch-replicas-stop-helping.md`.
 
+## Sunum slaytları
+
+NotebookLM gibi araçlardan çıkan sunumlar **ayrı bir sayfa değil**: slaytlar
+bölümün içine, anlattıkları yerin yanına giriyor. Sayfanın altına yığılmış bir
+deste okunmuyor; anlatının parçası olan slayt okunuyor.
+
+```bash
+pnpm deck <slug> <pdf>     # public/decks/<slug>/ -> NN.webp, NN@800.webp, slides.json
+```
+
+Yazıda tek satır:
+
+```markdown
+![Slaytın ne gösterdiği](/decks/crs-evolution/04.webp "Altına düşecek cümle.")
+```
+
+`plugins/remark-slides.mjs` bunu `<figure class="slide">` + `srcset` +
+`width`/`height` + `<figcaption>` haline getiriyor. **Elle `<figure>` yazma.**
+
+İki şey build'i durdurur: alt metni boş slayt, ve `slides.json`'da olmayan
+slayt numarası. Alt metni zorunlu çünkü slaytın içindeki her şey piksel —
+metin katmanı yok, ekran okuyucu ve pagefind yalnızca alt metnini görüyor.
+
+**PDF repoya konmuyor**, indirme bağlantısı verilmiyor. 10 slayt WebP olarak
+1.6 MB; aynı PDF 10.9 MB.
+
+Bölümü sıfırdan kurmak için `new-chapter` skill'i var: domain, başlık, PDF ve
+brifing verildiğinde slaytları üretip yazıya yerleştiriyor.
+
 ## Yorumlar
 
 giscus (GitHub Discussions). `src/config.ts` içindeki `COMMENTS.enabled`
@@ -309,6 +338,14 @@ sunma.** `signals` içindeki link ve kaynak bilgileri gerçek, yorum kısmı de�
 - Kod yorumları ve commit mesajları Türkçe. Site içeriği İngilizce veya Türkçe.
 
 ## Araç zinciri
+
+`@astrojs/markdown-satteri` **doğrudan bağımlılık ve astro ile aynı sürümde
+kalmalı.** Astro 7'de varsayılan markdown işleyicisi Sätteri; `markdown.processor`
+ile eklenti vermek için paketi kendimiz import ediyoruz (astro re-export
+etmiyor). Klasik `remarkPlugins` kullanmak `@astrojs/markdown-remark` kurup
+bütün siteyi eski unified boru hattına almak demek — tek bir slayt eklentisi
+için o bedel ödenmiyor. Astro'yu yükseltirken bu paketin sürümünü de eşle.
+
 
 `packageManager` alanı pnpm sürümünü sabitler — CI ve local aynı sürümü
 kullanır. pnpm 10'a geçerken dikkat: build script onayı (`esbuild`, `sharp`)
