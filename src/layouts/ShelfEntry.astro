@@ -32,8 +32,10 @@ const kunye = [
   { k: meta.creator[lang], v: yapan },
   d.year && { k: lang === 'tr' ? 'Yıl' : 'Year', v: String(d.year) },
   d.pages && { k: lang === 'tr' ? 'Sayfa' : 'Pages', v: String(d.pages) },
-  d.runtime && { k: lang === 'tr' ? 'Süre' : 'Runtime', v: `${d.runtime} dk` },
-  d.hours && { k: lang === 'tr' ? 'Oynadığım' : 'Played', v: `${d.hours} saat` },
+  d.runtime && { k: lang === 'tr' ? 'Süre' : 'Runtime',
+                 v: `${d.runtime} ${lang === 'tr' ? 'dk' : 'min'}` },
+  d.hours && { k: lang === 'tr' ? 'Oynadığım' : 'Played',
+               v: `${d.hours} ${lang === 'tr' ? 'saat' : 'hours'}` },
   d.platform && { k: lang === 'tr' ? 'Platform' : 'Platform', v: d.platform },
 ].filter(Boolean) as { k: string; v: string }[];
 
