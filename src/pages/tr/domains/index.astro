@@ -2,13 +2,13 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import { DOMAINS, DOMAIN_UI, type Locale } from '../../../config';
-import { localePath } from '../../../lib/content';
+import { localePath, getDomains, getChapters } from '../../../lib/content';
 
 const lang: Locale = 'tr';
 const domains = (await getCollection('domains'))
   .filter((e) => e.id.startsWith(`${lang}/`) || !e.id.includes('/'))
   .sort((a, b) => a.data.order - b.data.order);
-const chapters = await getCollection('chapters');
+const chapters = await getChapters('tr');
 
 const satirlar = domains.map((dm) => {
   const slug = dm.id.split('/').pop()!;

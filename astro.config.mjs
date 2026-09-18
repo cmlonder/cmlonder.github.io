@@ -29,6 +29,42 @@ const LEGACY_SLUGS = {
     'how-one-feature-from-a-failed-startup-can-become-a-billion-dollar-idea',
 };
 
+/**
+ * Domain ve bölüm slug'ları 2026-09-18'de Türkçeden İngilizceye çevrildi.
+ *
+ * Sebep: site kuralı URL parçalarının İngilizce ve ASCII olmasını istiyor
+ * (yazılarda zaten öyleydi) ve iki dilli bir sitede İngilizce okuyucuya
+ * /domains/havacilik/stok-bir-sayi-degil göstermek tutarsızdı. Ayrıca
+ * `mürettebat-ciozelgeleme` slug'ında ASCII olmayan bir harf vardı.
+ *
+ * Eskiler canlıda yayındaydı; bunlar onları yeni adrese taşıyor.
+ */
+const DOMAIN_SLUGS = {
+  havacilik: 'aviation',
+  eticaret: 'ecommerce',
+};
+const CHAPTER_SLUGS = {
+  'havacilik/pnr-bir-kayit-degil':        'aviation/pnr-is-a-contract',
+  'havacilik/overbooking-bir-hata-degil': 'aviation/overbooking-is-a-model',
+  'eticaret/stok-bir-sayi-degil':         'ecommerce/stock-is-a-reservation',
+  'eticaret/sepet-bir-tablo-degil':       'ecommerce/cart-is-a-time-window',
+};
+/* Proje slug'ları da aynı sebeple İngilizceye çevrildi. */
+const PROJECT_SLUGS = {
+  'radar-boru-hatti': 'radar-pipeline',
+  'spark-prompt-sozlesmesi': 'spark-prompt-contract',
+};
+
+/* Her ikisi de iki dilde yayındaydı: /domains/... ve /tr/domains/... */
+const domainYonlendirmeleri = Object.fromEntries(
+  ['', '/tr'].flatMap((on) => [
+    ...Object.entries(DOMAIN_SLUGS).map(([e, y]) => [`${on}/domains/${e}`, `${on}/domains/${y}`]),
+    ...Object.entries(CHAPTER_SLUGS).map(([e, y]) => [`${on}/domains/${e}`, `${on}/domains/${y}`]),
+    ...Object.entries(DOMAIN_SLUGS).map(([e, y]) => [`${on}/domains/${e}/read`, `${on}/domains/${y}/read`]),
+    ...Object.entries(PROJECT_SLUGS).map(([e, y]) => [`${on}/projects/${e}`, `${on}/projects/${y}`]),
+  ])
+);
+
 // https://astro.build/config
 export default defineConfig({
   // Sitenin GERÇEKTEN yayınlandığı adres. Canonical, sitemap, llms.txt ve
@@ -37,11 +73,14 @@ export default defineConfig({
   // SITE.url'i 'https://cmlonder.com' yap, public/CNAME ekle.
   site: SITE_URL,
 
-  redirects: IS_CUTOVER
-    ? Object.fromEntries(
-        Object.entries(LEGACY_SLUGS).map(([from, to]) => [`/${from}`, `/essays/${to}`])
-      )
-    : {},
+  redirects: {
+    ...domainYonlendirmeleri,
+    ...(IS_CUTOVER
+      ? Object.fromEntries(
+          Object.entries(LEGACY_SLUGS).map(([from, to]) => [`/${from}`, `/essays/${to}`])
+        )
+      : {}),
+  },
 
   integrations: [
     // Build sonrası dist/ üzerinden statik arama indeksi üretir. Sunucu yok.

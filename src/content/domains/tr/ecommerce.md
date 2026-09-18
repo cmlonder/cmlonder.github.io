@@ -4,35 +4,35 @@ thesis: "E-ticaret yazılımı, stoğun aslında bir söz olduğunu kabul etmeyi
 blurb: "Stok, sepet, sipariş. Üçü de göründüğünden daha geçici."
 order: 2
 outline:
-  - slug: stok-bir-sayi-degil
+  - slug: stock-is-a-reservation
     title: "Stok bir sayı değil, bir rezervasyon"
     promise: "Sayaç azaltmakla söz vermek arasındaki fark, ve oversell'in kaynağı."
     part: "Envanter"
-  - slug: sepet-bir-tablo-degil
+  - slug: cart-is-a-time-window
     title: "Sepet bir tablo değil, bir zaman penceresi"
     promise: "Fiyat ne zaman donar? Sepete eklerken mi, ödemede mi? Yanlış cevabın maliyeti."
     part: "Sipariş"
-  - slug: siparis-durum-makinesi
+  - slug: order-state-machine
     title: "Sipariş bir durum makinesi, ama kimin?"
     promise: "Ödeme, depo ve kargo aynı siparişe farklı durumlar atıyor. Tek doğru yok."
     part: "Sipariş"
-  - slug: kampanya-degerlendirme
+  - slug: promotion-engine
     title: "Kampanya motoru neden her zaman yavaş"
     promise: "Kural sayısı arttıkça kombinatoryal patlama ve önbelleğin neden işe yaramadığı."
     part: "Fiyatlama"
-  - slug: iade-tersine-akis
+  - slug: returns-are-a-new-flow
     title: "İade tersine akış değil, yeni bir akış"
     promise: "Siparişi geri sarmaya çalışan sistemlerin neden muhasebeyi bozduğu."
     part: "Sipariş"
-  - slug: arama-alaka
+  - slug: search-relevance-or-revenue
     title: "Arama: alaka mı, ciro mu"
     promise: "Alakalı sonuç ile kârlı sonuç aynı şey değil, ve bunu kim seçiyor."
     part: "Keşif"
-  - slug: pazaryeri-coklu-satici
+  - slug: marketplace-many-truths
     title: "Pazaryeri: aynı ürün, on farklı gerçek"
     promise: "Çoklu satıcıda ürün kimliği, fiyat ve stoğun neden ayrışması gerektiği."
     part: "Pazaryeri"
-  - slug: kara-cuma-yuk
+  - slug: black-friday-constraint
     title: "Kara Cuma bir yük testi değil, bir tasarım kısıtı"
     promise: "Yılın bir gününe göre tasarlamanın diğer 364 güne maliyeti."
     part: "Ölçek"

@@ -12,13 +12,13 @@
  */
 import { getCollection } from 'astro:content';
 import { DOMAINS, type Locale } from '../config';
-import { localePath } from '../lib/content';
+import { localePath, getDomains, getChapters } from '../lib/content';
 
 interface Props { lang: Locale; yazi: number }
 const { lang, yazi } = Astro.props as Props;
 
-const domains = (await getCollection('domains')).filter((d) => d.id.startsWith('tr/'));
-const chapters = await getCollection('chapters');
+const domains = await getDomains(lang);
+const chapters = await getChapters(lang);
 const planlanan = domains.reduce((n, d) => n + d.data.outline.length, 0);
 const yazilan = chapters.length;
 

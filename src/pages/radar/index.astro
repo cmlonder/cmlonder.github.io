@@ -4,6 +4,8 @@ import Base from '../../layouts/Base.astro';
 import { RADAR, RADAR_SERIES, type Locale } from '../../config';
 import { formatDate } from '../../lib/content';
 
+/* Radar içeriğini Spark Türkçe üretiyor, o yüzden bu sayfa İngilizce kökte
+   dursa da Türkçe. Menüdeki tanıtım bunu İngilizce okura söylüyor. */
 const lang: Locale = 'tr';
 
 const all = (await getCollection('radar'))
@@ -15,12 +17,12 @@ const series = Object.entries(RADAR_SERIES)
   .filter((s) => s.entries.length > 0);
 ---
 
-<Base title={`${RADAR.name.tr} — Cemal Önder`} description={RADAR.blurb.tr} lang={lang}
+<Base title={`${RADAR.name[lang]} — Cemal Önder`} description={RADAR.blurb[lang]} lang={lang}
       ogImage="/og/radar.png">
   <div class="wrap">
     <header class="head">
       <p class="kicker"><span class="count">{all.length}</span><a href="/">Ana sayfa</a></p>
-      <h1>{RADAR.name.tr}</h1>
+      <h1>{RADAR.name[lang]}</h1>
       <p class="lead">
           Buradaki bültenleri <strong>Gemini Spark</strong> ile üretiyorum,
           tek tek ben yazmıyorum. Her iddianın kaynağı yazının içinde

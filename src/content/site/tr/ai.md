@@ -67,15 +67,17 @@ Rozetin tek başına yeterli olmadığını biliyorum —
 Okuyucuyu koruyan şey rozet değil, hangi satırın çürük olduğunu görebilmesi.
 Tablo bu yüzden yayınlanıyor.
 
-## Radar ana akışa karışmaz
+## Radar ana beslemede
 
-Radar bültenleri ana beslemede: [`/rss.xml`](/rss.xml).
-Ana [`/rss.xml`](/rss.xml) beslemesine girmiyor — makine üretimi içeriği
-istemeden abone olman mümkün değil.
+Radar bültenleri ana [`/rss.xml`](/rss.xml) beslemesinde, yazılarla birlikte
+akıyor. Bir dönem ayrı besleme tuttum ama iki ayrı adrese abone olmak kimsenin
+işine yaramıyordu. Bültenlerin makine ürünü olduğu besleme kayıtlarında da
+işaretli, yani okuyucun hangi yazıyı kimin yazdığını görmeden okumak zorunda
+kalmıyor.
 
 ## Hata bulursan
 
-Doğrulama kapısından geçmiş ama yine de yanlış bir iddia görürsen
+Yanlış bir iddia görürsen
 [depoda bir issue aç](https://github.com/cmlonder/cmlonder.github.io/issues)
-veya yazının altındaki yorumlara yaz. Kapının kaçırdığı her hata, kapıya
+veya yazının altındaki yorumlara yaz. Ajanın kaçırdığı her hata, prompt'a
 eklenecek bir kural demek.

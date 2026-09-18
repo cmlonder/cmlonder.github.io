@@ -1,84 +1,87 @@
 ---
 title: 'AI usage'
 description: 'Which parts of this site I write, which parts a machine writes, and what happens when it does.'
-updated: 2026-09-16
+updated: 2026-09-18
 ---
 
 Short answer: **The writing is mine. [Radar](/radar) is not.**
 
-> The Radar briefings themselves are in Turkish. This page explains the process
-> in English; the mechanics are identical.
+> The Radar briefings themselves are written in Turkish. This page explains the
+> process in English; the mechanics are identical.
 
-## Hangi bölüm kim tarafından yazılıyor
+## Who writes which part
 
-| Bölüm | Kim yazıyor |
+| Section | Who writes it |
 |---|---|
-| Yazılar, Notlar, Kılavuzlar, Bulduklarım, Kitaplık | Ben |
-| [Radar](/radar) | Bir ajan (Gemini Spark). Ben yazmıyorum. |
+| Essays, Notes, Playbooks, Signals, Library | Me |
+| [Radar](/radar) | An agent (Gemini Spark). Not me. |
 
-Yazılarımı yazarken ajan kullanıyorum — düzeltme, araştırma, kod. Ama cümleler
-ve iddialar benim, sorumluluğu da bende. Radar'da durum kategorik olarak farklı:
-metni ben görmeden makine üretiyor.
+I use agents while writing — for correction, research and code. But the
+sentences and the claims are mine, and so is the responsibility for them. Radar
+is categorically different: the machine produces the text and I do not see it
+first.
 
-## Radar nasıl çalışıyor
+## How Radar works
 
-Günlük bir ajan görevi tek kişilik girişim vakalarını tarıyor ve yayına hazır
-markdown üretiyor — Drive'a `2026-09-16.md` gibi bir dosya bırakıyor. Bir Apps
-Script dosyayı olduğu gibi repoya itiyor, bir GitHub Action frontmatter'ın
-sağlam olduğunu kontrol edip yerine taşıyor ve site yeniden kuruluyor. Arada
-metni okuyan, düzelten, yeniden yazan kimse yok — ne insan ne başka bir model.
+A daily agent task searches for solo-founder cases and produces publish-ready
+markdown, dropping a file like `2026-09-16.md` into Drive. An Apps Script pushes
+that file to the repository unchanged, a GitHub Action checks that the
+frontmatter is well-formed and moves it into place, and the site rebuilds.
+Nobody in between reads, corrects or rewrites the text — no human and no other
+model.
 
-Her iddia yazının içinde numarayla gösteriliyor ve numaranın karşılığı yazının
-altındaki kaynak listesinde, bağlantısıyla duruyor. Rakamları kendin kontrol
-edebilirsin; doğrulama işini sana bırakıyorum, benim adıma yapıldığını iddia
-etmiyorum.
+Every claim is numbered inline, and each number resolves to a linked entry in
+the source list at the foot of the piece. You can check the figures yourself; I
+am leaving the verification to you rather than claiming it was done on my
+behalf.
 
-## Neden ajanın kendi beyanına güvenmiyorum
+## Why I do not trust the agent's own assertions
 
-Ajan başlangıçta kendi "güven derecesi" sütununu dolduruyordu. Bir turda şunu
-yaptığını gördüm: erişemediği bir sayfanın adresini **tahmin etti**, tahminini bir
-Google arama linkine sardı, ve tabloda *"metrik doğrudan profilden çekildi"*
-yazdı. Tahmin ettiği adres 404'tü.
+The agent used to fill in its own "confidence" column. On one round I watched it
+do this: it **guessed** the address of a page it could not reach, wrapped the
+guess in a Google search link, and wrote *"metric pulled directly from the
+profile"* into the table. The address it guessed was a 404.
 
-Ajan URL çekemiyor. Çekemediğinde bunu söylemek yerine doğruladığını iddia
-ediyordu. O yüzden güven sütunu prompt'tan kaldırıldı — ajan artık yalnızca
-iddia ve kaynak veriyor, yorum katmıyor.
+The agent cannot fetch URLs. When it could not, instead of saying so it claimed
+to have verified. So the confidence column came out of the prompt — the agent
+now supplies only claims and sources, with no commentary attached.
 
-Bir dönem her iddianın kaynağını çekip aranan değeri metinde arayan bir script
-çalıştırdım. İşe yaradı: bir gün ajanın gerçek bir satılık ilanını doğru
-aktardığını ama **fiyatı uydurduğunu** yakaladı — ilan sayfada vardı, rakam
-yoktu. Ama iki sorunu vardı. Canlı kaynaklar kayıyor: bir gün `$6,441` yazan
-sayfa ertesi gün `$6,491` yazıyordu, yayınlanmış yazı kendiliğinden
-"doğrulanmamış"a dönüşüyordu. İkincisi, sayfa doğrulama tablolarıyla doluyor,
-okunmuyordu. Şimdilik kaldırdım; kaynakları görünür kılmanın okura daha çok
-yaradığını düşünüyorum.
+For a while I ran a script that fetched the source behind each claim and looked
+for the cited value in the text. It worked: one day it caught the agent
+reporting a real listing correctly but **inventing the price** — the listing was
+on the page, the number was not. But it had two problems. Live sources drift: a
+page saying `$6,441` one day said `$6,491` the next, and a published piece would
+turn itself into "unverified" overnight. And the page filled up with verification
+tables that nobody read. I have removed it for now; I think making the sources
+visible serves the reader better.
 
-## Şeffaflık işaretleri
+## Transparency markers
 
-Her Radar yazısı şunları taşıyor:
+Every Radar piece carries:
 
-- `/radar` sayfasında, serinin tamamı için tek ve net bir beyan: metni ajan
-  üretiyor, ben yazmıyorum
-- Her iddia için numaralı kaynak ve yazının altında tam bağlantı listesi
-- Makine okunur işaretleme: IPTC
+- A single clear statement on the [`/radar`](/radar) page covering the whole
+  series: an agent produces the text, I do not write it
+- A numbered source for every claim, with a full link list at the foot
+- Machine-readable marking: IPTC
   [`trainedAlgorithmicMedia`](http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia)
-  ve `creativeWorkStatus: Machine-generated`
+  and `creativeWorkStatus: Machine-generated`
 
-Rozetin tek başına yeterli olmadığını biliyorum —
-[araştırmalar](https://hai.stanford.edu/policy/labeling-ai-generated-content-may-not-change-its-persuasiveness)
-"AI üretimi" etiketinin içeriğin ikna ediciliğini azaltmadığını gösteriyor.
-Okuyucuyu koruyan şey rozet değil, hangi satırın çürük olduğunu görebilmesi.
-Tablo bu yüzden yayınlanıyor.
+I know the badge alone is not enough —
+[research](https://hai.stanford.edu/policy/labeling-ai-generated-content-may-not-change-its-persuasiveness)
+shows that an "AI-generated" label does not reduce how persuasive the content
+is. What protects the reader is not the badge but being able to see which line
+is rotten. That is why the sources are published.
 
-## Radar ana akışa karışmaz
+## Radar is in the main feed
 
-Radar bulletins are in the main feed: [`/rss.xml`](/rss.xml).
-Ana [`/rss.xml`](/rss.xml) beslemesine girmiyor — makine üretimi içeriği
-istemeden abone olman mümkün değil.
+Radar briefings flow through the main [`/rss.xml`](/rss.xml) feed alongside the
+writing. I kept a separate feed for a while, but subscribing to two addresses
+served nobody. The feed entries mark the briefings as machine-produced, so your
+reader does not have to guess who wrote what.
 
-## Hata bulursan
+## If you find an error
 
-Doğrulama kapısından geçmiş ama yine de yanlış bir iddia görürsen
-[depoda bir issue aç](https://github.com/cmlonder/cmlonder.github.io/issues)
-veya yazının altındaki yorumlara yaz. Kapının kaçırdığı her hata, kapıya
-eklenecek bir kural demek.
+If you see a claim that is wrong,
+[open an issue in the repository](https://github.com/cmlonder/cmlonder.github.io/issues)
+or leave a comment under the piece. Every error the agent gets away with is a
+rule to add to the prompt.

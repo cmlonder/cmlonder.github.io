@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { SITE, HERO, ENTRY_TYPE } from '../config';
-import { getAllEntries, parseId, entryPath } from '../lib/content';
+import { getAllEntries, parseId, entryPath, getDomains, getChapters } from '../lib/content';
 import { getCollection } from 'astro:content';
 
 export async function GET(context: APIContext) {
@@ -9,7 +9,7 @@ export async function GET(context: APIContext) {
   const items = await getAllEntries(lang);
 
   // Domain bölümleri de beslemede: bunlar tam yazı, liste değil.
-  const chapters = (await getCollection('chapters')).map((c) => ({
+  const chapters = (await getChapters(lang)).map((c) => ({
     title: c.data.title,
     description: c.data.summary,
     pubDate: c.data.pubDate,

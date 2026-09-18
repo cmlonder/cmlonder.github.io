@@ -9,16 +9,14 @@
  */
 import { getCollection } from 'astro:content';
 import { DOMAINS, DOMAIN_UI, type Locale } from '../config';
-import { localePath } from '../lib/content';
+import { localePath, getDomains, getChapters } from '../lib/content';
 
 interface Props { lang: Locale }
 const { lang } = Astro.props as Props;
 const t = DOMAIN_UI[lang];
 
-const domains = (await getCollection('domains'))
-  .filter((d) => d.id.startsWith('tr/'))
-  .sort((a, b) => a.data.order - b.data.order);
-const chapters = await getCollection('chapters');
+const domains = await getDomains(lang);
+const chapters = await getChapters(lang);
 
 const satir = domains.map((d) => {
   const slug = d.id.split('/').pop()!;

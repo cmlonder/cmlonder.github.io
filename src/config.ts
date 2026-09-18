@@ -414,7 +414,7 @@ export const RADAR = {
   path: 'radar',
   name:  { en: 'Radar', tr: 'Radar' } as Record<Locale, string>,
   blurb: {
-    en: 'A daily briefing written by an agent, not by me. I do not edit it either — what it writes is what you read.',
+    en: 'A daily briefing written by an agent, not by me, and not edited by me either. Written in Turkish.',
     tr: 'Günlük bülteni bir ajan yazıyor, ben yazmıyorum. Sonradan düzeltmiyorum da; ajan ne yazdıysa onu okuyorsunuz.',
   } as Record<Locale, string>,
 };
@@ -503,7 +503,8 @@ export const PAGE: Record<Locale, {
     skillsLead:
       'These are not examples — they are the files this site actually runs on. ' +
       'The page is generated from .claude/skills/ at build time, so it cannot ' +
-      'drift from the source.',
+      'drift from the source. The files themselves are written in Turkish, ' +
+      'because that is the language I work in.',
     topicsBlurb: 'Everything I write sits under one of six headings. A topic can appear in any format.',
     topicBlurb: (t) => `Everything filed under ${t} — essays, notes, playbooks and signals.`,
     recently: 'Recently',

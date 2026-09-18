@@ -4,7 +4,7 @@ import {
   ENTRY_TYPE, TOPICS, TOPIC_LABELS, HERO, LIBRARY, SHELVES, DOMAINS,
 } from '../config';
 import { getCollection } from 'astro:content';
-import { getEntries, parseId, entryPath, getTopicCounts } from '../lib/content';
+import { getEntries, parseId, entryPath, getTopicCounts, getDomains, getChapters } from '../lib/content';
 
 /**
  * llms.txt — ajanlara sitenin ne olduğunu ve nereye bakacağını anlatır.
@@ -64,8 +64,9 @@ export const GET: APIRoute = async () => {
    * İÇİNDEKİLERİ, yazılmamış bölümler dahil. Neyin var olduğu kadar
    * neyin planlandığı da bilgi.
    */
-  const domains = (await getCollection('domains')).filter((d) => d.id.startsWith('tr/'));
-  const chapters = await getCollection('chapters');
+  /* llms.txt İngilizce indeks (entryPath('en', ...) yukarıda da öyle). */
+  const domains = await getDomains('en');
+  const chapters = await getChapters('en');
   if (domains.length) {
     out.push(`## ${DOMAINS.name.en}`, '', DOMAINS.blurb.en, '');
     for (const dm of domains) {

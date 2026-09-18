@@ -1,12 +1,12 @@
 ---
 title: "Overbooking bir hata değil, bir model"
-domain: "havacilik"
+domain: "aviation"
 summary: "Havayolları koltuktan fazla bilet satıyor ve bu bir yazılım hatası değil, bilinçli bir karar. İlginç olan kararın kendisi değil, sistemin onu nasıl taşıdığı."
 pubDate: 2026-09-13
 topics: ["solution-architecture", "scale-and-performance"]
 crossRef:
-  domain: "eticaret"
-  slug: "stok-bir-sayi-degil"
+  domain: "ecommerce"
+  slug: "stock-is-a-reservation"
   why: "E-ticarette oversell hata sayılıyor, havacılıkta model. Fark tazminatın fiyatlanabilir olmasında."
 placeholder: true
 ---

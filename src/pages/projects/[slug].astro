@@ -6,7 +6,7 @@ import { localePath, formatDate } from '../../lib/content';
 
 export async function getStaticPaths() {
   const all = await getCollection('projects');
-  const liste = all.filter((e) => e.id.startsWith('tr/')).sort((a, b) => a.data.order - b.data.order);
+  const liste = all.filter((e) => e.id.startsWith('en/')).sort((a, b) => a.data.order - b.data.order);
   return liste.map((entry) => ({ params: { slug: entry.id.split('/').pop()! }, props: { entry } }));
 }
 

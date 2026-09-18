@@ -2,11 +2,11 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import { DOMAINS, DOMAIN_UI, type Locale } from '../../../config';
-import { localePath } from '../../../lib/content';
+import { localePath, getDomains, getChapters } from '../../../lib/content';
 
 export async function getStaticPaths() {
-  const domains = (await getCollection('domains')).filter((e) => e.id.startsWith('tr/'));
-  const chapters = await getCollection('chapters');
+  const domains = await getDomains('en');
+  const chapters = await getChapters('en');
 
   return domains.map((dm) => {
     const slug = dm.id.split('/').pop()!;

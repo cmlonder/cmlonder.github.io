@@ -208,3 +208,31 @@ export async function getBacklinks(lang: Locale): Promise<Map<string, Backlink[]
   _backlinks.set(lang, map);
   return map;
 }
+
+/**
+ * Domain ve bölümler dile göre süzülür.
+ *
+ * Bunlar `parseId` kullanamıyor: domain'ler `<dil>/<slug>`, bölümler ise
+ * `<dil>/<domain>/<slug>` şeklinde iki kademeli. Süzme elle yapılıyor.
+ *
+ * Bu yardımcılar var çünkü yokluklarında İngilizce sayfalar `startsWith('tr/')`
+ * yazıp Türkçe içeriği İngilizce kabukta sunuyordu.
+ */
+export async function getDomains(lang: Locale) {
+  return (await getCollection('domains'))
+    .filter((d) => d.id.startsWith(`${lang}/`))
+    .sort((a, b) => a.data.order - b.data.order);
+}
+
+export function domainSlug(id: string): string {
+  return id.split('/').pop()!;
+}
+
+export async function getChapters(lang: Locale, domain?: string) {
+  const all = (await getCollection('chapters')).filter((c) => c.id.startsWith(`${lang}/`));
+  return domain ? all.filter((c) => c.data.domain === domain) : all;
+}
+
+export function chapterSlug(id: string): string {
+  return id.split('/').pop()!;
+}

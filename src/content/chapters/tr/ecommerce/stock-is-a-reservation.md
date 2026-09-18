@@ -1,12 +1,12 @@
 ---
 title: "Stok bir sayı değil, bir rezervasyon"
-domain: "eticaret"
+domain: "ecommerce"
 summary: "Stok sayacını azaltmak ile müşteriye söz vermek aynı şey değil. Oversell'in kaynağı neredeyse her zaman bu iki işlemin karıştırılması."
 pubDate: 2026-09-11
 topics: ["solution-architecture", "scale-and-performance"]
 crossRef:
-  domain: "havacilik"
-  slug: "overbooking-bir-hata-degil"
+  domain: "aviation"
+  slug: "overbooking-is-a-model"
   why: "Havacılık aynı problemi tam tersinden çözüyor: fazla satıp tazminatı fiyatlıyor."
 placeholder: true
 ---
