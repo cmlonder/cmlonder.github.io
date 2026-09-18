@@ -134,8 +134,30 @@ src/content/radar/<seri>/<YYYY-MM-DD>.md
      -> /radar/<seri>/<tarih>
 ```
 
-Yeni seri açmak: `src/config.ts` -> `RADAR_SERIES` içine bir satır, sonra
-`src/content/radar/<seri>/` klasörü. Drive'da aynı adla klasör.
+Yeni seri açmak: `src/config.ts` -> `RADAR_SERIES` içine bir satır. Hepsi bu.
+Drive klasörünü Apps Script ilk bültende kendisi açıyor, `src/content/radar/<seri>/`
+klasörünü de `check-radar.mjs` oluşturuyor.
+
+`RADAR_SERIES` **iki tarafın ortak sözlüğü**: site onu `/radar/series.json`
+olarak yayınlıyor, Drive'daki Apps Script oradan okuyor. Seri listesi
+`.gs` dosyasında yok — kopya tutmuyoruz.
+
+**Spark dosyayı Drive'ın ana dizinine yazıyor**, klasöre değil:
+
+```
+<Seri Adı>-PARSE-YYYY-MM-DD.md      örn. Solo-Kurucu-Bulteni-PARSE-2026-09-18.md
+```
+
+Apps Script addaki seri adını normalleştirip (`Türkçe harf katlanır, harf ve
+rakam dışındaki her şey atılır`) `series.json` ile eşleştiriyor, GitHub'a
+itiyor, sonra Drive'da seri klasörüne `<tarih>.md` olarak taşıyor. Eşleşmeyen
+ad taşınmıyor ve gönderilmiyor — sessizce yanlış klasöre düşmesindense
+kuyrukta kalması iyi. Ana dizindeki diğer dosyalara `-PARSE-` kalıbı
+olmadığı için dokunulmuyor.
+
+Sıra şu yüzden önemli: **önce GitHub, sonra taşıma.** Push patlarsa dosya ana
+dizinde kalıyor ve ertesi gün tekrar deneniyor; bu yüzden ayrıca
+"gönderildi mi" defteri tutulmuyor.
 
 ### Yeni bülten ekleme
 

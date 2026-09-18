@@ -15,6 +15,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse as parseYaml } from 'yaml';
+import { radarSerileri } from './lib/series.mjs';
 
 const IN  = 'inbox/radar';
 const OUT = 'src/content/radar';
@@ -31,10 +32,28 @@ const die = (m) => {
 
 if (!existsSync(IN)) { console.log('kuyruk yok, yapacak bir şey yok.'); process.exit(0); }
 
+/*
+ * Tanınan seriler config.ts'ten geliyor. Bilinmeyen bir seri klasörü
+ * yayına alınırsa dosya src/content/radar altına düşer ama RADAR_SERIES'te
+ * karşılığı olmadığı için ne liste sayfası ne de başlığı olur — build ya
+ * patlar ya da adsız bir sayfa üretir. Kuyrukta bırakıp söylemek daha iyi.
+ */
+const taninan = new Set(radarSerileri().map((s) => s.slug));
+
 let islenen = 0, hatali = 0;
 
 for (const series of readdirSync(IN, { withFileTypes: true }).filter((d) => d.isDirectory())) {
   const dir = join(IN, series.name);
+
+  if (!taninan.has(series.name)) {
+    const adet = readdirSync(dir).filter((f) => f.endsWith('.md')).length;
+    if (adet) {
+      die(`inbox/radar/${series.name}: RADAR_SERIES'te böyle bir seri yok.\n` +
+          `  src/config.ts'e ekle, ya da klasörü düzelt. ${adet} dosya kuyrukta bırakıldı.`);
+      hatali += adet;
+    }
+    continue;
+  }
   for (const name of readdirSync(dir).filter((f) => f.endsWith('.md'))) {
     const src = join(dir, name);
     const raw = readFileSync(src, 'utf8');
