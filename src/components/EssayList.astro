@@ -1,0 +1,102 @@
+---
+/**
+ * Yazılar listesi — uzun okuma vitrini.
+ *
+ * Diğer koleksiyonlardan farkı: öne çıkan yazı en üstte tek başına ve
+ * büyük duruyor, gerisi tipografik bir liste. Bir essay bitmiş bir
+ * argüman; onu diğer üçüyle aynı satırda göstermek ağırlığını
+ * gizliyordu.
+ */
+import { formatDate, entryPath, parseId, readingMinutes } from '../lib/content';
+import type { AnyEntry } from '../lib/content';
+import type { Locale } from '../config';
+
+interface Props { entries: AnyEntry[]; lang: Locale }
+const { entries, lang } = Astro.props as Props;
+
+const one = entries.find((e) => (e.data as any).featured) ?? null;
+const kalan = entries.filter((e) => e !== one);
+const dk = (e: AnyEntry) => `${readingMinutes(e as any)} ${lang === 'tr' ? 'dk' : 'min'}`;
+const yol = (e: AnyEntry) => entryPath(lang, 'essays', parseId(e.id).slug);
+---
+
+{one && (() => { const d = one.data as any; return (
+  <a class="one" href={yol(one)}>
+    <p class="meta">
+      <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+      <span aria-hidden="true">·</span><span>{dk(one)}</span>
+    </p>
+    <h2>{d.title}</h2>
+    <p class="dek">{d.description}</p>
+  </a>
+); })()}
+
+<ol class="liste">
+  {kalan.map((e) => { const d = e.data as any; return (
+    <li>
+      <a href={yol(e)}>
+        <h2>{d.title}</h2>
+        <p class="dek">{d.description}</p>
+        <p class="meta">
+          <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+          <span aria-hidden="true">·</span><span>{dk(e)}</span>
+        </p>
+      </a>
+    </li>
+  ); })}
+</ol>
+
+<style>
+  .meta { font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+          display: flex; gap: .5em; align-items: baseline; }
+
+  /* Öne çıkan: sayfanın tek büyük sesi. */
+  .one {
+    display: block; text-decoration: none;
+    padding: var(--s-l); margin-block-end: var(--s-2xl);
+    border: 1px solid var(--c-border); border-radius: var(--radius-lg);
+    background: var(--c-surface);
+    transition: border-color .2s ease;
+  }
+  .one:hover { border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); }
+  .one h2 {
+    margin-block-start: var(--s-2xs);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-lg); line-height: var(--lh-tight);
+    color: var(--c-text); text-wrap: balance;
+    transition: color .2s ease;
+  }
+  .one:hover h2 { color: var(--c-accent); }
+  .one .dek {
+    margin-block-start: var(--s-2xs);
+    font-family: var(--f-serif); font-size: var(--t-md);
+    color: var(--c-muted); line-height: 1.4; text-wrap: pretty;
+  }
+
+  .liste { list-style: none; margin: 0; padding: 0; }
+  .liste li + li { border-block-start: 1px solid var(--c-border); }
+  .liste a {
+    display: block; text-decoration: none;
+    padding: var(--s-m) 0 var(--s-m) var(--s-s);
+    margin-inline-start: calc(var(--s-s) * -1);
+    border-inline-start: 2px solid transparent;
+    transition: border-color .18s ease;
+  }
+  .liste a:hover { border-inline-start-color: var(--c-accent); }
+  .liste h2 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-md); line-height: var(--lh-snug);
+    color: var(--c-text); transition: color .18s ease;
+  }
+  .liste a:hover h2 { color: var(--c-accent); }
+  .liste .dek {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
+  }
+  .liste .meta { margin-block-start: var(--s-2xs); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .one, .one h2, .liste a, .liste h2 { transition: none; }
+  }
+</style>

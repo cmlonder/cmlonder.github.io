@@ -18,6 +18,8 @@ interface Props {
 
 const { title, blurb, lang, items, altLocale = null, showCollection = false, action = null } = Astro.props;
 const back = PAGE[lang].back;
+// Koleksiyonlar kendi gövdesini veriyor; vermeyenler varsayılan ızgarayı alıyor.
+const kendiGovdesi = Astro.slots.has('default');
 ---
 
 <Base title={`${title} — Cemal Önder`} description={blurb} lang={lang} altLocale={altLocale}>
@@ -34,6 +36,8 @@ const back = PAGE[lang].back;
 
     {items.length === 0 ? (
       <p class="meta empty">{UI[lang].empty}</p>
+    ) : kendiGovdesi ? (
+      <slot />
     ) : (
       <ul class="grid">
         {items.map(({ collection, entry }) => (

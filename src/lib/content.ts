@@ -236,3 +236,15 @@ export async function getChapters(lang: Locale, domain?: string) {
 export function chapterSlug(id: string): string {
   return id.split('/').pop()!;
 }
+
+/**
+ * Okuma süresi — dakika.
+ *
+ * Kelime sayısı gövdenin ham markdown'ından; frontmatter ve kod bloğu
+ * dahil, çünkü ikisi de okunuyor. 200 kelime/dakika ortalama okuma hızı.
+ * 1 dakikanın altına düşmüyor: "0 dk" diye bir okuma yok.
+ */
+export function readingMinutes(entry: { body?: string }): number {
+  const kelime = (entry.body ?? '').trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(kelime / 200));
+}

@@ -1,0 +1,175 @@
+---
+/**
+ * Konu sayfası — bir konu hakkında sitedeki her şey.
+ *
+ * Koleksiyon listelerinden KASITLI olarak farklı: orada tek tip var,
+ * burada dört tip birden. O yüzden düz liste değil, tipe göre bölümler:
+ * okuyucu "bu konuda ne yazmış" değil, "bu konuda NE TÜR şeyler yazmış"
+ * sorusunun cevabını görüyor.
+ *
+ * Üstteki şerit tipleri sayılarıyla gösteriyor ve bölümlere atlıyor.
+ */
+import Base from './Base.astro';
+import TypeMark from '../components/TypeMark.astro';
+import { COLLECTIONS, COLLECTION_LABELS, PAGE, UI,
+         type CollectionName, type Locale } from '../config';
+import { formatDate, entryPath, parseId, localePath } from '../lib/content';
+import type { AnyEntry } from '../lib/content';
+
+interface Props {
+  title: string;
+  blurb: string;
+  lang: Locale;
+  items: { collection: CollectionName; entry: AnyEntry }[];
+  altLocale?: { lang: Locale; href: string } | null;
+}
+const { title, blurb, lang, items, altLocale = null } = Astro.props as Props;
+
+// Tip sırası COLLECTIONS'tan geliyor: olgunluk sırası, alfabe değil.
+const gruplar = COLLECTIONS
+  .map((c) => ({
+    collection: c,
+    label: COLLECTION_LABELS[c][lang],
+    entries: items
+      .filter((i) => i.collection === c)
+      .sort((a, b) => (b.entry.data as any).pubDate - (a.entry.data as any).pubDate),
+  }))
+  .filter((g) => g.entries.length > 0);
+---
+
+<Base title={`${title} — Cemal Önder`} description={blurb} lang={lang} altLocale={altLocale}>
+  <div class="wrap">
+    <header class="head">
+      <p class="kicker">
+        <span class="count">{items.length}</span>
+        <a href={localePath(lang, 'topics')}>{PAGE[lang].back}</a>
+      </p>
+      <h1>{title}</h1>
+      <p class="blurb">{blurb}</p>
+
+      {gruplar.length > 1 && (
+        <nav class="turler" aria-label={title}>
+          {gruplar.map((g) => (
+            <a href={`#tur-${g.collection}`}>
+              <TypeMark collection={g.collection} size={14} />
+              <span>{g.label}</span>
+              <span class="n">{g.entries.length}</span>
+            </a>
+          ))}
+        </nav>
+      )}
+    </header>
+
+    {items.length === 0 ? <p class="meta empty">{UI[lang].empty}</p> : (
+      gruplar.map((g) => (
+        <section class="grup" id={`tur-${g.collection}`}>
+          <h2>
+            <span class="mark"><TypeMark collection={g.collection} size={16} /></span>
+            {g.label}
+            <span class="n">{g.entries.length}</span>
+          </h2>
+
+          <ul>
+            {g.entries.map(({ collection, entry }) => {
+              const d = entry.data as any;
+              const href = entryPath(lang, collection, parseId(entry.id).slug);
+              return (
+                <li>
+                  <a href={href}>
+                    <h3>{d.title}</h3>
+                    <p class="dek">{d.description}</p>
+                    <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    )}
+    <slot name="after" />
+  </div>
+</Base>
+
+<style>
+  .wrap { inline-size: min(100% - var(--s-l), var(--w-narrow)); margin-inline: auto; }
+  .head { margin-block-end: var(--s-2xl); }
+  .kicker {
+    display: flex; align-items: baseline; gap: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark-ink); font-variant-numeric: tabular-nums; }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; line-height: var(--lh-tight);
+  }
+  .blurb {
+    margin-block-start: var(--s-2xs); font-family: var(--f-serif);
+    font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: balance;
+  }
+
+  /* Tip şeridi: sayfanın neyi içerdiğini tek bakışta söylüyor. */
+  .turler { display: flex; flex-wrap: wrap; gap: var(--s-2xs); margin-block-start: var(--s-m); }
+  .turler a {
+    display: inline-flex; align-items: center; gap: .45em;
+    padding: .3em .75em; border-radius: 999px;
+    border: 1px solid var(--c-border);
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted); text-decoration: none;
+    transition: color .18s ease, border-color .18s ease, background-color .18s ease;
+  }
+  .turler a:hover {
+    color: var(--c-accent);
+    border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border));
+    background: var(--c-surface);
+  }
+  .turler .n, .grup h2 .n {
+    font-variant-numeric: tabular-nums; color: var(--c-mark-ink);
+  }
+
+  .grup { margin-block-start: var(--s-2xl); scroll-margin-block-start: var(--s-l); }
+  .grup h2 {
+    display: flex; align-items: center; gap: .5em;
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+    padding-block-end: var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .grup h2 .mark { display: grid; place-items: center; color: var(--c-mark-ink); }
+
+  .grup ul { list-style: none; margin: 0; padding: 0; }
+  .grup li + li { border-block-start: 1px solid var(--c-border); }
+  .grup li a {
+    display: block; text-decoration: none;
+    padding: var(--s-s) 0 var(--s-s) var(--s-s);
+    margin-inline-start: calc(var(--s-s) * -1);
+    border-inline-start: 2px solid transparent;
+    transition: border-color .18s ease, background-color .18s ease;
+  }
+  /* Satır zıplamıyor: kenarda beliren çizgi ve hafif zemin yetiyor. */
+  .grup li a:hover {
+    border-inline-start-color: var(--c-accent);
+    background: var(--c-surface);
+  }
+  .grup h3 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-base); line-height: var(--lh-snug);
+    color: var(--c-text);
+    transition: color .18s ease;
+  }
+  .grup li a:hover h3 { color: var(--c-accent); }
+  .grup .dek {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
+  }
+  .grup time {
+    display: block; margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .turler a, .grup li a, .grup h3 { transition: none; }
+  }
+</style>

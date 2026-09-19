@@ -1,6 +1,9 @@
 ---
 import ListPage from '../../../layouts/ListPage.astro';
 import SignalStream from '../../../layouts/SignalStream.astro';
+import EssayList from '../../../components/EssayList.astro';
+import NoteGarden from '../../../components/NoteGarden.astro';
+import PlaybookList from '../../../components/PlaybookList.astro';
 import { COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS, type Locale } from '../../../config';
 import { getEntries, localePath } from '../../../lib/content';
 
@@ -17,6 +20,12 @@ const items = entries.map((entry) => ({ collection, entry }));
 const enEntries = await getEntries(collection, 'en');
 const altLocale = enEntries.length
   ? { lang: 'en' as const, href: localePath('en', collection) }
+  : null;
+
+// Her koleksiyonun kendi gövdesi var; ayrım tasarımda da görünsün diye.
+const Govde = collection === 'essays' ? EssayList
+  : collection === 'notes' ? NoteGarden
+  : collection === 'playbooks' ? PlaybookList
   : null;
 
 const action = collection === 'playbooks'
@@ -40,5 +49,7 @@ const action = collection === 'playbooks'
   lang={lang}
   items={items}
   altLocale={altLocale}
-/>
+>
+  {Govde && <Govde entries={entries} lang={lang} />}
+</ListPage>
 )}

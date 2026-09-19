@@ -1,0 +1,90 @@
+---
+/**
+ * Notlar — bahçe.
+ *
+ * Şemada `status` var (filiz / fidan / kökleşmiş) ama listede hiç
+ * kullanılmıyordu. Notları olgunluğa göre gruplamak koleksiyonun kendi
+ * fikrini görünür kılıyor: burada bitmiş iş yok, büyüyen iş var.
+ */
+import { STATUS_LABELS, type Locale } from '../config';
+import { formatDate, entryPath, parseId } from '../lib/content';
+import type { AnyEntry } from '../lib/content';
+
+interface Props { entries: AnyEntry[]; lang: Locale }
+const { entries, lang } = Astro.props as Props;
+
+// Olgun olan önce: okuyucu en oturmuş nota en kısa yoldan varsın.
+const SIRA = ['evergreen', 'budding', 'seedling'] as const;
+const gruplar = SIRA
+  .map((s) => ({ status: s, entries: entries.filter((e) => ((e.data as any).status ?? 'seedling') === s) }))
+  .filter((g) => g.entries.length > 0);
+---
+
+{gruplar.map((g) => (
+  <section class="kat">
+    <h2>
+      <span class="nokta" data-s={g.status} aria-hidden="true"></span>
+      {STATUS_LABELS[g.status][lang]}
+      <span class="n">{g.entries.length}</span>
+    </h2>
+    <ul>
+      {g.entries.map((e) => { const d = e.data as any; return (
+        <li>
+          <a href={entryPath(lang, 'notes', parseId(e.id).slug)}>
+            <h3>{d.title}</h3>
+            <p class="dek">{d.description}</p>
+            <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+          </a>
+        </li>
+      ); })}
+    </ul>
+  </section>
+))}
+
+<style>
+  .kat + .kat { margin-block-start: var(--s-2xl); }
+  .kat h2 {
+    display: flex; align-items: center; gap: .55em;
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+    padding-block-end: var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .kat h2 .n { font-variant-numeric: tabular-nums; color: var(--c-mark-ink); }
+
+  /* Olgunluk rengi tek yerde: nokta. Metne renk vermek listeyi yoruyor. */
+  .nokta { inline-size: 7px; block-size: 7px; border-radius: 999px; background: var(--c-border); }
+  .nokta[data-s='seedling']  { background: color-mix(in srgb, var(--c-mark) 55%, var(--c-border)); }
+  .nokta[data-s='budding']   { background: var(--c-mark); }
+  .nokta[data-s='evergreen'] { background: var(--c-mark-ink); }
+
+  /* Notlar kısa; ızgara daha sıkışık, satır değil hücre hissi veriyor. */
+  .kat ul {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: var(--s-s);
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  }
+  .kat li a {
+    display: block; block-size: 100%; text-decoration: none;
+    padding: var(--s-s);
+    border: 1px solid transparent; border-radius: var(--radius-lg);
+    transition: border-color .18s ease, background-color .18s ease;
+  }
+  .kat li a:hover { border-color: var(--c-border); background: var(--c-surface); }
+  .kat h3 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-base); line-height: var(--lh-snug);
+    color: var(--c-text); transition: color .18s ease;
+  }
+  .kat li a:hover h3 { color: var(--c-accent); }
+  .kat .dek {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
+  }
+  .kat time {
+    display: block; margin-block-start: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  @media (prefers-reduced-motion: reduce) { .kat li a, .kat h3 { transition: none; } }
+</style>
