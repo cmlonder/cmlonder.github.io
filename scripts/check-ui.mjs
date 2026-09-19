@@ -6,8 +6,7 @@
  * çalışıyor görünüyordu, tıklamak hiçbir şey yapmıyordu. Tarayıcı
  * olmadan bu sınıf hatanın yakalanabileceği tek yer burası.
  *
- * Senaryolar: (1) içindekiler sekmesi paneli açıyor/kapatıyor,
- * (2) dipnot numarası satır içi notu açıyor, (3) liste kipi ızgaraya geçiyor.
+ * Senaryolar: (1) dipnot numarası notu açıyor, (2) liste kipi ızgaraya geçiyor.
  *
  * Kullanım: node scripts/check-ui.mjs   (pnpm verify çağırıyor; build gerekir)
  */
@@ -74,8 +73,9 @@ globalThis.window = globalThis;
 globalThis.document = {
   documentElement: html,
   querySelector: (s) => ({ '[data-kip-bar]': kipCubuk, '[data-liste]': kipListe })[s] ?? html.querySelector(s),
-  querySelectorAll: (s) => (s === '[data-kip]' ? [kipSatir, kipIzgara] : s === '[data-reader]' ? [kok] : html.querySelectorAll(s)),
+  querySelectorAll: (s) => (s === '[data-kip]' ? [kipSatir, kipIzgara] : s === '[data-reader]' ? [kok] : s.includes('.prose a') ? [] : html.querySelectorAll(s)),
   getElementById: (id) => (id === 'user-content-fn-x' ? kayit : null),
+  body: new El('body'),
   createElement: (t) => new El(t),
   addEventListener() {},
 };
@@ -83,7 +83,8 @@ globalThis.matchMedia = () => ({ matches: true, addEventListener() {} });
 globalThis.localStorage = { getItem: () => null, setItem() {} };
 globalThis.IntersectionObserver = class { observe() {} };
 globalThis.addEventListener = () => {};
-globalThis.scrollY = 0;
+globalThis.scrollY = 0; globalThis.innerHeight = 800; globalThis.innerWidth = 1200;
+globalThis.fetch = () => Promise.resolve({ json: () => ({}) });
 globalThis.HTMLElement = El;
 
 // ---- Paketleri bul: hash'li chunk ya da sayfaya gömülü ----
@@ -103,14 +104,6 @@ await calistir(bul(/^layout-toggle\..*\.js$/, 'data-kip', 'dist/tr/essays/index.
 
 // ---- Kontroller ----
 const sonuc = [];
-sonuc.push(['başlangıç data-toc', kok.dataset.toc, 'on']);
-kok.dispatch('click', { target: tocGizle });
-sonuc.push(['içindekiler kapandı', kok.dataset.toc, 'off']);
-sonuc.push(['aria-expanded', tocGizle.getAttribute('aria-expanded'), 'false']);
-kok.dispatch('click', { target: tocGizle });
-sonuc.push(['içindekiler geri açıldı', kok.dataset.toc, 'on']);
-kok.dispatch('click', { target: notGizle });
-sonuc.push(['notlar kapandı', kok.dataset.notes, 'off']);
 
 const notlar = prose._hepsi().filter((e) => e.className === 'note');
 sonuc.push(['not üretildi', notlar.length, 1]);

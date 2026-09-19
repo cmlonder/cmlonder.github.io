@@ -433,7 +433,7 @@ h2.section-title a,
 [data-reader] { --not-w: 14rem; --oluk: var(--s-2xl); --toc-w: 15rem; }
 
 /* — Dar ekran — */
-.toc-col, .toc-geri, .not-geri, .not-col { display: none; }
+.toc-col, .not-col { display: none; }
 .toc-mobil {
   margin-block-end: var(--s-l);
   border: 1px solid var(--c-border); border-radius: var(--radius-lg);
@@ -488,21 +488,18 @@ h2.section-title a,
   [data-reader] > .not-col { display: block; position: sticky; inset-block-start: var(--s-l); }
   .toc-mobil { display: none; }
 
-  [data-reader][data-notes='off'] { --not-w: 0px; column-gap: 0; }
-  [data-reader][data-notes='off'] > .not-col { display: none; }
-
   /* Kenar notu sağ sütuna yüzer. */
-  [data-reader]:not([data-notes='off']) .prose .note {
+  [data-reader] .prose .note {
     float: right; clear: right; inline-size: var(--not-w);
     margin-inline-end: calc(-1 * (var(--not-w) + var(--oluk)));
     margin-block: .2em var(--s-s);
     display: block; grid-template-rows: none; transition: none;
   }
-  [data-reader]:not([data-notes='off']) .prose .note > .note-ic {
+  [data-reader] .prose .note > .note-ic {
     overflow: visible; margin: 0; padding: 0; background: none; border-radius: 0;
     font-size: var(--t-xs); color: var(--c-muted); line-height: 1.5;
   }
-  [data-reader]:not([data-notes='off']) .prose .note.vurgu > .note-ic { animation: notVurgu 1.2s ease both; }
+  [data-reader] .prose .note.vurgu > .note-ic { animation: notVurgu 1.2s ease both; }
   @keyframes notVurgu { from { background: color-mix(in srgb, var(--c-accent) 14%, transparent); } to { background: transparent; } }
 
   /*
@@ -521,13 +518,13 @@ h2.section-title a,
     background: color-mix(in srgb, var(--c-surface) 78%, transparent);
     backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 28px color-mix(in srgb, var(--c-text) 8%, transparent);
-    transition: opacity .28s ease, translate .28s cubic-bezier(.4, 0, .2, 1), visibility 0s;
+    transform-origin: top left;
+    transition: transform .3s cubic-bezier(.4, 0, .2, 1), opacity .3s ease;
   }
-  /* Aşağı kaydırınca gizlenir, yukarı kaydırınca döner (reader.ts data-scroll). */
-  [data-reader][data-scroll='down'] > .toc-col { opacity: 0; translate: -.75rem 0; visibility: hidden; transition: opacity .28s ease, translate .28s ease, visibility 0s linear .28s; }
-  [data-reader][data-toc='off'] > .toc-col { display: none; }
-  [data-reader][data-toc='off'] .toc-geri { display: grid; }
-  [data-reader][data-notes='off'] .not-geri { display: grid; }
+  /* Aşağı kaydırınca küçülür, yukarı kaydırınca ya da üstüne gelince eski boyuna döner. */
+  [data-reader][data-scroll='down'] > .toc-col { transform: scale(.82); opacity: .78; }
+  [data-reader][data-scroll='down'] > .toc-col:hover,
+  [data-reader][data-scroll='down'] > .toc-col:focus-within { transform: none; opacity: 1; }
 }
 
 /* — İçindekiler içi — */
@@ -546,26 +543,35 @@ h2.section-title a,
 .toc-col a:hover { color: var(--c-text); }
 .toc-col a[data-aktif] { color: var(--c-accent); border-inline-start-color: var(--c-accent); }
 
-.toc-gizle, .not-gizle {
-  appearance: none; background: none; border: 0; cursor: pointer;
-  display: grid; place-items: center; inline-size: 1.75rem; block-size: 1.75rem; border-radius: 999px; color: var(--c-muted);
-  transition: color .15s ease, background-color .15s ease;
-}
-.toc-gizle:hover, .not-gizle:hover { color: var(--c-accent); background: var(--c-tinted); }
-.not-col .not-h { display: flex; align-items: center; justify-content: space-between; font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted); }
-
-.toc-geri, .not-geri {
-  position: fixed; inset-block-start: 50%; translate: 0 -50%; z-index: 30;
-  place-items: center; inline-size: 2.25rem; block-size: 2.25rem;
-  border: 1px solid var(--c-border); border-radius: 999px; background: var(--c-surface); color: var(--c-muted); cursor: pointer;
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--c-text) 10%, transparent);
-  transition: color .15s ease, border-color .15s ease;
-}
-.toc-geri { inset-inline-start: .75rem; }
-.not-geri { inset-inline-end: .75rem; }
-.toc-geri:hover, .not-geri:hover { color: var(--c-accent); border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); }
-
 @media (prefers-reduced-motion: reduce) {
-  .note, .toc-col, .toc-col a, .toc-gizle, .not-gizle, .toc-geri, .not-geri, .prose a[data-footnote-ref] { transition: none; }
-  [data-reader][data-scroll='down'] > .toc-col { opacity: 1; translate: none; visibility: visible; }
+  .note, .toc-col, .toc-col a, .prose a[data-footnote-ref], .ilerleme, .onizleme { transition: none; }
+  [data-reader][data-scroll='down'] > .toc-col { transform: none; opacity: 1; }
 }
+
+/* — Okuma ilerlemesi: sayfanın en üstünde 2px, aksan renginde — */
+.ilerleme {
+  position: fixed; inset-block-start: 0; inset-inline-start: 0; z-index: 50;
+  inline-size: 100%; block-size: 2px;
+  background: var(--c-accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .08s linear;
+  pointer-events: none;
+}
+
+/* — İç bağlantı önizlemesi — */
+.onizleme {
+  position: absolute; z-index: 45;
+  inline-size: min(22rem, calc(100vw - 2rem));
+  padding: var(--s-s) var(--s-m);
+  border: 1px solid var(--c-border); border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--c-surface) 92%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--c-text) 12%, transparent);
+  pointer-events: none;
+  opacity: 0; translate: 0 4px;
+  transition: opacity .18s ease, translate .18s ease;
+}
+.onizleme[data-on] { opacity: 1; translate: 0 0; }
+.onizleme .on-k { font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--c-mark-ink); }
+.onizleme .on-t { margin-block-start: .15em; font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-size: var(--t-base); line-height: var(--lh-snug); color: var(--c-text); }
+.onizleme .on-d { margin-block-start: .3em; font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); line-height: 1.5; text-wrap: pretty; }

@@ -114,21 +114,12 @@ seri açmak = config.ts'e bir satır.**
 1. **Geriye dönük üretim.** 19 Eyl itibarıyla klasörde 1-8 Eylül arası
    bültenler var. Bu senin istediğin bir backfill mi, yoksa Spark kendi
    kafasına göre tarih mi üretiyor — karar senin.
-2. **`/digest` skill'i hâlâ gerekli mi?** Eski planda Drive'dan okuyup
-   `claims` frontmatter'ını üretecekti. Spark artık yayına hazır markdown
-   yazdığı için gerekçesi kalmamış olabilir. Gerekmiyorsa bu maddeyi sil.
+2. ~~`/digest` skill'i~~ — silindi (19 Eyl). Spark yayına hazır markdown
+   yazıyor; gerekçesi kalmadı.
 
 ## 8. Opsiyonel / açık kalanlar
 
-**OG görselleri.** `public/og/*.png` elle üretildi (PIL); üretici script
-commit'te yok. 19 Eyl'de denendi, şuraya takıldı: `sharp` SVG metnini ve
-yerel `.ttf`'i sorunsuz çiziyor, ama **Fraunces yalnızca değişken font olarak
-dağıtılıyor** ve librsvg onu doğru örneklemiyor — başlık grotesk bir sans
-gibi çıkıyor. Üç seçenek:
-
-- Fraunces'ın statik bir örneğini üretip repoya koymak (~400 KB, OFL, izinli)
-- Kartları Georgia ile yeniden üretmek (yedi kartın görünümü değişir)
-- Script'i yazmayıp kartları elle üretilmiş bırakmak
+**OG görselleri — TAMAM ✅** `pnpm og` (fontlar `assets/og-fonts/`).
 
 **Sunum PDF'i git geçmişinde.** 11 MB'lık `crs-evolution.pdf` HEAD'den
 silindi ama geçmişte duruyor. Temizlemek geçmişi yeniden yazıp zorla push
@@ -141,6 +132,19 @@ daha dürüst.
 **Chrome eklentisi.** `claude.ai/chrome`. Bağlanırsa ajan etkileşimli
 durumları (açık dropdown, hover, tema değişimi) doğrudan doğrulayabilir.
 Şu an bağlı değil; görsel doğrulamayı sen yapıyorsun.
+
+## 9. Yalnızca senin yapabileceklerin — özet
+
+Ajanın onaysız dokunmadığı her şey burada; ayrıntı ilgili bölümde.
+
+- 128 yer tutucu: onayla ya da sil (bölüm 2)
+- Hashnode'u kapat; çift SPF kaydını düzelt; Search Console'a sitemap bildir (bölüm 4)
+- `/uses` donanım ve uygulama listesi (bölüm 5)
+- Radar'daki geriye dönük üretim kasıtlı mı (bölüm 7)
+- RIGGED `shipped` mı `archived` mı (bölüm 8)
+- Sunum PDF'i git geçmişinden temizlensin mi — zorla push gerektirir (bölüm 8)
+- Colophon'u kendi sesinle; ajan taslak çıkarır, yayın kararı sende (bölüm 3)
+- Radar zinciri yazısı: taslağı ajan yazar, yayın kararı sende (aşağıda)
 
 ## Radar zinciri hakkında yazı (backlog)
 

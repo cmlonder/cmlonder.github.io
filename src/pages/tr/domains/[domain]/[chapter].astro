@@ -48,7 +48,7 @@ const koken = entry.data.origin
 ---
 
 <Base title={`${entry.data.title} — ${dm.data.title}`} description={entry.data.summary} lang={lang}>
-  <div class="book" data-reader data-notes="on">
+  <div class="book" data-reader>
     <aside class="rail">
       <a class="up" href={localePath(lang, DOMAINS.path, dSlug)}>{dm.data.title}</a>
       <Outline outline={dm.data.outline} yazilan={yazilan} domain={dSlug}
@@ -102,19 +102,7 @@ const koken = entry.data.origin
       </nav>
     </article>
 
-    <aside class="not-col">
-      <p class="not-h">
-        <span>{t.notes}</span>
-        <button type="button" class="not-gizle" data-toggle="notes" aria-label={t.notes} title={t.notes}>
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"
-               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-        </button>
-      </p>
-    </aside>
-    <button type="button" class="not-geri" data-toggle="notes" aria-label={t.notes} title={t.notes}>
-      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"
-           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
-    </button>
+    <aside class="not-col" aria-hidden="true"></aside>
 
   </div>
 </Base>
@@ -142,7 +130,6 @@ const koken = entry.data.origin
     align-items: start;
   }
   .rail { position: sticky; inset-block-start: var(--s-l); }
-  .book[data-notes='off'] { --not-w: 0px; }
   .up {
     display: block; font-family: var(--f-sans); font-size: var(--t-xs);
     text-transform: uppercase; letter-spacing: .08em;

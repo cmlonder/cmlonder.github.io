@@ -17,18 +17,11 @@ interface Props {
 }
 const { headings, label, lang, variant = 'col' } = Astro.props as Props;
 const oge = headings.filter((h) => h.depth === 2 || h.depth === 3);
-const t = lang === 'tr' ? { hide: 'Gizle' } : { hide: 'Hide' };
 ---
 
 {oge.length > 1 && variant === 'col' && (
   <nav class="toc" aria-label={label}>
-    <p class="toc-h">
-      <span>{label}</span>
-      <button type="button" class="toc-gizle" data-toggle="toc" aria-label={t.hide} title={t.hide}>
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
-      </button>
-    </p>
+    <p class="toc-h">{label}</p>
     <ol>
       {oge.map((h) => (
         <li data-d={h.depth}><a href={`#${h.slug}`}>{h.text}</a></li>

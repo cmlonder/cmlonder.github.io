@@ -1,47 +1,8 @@
 /**
- * Okuyucu: sol içindekiler + sağ kenar notları, ikisi de kapanabilir.
- *
- * Yerleşim TAMAMEN CSS'te. Bu script yalnızca üç şey yapıyor:
- *   1. [data-toggle] düğmeleri köke data-toc / data-notes yazıyor
- *      (tercih localStorage'da).
- *   2. Markdown dipnotlarını, referansın olduğu paragrafın hemen ardına
- *      <aside class="note"> olarak kopyalıyor. Geniş ekranda CSS bu
- *      aside'ı sağ kenara yüzdürüyor (Tufte float: üst üste binme
- *      fiziksel olarak imkânsız), dar ekranda tıklayınca açılan kutu.
- *   3. İçindekilerde okunan bölümü işaretliyor.
- *
- * Konum hesabı, yükseklik ölçümü, scroll dinleme YOK. Önceki sürümler
- * tam da orada kırılıyordu.
+ * Okuyucu: sol içindekiler (sabit, kaydırınca küçülür) + sağ kenar
+ * notları (Tufte float: clear:right ⇒ üst üste binemez).
  */
-const DEPO = 'okuyucu';
-
-function tercih(): Record<string, boolean> {
-  try { return JSON.parse(localStorage.getItem(DEPO) || '{}'); } catch { return {}; }
-}
-function yaz(d: Record<string, boolean>) {
-  try { localStorage.setItem(DEPO, JSON.stringify(d)); } catch { /* gizli sekme */ }
-}
-
 for (const kok of document.querySelectorAll<HTMLElement>('[data-reader]')) {
-  /* — 1. Aç/kapa — */
-  const durum = tercih();
-  const uygula = (ad: string, acik: boolean) => {
-    kok.dataset[ad] = acik ? 'on' : 'off';
-    kok.querySelectorAll<HTMLButtonElement>(`[data-toggle="${ad}"]`)
-      .forEach((d) => d.setAttribute('aria-expanded', String(acik)));
-  };
-  for (const ad of ['toc', 'notes']) {
-    if (!kok.querySelector(`[data-toggle="${ad}"]`)) continue;
-    uygula(ad, durum[ad] ?? true);
-  }
-  kok.addEventListener('click', (e) => {
-    const d = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-toggle]');
-    if (!d) return;
-    const ad = d.dataset.toggle!;
-    const acik = kok.dataset[ad] !== 'on';
-    durum[ad] = acik; yaz(durum); uygula(ad, acik);
-  });
-
   /* — 2. Notlar — */
   const yazi = kok.querySelector<HTMLElement>('.prose');
   if (yazi) {
@@ -102,6 +63,18 @@ for (const kok of document.querySelectorAll<HTMLElement>('[data-reader]')) {
     sonY = y;
   }, { passive: true });
 
+  /* — 2c. Okuma ilerlemesi: üstte ince çizgi (Gwern) — */
+  const cubuk = document.createElement('div');
+  cubuk.className = 'ilerleme'; cubuk.setAttribute('aria-hidden', 'true');
+  document.body.append(cubuk);
+  const ilerle = () => {
+    const doc = document.documentElement;
+    const oran = doc.scrollHeight > innerHeight ? scrollY / (doc.scrollHeight - innerHeight) : 0;
+    cubuk.style.transform = `scaleX(${Math.min(1, Math.max(0, oran))})`;
+  };
+  addEventListener('scroll', ilerle, { passive: true });
+  ilerle();
+
   /* — 3. Okunan bölüm — */
   const baglar = [...kok.querySelectorAll<HTMLAnchorElement>('.toc a[href^="#"]')];
   if (baglar.length && yazi && 'IntersectionObserver' in window) {
@@ -117,5 +90,50 @@ for (const kok of document.querySelectorAll<HTMLElement>('[data-reader]')) {
     basliklar.forEach((h) => gozcu.observe(h));
   }
 }
+
+/*
+ * — 4. İç bağlantı önizlemesi (Maggie / Matuschak) —
+ * Siteye ait bir bağlantının üstünde kısa bekleyince hedefin başlığı ve
+ * açıklaması beliriyor. Veri build'de üretilen /preview.json; ilk
+ * hover'da bir kez çekiliyor. Bağlantıyı değiştirmiyor, üstüne kart
+ * koyuyor; klavye odağında da çalışıyor, Escape kapatıyor.
+ */
+let veri: Record<string, { t: string; d: string; k: string }> | null = null;
+let yukleniyor: Promise<void> | null = null;
+const kart = document.createElement('div');
+kart.className = 'onizleme'; kart.setAttribute('role', 'tooltip'); kart.hidden = true;
+document.body.append(kart);
+let zaman = 0;
+
+const yukle = () => yukleniyor ??= fetch('/preview.json').then((r) => r.json()).then((j) => { veri = j; }).catch(() => { veri = {}; });
+
+function goster(a: HTMLAnchorElement) {
+  if (!veri) return;
+  const yol = a.pathname.replace(/\/$/, '') || '/';
+  const v = veri[yol];
+  if (!v) return;
+  kart.innerHTML = `<p class="on-k">${v.k}</p><p class="on-t">${v.t}</p><p class="on-d">${v.d}</p>`;
+  kart.hidden = false;
+  const r = a.getBoundingClientRect();
+  const w = Math.min(22 * 16, innerWidth - 32);
+  let x = r.left + scrollX; if (x + w > scrollX + innerWidth - 16) x = scrollX + innerWidth - 16 - w;
+  const alttaYer = innerHeight - r.bottom > 160;
+  kart.style.left = `${Math.max(16, x)}px`;
+  kart.style.top = alttaYer ? `${r.bottom + scrollY + 8}px` : '';
+  kart.style.bottom = alttaYer ? '' : `${document.documentElement.scrollHeight - (r.top + scrollY) + 8}px`;
+  kart.dataset.on = '';
+}
+function gizle() { clearTimeout(zaman); delete kart.dataset.on; kart.hidden = true; }
+
+for (const a of document.querySelectorAll<HTMLAnchorElement>('.prose a[href^="/"], .backlinks a[href^="/"]')) {
+  if (a.hasAttribute('data-footnote-ref') || a.classList.contains('capa')) continue;
+  const bekle = () => { clearTimeout(zaman); yukle().then(() => { zaman = window.setTimeout(() => goster(a), 220); }); };
+  a.addEventListener('mouseenter', bekle);
+  a.addEventListener('focus', bekle);
+  a.addEventListener('mouseleave', gizle);
+  a.addEventListener('blur', gizle);
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') gizle(); });
+addEventListener('scroll', gizle, { passive: true });
 
 export {};
