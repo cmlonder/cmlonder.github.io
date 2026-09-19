@@ -509,6 +509,9 @@ export const PAGE: Record<Locale, {
   tagBlurb: (tag: string) => string;
   archiveTitle: string;
   archiveBlurb: string;
+  draftNotice: string;
+  draftNoticeLink: string;
+  draftNoticeTail: string;
   recently: string;
   findTitle: string;
   findBlurb: string;
@@ -536,6 +539,12 @@ export const PAGE: Record<Locale, {
     tagBlurb: (t) => `Everything tagged ${t}.`,
     archiveTitle: 'Archive',
     archiveBlurb: 'Everything I have written here, newest first. Yearly, in one list.',
+    draftNotice:
+      'Most of the content here is AI-generated. I am working on the design right now and ' +
+      'letting an agent fill the pages in the meantime. If you have landed here, the one ' +
+      'section worth reading as real content is ',
+    draftNoticeLink: 'the radar',
+    draftNoticeTail: '. That one comes out of a proper pipeline.',
     recently: 'Recently',
     findTitle: 'Which playbook?',
     findBlurb: 'Pick the symptoms you are seeing. Matching playbooks rise to the top.',
@@ -563,6 +572,12 @@ export const PAGE: Record<Locale, {
     tagBlurb: (t) => `${t} etiketli her şey.`,
     archiveTitle: 'Arşiv',
     archiveBlurb: 'Burada yazdığım her şey, yeniden eskiye. Yıl yıl, tek listede.',
+    draftNotice:
+      'Çoğu içerik AI üretimi. Şu anda taslak üzerine yoğunlaştım, içeriği de geçici olarak ' +
+      'AI\'a ürettiriyorum. Bir şekilde denk geldiyseniz şu anda düzgün içerik olarak ' +
+      'okuyabileceğiniz bölüm ',
+    draftNoticeLink: 'radar',
+    draftNoticeTail: '. Burayı düzgün bir pipeline sonucu oluşturuyorum.',
     recently: 'Son eklenenler',
     findTitle: 'Hangi playbook?',
     findBlurb: "Gördüğün belirtileri seç. Eşleşen playbook'lar öne çıkar.",

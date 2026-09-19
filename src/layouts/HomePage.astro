@@ -8,8 +8,7 @@ import BookCard from '../components/BookCard.astro';
 import { getCollection } from 'astro:content';
 import {
   SITE, COLLECTION_LABELS, COLLECTION_BLURBS,
-  HERO, HUB, LIBRARY, UI, type Locale,
-} from '../config';
+  HERO, HUB, LIBRARY, UI, type Locale, PAGE,} from '../config';
 import { getEntries, localePath, countLabel } from '../lib/content';
 
 interface Props { lang: Locale }
@@ -48,6 +47,18 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
       <span>{hero.now}</span>
     </p>
   </section>
+
+  {/*
+    Taslak uyarısı. Hero'nun hemen altında, çünkü okuyucu bir yazıya
+    tıklamadan ÖNCE bilmeli: sayfaların çoğu şu an ajan çıktısı.
+    Sitenin geri kalanı bunu tek tek söylemiyor; burası söylüyor.
+  */}
+  <aside class="wrap taslak">
+    <p>
+      {PAGE[lang].draftNotice}
+      <a href="/radar">{PAGE[lang].draftNoticeLink}</a>{PAGE[lang].draftNoticeTail}
+    </p>
+  </aside>
 
   <GardenState lang={lang} yazi={essays.length + notes.length + playbooks.length + signals.length} />
 
@@ -188,6 +199,26 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
     font-size: var(--t-xl);
     line-height: var(--lh-snug);
   }
+  /*
+   * Uyarı kutusu: dikkat çeksin ama bağırmasın. Kenar çizgisi aksan,
+   * zemin tonlu; site paletinin dışına çıkmıyor.
+   */
+  .taslak {
+    margin-block: var(--s-l);
+    padding: var(--s-s) var(--s-m);
+    border-inline-start: 2px solid var(--c-accent);
+    border-radius: var(--radius-sm);
+    background: var(--c-tinted);
+  }
+  .taslak p {
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted-on-tint); line-height: 1.55; text-wrap: pretty;
+  }
+  .taslak a {
+    color: var(--c-accent);
+    text-decoration-thickness: 1px; text-underline-offset: .2em;
+  }
+
   .hub-blurb {
     margin-block-start: var(--s-2xs);
     max-inline-size: 62ch;
