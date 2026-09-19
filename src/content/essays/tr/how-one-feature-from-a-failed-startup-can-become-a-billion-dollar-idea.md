@@ -16,11 +16,11 @@ paylaşacağım.
 
 Bu yazıyı yumuşak bir caz eşliğinde okuyabilirsin:
 
-%[https://www.youtube.com/watch?v=uLMD_u41GlA]
+[▶ Slack Huddle bekleme müziği — YouTube](https://www.youtube.com/watch?v=uLMD_u41GlA)
 
 # Birinci deneme: Game Neverending
 
-<img src="/legacy/a761c859093d.jpg" alt="Game Neverending ekran görüntüsü" width="560" height="505" loading="lazy" decoding="async">
+![Game Neverending ekran görüntüsü](../../../assets/legacy/a761c859093d.jpg)
 
 [Ludicorp](https://web.archive.org/web/20040202160253/http://www.ludicorp.com/the_team.php?width=900)
 adlı oyun şirketinin kurucu ortağı Stewart Butterfield, 2002'de ekibiyle
@@ -43,7 +43,7 @@ birini elinde tuttu.
 
 # İkinci deneme: Flickr
 
-<img src="/legacy/6da087b3a3e8.jpg" alt="Flickr arayüzü" width="1400" height="932" loading="lazy" decoding="async">
+![Flickr arayüzü](../../../assets/legacy/6da087b3a3e8.jpg)
 
 Oyuncular Game Neverending içinde görsellerini yükleyip birbirleriyle
 paylaşıyordu. Ekip bu aracı yeni bir servise dönüştürdü: Flickr.
@@ -57,7 +57,7 @@ Bu, Flickr'ın büyümesini patlattı ve küresel şirketlerin dikkatini çekti.
 
 # Yahoo!'ya satış: Flickr
 
-<img src="/legacy/8901988c2761.jpg" alt="Yahoo ve Flickr" width="1400" height="788" loading="lazy" decoding="async">
+![Yahoo ve Flickr](../../../assets/legacy/8901988c2761.jpg)
 
 Yahoo, 2005'te Flickr'ı ve Ludicorp ekibini
 [25 milyon dolara](https://www.theguardian.com/technology/2018/apr/23/flickr-bought-by-smugmug-yahoo-breakup)
@@ -70,7 +70,7 @@ Yahoo'dan ayrıldı.
 
 # Üçüncü deneme: Glitch
 
-<img src="/legacy/49193ba36555.jpg" alt="Glitch oyunundan bir kare" width="1400" height="615" loading="lazy" decoding="async">
+![Glitch oyunundan bir kare](../../../assets/legacy/49193ba36555.jpg)
 
 Stewart Butterfield kaldığı yerden devam etmek için Tiny Speck adında bir
 oyun şirketi kurdu. Artık kendisi ve ekibi yatırımcılar tarafından
@@ -107,11 +107,11 @@ Müşteri davranışını 2012-2021 arası masaüstü ve mobil kullanım için
 hâkimiyetinin son anıydı; sonrasında mobil kullanım dünyada düzenli olarak
 yayıldı.
 
-<img src="/legacy/cfe88b3f69f2.jpg" alt="Masaüstü ve mobil kullanım grafiği" width="1280" height="720" loading="lazy" decoding="async">
+![Masaüstü ve mobil kullanım grafiği](../../../assets/legacy/cfe88b3f69f2.jpg)
 
 # Dördüncü deneme: Slack
 
-<img src="/legacy/8c3ae654fd2c.png" alt="Slack arayüzü" width="1400" height="788" loading="lazy" decoding="async">
+![Slack arayüzü](../../../assets/legacy/8c3ae654fd2c.png)
 
 Az önce bahsettiğim iç iletişim aracını hatırlıyor musun? Tiny Speck ekibinin
 ekip üyeleriyle senkron kalmak için bir iletişim aracına ihtiyacı vardı. O
@@ -155,7 +155,7 @@ Nick Tune, Domain Driven Design eğitiminde ve
 [*Core Domain Patterns* yazısında](https://medium.com/nick-tune-tech-strategy-blog/core-domain-patterns-941f89446af5)
 Siyah Kuğu'yu ilginç bir şekilde kullanıyor:
 
-<img src="/legacy/eadd21d60e64.jpg" alt="Core domain patterns diyagramı" width="1400" height="787" loading="lazy" decoding="async">
+![Core domain patterns diyagramı](../../../assets/legacy/eadd21d60e64.jpg)
 
 Çok fazla karmaşıklık gerektirmeyen ve net bir iş ayrımı yaratmayan bir
 özellik, nadiren de olsa işinin çekirdek özelliği haline gelebiliyor.

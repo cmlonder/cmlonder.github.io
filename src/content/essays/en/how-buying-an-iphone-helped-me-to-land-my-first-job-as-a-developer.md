@@ -24,10 +24,10 @@ I had just graduated from College with a Computer Science degree and was applyin
 If I pass the Group Interview stage, I will get an offer. The group Interview was interesting; a case study is given to 8-10 people around a table. Everyone reads the case carefully and suggests a solution for the given questions.
 
 ## Group Interview
-<img src="/legacy/e4d7dae6a967.jpg" alt="pexels-tima-miroshnichenko-5439481.jpg" width="1400" height="933" loading="lazy" decoding="async">
+![A group gathered around a table](../../../assets/legacy/e4d7dae6a967.jpg)
 It was the interview day. I was prepared by watching example cases on Youtube but I had never participated before. There were 4-5 employees (later realized that most of them were managers) and 8-10 candidates in the room. We were given a 2 pages case, on the first page there were some graphs and on the second page, there were a description and a question at the end. I can't remember the graphs exactly, but one of them was something like the below:
 
-<img src="/legacy/ac2a0d412001.jpg" alt="Screen Shot 2022-08-28 at 20.53.51.png" width="1400" height="645" loading="lazy" decoding="async">
+![Sales chart by month](../../../assets/legacy/ac2a0d412001.jpg)
 
 There was also some demographic distribution of users and other market-related information.
 
@@ -36,7 +36,7 @@ There was also some demographic distribution of users and other market-related i
 **Note**: Company was selling internet plans (GB deals etc.), headphones, accessories, tablets, and cell phones.
 
 ## Success
-<img src="/legacy/3492e132680a.jpg" alt="pexels-pixabay-356043(1).jpg" width="640" height="391" loading="lazy" decoding="async">
+![People in a discussion](../../../assets/legacy/3492e132680a.jpg)
 Thinking time is up and now it is discussion time. One of the candidates started to explain his idea then I and others began to discuss: 
 
 * We should make discounts on physical products with sim card deals
@@ -45,7 +45,7 @@ Thinking time is up and now it is discussion time. One of the candidates started
 
 I did not write down too many ideas but one of them was interesting. The year before I graduate, thanks to my father and his friends, invited me to join their trip to the USA. It was in September and Apple had just announced iPhone 6S.
 
-<img src="/legacy/16f3b1f6409d.jpg" alt="Screen Shot 2022-08-28 at 21.42.12.png" width="1400" height="1380" loading="lazy" decoding="async">
+![Table of iPhone release dates](../../../assets/legacy/16f3b1f6409d.jpg)
 
 When we went to Apple Store in Washington I joined the long waiting queue first time in my life. At that time I searched the reasons and learn that because of Apple's announcement policy, people were already prepared for this time. If you look in detail at the release cycles in the above picture, most of the releases are in September and October.
 
@@ -53,7 +53,7 @@ Back to the interview, I was thinking of the peak point in a specific picture. A
 
 ***Is it possible people are checking if there is a new deal for the new iPhones?***
 
-<img src="/legacy/306e8b22246c.jpg" alt="resim.png" width="1400" height="642" loading="lazy" decoding="async">
+![Sales chart with the peak marked](../../../assets/legacy/306e8b22246c.jpg)
 
 When it's my turn to share the idea I mention;
 

@@ -43,7 +43,9 @@ export const GET: APIRoute = ({ props }) => {
     '',
   ].join('\n');
 
-  return new Response(header + entry.body, {
+  // Göreli görsel yolları (src/assets) ayna dışında çözülmez; depodaki ham dosyaya çevrilir.
+  const govde = (entry.body ?? '').replace(/\]\((?:\.\.\/)+assets\//g, '](https://github.com/cmlonder/cmlonder.github.io/raw/main/src/assets/');
+  return new Response(header + govde, {
     headers: { 'Content-Type': 'text/markdown; charset=utf-8' },
   });
 };

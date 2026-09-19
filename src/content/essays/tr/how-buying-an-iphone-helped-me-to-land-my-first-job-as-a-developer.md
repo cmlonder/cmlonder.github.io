@@ -34,7 +34,7 @@ okuyup sorulan sorulara bir çözüm öneriyor.
 
 ## Grup mülakatı
 
-<img src="/legacy/e4d7dae6a967.jpg" alt="Bir masanın etrafında toplanmış grup" width="1400" height="933" loading="lazy" decoding="async">
+![Bir masanın etrafında toplanmış grup](../../../assets/legacy/e4d7dae6a967.jpg)
 
 Mülakat günü geldi. YouTube'dan örnek vakalar izleyerek hazırlanmıştım ama
 daha önce hiç katılmamıştım. Odada 4-5 çalışan (sonradan çoğunun yönetici
@@ -42,7 +42,7 @@ olduğunu anladım) ve 8-10 aday vardı. Bize iki sayfalık bir vaka verildi;
 ilk sayfada grafikler, ikinci sayfada bir açıklama ve sonunda bir soru vardı.
 Grafikleri tam hatırlamıyorum ama biri aşağıdakine benziyordu:
 
-<img src="/legacy/ac2a0d412001.jpg" alt="Aylara göre satış grafiği" width="1400" height="645" loading="lazy" decoding="async">
+![Aylara göre satış grafiği](../../../assets/legacy/ac2a0d412001.jpg)
 
 Ayrıca kullanıcıların demografik dağılımı ve pazara dair başka bilgiler de
 vardı.
@@ -67,7 +67,7 @@ anlatmaya başladı, sonra ben ve diğerleri tartışmaya katıldık:
 babam ve arkadaşları sayesinde ABD gezilerine katılmıştım. Eylül ayıydı ve
 Apple iPhone 6S'i yeni duyurmuştu.
 
-<img src="/legacy/16f3b1f6409d.jpg" alt="iPhone çıkış tarihleri tablosu" width="1400" height="1380" loading="lazy" decoding="async">
+![iPhone çıkış tarihleri tablosu](../../../assets/legacy/16f3b1f6409d.jpg)
 
 Washington'daki Apple Store'a gittiğimizde hayatımda ilk kez o uzun kuyruğa
 girdim. O sırada sebebini araştırdım ve Apple'ın duyuru politikası yüzünden
@@ -80,7 +80,7 @@ bir şey geldi:
 ***Acaba insanlar yeni iPhone'lar için yeni bir kampanya var mı diye mi
 bakıyor?***
 
-<img src="/legacy/306e8b22246c.jpg" alt="Tepe noktası işaretlenmiş satış grafiği" width="1400" height="642" loading="lazy" decoding="async">
+![Tepe noktası işaretlenmiş satış grafiği](../../../assets/legacy/306e8b22246c.jpg)
 
 Sıra bana geldiğinde şunu söyledim:
 

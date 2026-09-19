@@ -32,5 +32,7 @@ siteler (Letterboxd, Backloggd, Literal, Gates Notes) listeye alınmadı.
 
 > Üçüncü tur (19 Eyl): otomatik kaynakça (gwern.net/design "Links") ve "kaldığın yer" (gwern.net, Kindle) yapıldı. Reddedilenler, geri konmayacak: git tabanlı "dikildi / son bakım" satırı, ilgili yazılar (backlink + konu + not ağı yeterli), konu bazlı RSS ve /subscribe. Karar bekleyen: anasayfa "son güncellemeler" akışı, radar changelog ritmi.
 
+> Dördüncü tur (19 Eyl): Hashnode kalıntıları temizlendi, RSS tam metin (simonwillison.net, jvns.ca), slayt gezgini (ciechanow.ski), baskı + karanlık görsel + tablo CSS'i (gwern.net/design), palet boş durumu (raycast.com) yapıldı. Analiz listesi burada bitti.
+
 - **Anasayfa "son güncellemeler" akışı** ([brianlovin.com](https://brianlovin.com/), [simonwillison.net](https://simonwillison.net/)): koleksiyon fark etmeksizin son değişen 10 sayfa. Karar bekliyor.
 - **Radar changelog ritmi**: bültenlerin "bu hafta ne değişti" özeti. Karar bekliyor.

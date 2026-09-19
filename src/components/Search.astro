@@ -7,12 +7,25 @@
  * Pagefind yalnızca dizin ve arama motoru olarak kullanılıyor; paket ilk
  * açılışta yükleniyor. Görünüm: yarı saydam, buğulu, ortalı.
  */
-import { COLLECTION_LABELS, SHELVES, DOMAINS, RADAR, type Locale } from '../config';
+import { COLLECTION_LABELS, SHELVES, DOMAINS, RADAR, HUB, NAV, type Locale } from '../config';
+import { localePath } from '../lib/content';
 interface Props { lang: Locale }
 const { lang } = Astro.props;
 const t = lang === 'tr'
   ? { label: 'Ara', placeholder: 'Yazılarda, notlarda, raflarda ara…', empty: 'Sonuç yok', hint: '↑↓ gez · ↵ aç · esc kapat', loading: 'Dizin yükleniyor…' }
   : { label: 'Search', placeholder: 'Search essays, notes, shelves…', empty: 'No results', hint: '↑↓ move · ↵ open · esc close', loading: 'Loading index…' };
+const bos = lang === 'tr' ? { sections: 'Bölümler', recent: 'Son aramalar' } : { sections: 'Sections', recent: 'Recent searches' };
+// Kutu boşken: bölüm kısayolları (Spotlight'ın "en üst isabetleri" gibi).
+const bolumler = [
+  { l: HUB.name[lang], h: localePath(lang, HUB.path) },
+  { l: COLLECTION_LABELS.essays[lang], h: localePath(lang, 'essays') },
+  { l: COLLECTION_LABELS.notes[lang], h: localePath(lang, 'notes') },
+  { l: COLLECTION_LABELS.playbooks[lang], h: localePath(lang, 'playbooks') },
+  { l: DOMAINS.name[lang], h: localePath(lang, DOMAINS.path) },
+  { l: RADAR.name[lang], h: '/radar' },
+  { l: SHELVES.library.name[lang], h: localePath(lang, 'library') },
+  ...NAV[lang].map((n) => ({ l: n.label, h: localePath(lang, n.href.replace(/^\//, '')) })),
+];
 // URL'nin ilk parçasından tür etiketi.
 const turler: Record<string, string> = {
   essays: COLLECTION_LABELS.essays[lang], notes: COLLECTION_LABELS.notes[lang],
@@ -41,7 +54,12 @@ const turler: Record<string, string> = {
              placeholder={t.placeholder} aria-label={t.label} aria-controls="palet-sonuc" aria-autocomplete="list" />
       <kbd>esc</kbd>
     </form>
-    <ul id="palet-sonuc" class="palet-sonuc" role="listbox" aria-label={t.label}></ul>
+    <ul id="palet-sonuc" class="palet-sonuc" role="listbox" aria-label={t.label} data-recent={bos.recent}>
+      <li class="grup" aria-hidden="true">{bos.sections}</li>
+      {bolumler.map((b) => (
+        <li role="option" aria-selected="false" class="bolum"><a href={b.h}><span class="tur" aria-hidden="true">→</span><span class="ad">{b.l}</span></a></li>
+      ))}
+    </ul>
     <p class="palet-ipucu">{t.hint}</p>
   </dialog>
 </div>
@@ -105,6 +123,13 @@ const turler: Record<string, string> = {
   .palet-sonuc :global(.ad) { font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-size: var(--t-base); line-height: var(--lh-snug); }
   .palet-sonuc :global(.oz) { font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); line-height: 1.45; }
   .palet-sonuc :global(.oz mark) { background: color-mix(in srgb, var(--c-accent) 18%, transparent); color: inherit; border-radius: 3px; }
+  .palet-sonuc :global(.grup) {
+    padding: var(--s-xs) var(--s-s) var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+  }
+  .palet-sonuc :global(.bolum a), .palet-sonuc :global(.son a) { grid-template-columns: 1.25rem 1fr; align-items: center; padding-block: .35em; }
+  .palet-sonuc :global(.bolum .tur), .palet-sonuc :global(.son .tur) { grid-row: auto; min-inline-size: 0; margin: 0; color: var(--c-muted); }
+  .palet-sonuc :global(.bolum .ad), .palet-sonuc :global(.son .ad) { font-family: var(--f-sans); font-size: var(--t-sm); }
   .palet-sonuc :global(.bos) { padding: var(--s-m); font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted); text-align: center; }
   .palet-ipucu { margin: 0; padding: var(--s-2xs) var(--s-m); border-block-start: 1px solid var(--c-border); font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); }
   @media (prefers-reduced-motion: reduce) { .palet[open] { animation: none; } }
@@ -121,15 +146,36 @@ const turler: Record<string, string> = {
     let pf: any = null;
     let secili = -1;
     let sira = 0;
+    const bosHTML = L.innerHTML;                          // sunucudan gelen bölüm listesi
+    const SON = 'arama:son';
+    const sonlar = (): string[] => { try { return JSON.parse(localStorage.getItem(SON) || '[]'); } catch { return []; } };
+    const hatirla = (q: string) => {
+      q = q.trim(); if (!q) return;
+      try { localStorage.setItem(SON, JSON.stringify([q, ...sonlar().filter((x) => x !== q)].slice(0, 3))); } catch { /* özel pencere */ }
+    };
+    const kacir = (x: string) => x.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+    function bosDurum() {
+      const son = sonlar();
+      L.innerHTML = bosHTML + (son.length
+        ? `<li class="grup" aria-hidden="true">${L.dataset.recent}</li>` +
+          son.map((q) => `<li role="option" aria-selected="false" class="son"><a href="#" data-q="${kacir(q)}"><span class="tur" aria-hidden="true">↺</span><span class="ad">${kacir(q)}</span></a></li>`).join('')
+        : '');
+      secili = -1;
+    }
+    L.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-q]');
+      if (a) { e.preventDefault(); giris!.value = a.dataset.q!; ara(giris!.value); giris!.focus(); return; }
+      if ((e.target as HTMLElement).closest('a')) hatirla(giris!.value);
+    });
 
     async function motor() {
       if (pf) return pf;
-      L.innerHTML = `<li class="bos">${dialog!.dataset.loading}</li>`;
+      if (giris!.value.trim()) L.innerHTML = `<li class="bos">${dialog!.dataset.loading}</li>`;
       // Yol değişkende: Vite build sırasında çözmeye kalkmasın, tarayıcı çözsün.
       const yol = '/pagefind/pagefind.js';
       pf = await import(/* @vite-ignore */ yol);
       await pf.init();
-      L.innerHTML = '';
+      if (!giris!.value.trim()) bosDurum();
       return pf;
     }
     const tur = (url: string) => {
@@ -145,7 +191,7 @@ const turler: Record<string, string> = {
     }
     async function ara(q: string) {
       const benim = ++sira;
-      if (!q.trim()) { liste!.innerHTML = ''; secili = -1; return; }
+      if (!q.trim()) { bosDurum(); return; }
       const p = await motor();
       const r = await p.search(q);
       if (benim !== sira) return;                           // eski sorgu, at
@@ -167,7 +213,10 @@ const turler: Record<string, string> = {
       else if (e.key === 'ArrowUp') { e.preventDefault(); sec(secili - 1); }
       else if (e.key === 'Enter') {
         const a = liste!.querySelector<HTMLAnchorElement>('li[aria-selected="true"] a');
-        if (a) { e.preventDefault(); location.href = a.href; }
+        if (!a) return;
+        e.preventDefault();
+        if (a.dataset.q) { giris!.value = a.dataset.q; ara(giris!.value); return; }
+        hatirla(giris!.value); location.href = a.href;
       }
     });
     liste.addEventListener('mousemove', (e) => {
@@ -177,7 +226,7 @@ const turler: Record<string, string> = {
 
     async function goster() {
       dialog!.showModal();
-      giris!.value = ''; liste!.innerHTML = ''; secili = -1;
+      giris!.value = ''; bosDurum();
       setTimeout(() => giris!.focus(), 30);
       motor().catch(() => { liste!.innerHTML = `<li class="bos">${dialog!.dataset.empty}</li>`; });
     }
