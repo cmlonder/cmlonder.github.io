@@ -10,7 +10,8 @@ plain files in a repository is content an agent can work with.
 ## Stack
 
 Astro, static output, deployed to GitHub Pages by a GitHub Actions workflow on
-every push to `main`. No database, no server, no analytics.
+every push to `main`. No database and no server; the only third party is
+Google Analytics, which counts page views.
 
 ## Type
 

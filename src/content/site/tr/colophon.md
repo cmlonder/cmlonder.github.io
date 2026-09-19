@@ -11,7 +11,8 @@ sonucu.
 ## Yığın
 
 Astro, statik çıktı, `main`'e her push'ta GitHub Actions ile GitHub Pages'e
-deploy. Veritabanı yok, sunucu yok, analitik yok.
+deploy. Veritabanı yok, sunucu yok; tek üçüncü taraf sayfa görüntülemelerini
+sayan Google Analytics.
 
 ## Tipografi
 

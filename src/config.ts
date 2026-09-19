@@ -367,6 +367,21 @@ export const SHELF_NAMES = Object.keys(SHELVES) as ShelfName[];
  * App'inin bu repoda kurulu olması gerekir (github.com/apps/giscus), yoksa
  * her yazıda hata kutusu çıkar.
  */
+/**
+ * Google Analytics 4.
+ *
+ * `enabled` kapalıyken sayfaya HİÇBİR ŞEY düşmez — ne script etiketi ne
+ * dataLayer; yorumlardaki kuralın aynısı. Ayrıca yalnızca üretim
+ * build'inde basılıyor: localhost gezintisi mülke veri yazmasın.
+ *
+ * Bunu açmak colophon'daki "analitik yok" cümlesini yalanlar; o cümle
+ * bu sabitle birlikte güncellendi. İkisi birlikte değişir.
+ */
+export const ANALYTICS = {
+  enabled: true,
+  ga4: 'G-1W2Z58W0MF',
+};
+
 export const COMMENTS = {
   enabled: true,
   repo: 'cmlonder/cmlonder.github.io',
