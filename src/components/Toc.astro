@@ -1,52 +1,45 @@
 ---
 /**
- * İçindekiler — yazının kendi başlıklarından, build sırasında.
+ * İçindekiler — sayfa düzeninden BAĞIMSIZ.
  *
- * JS'e ihtiyacı yok: liste sunucuda basılıyor. JS yalnızca okunan bölümü
- * işaretliyor ve rayı açıp kapatıyor.
+ * Panel `position: fixed`; hiçbir ızgara sütunu, hiçbir konum hesabı
+ * yok. Geniş ekranda sol kenara yaslı durur, dar ekranda karartmalı
+ * çekmece olur. Sekme sol kenarda, ekranın ortasında.
  *
- * h2 ve h3 alınıyor; daha derini listeyi merdivene çeviriyor ve kimse
- * o seviyede gezinmiyor.
+ * Liste sunucuda basılıyor; JS yalnızca açıp kapatıyor ve okunan bölümü
+ * işaretliyor. JS yoksa sekme görünmüyor, sayfa etkilenmiyor.
  */
+import type { Locale } from '../config';
 interface Props {
   headings: { depth: number; slug: string; text: string }[];
   label: string;
+  lang: Locale;
 }
-const { headings, label } = Astro.props as Props;
+const { headings, label, lang } = Astro.props as Props;
 const oge = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const kapat = lang === 'tr' ? 'Kapat' : 'Close';
 ---
 
 {oge.length > 1 && (
-  <nav class="toc" aria-labelledby="toc-h">
-    <p class="toc-h" id="toc-h">{label}</p>
-    <ol>
-      {oge.map((h) => (
-        <li data-d={h.depth}><a href={`#${h.slug}`}>{h.text}</a></li>
-      ))}
-    </ol>
-  </nav>
+  <>
+    <button type="button" class="toc-tab" data-toc-tab aria-expanded="false" aria-controls="toc-panel" hidden>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 6l6 6-6 6" />
+      </svg>
+      <span class="lbl">{label}</span>
+    </button>
+    <div class="toc-ortu" data-toc-ortu></div>
+    <nav class="toc-panel" id="toc-panel" data-toc-panel aria-label={label}>
+      <p class="toc-h">
+        <span>{label}</span>
+        <button type="button" class="kapat" data-toc-kapat aria-label={kapat}>&times;</button>
+      </p>
+      <ol>
+        {oge.map((h) => (
+          <li data-d={h.depth}><a href={`#${h.slug}`}>{h.text}</a></li>
+        ))}
+      </ol>
+    </nav>
+  </>
 )}
-
-<style>
-  .toc-h {
-    font-family: var(--f-sans); font-size: var(--t-xs);
-    text-transform: uppercase; letter-spacing: .08em;
-    color: var(--c-muted);
-    padding-block-end: var(--s-2xs);
-    margin-block-end: var(--s-2xs);
-    border-block-end: 1px solid var(--c-border);
-  }
-  .toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .45em; }
-  .toc li[data-d='3'] { padding-inline-start: var(--s-s); }
-  .toc a {
-    font-family: var(--f-sans); font-size: var(--t-xs);
-    color: var(--c-muted); text-decoration: none;
-    line-height: 1.4; display: block;
-    border-inline-start: 2px solid transparent;
-    padding-inline-start: .6em; margin-inline-start: -.6em;
-    transition: color .15s ease, border-color .15s ease;
-  }
-  .toc a:hover { color: var(--c-text); }
-  /* Okunan bölüm: renk değil çizgi taşıyor — liste sakin kalsın. */
-  .toc a[data-aktif] { color: var(--c-accent); border-inline-start-color: var(--c-accent); }
-</style>

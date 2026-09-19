@@ -295,56 +295,7 @@ h2.section-title a,
   min-block-size: 24px;
 }
 
-/*
- * Ray okları — içindekiler ve kenar notlarını açıp kapatan kontrol.
- *
- * Ok rayın İÇİNDE değil, yazının kenarına sabitli bir tutamakta duruyor.
- * Böylece ray açıkken de kapalıyken de aynı yerde; kapanınca ray
- * tamamen gidiyor, geri açmak için tutamak orada. Tutamak yazının boyu
- * kadar uzanan sıfır genişlikli bir şerit; içindeki düğme yapışkan,
- * kaydırınca okuyucuyla geliyor.
- *
- * Görünürlüğü düzenler veriyor (yalnızca raylı geniş ekranda).
- */
-.ray-tut {
-  position: absolute; inset-block: 0;
-  inline-size: 0;
-  pointer-events: none;
-}
-.ray-tut.sol { inset-inline-start: calc(-1 * var(--s-2xl) / 2 - .9rem); }
-.ray-tut.sag { inset-inline-end:   calc(-1 * var(--s-2xl) / 2 - .9rem); }
 
-.ray-ok {
-  position: sticky; inset-block-start: var(--s-l);
-  pointer-events: auto;
-  appearance: none; cursor: pointer;
-  display: grid; place-items: center;
-  inline-size: 1.8rem; block-size: 1.8rem;
-  border: 1px solid var(--c-border); border-radius: 999px;
-  background: var(--c-surface);
-  color: var(--c-muted);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--c-text) 8%, transparent);
-  transition: color .18s ease, border-color .18s ease, background-color .18s ease,
-              transform .18s ease, box-shadow .18s ease;
-}
-.ray-ok:hover, .ray-ok:focus-visible {
-  color: var(--c-accent);
-  border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border));
-  transform: scale(1.08);
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--c-text) 12%, transparent);
-}
-.ray-ok svg { transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
-
-/* Ok, rayın gideceği yönü gösteriyor: sol ray kapanırken sola, kapalıyken sağa. */
-.ray-tut.sol .ray-ok[aria-expanded='false'] svg,
-.ray-tut.sag .ray-ok[aria-expanded='true']  svg { transform: rotate(180deg); }
-
-.ray-ic { min-inline-size: 0; }
-
-@media (prefers-reduced-motion: reduce) {
-  .ray-ok, .ray-ok svg { transition: none; }
-  .ray-ok:hover { transform: none; }
-}
 
 /*
  * Ortak hover dili.
@@ -422,40 +373,6 @@ h2.section-title a,
   white-space: nowrap; border: 0;
 }
 
-/*
- * Kenar notları — hem yazı hem bölüm sayfalarında. Markup'ı
- * scripts/reading.ts üretiyor; kaynağı standart markdown dipnotu.
- */
-/* — Kenar notları — */
-.notes-rail .ray-ic { position: relative; }
-.sidenote {
-  position: absolute; inset-inline: 0; inset-block-start: 0;
-  font-family: var(--f-sans); font-size: var(--t-xs);
-  color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
-  transition: transform .25s cubic-bezier(.4, 0, .2, 1);
-}
-.sidenote p { margin: 0; }
-.sidenote p + p { margin-block-start: var(--s-2xs); }
-.sidenote .sn-n {
-  color: var(--c-accent); font-variant-numeric: tabular-nums;
-  margin-inline-end: .4em;
-}
-/* Referansa tıklanınca notu bir an belirt — kaybolmasın diye. */
-@keyframes notVurgu {
-  from { background: color-mix(in srgb, var(--c-mark) 22%, transparent); }
-  to   { background: transparent; }
-}
-.sidenote.vurgu { animation: notVurgu 1.2s ease both; }
-
-/* Notlar kenara taşındıysa alttaki dipnot bölümü tekrarlanmasın. */
-[data-sidenotes='var'] [data-footnotes] { display: none; }
-
-.prose a[data-footnote-ref] { text-decoration: none; }
-
-@media (prefers-reduced-motion: reduce) {
-  .sidenote { transition: none; }
-  .sidenote.vurgu { animation: none; }
-}
 
 /*
  * Liste kipi: satır (varsayılan) <-> ızgara.
@@ -491,3 +408,127 @@ h2.section-title a,
 }
 .timeline .ay-bag:hover { color: var(--c-accent); background-size: 100% 1px; }
 @media (prefers-reduced-motion: reduce) { .timeline .ay-bag { transition: none; } }
+
+/* ============================================================
+ * OKUYUCU: içindekiler paneli + satır içi notlar.
+ *
+ * Önceki tasarım ızgara sütunlarına ve konum hesabına dayanıyordu ve
+ * üç kez üst üste kırıldı. Bu tasarımın kuralı: sayfa düzenine hiç
+ * dokunma. Panel `position: fixed`, notlar paragrafın altında açılıyor.
+ * ============================================================ */
+
+/* — İçindekiler sekmesi: sol kenar, ekranın ortası — */
+.toc-tab {
+  position: fixed; inset-inline-start: 0; inset-block-start: 50%;
+  translate: 0 -50%;
+  z-index: 40;
+  appearance: none; cursor: pointer;
+  display: flex; align-items: center; gap: .5em;
+  padding: .6em .55em .6em .5em;
+  border: 1px solid var(--c-border); border-inline-start: 0;
+  border-radius: 0 999px 999px 0;
+  background: var(--c-surface); color: var(--c-muted);
+  font-family: var(--f-sans); font-size: var(--t-xs);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--c-text) 10%, transparent);
+  transition: color .18s ease, translate .28s cubic-bezier(.4, 0, .2, 1), background-color .18s ease;
+}
+.toc-tab:hover { color: var(--c-accent); background: var(--c-bg); }
+.toc-tab .lbl { writing-mode: vertical-rl; rotate: 180deg; letter-spacing: .08em; text-transform: uppercase; }
+.toc-tab svg { transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
+.toc-tab[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+/* — Panel — */
+.toc-panel {
+  position: fixed; inset-block: 0; inset-inline-start: 0;
+  z-index: 41;
+  inline-size: min(20rem, 88vw);
+  padding: var(--s-l) var(--s-m) var(--s-l) var(--s-l);
+  overflow-y: auto;
+  background: var(--c-surface);
+  border-inline-end: 1px solid var(--c-border);
+  box-shadow: 8px 0 24px color-mix(in srgb, var(--c-text) 10%, transparent);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform .28s cubic-bezier(.4, 0, .2, 1), visibility 0s linear .28s;
+}
+.toc-panel[data-open] {
+  transform: none; visibility: visible;
+  transition: transform .28s cubic-bezier(.4, 0, .2, 1);
+}
+.toc-panel .toc-h {
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--f-sans); font-size: var(--t-xs);
+  text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+  padding-block-end: var(--s-2xs); margin-block-end: var(--s-s);
+  border-block-end: 1px solid var(--c-border);
+}
+.toc-panel .kapat {
+  appearance: none; background: none; border: 0; cursor: pointer;
+  color: var(--c-muted); font-size: 1.3em; line-height: 1; padding: 0 .2em;
+}
+.toc-panel .kapat:hover { color: var(--c-accent); }
+.toc-panel ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .5em; }
+.toc-panel li[data-d='3'] { padding-inline-start: var(--s-s); }
+.toc-panel a {
+  display: block; font-family: var(--f-sans); font-size: var(--t-sm);
+  color: var(--c-muted); text-decoration: none; line-height: 1.4;
+  border-inline-start: 2px solid transparent;
+  padding-inline-start: .6em; margin-inline-start: -.6em;
+  transition: color .15s ease, border-color .15s ease;
+}
+.toc-panel a:hover { color: var(--c-text); }
+.toc-panel a[data-aktif] { color: var(--c-accent); border-inline-start-color: var(--c-accent); }
+
+/* Dar ekranda panel çekmece: arkada karartma, tıklayınca kapanır. */
+.toc-ortu {
+  position: fixed; inset: 0; z-index: 39;
+  background: color-mix(in srgb, var(--c-text) 35%, transparent);
+  opacity: 0; visibility: hidden;
+  transition: opacity .25s ease, visibility 0s linear .25s;
+}
+.toc-ortu[data-open] { opacity: 1; visibility: visible; transition: opacity .25s ease; }
+
+/* Geniş ekranda karartma yok; sekme panelin kenarına taşınır. */
+@media (min-width: 64rem) {
+  .toc-ortu { display: none; }
+  html[data-toc-open] .toc-tab { translate: min(20rem, 88vw) -50%; }
+}
+
+/* — Satır içi notlar — */
+.prose a[data-footnote-ref] {
+  cursor: pointer; text-decoration: none;
+  display: inline-block; min-inline-size: 1.4em; text-align: center;
+  padding-inline: .25em; margin-inline-start: .1em;
+  border-radius: 999px;
+  font-family: var(--f-sans); font-size: .72em; line-height: 1.5;
+  color: var(--c-accent); background: color-mix(in srgb, var(--c-accent) 12%, transparent);
+  transition: background-color .15s ease, color .15s ease;
+}
+.prose a[data-footnote-ref]:hover,
+.prose a[data-footnote-ref][aria-expanded='true'] { background: var(--c-accent); color: var(--c-bg); }
+
+.note-inline {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .28s cubic-bezier(.4, 0, .2, 1);
+}
+.note-inline[data-open] { grid-template-rows: 1fr; }
+.note-inline > div { overflow: hidden; }
+.note-inline .govde {
+  margin-block: var(--s-2xs) var(--s-s);
+  padding: var(--s-s) var(--s-m);
+  border-inline-start: 2px solid var(--c-accent);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  background: var(--c-tinted);
+  font-family: var(--f-sans); font-size: var(--t-sm);
+  color: var(--c-muted-on-tint); line-height: 1.55; text-wrap: pretty;
+}
+.note-inline .govde p { margin: 0; }
+.note-inline .govde p + p { margin-block-start: var(--s-2xs); }
+.note-inline .sn-n { color: var(--c-accent); font-variant-numeric: tabular-nums; margin-inline-end: .5em; }
+
+/* JS notları paragrafa taşıdıysa alttaki dipnot bölümü tekrarlanmasın. */
+[data-reader][data-notes-inline] [data-footnotes] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-tab, .toc-tab svg, .toc-panel, .toc-ortu, .note-inline, .prose a[data-footnote-ref] { transition: none; }
+}

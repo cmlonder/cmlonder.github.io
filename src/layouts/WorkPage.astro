@@ -179,10 +179,15 @@ const other = p.lang === 'tr' ? 'en' : 'tr';
   .when {
     position: relative;
     font-family: var(--f-mono); font-size: var(--t-xs); color: var(--c-muted);
-    margin: 0; padding-block-start: .35em; white-space: nowrap;
+    margin: 0; padding-block-start: .35em;
+    /* nowrap yoktu derken "09/2022 — 08/2024" 8.5rem'lik sütunu taşıp
+       yazının üstüne biniyordu. Sütun genişledi, satır kırılabilir. */
+    white-space: normal; line-height: 1.5;
   }
   .when .dot {
-    position: absolute; inset-inline-start: -1rem; inset-block-start: .75em;
+    /* Dar ekranda çizgi yok, düğüm de yok. */
+    display: none;
+    position: absolute; inset-block-start: .75em;
     inline-size: 9px; block-size: 9px; border-radius: 999px;
     background: var(--c-bg);
     border: 2px solid var(--c-border);
@@ -230,16 +235,16 @@ const other = p.lang === 'tr' ? 'en' : 'tr';
   .figures li:hover b { color: var(--c-accent); }
 
   @media (min-width: 46rem) {
-    .roles > li { grid-template-columns: 8.5rem 1fr; }
+    .roles > li { grid-template-columns: 10.5rem 1fr; }
     /* Çizgi dönem sütunuyla içerik sütunu arasından geçiyor. */
     .roles > li::before {
       content: ''; position: absolute;
-      inset-inline-start: calc(8.5rem + var(--s-l) / 2 - 1px);
+      inset-inline-start: calc(10.5rem + var(--s-l) / 2 - 1px);
       inset-block: .9em calc(var(--s-2xl) * -1);
       inline-size: 1px; background: var(--c-border);
     }
     .roles > li:last-child::before { display: none; }
-    .when .dot { inset-inline-start: calc(8.5rem + var(--s-l) / 2 - 4.5px); }
+    .when .dot { display: block; inset-inline-start: calc(10.5rem + var(--s-l) / 2 - 4.5px); }
     .when { padding-inline-end: var(--s-s); }
     .know { grid-template-columns: 13rem 1fr; }
     .know dd { margin-block-end: var(--s-2xs); }
