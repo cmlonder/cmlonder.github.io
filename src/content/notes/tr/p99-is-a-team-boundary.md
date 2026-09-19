@@ -4,7 +4,7 @@ description: 'p99''un sahibi kim ise nöbet telefonunun sahibi de o. Gerisi bund
 pubDate: 2026-06-19
 status: budding
 topics: [scale-and-performance]
-tags: [slo, nöbet]
+tags: [slo, oncall]
 draft: false
 placeholder: true
 ---

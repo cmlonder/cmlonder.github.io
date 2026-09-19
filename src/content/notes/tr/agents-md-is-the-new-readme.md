@@ -4,7 +4,7 @@ description: 'README bir kere göz gezdirecek insan için yazılmıştı. Bu dos
 pubDate: 2026-07-29
 status: budding
 topics: [agentic-development]
-tags: [konvansiyon]
+tags: [conventions]
 draft: false
 placeholder: true
 ---

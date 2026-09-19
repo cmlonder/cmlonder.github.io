@@ -5,7 +5,7 @@ pubDate: 2026-02-24
 updatedDate: 2026-07-28
 status: evergreen
 topics: [scale-and-performance]
-tags: [kafka, kuyruk]
+tags: [kafka, queues]
 draft: false
 placeholder: true
 ---

@@ -11,7 +11,7 @@ symptoms:
 - Trafik artmadan sorgu gecikmesi yükseldi
 tryFirst: 10
 topics: [scale-and-performance, solution-architecture]
-tags: [postgres, veritabanı, kapasite]
+tags: [postgres, database, capacity]
 draft: false
 placeholder: true
 ---

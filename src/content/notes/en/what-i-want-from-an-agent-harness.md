@@ -4,7 +4,7 @@ description: 'A running wishlist. Mostly about observability and being able to s
 pubDate: 2026-05-10
 status: budding
 topics: [agentic-development]
-tags: [tooling]
+tags: [tools]
 draft: false
 placeholder: true
 ---

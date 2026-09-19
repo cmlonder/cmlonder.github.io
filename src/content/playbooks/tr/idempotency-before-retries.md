@@ -10,7 +10,7 @@ symptoms:
 - Mükerrer kayıtlar oluşuyor
 tryFirst: 30
 topics: [solution-architecture]
-tags: [güvenilirlik, retry]
+tags: [reliability, retries]
 draft: false
 placeholder: true
 ---

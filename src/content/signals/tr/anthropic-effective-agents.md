@@ -5,7 +5,7 @@ pubDate: 2026-08-28
 url: https://www.anthropic.com/engineering/building-effective-agents
 source: 'Anthropic Engineering'
 topics: [agentic-development, ai-news]
-tags: [pattern]
+tags: [patterns]
 draft: false
 placeholder: true
 ---

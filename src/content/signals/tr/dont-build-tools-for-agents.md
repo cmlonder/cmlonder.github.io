@@ -5,7 +5,7 @@ pubDate: 2026-08-11
 url: https://seangoedecke.com/dont-build-tools-for-ai-agents/
 source: 'Sean Goedecke'
 topics: [agentic-development]
-tags: [tool]
+tags: [tools]
 draft: false
 placeholder: true
 ---

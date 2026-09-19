@@ -4,7 +4,7 @@ description: 'Kendi şeyini sessizce kurmak mümkün mü, ve bu işin amacını 
 pubDate: 2026-09-13
 status: seedling
 topics: [solo-company]
-tags: [bağımsızlık]
+tags: [independence]
 draft: false
 placeholder: true
 ---

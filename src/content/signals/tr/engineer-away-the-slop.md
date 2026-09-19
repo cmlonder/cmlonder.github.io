@@ -5,7 +5,7 @@ pubDate: 2026-07-25
 url: https://ghuntley.com/slop/
 source: 'Geoffrey Huntley'
 topics: [agentic-development]
-tags: [kalite]
+tags: [quality]
 draft: false
 placeholder: true
 ---

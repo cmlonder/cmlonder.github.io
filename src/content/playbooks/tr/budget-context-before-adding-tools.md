@@ -10,7 +10,7 @@ symptoms:
 - Bir şey yavaş ve kimse nedenini bilmiyor
 tryFirst: 10
 topics: [agentic-development]
-tags: [context-engineering, tool]
+tags: [context-engineering, tools]
 draft: false
 placeholder: true
 ---

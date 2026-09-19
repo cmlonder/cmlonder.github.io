@@ -10,7 +10,7 @@ symptoms:
 - Yazma başarılı ama olay gelmedi
 tryFirst: 30
 topics: [solution-architecture, scale-and-performance]
-tags: [kafka, tutarlılık, outbox]
+tags: [kafka, consistency, outbox]
 draft: false
 placeholder: true
 ---
