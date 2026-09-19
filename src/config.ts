@@ -311,6 +311,7 @@ export const SHELVES = {
       tr: 'Sistemler, iş ya da kendim hakkında düşüncemi değiştiren kitaplar.',
     },
     creator: { en: 'Author', tr: 'Yazar' },
+    done:    { en: 'Read', tr: 'Okuduklarım' },
     queued:  { en: 'Up next', tr: 'Sırada' },
     queuedBlurb: {
       en: 'Unread, and kept in sight on purpose — a reminder of how much I do not know.',
@@ -326,6 +327,7 @@ export const SHELVES = {
       tr: 'Zanaat, saplantı ve yapıcısını aşan sistemler üzerine filmler.',
     },
     creator: { en: 'Director', tr: 'Yönetmen' },
+    done:    { en: 'Watched', tr: 'İzlediklerim' },
     queued:  { en: 'Watchlist', tr: 'İzleme listesi' },
     queuedBlurb: {
       en: 'Queued up, not yet watched.',
@@ -341,6 +343,7 @@ export const SHELVES = {
       tr: 'Çoğu bir ya da iki kişinin işi. Oynayarak öğrenilen sistemler.',
     },
     creator: { en: 'Studio', tr: 'Geliştirici' },
+    done:    { en: 'Played', tr: 'Oynadıklarım' },
     queued:  { en: 'Backlog', tr: 'Oynanacaklar' },
     queuedBlurb: {
       en: 'Bought, installed, not yet played.',

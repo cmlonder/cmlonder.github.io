@@ -1,7 +1,11 @@
 ---
 /**
  * Raf listesi — /library, /films, /games için ortak.
- * Bitirdiklerim üstte ızgarada; sırada bekleyenler altta ayrı bölümde.
+ *
+ * İki bölüm var: bitirdiklerim ve sırada bekleyenler. Sunucu ikisini alt
+ * alta basıyor; shelf-tabs.ts bunları sekmeye çeviriyor. JS gelmezse
+ * sayfa alt alta çalışmaya devam ediyor — sekme bir iyileştirme, sayfanın
+ * çalışma şartı değil.
  */
 import Base from './Base.astro';
 import ShelfCard from '../components/ShelfCard.astro';
@@ -34,27 +38,39 @@ const sirada = items.filter((e) => e.data.status === 'queued');
 
     <LangNote lang={lang} shown={shown} />
 
-    {bitmis.length === 0 ? <p class="meta">{UI[lang].empty}</p> : (
-      <ul class="grid">
-        {bitmis.map((e) => (
-          <li><ShelfCard entry={e} shelf={shelf} lang={lang} href={yol(e)} /></li>
-        ))}
-      </ul>
-    )}
-
-    {sirada.length > 0 && (
-      <section class="queued">
-        <h2>{meta.queued[lang]}</h2>
-        <p class="blurb">{meta.queuedBlurb[lang]}</p>
-        <ul class="grid">
-          {sirada.map((e) => (
-            <li><ShelfCard entry={e} shelf={shelf} lang={lang} href={yol(e)} /></li>
-          ))}
-        </ul>
+    <div class="shelf" data-shelf
+         data-label={meta.name[lang]}
+         data-done={meta.done[lang]}
+         data-queued={meta.queued[lang]}>
+      <section class="panel" id="shelf-done" data-panel="done" data-count={bitmis.length}>
+        <h2>{meta.done[lang]}</h2>
+        {bitmis.length === 0 ? <p class="meta">{UI[lang].empty}</p> : (
+          <ul class="grid">
+            {bitmis.map((e) => (
+              <li><ShelfCard entry={e} shelf={shelf} lang={lang} href={yol(e)} /></li>
+            ))}
+          </ul>
+        )}
       </section>
-    )}
+
+      {sirada.length > 0 && (
+        <section class="panel queued" id="shelf-queued" data-panel="queued" data-count={sirada.length}>
+          <h2>{meta.queued[lang]}</h2>
+          <p class="blurb">{meta.queuedBlurb[lang]}</p>
+          <ul class="grid">
+            {sirada.map((e) => (
+              <li><ShelfCard entry={e} shelf={shelf} lang={lang} href={yol(e)} /></li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
   </div>
 </Base>
+
+<script>
+  import './../scripts/shelf-tabs';
+</script>
 
 <style>
   .wrap { max-inline-size: var(--w-page); margin-inline: auto; }
@@ -82,22 +98,86 @@ const sirada = items.filter((e) => e.data.status === 'queued');
     gap: var(--s-l) var(--s-m);
   }
 
-  .queued {
+  /* JS yokken iki bölüm alt alta; bugünkü görünüm. */
+  .panel + .panel {
     margin-block-start: var(--s-4xl);
     padding-block-start: var(--s-l);
     border-block-start: 1px solid var(--c-border);
   }
-  .queued h2 {
+  .panel h2 {
     font-family: var(--f-serif); font-variation-settings: var(--axis-display);
     font-weight: 400; font-size: var(--t-lg);
+    margin-block-end: var(--s-m);
   }
   .queued .blurb { font-size: var(--t-sm); margin-block-end: var(--s-l); }
+
+  /* — Sekmeye dönünce — */
+  .shelf.sekmeli .panel + .panel {
+    margin-block-start: 0; padding-block-start: 0; border-block-start: 0;
+  }
+  .shelf.sekmeli .panel:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 6px; }
+  :global(.sr-gizli) {
+    position: absolute; inline-size: 1px; block-size: 1px;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+  }
+
+  .shelf :global(.tablist) {
+    position: relative;
+    display: flex; gap: var(--s-m);
+    margin-block-end: var(--s-l);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .shelf :global(.tab) {
+    appearance: none; background: none; border: 0; cursor: pointer;
+    display: flex; align-items: baseline; gap: .5em;
+    padding: 0 0 var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted);
+    transition: color .18s ease;
+  }
+  .shelf :global(.tab:hover) { color: var(--c-text); }
+  .shelf :global(.tab[aria-selected='true']) { color: var(--c-accent); }
+  .shelf :global(.tab .n) {
+    font-size: var(--t-xs); font-variant-numeric: tabular-nums;
+    color: var(--c-muted);
+  }
+  .shelf :global(.tab[aria-selected='true'] .n) { color: var(--c-mark-ink); }
+
+  /* Altta kayan çizgi — sekmeler arası bağı görünür kılan tek hareket. */
+  .shelf :global(.ink) {
+    position: absolute; inset-block-end: -1px; inset-inline-start: 0;
+    block-size: 2px; background: var(--c-accent);
+  }
+  /* Geçiş ilk konumlandırmadan SONRA açılıyor; yoksa çizgi sayfa
+     açılışında soldan kayarak geliyor ve hareket bedava değil. */
+  .shelf :global(.tablist.hazir .ink) {
+    transition: transform .28s cubic-bezier(.4, 0, .2, 1), inline-size .28s cubic-bezier(.4, 0, .2, 1);
+  }
+
+  /* Panel geçişi: kısa, tek yönlü, dikkat çalmayan. */
+  @keyframes panelGiris {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .shelf.sekmeli .panel.giris { animation: panelGiris .22s ease both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shelf :global(.tablist.hazir .ink) { transition: none; }
+    .shelf.sekmeli .panel.giris { animation: none; }
+  }
   /* Sırada bekleyenler ayrışsın ama OKUNAKLI kalsın.
      Kartın tamamına opaklık vermek metni 2.70:1'e düşürüyordu —
      üstelik en ilginç kopya orada. Soluklaştırma yalnızca kapakta;
-     ayrım metinde tipografiyle taşınıyor. */
-  .queued :global(.cover) { opacity: .6; filter: saturate(.75); transition: opacity .18s ease, filter .18s ease; }
-  .queued :global(.card:hover .cover) { opacity: 1; filter: none; }
+     ayrım metinde tipografiyle taşınıyor.
+
+     Yalnızca sekmesiz görünümde: sekme açıkken iki bölüm zaten ayrı
+     ekranda ve ayrımı sekme adı taşıyor, orada soluklaştırma sadece
+     kapakları soldurmuş oluyor. */
+  .shelf:not(.sekmeli) .queued :global(.cover) {
+    opacity: .6; filter: saturate(.75);
+    transition: opacity .18s ease, filter .18s ease;
+  }
+  .shelf:not(.sekmeli) .queued :global(.card:hover .cover) { opacity: 1; filter: none; }
   .queued :global(.note) { font-style: italic; }
 
   @media (max-width: 34rem) {
