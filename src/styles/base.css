@@ -575,3 +575,38 @@ h2.section-title a,
 .onizleme .on-k { font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--c-mark-ink); }
 .onizleme .on-t { margin-block-start: .15em; font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-size: var(--t-base); line-height: var(--lh-snug); color: var(--c-text); }
 .onizleme .on-d { margin-block-start: .3em; font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); line-height: 1.5; text-wrap: pretty; }
+
+/* — Kod bloğu: dil etiketi + kopyala. Shiki <pre>'si figure'a sarılı. — */
+.kod { margin-block: var(--s-m); border: 1px solid var(--c-border); border-radius: var(--radius-lg); overflow: hidden; background: var(--c-surface); }
+.kod-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-s);
+  padding: .35em var(--s-s) .35em var(--s-m);
+  border-block-end: 1px solid var(--c-border);
+  font-family: var(--f-mono); font-size: var(--t-xs); color: var(--c-muted);
+}
+.kod-ad { text-transform: lowercase; letter-spacing: .04em; }
+.kod-kopyala {
+  appearance: none; cursor: pointer; border: 1px solid transparent; border-radius: 6px;
+  padding: .2em .6em; background: none;
+  font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  transition: color .15s ease, border-color .15s ease, background-color .15s ease;
+}
+.kod-kopyala:hover { color: var(--c-accent); border-color: var(--c-border); background: var(--c-bg); }
+.kod-kopyala[data-ok] { color: var(--c-mark-ink); }
+.kod pre { margin: 0; border: 0; border-radius: 0; }
+
+/* — Büyütme — */
+.prose img.buyutulebilir { cursor: zoom-in; }
+.buyut { border: 0; padding: 0; background: transparent; max-inline-size: 100vw; max-block-size: 100vh; inline-size: 100vw; block-size: 100vh; }
+.buyut::backdrop { background: color-mix(in srgb, var(--c-text) 72%, transparent); backdrop-filter: blur(6px); }
+.buyut figure { margin: 0; block-size: 100%; display: grid; place-items: center; gap: var(--s-s); padding: var(--s-l); }
+.buyut img { max-inline-size: min(96vw, 110rem); max-block-size: 82vh; border-radius: var(--radius-lg); box-shadow: 0 30px 80px color-mix(in srgb, var(--c-text) 40%, transparent); cursor: zoom-out; }
+.buyut figcaption { font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-bg); text-align: center; max-inline-size: 60ch; text-wrap: pretty; }
+.buyut-kapat {
+  position: fixed; inset-block-start: 1rem; inset-inline-end: 1rem;
+  inline-size: 2.5rem; block-size: 2.5rem; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--c-bg) 40%, transparent);
+  background: color-mix(in srgb, var(--c-text) 40%, transparent); color: var(--c-bg); font-size: 1.4em; line-height: 1; cursor: pointer;
+}
+.buyut[open] img { animation: buyutGiris .2s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes buyutGiris { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .buyut[open] img { animation: none; } .kod-kopyala { transition: none; } }

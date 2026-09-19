@@ -60,6 +60,10 @@ const home = localePath(lang, '');
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogUrl} />
 
+    {/* Makine okurları için: yazının ham Markdown aynası. İnsana görünmez. */}
+    {structured && (
+      <link rel="alternate" type="text/markdown" href={new URL(Astro.url.pathname.replace(/\/$/, '') + '.md', SITE.url).href} />
+    )}
     <link rel="alternate" type="application/rss+xml"
           title={`${SITE.author} — RSS`} href={localePath(lang, 'rss.xml')} />
     <StructuredData lang={lang} entry={structured} />
@@ -129,3 +133,7 @@ const home = localePath(lang, '');
     </style>
   </body>
 </html>
+
+<script>
+  import '../scripts/prose-extras';
+</script>

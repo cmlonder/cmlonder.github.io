@@ -26,7 +26,9 @@ siteler (Letterboxd, Backloggd, Literal, Gates Notes) listeye alınmadı.
 
 ## Sitede henüz olmayan, referanslarda olan
 
-> Karar (19 Eyl): "kime yazıldı" satırı, not ağı ve ikinci açıklayıcı yapıldı; yıllık seçme listeden çıkarıldı; radar changelog ritmi karar bekliyor.
+> Karar (19 Eyl): "kime yazıldı" satırı, not ağı ve ikinci açıklayıcı yapıldı; yıllık seçme listeden çıkarıldı; radar changelog ritmi ve anasayfa "son güncellemeler" akışı (brianlovin.com, simonwillison.net) karar bekliyor.
+>
+> İkinci tur (19 Eyl): kod bloğu üst çubuğu (dil + kopyala), görsel/slayt büyütme, makine için görünmez `text/markdown` alternate bağlantısı ve ⌘K arama paleti yapıldı. Kalanlar: anasayfa "son güncellemeler" akışı ve radar changelog ritmi — silinmedi, karar bekliyor.
 
 - **Notlar arası "backlink + önizleme" hover'ı** (Maggie garden, Andy Matuschak): bağlantının üstüne gelince hedef notun ilk paragrafı beliriyor. Bizde backlink listesi var, önizleme yok.
 - **Okuma ilerleme göstergesi / "kaldığın yer"** (Gwern): uzun bölümlerde.

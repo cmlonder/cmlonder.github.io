@@ -1,94 +1,193 @@
 ---
-import type { Locale } from '../config';
+/**
+ * Arama paleti — ⌘K / Ctrl+K / "/".
+ *
+ * Pagefind'in hazır arayüzü yerine kendi paletimiz: tek giriş kutusu,
+ * altında tür işaretli sonuçlar, ok tuşlarıyla gezinme, Enter ile aç.
+ * Pagefind yalnızca dizin ve arama motoru olarak kullanılıyor; paket ilk
+ * açılışta yükleniyor. Görünüm: yarı saydam, buğulu, ortalı.
+ */
+import { COLLECTION_LABELS, SHELVES, DOMAINS, RADAR, type Locale } from '../config';
 interface Props { lang: Locale }
 const { lang } = Astro.props;
-const label = lang === 'tr' ? 'Ara' : 'Search';
-const placeholder = lang === 'tr' ? 'Yazılarda ara…' : 'Search entries…';
+const t = lang === 'tr'
+  ? { label: 'Ara', placeholder: 'Yazılarda, notlarda, raflarda ara…', empty: 'Sonuç yok', hint: '↑↓ gez · ↵ aç · esc kapat', loading: 'Dizin yükleniyor…' }
+  : { label: 'Search', placeholder: 'Search essays, notes, shelves…', empty: 'No results', hint: '↑↓ move · ↵ open · esc close', loading: 'Loading index…' };
+// URL'nin ilk parçasından tür etiketi.
+const turler: Record<string, string> = {
+  essays: COLLECTION_LABELS.essays[lang], notes: COLLECTION_LABELS.notes[lang],
+  playbooks: COLLECTION_LABELS.playbooks[lang], signals: COLLECTION_LABELS.signals[lang],
+  library: SHELVES.library.name[lang], films: SHELVES.films.name[lang], games: SHELVES.games.name[lang],
+  domains: DOMAINS.name[lang], radar: RADAR.name[lang], projects: lang === 'tr' ? 'Proje' : 'Project',
+};
 ---
 
-<div class="search" data-label={label}>
-  <button id="search-open" type="button" aria-label={label} title={label}>
+<div class="search">
+  <button id="search-open" type="button" aria-label={t.label} title={`${t.label} (⌘K)`}>
     <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none"
          stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
       <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
     </svg>
   </button>
 
-  <dialog id="search-dialog" aria-label={label}>
-    <div id="pagefind" data-placeholder={placeholder}></div>
+  <dialog id="search-dialog" class="palet" aria-label={t.label}
+          data-turler={JSON.stringify(turler)} data-empty={t.empty} data-loading={t.loading}>
+    <form class="palet-kutu" role="search" onsubmit="return false">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none"
+           stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
+      </svg>
+      <input id="palet-giris" type="search" autocomplete="off" spellcheck="false"
+             placeholder={t.placeholder} aria-label={t.label} aria-controls="palet-sonuc" aria-autocomplete="list" />
+      <kbd>esc</kbd>
+    </form>
+    <ul id="palet-sonuc" class="palet-sonuc" role="listbox" aria-label={t.label}></ul>
+    <p class="palet-ipucu">{t.hint}</p>
   </dialog>
 </div>
 
-<style is:global>
-  /* Pagefind'in kendi CSS değişkenleri — sitenin token'larına bağlanıyor. */
-  #pagefind {
-    --pagefind-ui-scale: 0.85;
-    --pagefind-ui-primary: var(--c-text);
-    --pagefind-ui-text: var(--c-text);
-    --pagefind-ui-background: var(--c-surface);
-    --pagefind-ui-border: var(--c-border);
-    --pagefind-ui-tag: var(--c-tinted);
-    --pagefind-ui-border-width: 1px;
-    --pagefind-ui-border-radius: var(--radius);
-    --pagefind-ui-font: var(--f-sans);
-  }
-  #pagefind mark { background: color-mix(in srgb, var(--c-accent) 18%, transparent); color: inherit; }
-</style>
-
 <style>
   #search-open {
-    display: grid; place-items: center;
-    inline-size: 2rem; block-size: 2rem;
+    display: grid; place-items: center; inline-size: 2rem; block-size: 2rem;
     padding: 0; border: 1px solid transparent; border-radius: 999px;
     background: none; color: var(--c-muted); cursor: pointer;
     transition: color 120ms ease, border-color 120ms ease;
   }
   #search-open:hover { color: var(--c-accent); border-color: var(--c-border); }
 
-  dialog {
-    inline-size: min(92vw, 40rem);
-    max-block-size: 80vh;
-    margin-block-start: 12vh;
-    padding: var(--s-xs);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-lg);
-    background: var(--c-surface);
-    color: var(--c-text);
+  .palet {
+    inline-size: min(92vw, 42rem); max-block-size: min(70vh, 34rem);
+    margin-block-start: 14vh; padding: 0;
+    border: 1px solid color-mix(in srgb, var(--c-border) 80%, transparent);
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--c-surface) 86%, transparent);
+    backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    box-shadow: 0 24px 60px color-mix(in srgb, var(--c-text) 18%, transparent);
+    color: var(--c-text); overflow: hidden;
+    display: none;
+    grid-template-rows: auto 1fr auto;
   }
-  dialog::backdrop { background: color-mix(in srgb, var(--c-bg) 70%, transparent); backdrop-filter: blur(3px); }
+  .palet[open] { display: grid; animation: paletGiris .18s cubic-bezier(.2, .8, .2, 1) both; }
+  .palet::backdrop { background: color-mix(in srgb, var(--c-bg) 55%, transparent); backdrop-filter: blur(4px); }
+  @keyframes paletGiris { from { opacity: 0; transform: translateY(-6px) scale(.985); } to { opacity: 1; transform: none; } }
+
+  .palet-kutu {
+    display: flex; align-items: center; gap: var(--s-xs);
+    padding: var(--s-s) var(--s-m);
+    border-block-end: 1px solid var(--c-border);
+    color: var(--c-muted);
+  }
+  .palet-kutu input {
+    flex: 1; min-inline-size: 0; border: 0; background: none; outline: none;
+    font-family: var(--f-sans); font-size: var(--t-md); color: var(--c-text);
+  }
+  .palet-kutu input::placeholder { color: var(--c-muted); }
+  .palet-kutu input::-webkit-search-cancel-button { display: none; }
+  .palet kbd {
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+    padding: .1em .45em; border: 1px solid var(--c-border); border-radius: 6px;
+  }
+
+  .palet-sonuc { list-style: none; margin: 0; padding: var(--s-2xs); overflow-y: auto; min-block-size: 0; }
+  .palet-sonuc:empty { padding: 0; }
+  .palet-sonuc :global(li) { border-radius: 10px; }
+  .palet-sonuc :global(a) {
+    display: grid; grid-template-columns: auto 1fr; gap: .2em var(--s-s); align-items: baseline;
+    padding: var(--s-2xs) var(--s-s); border-radius: 10px;
+    text-decoration: none; color: var(--c-text);
+  }
+  .palet-sonuc :global(li[aria-selected='true'] a), .palet-sonuc :global(a:hover) { background: color-mix(in srgb, var(--c-accent) 9%, transparent); }
+  .palet-sonuc :global(.tur) {
+    grid-row: span 2; align-self: start; margin-block-start: .35em;
+    font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em;
+    color: var(--c-mark-ink); min-inline-size: 5.5rem;
+  }
+  .palet-sonuc :global(.ad) { font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-size: var(--t-base); line-height: var(--lh-snug); }
+  .palet-sonuc :global(.oz) { font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); line-height: 1.45; }
+  .palet-sonuc :global(.oz mark) { background: color-mix(in srgb, var(--c-accent) 18%, transparent); color: inherit; border-radius: 3px; }
+  .palet-sonuc :global(.bos) { padding: var(--s-m); font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted); text-align: center; }
+  .palet-ipucu { margin: 0; padding: var(--s-2xs) var(--s-m); border-block-start: 1px solid var(--c-border); font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); }
+  @media (prefers-reduced-motion: reduce) { .palet[open] { animation: none; } }
 </style>
 
 <script>
   const dialog = document.getElementById('search-dialog') as HTMLDialogElement | null;
   const open = document.getElementById('search-open');
-  const mount = document.getElementById('pagefind');
-  let loaded = false;
+  const giris = document.getElementById('palet-giris') as HTMLInputElement | null;
+  const liste = document.getElementById('palet-sonuc') as HTMLUListElement | null;
+  if (dialog && giris && liste) {
+    const L = liste;                                       // kapanışlar için null'sız kopya
+    const turler: Record<string, string> = JSON.parse(dialog.dataset.turler || '{}');
+    let pf: any = null;
+    let secili = -1;
+    let sira = 0;
 
-  async function show() {
-    if (!dialog) return;
-    if (!loaded && mount) {
-      loaded = true;                       // Pagefind paketi ilk açılışta yüklenir.
-      const { PagefindUI } = await import('@pagefind/default-ui');
-      await import('@pagefind/default-ui/css/ui.css');
-      new PagefindUI({
-        element: '#pagefind',
-        showImages: false,
-        showSubResults: true,
-        excerptLength: 20,
-        translations: { placeholder: mount.dataset.placeholder ?? 'Search' },
-      });
+    async function motor() {
+      if (pf) return pf;
+      L.innerHTML = `<li class="bos">${dialog!.dataset.loading}</li>`;
+      // Yol değişkende: Vite build sırasında çözmeye kalkmasın, tarayıcı çözsün.
+      const yol = '/pagefind/pagefind.js';
+      pf = await import(/* @vite-ignore */ yol);
+      await pf.init();
+      L.innerHTML = '';
+      return pf;
     }
-    dialog.showModal();
-    setTimeout(() => dialog.querySelector('input')?.focus(), 40);
+    const tur = (url: string) => {
+      const p = url.replace(/^\/tr\//, '/').split('/').filter(Boolean)[0] ?? '';
+      return turler[p] ?? '';
+    };
+    function sec(i: number) {
+      const ogeler = [...liste!.querySelectorAll('li[role="option"]')];
+      if (!ogeler.length) return;
+      secili = (i + ogeler.length) % ogeler.length;
+      ogeler.forEach((li, j) => li.setAttribute('aria-selected', String(j === secili)));
+      (ogeler[secili] as HTMLElement).scrollIntoView({ block: 'nearest' });
+    }
+    async function ara(q: string) {
+      const benim = ++sira;
+      if (!q.trim()) { liste!.innerHTML = ''; secili = -1; return; }
+      const p = await motor();
+      const r = await p.search(q);
+      if (benim !== sira) return;                           // eski sorgu, at
+      const veriler = await Promise.all(r.results.slice(0, 12).map((x: any) => x.data()));
+      if (benim !== sira) return;
+      if (!veriler.length) { liste!.innerHTML = `<li class="bos">${dialog!.dataset.empty}</li>`; secili = -1; return; }
+      liste!.innerHTML = veriler.map((d: any) => {
+        const t = tur(new URL(d.url, location.origin).pathname);
+        return `<li role="option" aria-selected="false"><a href="${d.url}">` +
+          `<span class="tur">${t}</span><span class="ad">${d.meta?.title ?? ''}</span>` +
+          `<span class="oz">${d.excerpt ?? ''}</span></a></li>`;
+      }).join('');
+      sec(0);
+    }
+    let zaman = 0;
+    giris.addEventListener('input', () => { clearTimeout(zaman); zaman = window.setTimeout(() => ara(giris.value), 110); });
+    giris.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); sec(secili + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); sec(secili - 1); }
+      else if (e.key === 'Enter') {
+        const a = liste!.querySelector<HTMLAnchorElement>('li[aria-selected="true"] a');
+        if (a) { e.preventDefault(); location.href = a.href; }
+      }
+    });
+    liste.addEventListener('mousemove', (e) => {
+      const li = (e.target as HTMLElement).closest('li[role="option"]');
+      if (li) sec([...liste!.querySelectorAll('li[role="option"]')].indexOf(li));
+    });
+
+    async function goster() {
+      dialog!.showModal();
+      giris!.value = ''; liste!.innerHTML = ''; secili = -1;
+      setTimeout(() => giris!.focus(), 30);
+      motor().catch(() => { liste!.innerHTML = `<li class="bos">${dialog!.dataset.empty}</li>`; });
+    }
+    open?.addEventListener('click', goster);
+    addEventListener('keydown', (e) => {
+      const typing = /^(INPUT|TEXTAREA)$/.test((e.target as HTMLElement)?.tagName ?? '');
+      if (((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') || (e.key === '/' && !typing)) {
+        e.preventDefault(); dialog!.open ? dialog!.close() : goster();
+      }
+    });
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog!.close(); });
   }
-
-  open?.addEventListener('click', show);
-  // Cmd/Ctrl+K ve / ile aç.
-  addEventListener('keydown', (e) => {
-    const typing = /^(INPUT|TEXTAREA)$/.test((e.target as HTMLElement)?.tagName ?? '');
-    if (((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') || (e.key === '/' && !typing)) {
-      e.preventDefault(); show();
-    }
-  });
-  dialog?.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
 </script>
