@@ -316,6 +316,38 @@ h2.section-title a,
   .ray-ok, .ray-ok svg { transition: none; }
 }
 
+/* Başlık çapası: yerini kaplıyor ama görünmüyor; hover ve odakta beliriyor. */
+.prose :is(h2, h3) { position: relative; }
+.capa {
+  margin-inline-start: .35em;
+  font-family: var(--f-sans); font-size: .7em; font-weight: 400;
+  color: var(--c-muted); text-decoration: none;
+  opacity: 0;
+  transition: opacity .18s ease, color .18s ease;
+}
+.prose :is(h2, h3):hover .capa,
+.capa:focus-visible { opacity: 1; }
+.capa:hover { color: var(--c-accent); }
+
+/*
+ * Dış link. Ok, metnin parçası değil ::after — seçilip kopyalanmıyor.
+ * İç bağlantılardan ayrılması okuyucuya nereye gittiğini söylüyor.
+ */
+.prose a.dis::after {
+  content: '\2197';
+  display: inline-block;
+  margin-inline-start: .15em;
+  font-size: .8em;
+  color: var(--c-muted);
+  transition: transform .18s ease, color .18s ease;
+}
+.prose a.dis:hover::after { color: var(--c-accent); transform: translate(1px, -1px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .capa, .prose a.dis::after { transition: none; }
+  .prose a.dis:hover::after { transform: none; }
+}
+
 /* Ekran okuyucuya bırakılan metin. Sätteri'nin dipnot başlığı da bunu kullanıyor. */
 .sr-only {
   position: absolute;

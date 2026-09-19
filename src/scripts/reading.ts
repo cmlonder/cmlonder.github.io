@@ -99,6 +99,22 @@ function kur(kok: HTMLElement) {
     notRay.style.blockSize = `${alt}px`;
   }
 
+  /*
+   * Başlık çapaları. Astro'nun başlık-id eklentisi hast eklentimizden
+   * sonra koştuğu için build sırasında id görünmüyor; burada görünüyor.
+   * Hover'da beliriyor, klavyeyle odaklanınca da.
+   */
+  yazi.querySelectorAll<HTMLElement>('h2[id], h3[id]').forEach((b) => {
+    if (b.querySelector('.capa')) return;
+    const a = document.createElement('a');
+    a.className = 'capa';
+    a.href = `#${encodeURIComponent(b.id)}`;
+    a.textContent = '#';
+    a.setAttribute('aria-label', document.documentElement.lang === 'tr'
+      ? 'Bu başlığa bağlantı' : 'Link to this heading');
+    b.append(a);
+  });
+
   /* — İçindekilerde okunan bölüm — */
   const baglar = [...kok.querySelectorAll<HTMLAnchorElement>('.toc a')];
   if (baglar.length) {

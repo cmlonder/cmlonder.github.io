@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import pagefind from 'astro-pagefind';
 import { satteri } from '@astrojs/markdown-satteri';
 import { slaytlar } from './plugins/remark-slides.mjs';
+import { disLinkler } from './plugins/hast-polish.mjs';
 
 /** @type {['latin', 'latin-ext']} */
 const subsets = ['latin', 'latin-ext']; // latin-ext = Türkçe ğ ş ı İ ç ö ü
@@ -145,7 +146,7 @@ export default defineConfig({
     // Sätteri Astro 7'nin varsayılan işleyicisi; klasik remarkPlugins'e
     // geçmek @astrojs/markdown-remark kurup bütün siteyi eski boru hattına
     // almak demekti. Tek eklenti için o bedel ödenmiyor.
-    processor: satteri({ mdastPlugins: [slaytlar] }),
+    processor: satteri({ mdastPlugins: [slaytlar], hastPlugins: [disLinkler] }),
     shikiConfig: {
       themes: { light: 'vitesse-light', dark: 'vitesse-dark' },
       defaultColor: 'light',
