@@ -12,13 +12,17 @@ import type { Locale } from '../config';
 
 interface Props { entries: AnyEntry[]; lang: Locale }
 const { entries, lang } = Astro.props as Props;
-const t = { symptom: lang === 'tr' ? 'Belirtiler' : 'Symptoms' };
+const t = {
+  symptom: lang === 'tr' ? 'Belirtiler' : 'Symptoms',
+  problem: lang === 'tr' ? 'Problem' : 'Problem',
+};
 ---
 
 <ul class="katalog">
   {entries.map((e) => { const d = e.data as any; return (
     <li>
       <a href={entryPath(lang, 'playbooks', parseId(e.id).slug)}>
+        <p class="lbl">{t.problem}</p>
         <p class="problem">{d.problem}</p>
         <h2>{d.title}</h2>
         <p class="context">{d.context}</p>
@@ -44,21 +48,33 @@ const t = { symptom: lang === 'tr' ? 'Belirtiler' : 'Symptoms' };
   }
   .katalog a:hover { border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); }
 
-  /* Problem başlıktan önce ve başlıktan büyük: aranan şey bu. */
+  /*
+   * Hiyerarşi: PROBLEM etiketi (küçük), problem cümlesi (büyük serif),
+   * sonra başlık. Önce başlığı küçük büyük harfle yazmıştım; kartın
+   * asıl adı kaybolmuş, sıralama kaymış gibi duruyordu.
+   */
+  .lbl {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--c-muted);
+  }
   .problem {
+    margin-block-start: var(--s-3xs);
     font-family: var(--f-serif); font-size: var(--t-md);
     line-height: 1.35; color: var(--c-text); text-wrap: pretty;
+  }
+  .katalog h2 {
+    margin-block-start: var(--s-s);
+    padding-block-start: var(--s-2xs);
+    border-block-start: 1px solid var(--c-border);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-base); line-height: var(--lh-snug);
+    color: var(--c-text);
     transition: color .18s ease;
   }
-  .katalog a:hover .problem { color: var(--c-accent); }
-  .katalog h2 {
-    margin-block-start: var(--s-2xs);
-    font-family: var(--f-sans); font-size: var(--t-xs);
-    text-transform: uppercase; letter-spacing: .06em;
-    font-weight: 400; color: var(--c-muted);
-  }
+  .katalog a:hover h2 { color: var(--c-accent); }
   .context {
-    margin-block-start: var(--s-2xs);
+    margin-block-start: var(--s-3xs);
     font-family: var(--f-sans); font-size: var(--t-sm);
     color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
   }
@@ -74,5 +90,5 @@ const t = { symptom: lang === 'tr' ? 'Belirtiler' : 'Symptoms' };
     padding: .1em .55em; border-radius: 999px;
     background: var(--c-tinted); color: var(--c-muted-on-tint);
   }
-  @media (prefers-reduced-motion: reduce) { .katalog a, .problem { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .katalog a, .katalog h2 { transition: none; } }
 </style>

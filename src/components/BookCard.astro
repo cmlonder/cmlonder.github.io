@@ -1,6 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+import { localePath } from '../lib/content';
+import type { Locale } from '../config';
 
 /**
  * Kapak konvansiyonla bulunuyor: src/assets/covers/<slug>.jpg
@@ -19,24 +21,28 @@ const { entry, compact = false } = Astro.props;
 const d = entry.data;
 
 /** Kapak görseli yok — kitap kapağı taramıyoruz. Tipografik kapak üretiyoruz. */
-const slug = entry.id.split('/').pop();
+const [dil, slug] = entry.id.split('/') as [Locale, string];
 const kapakYolu = Object.keys(kapaklar).find((k) => k.endsWith(`/${slug}.jpg`)
   || k.endsWith(`/${slug}.jpeg`) || k.endsWith(`/${slug}.png`) || k.endsWith(`/${slug}.webp`));
 const kapak = kapakYolu ? kapaklar[kapakYolu].default : null;
 
 const tone = [...d.title].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 4;
-const Wrapper = d.url ? 'a' : 'div';
+/*
+ * Kapak SİTEDEKİ kitap sayfasına gidiyor, kitabın dış adresine değil.
+ * Önceden `url` alanı yoksa kapak hiç tıklanmıyordu — anasayfadaki
+ * kitapların çoğu ölü kutuydu.
+ */
+const href = localePath(dil, 'library', slug);
 ---
 
 <article class="book">
   {/* Kapak başlığı taşıyor — altında tekrar etmiyoruz. */}
-  <Wrapper class:list={['cover', !kapak && `tone-${tone}`, kapak && 'has-img']}
-           {...(d.url ? { href: d.url, rel: 'noopener' } : {})}>
+  <a class:list={['cover', !kapak && `tone-${tone}`, kapak && 'has-img']} href={href}>
     {kapak
       ? <Image src={kapak} alt={`${d.title} — ${d.author}`} widths={[180, 360]}
                sizes="(max-width: 46rem) 40vw, 180px" loading="lazy" />
       : <><span class="t">{d.title}</span><span class="a">{d.author}</span></>}
-  </Wrapper>
+  </a>
   <p class="meta">{d.year}</p>
   {!compact && <p class="note">{d.note}</p>}
 </article>

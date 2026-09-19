@@ -131,15 +131,18 @@ const koken = entry.data.origin
   }
 
   .book {
-    inline-size: min(100% - var(--s-l), calc(15rem + var(--w-narrow) + var(--ray-not, 15rem) + 2 * var(--s-2xl)));
+    inline-size: min(100% - var(--s-l), calc(var(--ray-toc, 15rem) + var(--w-narrow) + var(--ray-not, 15rem) + 2 * var(--s-2xl)));
     margin-inline: auto;
     display: grid;
-    grid-template-columns: minmax(0, 15rem) minmax(0, var(--w-narrow)) minmax(0, var(--ray-not, 15rem));
+    grid-template-columns: minmax(0, var(--ray-toc, 15rem)) minmax(0, var(--w-narrow)) minmax(0, var(--ray-not, 15rem));
     gap: var(--s-2xl);
     justify-content: center;
     align-items: start;
   }
   .rail { position: sticky; inset-block-start: var(--s-l); }
+  /* Kapalı ray şeride düşüyor; ok orada kalıyor. */
+  .book[data-toc='kapali']   { --ray-toc: 2rem; }
+  .book[data-notes='kapali'] { --ray-not: 2rem; }
   .up {
     display: block; font-family: var(--f-sans); font-size: var(--t-xs);
     text-transform: uppercase; letter-spacing: .08em;
