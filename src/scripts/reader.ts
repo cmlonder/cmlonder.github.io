@@ -82,6 +82,17 @@ for (const kok of document.querySelectorAll<HTMLElement>('[data-reader]')) {
     if (n) kok.setAttribute('data-has-notes', '');
   }
 
+  /*
+   * — 2a. Geniş görsel —
+   * Eski yazılardaki <img> markdown'a ham HTML olarak yazılmış; Sätteri
+   * onu hast elemanı değil ham düğüm olarak taşıyor, build'deki eklenti
+   * göremiyor. İşaret burada konuyor: 1200px'ten geniş kaynak metin
+   * sütununu taşabilir (.genis, CSS'te).
+   */
+  yazi?.querySelectorAll<HTMLImageElement>('img[width]').forEach((img) => {
+    if (Number(img.getAttribute('width')) >= 1200) img.classList.add('genis');
+  });
+
   /* — 2b. Kaydırma yönü: aşağı inerken içindekiler kenara çekilir — */
   let sonY = scrollY;
   addEventListener('scroll', () => {

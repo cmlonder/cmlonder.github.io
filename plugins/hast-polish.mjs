@@ -19,7 +19,8 @@ export const disLinkler = {
 
   element: [
     {
-      /* Kaynağı 1200px'ten geniş görsel yazı sütununu taşabilir. */
+      /* Kaynağı 1200px'ten geniş görsel yazı sütununu taşabilir. Yalnızca
+         markdown ![...] görselleri buradan geçer; ham <img> reader.ts'te. */
       filter: ['img'],
       visit(node) {
         const w = Number(node.properties?.width);
