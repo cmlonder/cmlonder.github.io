@@ -10,7 +10,7 @@ import Backlinks from '../components/Backlinks.astro';
 import EntryCard from '../components/EntryCard.astro';
 import Comments from '../components/Comments.astro';
 import Toc from '../components/Toc.astro';
-import { formatDate, localePath, entryPath, getTranslations, parseId, getRelated, getNeighbours } from '../lib/content';
+import { formatDate, localePath, entryPath, getTranslations, parseId, getRelated, getNeighbours, tagSlug } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
 interface Props {
@@ -104,6 +104,14 @@ const t = {
           <a href={localePath(lang, 'topics', topic)}>{TOPIC_LABELS[topic][lang]}</a>
         ))}
       </p>
+
+      {d.tags?.length > 0 && (
+        <p class="tags meta">
+          {d.tags.map((tag: string) => (
+            <a href={localePath(lang, 'tags', tagSlug(tag))}>{tag}</a>
+          ))}
+        </p>
+      )}
 
       {(newer || older) && (
         <nav class="neighbours" aria-label={COLLECTION_LABELS[collection][lang]}>
@@ -202,6 +210,16 @@ const t = {
   .toc-rail { position: sticky; inset-block-start: var(--s-l); max-block-size: 80vh; overflow-y: auto; }
 
 
+
+  /* Etiketler konulardan sessiz: konu bir eksen, etiket bir not. */
+  .tags { display: flex; flex-wrap: wrap; gap: .4em; margin-block-start: var(--s-2xs); }
+  .tags a {
+    padding: .1em .6em; border-radius: 999px;
+    background: var(--c-tinted); color: var(--c-muted-on-tint);
+    text-decoration: none;
+    transition: color .15s ease, background-color .15s ease;
+  }
+  .tags a:hover { color: var(--c-accent); background: color-mix(in srgb, var(--c-accent) 12%, transparent); }
 
   .entry-head { margin-block-end: var(--s-l); }
 

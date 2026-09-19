@@ -1,0 +1,24 @@
+---
+import TopicPage from '../../layouts/TopicPage.astro';
+import { PAGE, type Locale } from '../../config';
+import { getAllTags, getEntriesByTag, localePath } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const tags = await getAllTags('en');
+  return tags.map(({ slug }) => ({ params: { tag: slug } }));
+}
+
+const lang: Locale = 'en';
+const { tag } = Astro.params as { tag: string };
+
+const items = await getEntriesByTag(tag, lang);
+const otherItems = await getEntriesByTag(tag, 'tr');
+const altLocale = otherItems.length
+  ? { lang: 'tr' as const, href: localePath('tr', 'tags', tag) }
+  : null;
+
+const ad = (await getAllTags(lang)).find((t) => t.slug === tag)?.tag ?? tag;
+---
+
+<TopicPage title={ad} blurb={PAGE[lang].tagBlurb(ad)} lang={lang}
+           items={items} altLocale={altLocale} />

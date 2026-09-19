@@ -248,3 +248,38 @@ export function readingMinutes(entry: { body?: string }): number {
   const kelime = (entry.body ?? '').trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(kelime / 200));
 }
+
+/**
+ * Etiketler — konulardan farklı bir eksen.
+ *
+ * `topics` altı sabit sütun ve zorunlu; `tags` serbest ve isteğe bağlı.
+ * Şemada baştan beri vardı ama gezilebilir değildi: hiçbir sayfası yoktu.
+ *
+ * Slug URL için; arama slug üzerinden yapılıyor çünkü etiket serbest
+ * metin ve "Kafka" ile "kafka" aynı etiket sayılmalı.
+ */
+export const tagSlug = (t: string) =>
+  t.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+export async function getAllTags(lang: Locale) {
+  const all = await getAllEntries(lang);
+  const sayac = new Map<string, { tag: string; count: number }>();
+  for (const { entry } of all) {
+    for (const ham of ((entry.data as any).tags ?? []) as string[]) {
+      const slug = tagSlug(ham);
+      if (!slug) continue;
+      const v = sayac.get(slug) ?? { tag: ham, count: 0 };
+      v.count++;
+      sayac.set(slug, v);
+    }
+  }
+  return [...sayac.entries()]
+    .map(([slug, v]) => ({ slug, ...v }))
+    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+}
+
+export async function getEntriesByTag(slug: string, lang: Locale) {
+  const all = await getAllEntries(lang);
+  return all.filter(({ entry }) =>
+    (((entry.data as any).tags ?? []) as string[]).some((t) => tagSlug(t) === slug));
+}

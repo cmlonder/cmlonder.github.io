@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import { PAGE, type Locale } from '../../config';
+import { getAllTags, localePath } from '../../lib/content';
+
+const lang: Locale = 'en';
+const tags = await getAllTags(lang);
+const trTags = await getAllTags('tr');
+const altLocale = trTags.length ? { lang: 'tr' as const, href: localePath('tr', 'tags') } : null;
+const enCok = Math.max(1, ...tags.map((t) => t.count));
+---
+
+<Base title={`${PAGE[lang].tagsTitle} — Cemal Önder`} description={PAGE[lang].tagsBlurb}
+      lang={lang} altLocale={altLocale}>
+  <div class="wrap">
+    <header class="head">
+      <p class="kicker">
+        <span class="count">{tags.length}</span>
+        <a href={localePath(lang, '')}>{PAGE[lang].back}</a>
+      </p>
+      <h1>{PAGE[lang].tagsTitle}</h1>
+      <p class="blurb">{PAGE[lang].tagsBlurb}</p>
+    </header>
+
+    <ul class="bulut">
+      {tags.map((t) => (
+        <li>
+          <a href={localePath(lang, 'tags', t.slug)} style={`--w:${t.count / enCok}`}>
+            {t.tag}<span class="n">{t.count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .wrap { inline-size: min(100% - var(--s-l), var(--w-narrow)); margin-inline: auto; }
+  .head { margin-block-end: var(--s-2xl); }
+  .kicker {
+    display: flex; align-items: baseline; gap: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark-ink); font-variant-numeric: tabular-nums; }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; line-height: var(--lh-tight);
+  }
+  .blurb {
+    margin-block-start: var(--s-2xs); font-family: var(--f-serif);
+    font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: balance;
+  }
+
+  /*
+   * Bulut: boyut sıklığı taşıyor. Yazı tipi boyutunu değiştirmek satır
+   * yüksekliğini bozuyordu; onun yerine zemin yoğunluğu ve kenar rengi
+   * değişiyor — liste hizalı kalıyor, ağırlık yine görünüyor.
+   */
+  .bulut { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s-2xs); }
+  .bulut a {
+    display: inline-flex; align-items: baseline; gap: .5em;
+    padding: .35em .8em; border-radius: 999px;
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted); text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--c-accent) calc(var(--w) * 40%), var(--c-border));
+    background: color-mix(in srgb, var(--c-accent) calc(var(--w) * 8%), transparent);
+    transition: color .18s ease, background-color .18s ease, border-color .18s ease;
+  }
+  .bulut a:hover {
+    color: var(--c-accent);
+    background: color-mix(in srgb, var(--c-accent) 14%, transparent);
+    border-color: var(--c-accent);
+  }
+  .bulut .n { font-size: var(--t-xs); font-variant-numeric: tabular-nums; color: var(--c-mark-ink); }
+  @media (prefers-reduced-motion: reduce) { .bulut a { transition: none; } }
+</style>

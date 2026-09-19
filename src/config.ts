@@ -504,6 +504,9 @@ export const PAGE: Record<Locale, {
   showFile: string;
   topicsBlurb: string;
   topicBlurb: (topic: string) => string;
+  tagsTitle: string;
+  tagsBlurb: string;
+  tagBlurb: (tag: string) => string;
   recently: string;
   findTitle: string;
   findBlurb: string;
@@ -526,6 +529,9 @@ export const PAGE: Record<Locale, {
     showFile: 'Show the full file',
     topicsBlurb: 'Everything I write sits under one of six headings. A topic can appear in any format.',
     topicBlurb: (t) => `Everything filed under ${t} — essays, notes, playbooks and signals.`,
+    tagsTitle: 'Tags',
+    tagsBlurb: 'Free-form labels, unlike the six fixed topics. Bigger means more often.',
+    tagBlurb: (t) => `Everything tagged ${t}.`,
     recently: 'Recently',
     findTitle: 'Which playbook?',
     findBlurb: 'Pick the symptoms you are seeing. Matching playbooks rise to the top.',
@@ -548,6 +554,9 @@ export const PAGE: Record<Locale, {
     showFile: 'Tam metni göster',
     topicsBlurb: 'Yazdıklarım altı başlık altında toplanıyor. Bir konu her formatta görünebilir.',
     topicBlurb: (t) => `${t} konusundaki tüm yazı, not, playbook ve sinyaller.`,
+    tagsTitle: 'Etiketler',
+    tagsBlurb: 'Altı sabit konunun aksine serbest etiketler. Büyük olan daha sık geçiyor.',
+    tagBlurb: (t) => `${t} etiketli her şey.`,
     recently: 'Son eklenenler',
     findTitle: 'Hangi playbook?',
     findBlurb: "Gördüğün belirtileri seç. Eşleşen playbook'lar öne çıkar.",
