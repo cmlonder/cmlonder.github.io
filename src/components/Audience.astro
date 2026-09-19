@@ -1,0 +1,41 @@
+---
+/**
+ * "Kime yazıldı" kartı — Maggie'nin "Assumed Audience" kutusu.
+ *
+ * Başlığın altında, gövdeden önce; okur bir paragraf bile okumadan
+ * bu yazının kendisi için olup olmadığını anlasın. Tonlu zemin, aksan
+ * kenar çizgisi; sitenin uyarı/çapraz gönderme kutularıyla aynı dil.
+ */
+import type { Locale } from '../config';
+import { PAGE } from '../config';
+interface Props { text: string | undefined; lang: Locale }
+const { text, lang } = Astro.props;
+---
+
+{text && (
+  <aside class="kime">
+    <p class="kime-lbl">{PAGE[lang].audience}</p>
+    <p class="kime-metin">{text}</p>
+  </aside>
+)}
+
+<style>
+  .kime {
+    margin-block-start: var(--s-m);
+    padding: var(--s-s) var(--s-m);
+    border: 1px solid var(--c-border);
+    border-inline-start: 3px solid var(--c-accent);
+    border-radius: var(--radius);
+    background: var(--c-tinted);
+  }
+  .kime-lbl {
+    font-family: var(--f-sans); font-size: var(--t-xs); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--c-accent);
+  }
+  .kime-metin {
+    margin-block-start: .25em;
+    font-family: var(--f-serif); font-size: var(--t-sm);
+    color: var(--c-text); line-height: 1.5; text-wrap: pretty;
+  }
+</style>
