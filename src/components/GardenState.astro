@@ -1,4 +1,5 @@
 ---
+import AiMark from './AiMark.astro';
 /**
  * Bahçenin hâli — ana sayfanın ilk gerçek bilgisi.
  *
@@ -29,9 +30,9 @@ const son = radar[0];
 
 const T = {
   en: { written: 'pieces written', chapters: 'chapters planned, {n} written',
-        bulletins: 'AI bulletins', machine: 'ai' },
+        bulletins: 'bulletins' },
   tr: { written: 'yazı yazıldı', chapters: 'bölüm planlandı, {n} tanesi yazıldı',
-        bulletins: 'AI bülteni', machine: 'ai' },
+        bulletins: 'bülten' },
 }[lang];
 ---
 
@@ -50,7 +51,7 @@ const T = {
     </div>
     <div>
       <dt>{radar.length}</dt>
-      <dd>{T.bulletins} <span class="tag">{T.machine}</span></dd>
+      <dd>{T.bulletins} <AiMark level="generated" lang={lang} mini /></dd>
     </div>
   </dl>
 
@@ -100,13 +101,6 @@ const T = {
     overflow: hidden;
   }
   .fill { display: block; block-size: 100%; inline-size: var(--p); background: var(--c-accent); }
-  .tag {
-    font-size: .9em;
-    padding: .05em .45em;
-    border-radius: 999px;
-    color: var(--c-accent);
-    background: color-mix(in srgb, var(--c-accent) 11%, transparent);
-  }
 
   .latest {
     display: grid;

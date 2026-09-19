@@ -88,7 +88,7 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
           <a class="item machine" href="/radar">
             <NavIcon name="radar" />
             <span class="txt">
-              <strong>{RADAR.name[lang]}<span class="tag">ai</span></strong>
+              <strong>{RADAR.name[lang]}</strong>
               <span class="dek">{RADAR.blurb[lang]}</span>
             </span>
           </a>
@@ -258,14 +258,6 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
   /* Radar makine üretimi; ayrımı yayılmayla değil kenar çizgisiyle. */
   .item.machine { box-shadow: inset 2px 0 0 color-mix(in srgb, var(--c-accent) 45%, transparent); }
   .item.machine :global(svg) { color: var(--c-accent); opacity: .75; }
-  .tag {
-    font-size: var(--t-xs);
-    font-weight: 400;
-    padding: .1em .5em;
-    border-radius: 999px;
-    color: var(--c-accent);
-    background: color-mix(in srgb, var(--c-accent) 11%, transparent);
-  }
 
   @media (max-width: 52rem) {
     .menu {
