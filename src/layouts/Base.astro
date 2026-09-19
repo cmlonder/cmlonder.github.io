@@ -73,16 +73,19 @@ const home = localePath(lang, '');
       etiketlerini koşuldan bağımsız paketliyor ve kapalıyken sayfaya ölü
       kod düşüyor — giscus'ta aynı tuzağa düşülmüştü.
       import.meta.env.PROD: dev sunucusundaki gezinti mülke yazılmasın.
+      define:vars kullanılmıyor: Astro script'i IIFE'ye sarıyor ve gtag
+      global olmuyor. Sayfa görüntüleme yine gidiyor (dataLayer global)
+      ama ileride olay göndermek isteyen kod gtag'i bulamıyor.
     */}
     {ANALYTICS.enabled && import.meta.env.PROD && (
       <>
         <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS.ga4}`}></script>
-        <script is:inline define:vars={{ ga4: ANALYTICS.ga4 }}>
+        <script is:inline set:html={`
           window.dataLayer = window.dataLayer || [];
-          function gtag() { dataLayer.push(arguments); }
+          function gtag(){ dataLayer.push(arguments); }
           gtag('js', new Date());
-          gtag('config', ga4);
-        </script>
+          gtag('config', '${ANALYTICS.ga4}');
+        `} />
       </>
     )}
 
