@@ -1,5 +1,6 @@
 ---
 import ListPage from '../../layouts/ListPage.astro';
+import SignalStream from '../../layouts/SignalStream.astro';
 import { COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS, type Locale } from '../../config';
 import { getEntries, localePath } from '../../lib/content';
 
@@ -24,6 +25,15 @@ const action = collection === 'playbooks'
   : null;
 ---
 
+{collection === 'signals' ? (
+  <SignalStream
+    title={COLLECTION_LABELS[collection][lang]}
+    blurb={COLLECTION_BLURBS[collection][lang]}
+    lang={lang}
+    items={entries}
+    altLocale={altLocale}
+  />
+) : (
 <ListPage
   action={action}
   title={COLLECTION_LABELS[collection][lang]}
@@ -32,3 +42,4 @@ const action = collection === 'playbooks'
   items={items}
   altLocale={altLocale}
 />
+)}

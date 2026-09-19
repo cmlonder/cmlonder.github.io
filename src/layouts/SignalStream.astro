@@ -1,0 +1,171 @@
+---
+/**
+ * Bulduklarım — akış.
+ *
+ * Diğer koleksiyon listelerinden KASITLI olarak farklı. Bir sinyal iki
+ * cümle; onu ayrı bir detay sayfasına gömüp listede özetini göstermek
+ * okuyucuyu boşuna tıklatıyordu. Burada gövde satır içinde: başlık dış
+ * linkin kendisi, tıklayınca kaynağa gidiyorsun.
+ *
+ * Kalıcı adres yine var (sağdaki ✦), yorum ve backlink oraya bağlı.
+ */
+import { render } from 'astro:content';
+import Base from './Base.astro';
+import { TOPIC_LABELS, UI, PAGE, type Locale, type Topic } from '../config';
+import { formatDate, localePath, entryPath, parseId } from '../lib/content';
+import type { AnyEntry } from '../lib/content';
+
+interface Props {
+  title: string;
+  blurb: string;
+  lang: Locale;
+  items: AnyEntry[];
+  altLocale?: { lang: Locale; href: string } | null;
+}
+const { title, blurb, lang, items, altLocale = null } = Astro.props as Props;
+
+const akis = await Promise.all(items.map(async (entry) => ({
+  entry,
+  d: entry.data as any,
+  slug: parseId(entry.id).slug,
+  Content: (await render(entry)).Content,
+})));
+
+const t = {
+  source: lang === 'tr' ? 'Kaynak' : 'Source',
+  permalink: lang === 'tr' ? 'Kalıcı adres' : 'Permalink',
+};
+---
+
+<Base title={`${title} — Cemal Önder`} description={blurb} lang={lang} altLocale={altLocale}>
+  <div class="wrap">
+    <header class="head">
+      <p class="kicker">
+        <span class="count">{items.length}</span>
+        <a href={localePath(lang, '')}>{PAGE[lang].back}</a>
+      </p>
+      <h1>{title}</h1>
+      <p class="blurb">{blurb}</p>
+    </header>
+
+    {akis.length === 0 ? <p class="meta empty">{UI[lang].empty}</p> : (
+      <ol class="stream">
+        {akis.map(({ d, slug, Content }) => (
+          <li class="sm">
+            <p class="top">
+              <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+              {(d.topics as Topic[]).map((k) => (
+                <a class="chip" href={localePath(lang, 'topics', k)}>{TOPIC_LABELS[k][lang]}</a>
+              ))}
+            </p>
+
+            <h2>
+              <a href={d.url} rel="noopener">{d.title}</a>
+              <span class="ext" aria-hidden="true">&#8599;</span>
+            </h2>
+
+            <div class="prose"><Content /></div>
+
+            <p class="foot">
+              <span class="src">{t.source}: {d.source}</span>
+              <a class="perma" href={entryPath(lang, 'signals', slug)} title={t.permalink}>
+                <span aria-hidden="true">&#10022;</span>
+                <span class="sr-only">{t.permalink}</span>
+              </a>
+            </p>
+          </li>
+        ))}
+      </ol>
+    )}
+  </div>
+</Base>
+
+<style>
+  .wrap { inline-size: min(100% - var(--s-l), var(--w-narrow)); margin-inline: auto; }
+  .head { margin-block-end: var(--s-2xl); }
+  .kicker {
+    display: flex; align-items: baseline; gap: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark-ink); font-variant-numeric: tabular-nums; }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; line-height: var(--lh-tight);
+  }
+  .blurb {
+    margin-block-start: var(--s-2xs); font-family: var(--f-serif);
+    font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: balance;
+  }
+
+  /*
+   * Akış: girdileri soldan geçen ince bir çizgi bağlıyor. Kart yok,
+   * kenarlık yok — okuyucu aşağı kayarken tek bir şerit görüyor.
+   */
+  .stream { list-style: none; margin: 0; padding: 0; }
+  .sm {
+    position: relative;
+    padding-inline-start: var(--s-l);
+    padding-block-end: var(--s-2xl);
+    border-inline-start: 1px solid var(--c-border);
+  }
+  .sm:last-child { border-inline-start-color: transparent; padding-block-end: 0; }
+  /* Çizginin üzerindeki düğüm. Hover'da akseni alıyor. */
+  .sm::before {
+    content: ''; position: absolute;
+    inset-inline-start: -4.5px; inset-block-start: .45em;
+    inline-size: 8px; block-size: 8px; border-radius: 999px;
+    background: var(--c-border);
+    transition: background-color .18s ease, transform .18s ease;
+  }
+  .sm:hover::before { background: var(--c-accent); transform: scale(1.35); }
+
+  .top {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2xs) var(--s-xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  .chip {
+    color: var(--c-muted); text-decoration: none;
+    padding: .1em .55em; border-radius: 999px;
+    background: var(--c-tinted);
+    transition: color .15s ease, background-color .15s ease;
+  }
+  .chip:hover { color: var(--c-accent); background: color-mix(in srgb, var(--c-accent) 12%, transparent); }
+
+  h2 {
+    margin-block-start: var(--s-2xs);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-md); line-height: var(--lh-snug);
+  }
+  h2 a {
+    color: var(--c-text); text-decoration: none;
+    background-image: linear-gradient(var(--c-accent), var(--c-accent));
+    background-repeat: no-repeat; background-position: 0 100%;
+    background-size: 0 1px;
+    transition: background-size .28s cubic-bezier(.4, 0, .2, 1), color .18s ease;
+  }
+  h2 a:hover { color: var(--c-accent); background-size: 100% 1px; }
+  /* Dış link olduğunu söyleyen ok — başlığın parçası, ayrı bir simge değil. */
+  .ext {
+    display: inline-block; margin-inline-start: .25em;
+    font-size: .7em; color: var(--c-muted);
+    transition: transform .18s ease, color .18s ease;
+  }
+  .sm:hover .ext { color: var(--c-accent); transform: translate(2px, -2px); }
+
+  .sm .prose { margin-block-start: var(--s-2xs); }
+
+  .foot {
+    display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-s);
+    margin-block-start: var(--s-s);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  .perma { color: var(--c-border); text-decoration: none; transition: color .18s ease; }
+  .sm:hover .perma { color: var(--c-muted); }
+  .perma:hover { color: var(--c-accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sm::before, h2 a, .ext, .chip, .perma { transition: none; }
+    .sm:hover .ext { transform: none; }
+  }
+</style>

@@ -280,11 +280,57 @@ h2.section-title a,
 }
 
 /*
+ * Ray okları — içindekiler ve kenar notlarını açıp kapatan tek kontrol.
+ *
+ * Metin düğmesi yerine ok: ray zaten orada duruyor, ok sadece onu
+ * kenara itiyor. Kapalıyken ray yok olmuyor, ince bir şeride dönüşüyor
+ * ve ok orada kalıyor — geri açmak için ayrı bir tutamak aramak
+ * gerekmiyor.
+ */
+.rail { display: flex; flex-direction: column; }
+.toc-rail .ray-ok { align-self: flex-end; }
+.notes-rail .ray-ok { align-self: flex-start; }
+
+.ray-ok {
+  appearance: none; background: none; cursor: pointer;
+  display: grid; place-items: center;
+  inline-size: 1.6rem; block-size: 1.6rem;
+  margin-block-end: var(--s-2xs);
+  border: 1px solid transparent; border-radius: 999px;
+  color: var(--c-border);
+  transition: color .18s ease, border-color .18s ease, background-color .18s ease;
+}
+.rail:hover .ray-ok { color: var(--c-muted); }
+.ray-ok:hover { color: var(--c-accent); border-color: var(--c-border); background: var(--c-surface); }
+.ray-ok svg { transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
+
+/* Ok, rayın kapanacağı yönü gösteriyor; kapalıyken tersine dönüyor. */
+.toc-rail .ray-ok[aria-expanded='false'] svg,
+.notes-rail .ray-ok[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+.ray-ic { min-inline-size: 0; }
+[data-toc='kapali'] .toc-rail .ray-ic,
+[data-notes='kapali'] .notes-rail .ray-ic { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ray-ok, .ray-ok svg { transition: none; }
+}
+
+/* Ekran okuyucuya bırakılan metin. Sätteri'nin dipnot başlığı da bunu kullanıyor. */
+.sr-only {
+  position: absolute;
+  inline-size: 1px; block-size: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%);
+  white-space: nowrap; border: 0;
+}
+
+/*
  * Kenar notları — hem yazı hem bölüm sayfalarında. Markup'ı
  * scripts/reading.ts üretiyor; kaynağı standart markdown dipnotu.
  */
 /* — Kenar notları — */
-.notes-rail { position: relative; }
+.notes-rail .ray-ic { position: relative; }
 .sidenote {
   position: absolute; inset-inline: 0; inset-block-start: 0;
   font-family: var(--f-sans); font-size: var(--t-xs);

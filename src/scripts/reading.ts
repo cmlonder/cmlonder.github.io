@@ -24,7 +24,7 @@ function railYaz(d: Record<string, boolean>) {
 
 function kur(kok: HTMLElement) {
   const yazi = kok.querySelector<HTMLElement>('.prose');
-  const notRay = kok.querySelector<HTMLElement>('[data-rail="notes"]');
+  const notRay = kok.querySelector<HTMLElement>('[data-rail="notes"] .ray-ic');
   if (!yazi) return;
 
   /* — Raylar — */

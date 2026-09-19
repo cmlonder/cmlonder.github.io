@@ -49,11 +49,19 @@ const koken = entry.data.origin
 
 <Base title={`${entry.data.title} — ${dm.data.title}`} description={entry.data.summary} lang={lang}>
   <div class="book" data-reading data-toc="acik" data-notes="acik">
-    <aside class="rail">
+    <aside class="rail toc-rail" data-rail="toc">
+      <button type="button" class="ray-ok" data-toggle="toc" aria-expanded="true" aria-label={t.contents} title={t.contents}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+             stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" />
+        </svg>
+      </button>
+      <div class="ray-ic">
       <a class="up" href={localePath(lang, DOMAINS.path, dSlug)}>{dm.data.title}</a>
       <Outline outline={dm.data.outline} yazilan={yazilan} domain={dSlug}
                lang={lang} aktif={entry.id.split('/').pop()} compact />
       <a class="one" href={localePath(lang, DOMAINS.path, dSlug, 'read')}>{t.onePage} &#8594;</a>
+      </div>
     </aside>
 
     <article class="chapter">
@@ -102,7 +110,15 @@ const koken = entry.data.origin
       </nav>
     </article>
 
-    <aside class="rail notes-rail" data-rail="notes" aria-label={t.notes}></aside>
+    <aside class="rail notes-rail" data-rail="notes" aria-label={t.notes}>
+      <button type="button" class="ray-ok" data-toggle="notes" aria-expanded="true" aria-label={t.notes} title={t.notes}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+             stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" />
+        </svg>
+      </button>
+      <div class="ray-ic"></div>
+    </aside>
   </div>
 </Base>
 

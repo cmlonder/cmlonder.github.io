@@ -55,15 +55,17 @@ const t = {
       structured={{ collection, entry }}>
   <div class="reading" data-reading data-toc="acik" data-notes="acik">
     <aside class="rail toc-rail" data-rail="toc">
-      <Toc headings={headings} label={t.toc} />
+      <button type="button" class="ray-ok" data-toggle="toc" aria-expanded="true" aria-label={t.toc} title={t.toc}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+             stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" />
+        </svg>
+      </button>
+      <div class="ray-ic"><Toc headings={headings} label={t.toc} /></div>
     </aside>
 
     <article class="narrow">
     <header class="entry-head">
-      <p class="rails">
-        <button type="button" class="rail-btn" data-toggle="toc" aria-expanded="true">{t.toc}</button>
-        <button type="button" class="rail-btn" data-toggle="notes" aria-expanded="true">{t.notes}</button>
-      </p>
       <p class="meta kicker">
         <a href={localePath(lang, collection)}>{COLLECTION_LABELS[collection][lang]}</a>
         <span aria-hidden="true">·</span>
@@ -123,7 +125,15 @@ const t = {
     <Backlinks entryId={entry.id} lang={lang} />
     </article>
 
-    <aside class="rail notes-rail" data-rail="notes" aria-label={t.notes}></aside>
+    <aside class="rail notes-rail" data-rail="notes" aria-label={t.notes}>
+      <button type="button" class="ray-ok" data-toggle="notes" aria-expanded="true" aria-label={t.notes} title={t.notes}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+             stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" />
+        </svg>
+      </button>
+      <div class="ray-ic"></div>
+    </aside>
   </div>
 
   {related.length > 0 && (
@@ -184,36 +194,13 @@ const t = {
     .reading > .rail { display: block; }
     .reading > .narrow { inline-size: 100%; }
 
-    /* Kapalı ray sütunu sıfırlanıyor; yazı ortada kalıyor. */
-    .reading[data-toc='kapali']   { --ray-toc: 0rem; }
-    .reading[data-notes='kapali'] { --ray-not: 0rem; }
-    .reading[data-toc='kapali'] > .toc-rail,
-    .reading[data-notes='kapali'] > .notes-rail { display: none; }
-    .reading[data-toc='kapali'],
-    .reading[data-notes='kapali'] { gap: var(--s-xl); }
+    /* Kapalı ray şeride düşüyor; ok orada kalsın diye yok olmuyor. */
+    .reading[data-toc='kapali']   { --ray-toc: 2rem; }
+    .reading[data-notes='kapali'] { --ray-not: 2rem; }
   }
 
   .toc-rail { position: sticky; inset-block-start: var(--s-l); max-block-size: 80vh; overflow-y: auto; }
 
-  /* — Ray düğmeleri — */
-  .rails { display: none; }
-  @media (min-width: 78rem) {
-    .rails {
-      display: flex; gap: var(--s-s);
-      justify-content: flex-end;
-      margin-block-end: var(--s-s);
-    }
-  }
-  .rail-btn {
-    appearance: none; background: none; cursor: pointer;
-    border: 1px solid transparent; border-radius: 999px;
-    padding: .15em .7em;
-    font-family: var(--f-sans); font-size: var(--t-xs);
-    color: var(--c-muted);
-    transition: color .15s ease, border-color .15s ease, opacity .15s ease;
-  }
-  .rail-btn:hover { color: var(--c-text); border-color: var(--c-border); }
-  .rail-btn[aria-expanded='false'] { opacity: .55; text-decoration: line-through; }
 
 
   .entry-head { margin-block-end: var(--s-l); }
