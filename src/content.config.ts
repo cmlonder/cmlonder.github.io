@@ -187,19 +187,6 @@ const games = defineCollection({
 });
 
 /**
- * Skill kütüphanesi. İçerik yazılmaz — repodaki gerçek .claude/skills/
- * dosyalarından okunur. Böylece sayfa asla kaynakla ayrışmaz.
- */
-const skills = defineCollection({
-  loader: glob({ pattern: '*/SKILL.md', base: './.claude/skills' }),
-  schema: z.object({
-    name: z.string(),
-    description: z.string(),
-    'allowed-tools': z.string().optional(),
-  }),
-});
-
-/**
  * Radar — makine üretimi günlük bülten.
  *
  * Diğer koleksiyonlardan kategorik olarak farklı: metni bir ajan yazıyor,
@@ -240,7 +227,6 @@ export const collections = {
   library,
   films,
   games,
-  skills,
   essays: collection(
     'essays',
     z.object({

@@ -26,12 +26,13 @@ ama işin geçtiği yer artık orası değil.
   halde sadece kafamda duracak kurallar. `CLAUDE.md` buna symlink, böylece
   doğru tutulacak tek dosya var.
 - **`.claude/skills/` altındaki skill'ler** — tekrar eden her iş için bir tane.
-  Bu sitede üç tane: link ekleme, yazı ekleme, kitap ekleme. Her biri kısa bir
-  markdown: *ne zaman* geçerli ve *iyi olan neye benzer*. Script değil.
+  Bu sitede dört tane: link ekleme, yazı ekleme, kitap ekleme, ve bir brifing
+  ile sunumu bölüme çevirme. Her biri kısa bir markdown: *ne zaman* geçerli ve
+  *iyi olan neye benzer*. Script değil.
 - **Bir doğrulama komutu** — burada `pnpm verify`. Bir ajan kendi işini kontrol
   edemiyorsa kontrol eden sen oluyorsun — sen de ölçeklenmiyorsun.
 
-Yöntemin tamamı bu. Dosyaların kendisi [skills](/skills) sayfasında.
+Yöntemin tamamı bu. Dosyaların kendisi repoda, etki ettikleri kodun yanında duruyor.
 
 ## Terminal
 

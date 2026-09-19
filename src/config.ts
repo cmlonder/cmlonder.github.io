@@ -360,16 +360,6 @@ export type ShelfName = keyof typeof SHELVES;
 export const SHELF_NAMES = Object.keys(SHELVES) as ShelfName[];
 
 
-/** Skill kütüphanesi — agentic kimliğin kanıtı. */
-export const SKILLS = {
-  path: 'skills',
-  name:  { en: 'Skills', tr: 'Skill dosyaları' } as Record<Locale, string>,
-  blurb: {
-    en: 'The actual agent instructions this site runs on. Copy them.',
-    tr: 'Bu sitenin üzerinde çalıştığı gerçek ajan talimatları. Kopyalayabilirsin.',
-  } as Record<Locale, string>,
-};
-
 /**
  * Yorumlar (giscus). Yorumlar repodaki GitHub Discussions'ta durur.
  *
@@ -495,7 +485,6 @@ export const PAGE: Record<Locale, {
   tools: string;
   repoPath: string;
   showFile: string;
-  skillsLead: string;
   topicsBlurb: string;
   topicBlurb: (topic: string) => string;
   recently: string;
@@ -518,11 +507,6 @@ export const PAGE: Record<Locale, {
     tools: 'Allowed tools',
     repoPath: 'Repo path',
     showFile: 'Show the full file',
-    skillsLead:
-      'These are not examples — they are the files this site actually runs on. ' +
-      'The page is generated from .claude/skills/ at build time, so it cannot ' +
-      'drift from the source. The files themselves are written in Turkish, ' +
-      'because that is the language I work in.',
     topicsBlurb: 'Everything I write sits under one of six headings. A topic can appear in any format.',
     topicBlurb: (t) => `Everything filed under ${t} — essays, notes, playbooks and signals.`,
     recently: 'Recently',
@@ -545,10 +529,6 @@ export const PAGE: Record<Locale, {
     tools: 'İzinli araçlar',
     repoPath: 'Repo yolu',
     showFile: 'Tam metni göster',
-    skillsLead:
-      'Bunlar örnek değil — bu sitenin gerçekten kullandığı dosyalar. Sayfa, ' +
-      'repodaki .claude/skills/ klasöründen build sırasında üretiliyor, o yüzden ' +
-      'kaynakla ayrışamaz.',
     topicsBlurb: 'Yazdıklarım altı başlık altında toplanıyor. Bir konu her formatta görünebilir.',
     topicBlurb: (t) => `${t} konusundaki tüm yazı, not, playbook ve sinyaller.`,
     recently: 'Son eklenenler',

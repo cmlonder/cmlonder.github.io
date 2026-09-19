@@ -3,7 +3,7 @@ import ThemeToggle from './ThemeToggle.astro';
 import Search from './Search.astro';
 import {
   SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  HUB, NAV, SHELVES, SHELF_NAMES, SKILLS, RADAR, DOMAINS, PROJECTS, type Locale,
+  HUB, NAV, SHELVES, SHELF_NAMES, RADAR, DOMAINS, PROJECTS, type Locale,
 } from '../config';
 import NavIcon from './NavIcon.astro';
 import { localePath } from '../lib/content';
@@ -81,14 +81,6 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
             <span class="txt">
               <strong>{DOMAINS.name[lang]}</strong>
               <span class="dek">{DOMAINS.blurb[lang]}</span>
-            </span>
-          </a>
-
-          <a class="item" href={localePath(lang, SKILLS.path)}>
-            <NavIcon name="skills" />
-            <span class="txt">
-              <strong>{SKILLS.name[lang]}</strong>
-              <span class="dek">{SKILLS.blurb[lang]}</span>
             </span>
           </a>
 

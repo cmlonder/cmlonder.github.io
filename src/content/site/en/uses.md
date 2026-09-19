@@ -25,13 +25,14 @@ Every project I care about carries:
 - **`AGENTS.md`** — architecture decisions, the content or data contract, and
   the rules that would otherwise live only in my head. `CLAUDE.md` is a symlink
   to it so there is exactly one file to keep true.
-- **Skills** in `.claude/skills/` — one per recurring task. This site has three:
-  adding a link, adding an essay, adding a book. Each is a short markdown file
-  describing *when* it applies and *what good looks like*, not a script.
+- **Skills** in `.claude/skills/` — one per recurring task. This site has four:
+  adding a link, adding an essay, adding a book, and turning a briefing plus a
+  slide deck into a chapter. Each is a short markdown file describing *when* it
+  applies and *what good looks like*, not a script.
 - **A verification command** — `pnpm verify` here. If an agent cannot check its
   own work, you are the check, and you will not scale.
 
-That is the whole method. See the [skills](/skills) page for the actual files.
+That is the whole method. The files live in the repository, next to the code they act on.
 
 ## Terminal
 
