@@ -30,6 +30,13 @@ the estimate is wrong there are not enough seats at the gate and a passenger is
 **denied boarding**, meaning they are kept off the flight either voluntarily or
 involuntarily.
 
+<c-overbooking overbook="6" noshow="5" style="--ex-height: 230px" description="Overbooking simulation: a 180-seat flight sells extra tickets while no-shows are random. Left, the seats filling; right, every flight's empty seats and denied boardings.">
+</c-overbooking>
+
+Play with the sliders: pull overbooking to zero and every flight leaves
+empty seats; push it past the no-show rate and denied boardings pile up.
+The model is trying to shrink the sum of those two bars.
+
 ## What makes the decision tractable
 
 The interesting part is the compensation. What is owed to a passenger who is

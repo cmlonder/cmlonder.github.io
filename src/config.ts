@@ -216,6 +216,7 @@ export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
   en: {
     chapters: 'chapters',
     notes: 'Margin notes',
+    audience: 'Assumed audience',
     written: 'chapters written',
     contents: 'Contents',
     note: 'Unwritten chapters are listed too. The line beneath each is a promise of what it will cover.',
@@ -231,6 +232,7 @@ export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
   tr: {
     chapters: 'bölüm',
     notes: 'Kenar notları',
+    audience: 'Kime',
     written: 'bölüm yazıldı',
     contents: 'İçindekiler',
     note: 'Yazılmamış bölümler de listede. Altlarındaki cümle, ne anlatacaklarına dair söz.',
@@ -528,6 +530,7 @@ export const PAGE: Record<Locale, {
   nowBlurb: string;
   nowIntro: string;
   nowAll: string;
+  audience: string;
   draftNotice: string;
   draftNoticeLink: string;
   draftNoticeTail: string;
@@ -562,6 +565,7 @@ export const PAGE: Record<Locale, {
     nowBlurb: 'A log of where my attention goes — appended irregularly, never overwritten.',
     nowIntro: 'This is a now page, but not the kind that gets overwritten: each update stacks on the last. Every month has its own address.',
     nowAll: 'All updates',
+    audience: 'Assumed audience',
     draftNotice:
       'Most of the content here is AI-generated. I am working on the design right now and ' +
       'letting an agent fill the pages in the meantime. If you have landed here, the one ' +
@@ -599,6 +603,7 @@ export const PAGE: Record<Locale, {
     nowBlurb: 'Neye baktığımın günlüğü — düzensiz aralıklarla eklenir, silinmez.',
     nowIntro: 'Bu bir now sayfası, ama silinen türden değil: her güncelleme öncekinin üstüne ekleniyor. Her ayın kendi adresi var.',
     nowAll: 'Bütün güncellemeler',
+    audience: 'Kime',
     draftNotice:
       'Çoğu içerik AI üretimi. Şu anda taslak üzerine yoğunlaştım, içeriği de geçici olarak ' +
       'AI\'a ürettiriyorum. Bir şekilde denk geldiyseniz şu anda düzgün içerik olarak ' +

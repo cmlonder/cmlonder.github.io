@@ -29,6 +29,13 @@ Bu yüzden havayolu tahmini no-show oranı kadar fazla satıyor. Tahmin
 tutmazsa bindirme kapısında koltuk yetmiyor ve yolcu **denied boarding**
 oluyor — yani gönüllü ya da gönülsüz olarak uçuşa alınmıyor.
 
+<c-overbooking overbook="6" noshow="5" style="--ex-height: 230px" description="Fazla satış simülasyonu: 180 koltuklu uçuşa fazladan bilet satılıyor, no-show oranı rastgele. Solda dolan koltuklar, sağda her uçuşun boş koltuk ve kapıda kalan sayısı.">
+</c-overbooking>
+
+Kaydırıcıyla oyna: fazla satışı sıfıra çek, her uçuşta boş koltuk kalır.
+No-show oranının üstüne çıkar, kapıda kalan birikir. Model tam bu iki
+çubuğun toplamını küçültmeye çalışıyor.
+
 ## Kararı taşınabilir kılan şey
 
 Burada asıl ilginç olan tazminat. Yolcunun uçağa alınmaması durumunda

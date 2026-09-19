@@ -169,7 +169,7 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
 /* — İnteraktif açıklayıcılar —
    Custom element'ler yazının içinde düz HTML olarak duruyor; stil burada,
    böylece her açıklayıcı aynı çerçeveyi paylaşıyor. */
-.prose :is(c-replicas) { display: block; margin-block: var(--s-m); }
+.prose :is(c-replicas, c-overbooking) { display: block; margin-block: var(--s-m); }
 
 /*
  * Sunum slaytı — yazının içinde, anlattığı yerin yanında.

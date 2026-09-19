@@ -2,6 +2,7 @@
 title: "From mail contracts to SABRE"
 domain: "aviation"
 summary: "Most of what looks strange in airline reservation systems today started with a single seat on a mail plane in 1925. This chapter is about why inventory and the passenger record were born apart, and why that split still costs us."
+audience: "Engineers meeting an airline reservation system for the first time, or wondering why the PNR and inventory were ever separate. No aviation background needed."
 pubDate: 2026-09-19
 topics: [solution-architecture]
 origin:

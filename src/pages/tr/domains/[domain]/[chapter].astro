@@ -64,6 +64,7 @@ const koken = entry.data.origin
       </p>
       <h1>{entry.data.title}</h1>
       <p class="standfirst">{entry.data.summary}</p>
+      {entry.data.audience && <p class="audience"><span class="lbl">{t.audience}</span> {entry.data.audience}</p>}
       <p class="meta"><time datetime={entry.data.pubDate.toISOString()}>{formatDate(entry.data.pubDate, lang)}</time></p>
 
       {koken && (
@@ -110,9 +111,12 @@ const koken = entry.data.origin
 <script>
   // Satır içi notlar (dipnot numarasına tıklayınca paragrafın altında açılır).
   import './../../../../scripts/reader';
+  import '../../../../scripts/explainers/boot';
 </script>
 
 <style>
+  .audience { margin-block-start: var(--s-s); font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted); line-height: 1.5; text-wrap: pretty; }
+  .audience .lbl { text-transform: uppercase; letter-spacing: .08em; font-size: var(--t-xs); margin-inline-end: .5em; color: var(--c-mark-ink); }
   .origin {
     margin-block-start: var(--s-m); padding: var(--s-s);
     border-inline-start: 2px solid var(--c-border); background: var(--c-tinted);

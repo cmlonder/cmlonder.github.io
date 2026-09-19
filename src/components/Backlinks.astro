@@ -1,29 +1,37 @@
 ---
 /** "Buraya bağlananlar" — bağlantı yoksa hiç görünmüyor. */
-import { getBacklinks, type Backlink } from '../lib/content';
+import { getBacklinks, getOutlinks, type Backlink } from '../lib/content';
 import { COLLECTION_LABELS, type Locale } from '../config';
 
 interface Props { entryId: string; lang: Locale }
 const { entryId, lang } = Astro.props as Props;
 const links: Backlink[] = (await getBacklinks(lang)).get(entryId) ?? [];
+const giden: Backlink[] = (await getOutlinks(lang)).get(entryId) ?? [];
+const t = lang === 'tr'
+  ? { in: 'Buraya bağlananlar', out: 'Buradan gidenler' }
+  : { in: 'Linked from', out: 'Links out to' };
 ---
 
-{links.length > 0 && (
-  <nav class="backlinks" aria-label={lang === 'tr' ? 'Buraya bağlananlar' : 'Linked from'}>
-    <h2>{lang === 'tr' ? 'Buraya bağlananlar' : 'Linked from'}</h2>
-    <ul>
-      {links.map((b) => (
-        <li>
-          <a href={b.href}>{b.title}</a>
-          <span class="coll">{COLLECTION_LABELS[b.collection][lang]}</span>
-        </li>
-      ))}
-    </ul>
+{(links.length > 0 || giden.length > 0) && (
+  <nav class="backlinks" aria-label={t.in}>
+    {[{ h: t.in, l: links }, { h: t.out, l: giden }].filter((g) => g.l.length).map((g) => (
+      <div class="grup">
+        <h2>{g.h}</h2>
+        <ul>
+          {g.l.map((b) => (
+            <li>
+              <a href={b.href}>{b.title}</a>
+              <span class="coll">{COLLECTION_LABELS[b.collection][lang]}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </nav>
 )}
 
 <style>
-  .backlinks { margin-block-start: var(--s-2xl); }
+  .backlinks { margin-block-start: var(--s-2xl); display: grid; gap: var(--s-l); }
   .backlinks h2 {
     font-family: var(--f-sans); font-size: var(--t-xs);
     text-transform: uppercase; letter-spacing: .08em;

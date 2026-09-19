@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import Base from './Base.astro';
 import {
-  COLLECTION_LABELS, topicLabel, STATUS_LABELS,
+  COLLECTION_LABELS, topicLabel, STATUS_LABELS, PAGE,
   type CollectionName, type Locale,
 } from '../config';
 import GrowthBadge from '../components/GrowthBadge.astro';
@@ -74,6 +74,7 @@ const t = {
 
       <h1>{d.title}</h1>
       <p class="standfirst">{d.description}</p>
+      {d.audience && <p class="audience"><span class="lbl">{PAGE[lang].audience}</span> {d.audience}</p>}
 
       {collection === 'playbooks' && (
         <dl class="facts">
@@ -163,6 +164,9 @@ const t = {
   .tags a:hover { color: var(--c-accent); background: color-mix(in srgb, var(--c-accent) 12%, transparent); }
 
   .entry-head { margin-block-end: var(--s-l); }
+  /* Kime yazıldı: standfirst'ten sessiz, gövdeden ayrı. */
+  .audience { margin-block-start: var(--s-s); font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted); line-height: 1.5; text-wrap: pretty; }
+  .audience .lbl { text-transform: uppercase; letter-spacing: .08em; font-size: var(--t-xs); margin-inline-end: .5em; color: var(--c-mark-ink); }
 
   .kicker {
     display: flex;

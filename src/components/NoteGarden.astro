@@ -7,11 +7,13 @@
  * fikrini görünür kılıyor: burada bitmiş iş yok, büyüyen iş var.
  */
 import { STATUS_LABELS, type Locale } from '../config';
-import { formatDate, entryPath, parseId } from '../lib/content';
+import { formatDate, entryPath, parseId, getLinkDegree } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
 interface Props { entries: AnyEntry[]; lang: Locale }
 const { entries, lang } = Astro.props as Props;
+const derece = await getLinkDegree(lang);
+const bagLbl = lang === 'tr' ? 'bağ' : 'links';
 
 // Olgun olan önce: okuyucu en oturmuş nota en kısa yoldan varsın.
 const SIRA = ['evergreen', 'budding', 'seedling'] as const;
@@ -33,7 +35,11 @@ const gruplar = SIRA
           <a href={entryPath(lang, 'notes', parseId(e.id).slug)}>
             <h3>{d.title}</h3>
             <p class="dek">{d.description}</p>
-            <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+            <p class="alt">
+              <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+              {(() => { const g = derece.get(e.id); const n = (g?.in ?? 0) + (g?.out ?? 0);
+                return n > 0 ? <span class="bag" title={`${g!.in} ← · ${g!.out} →`}>&#8644; {n} {bagLbl}</span> : null; })()}
+            </p>
           </a>
         </li>
       ); })}
@@ -82,9 +88,11 @@ const gruplar = SIRA
     font-family: var(--f-sans); font-size: var(--t-sm);
     color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
   }
-  .kat time {
-    display: block; margin-block-start: var(--s-2xs);
+  .kat .alt {
+    display: flex; justify-content: space-between; gap: var(--s-2xs); margin-block-start: var(--s-2xs);
     font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
   }
+  /* Ağdaki yer: bağ sayısı. Bağı olmayan not sessiz kalır. */
+  .kat .bag { color: var(--c-mark-ink); font-variant-numeric: tabular-nums; }
   @media (prefers-reduced-motion: reduce) { .kat li a, .kat h3 { transition: none; } }
 </style>

@@ -39,6 +39,12 @@ const base = z.object({
    * essay'lerde varsayılan açık; diğer tiplerde tek tek açılır.
    */
   commentable: z.boolean().default(false),
+  /**
+   * Kime yazıldı — standfirst'ün altında tek satır (Maggie'nin
+   * "Assumed audience"ı). Okur ilk cümlede kendisi için olup olmadığını
+   * anlıyor. Yazar yazıyor; ajan uydurmuyor.
+   */
+  audience: z.string().optional(),
 });
 
 const collection = (dir: string, extend = z.object({})) =>
@@ -110,6 +116,7 @@ const chapters = defineCollection({
     title: z.string(),
     domain: z.string(),
     summary: z.string(),
+    audience: z.string().optional(),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     /** Başka bir domaindeki kardeş bölüme çapraz gönderme. */

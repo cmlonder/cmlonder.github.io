@@ -26,7 +26,8 @@ siteler (Letterboxd, Backloggd, Literal, Gates Notes) listeye alınmadı.
 
 ## Sitede henüz olmayan, referanslarda olan
 
+> Karar (19 Eyl): "kime yazıldı" satırı, not ağı ve ikinci açıklayıcı yapıldı; yıllık seçme listeden çıkarıldı; radar changelog ritmi karar bekliyor.
+
 - **Notlar arası "backlink + önizleme" hover'ı** (Maggie garden, Andy Matuschak): bağlantının üstüne gelince hedef notun ilk paragrafı beliriyor. Bizde backlink listesi var, önizleme yok.
 - **Okuma ilerleme göstergesi / "kaldığın yer"** (Gwern): uzun bölümlerde.
 - **Yazı içi "Assumed audience" satırı** (Maggie): her yazının başında kime yazıldığı. Playbook `context` alanı buna çok yakın; essays'e de eklenebilir.
-- **Yıla göre "en çok okunan / seçme" vitrini** (Dan Luu, Julia Evans).

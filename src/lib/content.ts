@@ -309,3 +309,38 @@ export async function getShelfTopicEntries(topic: string, lang: Locale) {
   }));
   return hepsi.filter((g) => g.items.length > 0);
 }
+
+/**
+ * Giden bağlantılar: bir yazının gövdesinden site içi başka yazılara.
+ * Backlink'in tersi; ikisi birlikte notun ağdaki yerini veriyor.
+ */
+export async function getOutlinks(lang: Locale): Promise<Map<string, Backlink[]>> {
+  const all = await getAllEntries(lang);
+  const byHref = new Map<string, { collection: CollectionName; entry: any }>();
+  for (const { collection, entry } of all) {
+    byHref.set(entryPath(lang, collection, parseId(entry.id).slug), { collection, entry });
+  }
+  const map = new Map<string, Backlink[]>();
+  for (const { entry } of all) {
+    const body: string = (entry as any).body ?? '';
+    const hedefler = new Set([...body.matchAll(/\]\((\/[^)\s#?]+)/g)].map((m) => m[1].replace(/\/$/, '')));
+    const liste: Backlink[] = [];
+    for (const h of hedefler) {
+      const hedef = byHref.get(h) ?? byHref.get(h + '/');
+      if (!hedef || hedef.entry.id === entry.id) continue;
+      liste.push({ collection: hedef.collection, id: hedef.entry.id,
+        title: hedef.entry.data.title, href: entryPath(lang, hedef.collection, parseId(hedef.entry.id).slug) });
+    }
+    if (liste.length) map.set(entry.id, liste);
+  }
+  return map;
+}
+
+/** Notun ağdaki derecesi: gelen + giden bağlantı sayısı. */
+export async function getLinkDegree(lang: Locale): Promise<Map<string, { in: number; out: number }>> {
+  const [gelen, giden] = await Promise.all([getBacklinks(lang), getOutlinks(lang)]);
+  const m = new Map<string, { in: number; out: number }>();
+  const ids = new Set([...gelen.keys(), ...giden.keys()]);
+  for (const id of ids) m.set(id, { in: gelen.get(id)?.length ?? 0, out: giden.get(id)?.length ?? 0 });
+  return m;
+}

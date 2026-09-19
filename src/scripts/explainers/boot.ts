@@ -4,6 +4,7 @@
  */
 const REGISTRY: Record<string, () => Promise<unknown>> = {
   'c-replicas': () => import('./replicas'),
+  'c-overbooking': () => import('./overbooking'),
 };
 
 for (const [tag, load] of Object.entries(REGISTRY)) {
