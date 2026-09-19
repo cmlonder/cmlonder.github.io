@@ -71,9 +71,10 @@ export function formatDate(date: Date, lang: Locale): string {
 }
 
 /** Bir konuya ait tüm girdiler, koleksiyon fark etmeksizin. */
-export async function getEntriesByTopic(topic: Topic, lang: Locale) {
+export async function getEntriesByTopic(topic: string, lang: Locale) {
   const all = await getAllEntries(lang);
-  return all.filter(({ entry }) => (entry.data.topics as Topic[]).includes(topic));
+  return all.filter(({ entry }) =>
+    ((entry.data.topics ?? []) as string[]).some((t) => topicSlug(t) === topicSlug(topic)));
 }
 
 /** Konu → o konudaki girdi sayısı. Boş konular listede gösterilmez. */
@@ -250,36 +251,61 @@ export function readingMinutes(entry: { body?: string }): number {
 }
 
 /**
- * Etiketler — konulardan farklı bir eksen.
+ * Konular — sitenin TEK sınıflandırma ekseni.
  *
- * `topics` altı sabit sütun ve zorunlu; `tags` serbest ve isteğe bağlı.
- * Şemada baştan beri vardı ama gezilebilir değildi: hiçbir sayfası yoktu.
+ * Eskiden `topics` (altı sabit enum) ve `tags` (serbest) diye iki kavram
+ * vardı: farklı sayfalarda farklı adla görünüyor, raflarda hiç
+ * tıklanmıyordu. Tek eksene indirildi.
  *
- * Slug URL için; arama slug üzerinden yapılıyor çünkü etiket serbest
- * metin ve "Kafka" ile "kafka" aynı etiket sayılmalı.
+ * Slug URL için; arama slug üzerinden çünkü konu serbest metin ve
+ * "Kafka" ile "kafka" aynı konu sayılmalı.
  */
-export const tagSlug = (t: string) =>
+export const topicSlug = (t: string) =>
   t.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-export async function getAllTags(lang: Locale) {
-  const all = await getAllEntries(lang);
-  const sayac = new Map<string, { tag: string; count: number }>();
+export async function getAllTopics(lang: Locale) {
+  // Raflar da dahil: kitabın konusu tıklanabiliyorsa sayfası da olmalı.
+  // Yoksa kırık link üretiyoruz — bir kere üretildi de.
+  const raflar = await Promise.all((['library', 'films', 'games'] as const)
+    .map(async (raf) => (await getCollection(raf as any))
+      .filter((e: any) => e.id.startsWith(`${lang}/`))
+      .map((entry: any) => ({ entry }))));
+  const all = [...await getAllEntries(lang), ...raflar.flat()];
+  const sayac = new Map<string, { topic: string; count: number }>();
   for (const { entry } of all) {
-    for (const ham of ((entry.data as any).tags ?? []) as string[]) {
-      const slug = tagSlug(ham);
+    for (const ham of ((entry.data as any).topics ?? []) as string[]) {
+      const slug = topicSlug(ham);
       if (!slug) continue;
-      const v = sayac.get(slug) ?? { tag: ham, count: 0 };
+      const v = sayac.get(slug) ?? { topic: ham, count: 0 };
       v.count++;
       sayac.set(slug, v);
     }
   }
   return [...sayac.entries()]
     .map(([slug, v]) => ({ slug, ...v }))
-    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+    .sort((a, b) => b.count - a.count || a.topic.localeCompare(b.topic));
 }
 
-export async function getEntriesByTag(slug: string, lang: Locale) {
+export async function getShelfByTopic(slug: string, lang: Locale) {
   const all = await getAllEntries(lang);
   return all.filter(({ entry }) =>
-    (((entry.data as any).tags ?? []) as string[]).some((t) => tagSlug(t) === slug));
+    (((entry.data as any).topics ?? []) as string[]).some((t) => topicSlug(t) === slug));
+}
+
+/**
+ * Raf girdileri (kitap, film, oyun) bir konuda.
+ *
+ * Yazılarla aynı eksende duruyorlar: konu sayfası "bu konuda ne var"
+ * sorusuna cevap veriyorsa okuduğum kitap da o cevabın parçası.
+ */
+export async function getShelfTopicEntries(topic: string, lang: Locale) {
+  const raflar = ['library', 'films', 'games'] as const;
+  const hepsi = await Promise.all(raflar.map(async (raf) => {
+    const items = (await getCollection(raf as any))
+      .filter((e: any) => e.id.startsWith(`${lang}/`))
+      .filter((e: any) => ((e.data.topics ?? []) as string[])
+        .some((t) => topicSlug(t) === topicSlug(topic)));
+    return { shelf: raf, items };
+  }));
+  return hepsi.filter((g) => g.items.length > 0);
 }

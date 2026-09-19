@@ -20,6 +20,9 @@ const { title, blurb, lang, items, altLocale = null, showCollection = false, act
 const back = PAGE[lang].back;
 // Koleksiyonlar kendi gövdesini veriyor; vermeyenler varsayılan ızgarayı alıyor.
 const kendiGovdesi = Astro.slots.has('default');
+const t = lang === 'tr'
+  ? { rows: 'Satır olarak göster', grid: 'Izgara olarak göster' }
+  : { rows: 'Show as rows', grid: 'Show as grid' };
 ---
 
 <Base title={`${title} — Cemal Önder`} description={blurb} lang={lang} altLocale={altLocale}>
@@ -32,12 +35,30 @@ const kendiGovdesi = Astro.slots.has('default');
       <h1>{title}</h1>
       <p class="blurb">{blurb}</p>
       {action && <p class="action"><a href={action.href}>{action.label} <span class="arrow" aria-hidden="true">&#8594;</span></a></p>}
+
+      {kendiGovdesi && (
+        <p class="kip" hidden data-kip-bar>
+          <button type="button" data-kip="satir" aria-pressed="true" aria-label={t.rows} title={t.rows}>
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+                 stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
+          <button type="button" data-kip="izgara" aria-pressed="false" aria-label={t.grid} title={t.grid}>
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+                 stroke-width="1.7" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="4" width="7" height="7" rx="1" /><rect x="13" y="4" width="7" height="7" rx="1" />
+              <rect x="4" y="13" width="7" height="7" rx="1" /><rect x="13" y="13" width="7" height="7" rx="1" />
+            </svg>
+          </button>
+        </p>
+      )}
     </header>
 
     {items.length === 0 ? (
       <p class="meta empty">{UI[lang].empty}</p>
     ) : kendiGovdesi ? (
-      <slot />
+      <div class="liste-kip" data-liste data-goster="satir"><slot /></div>
     ) : (
       <ul class="grid">
         {items.map(({ collection, entry }) => (
@@ -52,8 +73,29 @@ const kendiGovdesi = Astro.slots.has('default');
   </div>
 </Base>
 
+<script>
+  import './../scripts/layout-toggle';
+</script>
+
 <style>
   .arrow { margin-inline-start: .4em; }
+
+  /* Kip düğmeleri JS gelince açılıyor; JS yoksa satır hâli zaten doğru. */
+  .kip { display: flex; gap: .25em; justify-content: flex-end; margin-block-start: var(--s-s); }
+  .kip button {
+    appearance: none; cursor: pointer;
+    display: grid; place-items: center;
+    inline-size: 1.9rem; block-size: 1.9rem;
+    border: 1px solid var(--c-border); border-radius: var(--radius-sm);
+    background: none; color: var(--c-muted);
+    transition: color .18s ease, border-color .18s ease, background-color .18s ease;
+  }
+  .kip button:hover { color: var(--c-accent); }
+  .kip button[aria-pressed='true'] {
+    color: var(--c-accent); background: var(--c-surface);
+    border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border));
+  }
+  @media (prefers-reduced-motion: reduce) { .kip button { transition: none; } }
   .head { margin-block-end: var(--s-2xl); }
 
   .kicker {

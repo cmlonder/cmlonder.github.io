@@ -6,7 +6,7 @@ rating: 4
 hours: 12
 platform: "PC"
 note: "Kuralları uygulamanın giderek nasıl bir şeye dönüştüğünü oynatarak anlatıyor."
-tags: ["solo", "rules", "ethics"]
+topics: [solo, rules, ethics]
 order: 3
 placeholder: true
 ---

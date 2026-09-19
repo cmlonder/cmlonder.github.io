@@ -3,7 +3,7 @@ title: "From mail contracts to SABRE"
 domain: "aviation"
 summary: "Most of what looks strange in airline reservation systems today started with a single seat on a mail plane in 1925. This chapter is about why inventory and the passenger record were born apart, and why that split still costs us."
 pubDate: 2026-09-19
-topics: ["solution-architecture"]
+topics: [solution-architecture]
 origin:
   tool: "NotebookLM"
   kind: "briefing"

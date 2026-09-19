@@ -5,7 +5,7 @@ year: 2018
 rating: 4
 runtime: 93
 note: "That building the right product ten years early gives you the same outcome as building the wrong one."
-tags: ["timing", "failure"]
+topics: [timing, failure]
 order: 6
 placeholder: true
 ---

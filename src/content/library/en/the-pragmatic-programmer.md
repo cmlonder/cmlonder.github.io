@@ -7,7 +7,7 @@ order: 7
 placeholder: true
 status: "done"
 rating: 3
-tags: ["craft", "habit"]
+topics: [craft, habit]
 ---
 
 I was very impressed the first time I read it and I look at it more

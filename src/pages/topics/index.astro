@@ -1,78 +1,99 @@
 ---
+/**
+ * Konular — sitenin tek sınıflandırma ekseninin dizini.
+ *
+ * Bulut: boyut yerine zemin yoğunluğu ve kenar rengi sıklığı taşıyor.
+ * Yazı tipi boyutunu oynatmak satır hizasını bozuyordu.
+ *
+ * Altı ANA konu üstte ayrı duruyor — sitenin kapsamını onlar ilan
+ * ediyor; gerisi serbest ve alfabetik.
+ */
 import Base from '../../layouts/Base.astro';
-import { TOPICS, TOPIC_LABELS, UI, type Locale, PAGE } from '../../config';
-import { getTopicCounts, localePath, countLabel } from '../../lib/content';
+import { TOPICS, topicLabel, UI, PAGE, type Locale } from '../../config';
+import { getAllTopics, localePath } from '../../lib/content';
 
 const lang: Locale = 'en';
-const other = 'tr' as const;
-const counts = await getTopicCounts(lang);
-
-const blurb = PAGE[lang].topicsBlurb;
+const hepsi = await getAllTopics(lang);
+const ana = TOPICS.map((t) => hepsi.find((x) => x.slug === t)).filter(Boolean) as typeof hepsi;
+const serbest = hepsi.filter((t) => !(TOPICS as readonly string[]).includes(t.slug))
+  .sort((a, b) => a.topic.localeCompare(b.topic));
+const enCok = Math.max(1, ...hepsi.map((t) => t.count));
 ---
 
-<Base title={`${UI[lang].topics} — Cemal Önder`} description={blurb} lang={lang}
-      altLocale={{ lang: other, href: localePath(other, 'topics') }}>
+<Base title={`${UI[lang].topics} — Cemal Önder`} description={PAGE[lang].topicsBlurb}
+      lang={lang} altLocale={{ lang: 'tr' as const, href: localePath('tr', 'topics') }}>
   <div class="wrap">
-    <h1>{UI[lang].topics}</h1>
-    <p class="blurb">{blurb}</p>
+    <header class="head">
+      <p class="kicker">
+        <span class="count">{hepsi.length}</span>
+        <a href={localePath(lang, '')}>{PAGE[lang].back}</a>
+      </p>
+      <h1>{UI[lang].topics}</h1>
+      <p class="blurb">{PAGE[lang].topicsBlurb}</p>
+    </header>
 
-    <ul class="topics">
-      {TOPICS.map((topic) => {
-        const n = counts.get(topic) ?? 0;
-        return (
-          <li class:list={{ empty: n === 0 }}>
-            {/* Henüz yazı olmayan konu link değil — boş sayfaya göndermeyelim,
-                ama altı sütun görünür kalsın: sitenin kapsamını ilan ediyor. */}
-            {n > 0
-              ? <a href={localePath(lang, 'topics', topic)}>{TOPIC_LABELS[topic][lang]}</a>
-              : <span class="name">{TOPIC_LABELS[topic][lang]}</span>}
-            <span class="meta">{countLabel(n, lang)}</span>
-          </li>
-        );
-      })}
+    <ul class="bulut ana">
+      {ana.map((t) => (
+        <li>
+          <a href={localePath(lang, 'topics', t.slug)} style={`--w:${t.count / enCok}`}>
+            {topicLabel(t.topic, lang)}<span class="n">{t.count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <ul class="bulut">
+      {serbest.map((t) => (
+        <li>
+          <a href={localePath(lang, 'topics', t.slug)} style={`--w:${t.count / enCok}`}>
+            {topicLabel(t.topic, lang)}<span class="n">{t.count}</span>
+          </a>
+        </li>
+      ))}
     </ul>
   </div>
 </Base>
 
 <style>
+  .wrap { inline-size: min(100% - var(--s-l), var(--w-narrow)); margin-inline: auto; }
+  .head { margin-block-end: var(--s-2xl); }
+  .kicker {
+    margin-block-end: var(--s-2xs);
+    display: flex; align-items: baseline; gap: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark-ink); font-variant-numeric: tabular-nums; }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
   h1 {
-    font-family: var(--f-serif);
-    font-variation-settings: var(--axis-display);
-    font-size: var(--t-3xl);
-    font-weight: 400;
-    line-height: var(--lh-tight);
-    letter-spacing: -0.02em;
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; line-height: var(--lh-tight);
   }
   .blurb {
-    margin-block-start: var(--s-2xs);
-    max-inline-size: 38ch;
-    font-family: var(--f-serif);
-    font-variation-settings: var(--axis-display);
-    font-size: var(--t-lg);
-    line-height: 1.25;
-    color: var(--c-muted);
+    margin-block-start: var(--s-2xs); font-family: var(--f-serif);
+    font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: balance;
   }
-  .topics {
-    list-style: none;
-    padding: 0;
-    margin-block-start: var(--s-l);
-    display: grid;
-    gap: 0;
-  }
-  .topics li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--s-2xs);
-    padding-block: var(--s-xs);
+
+  .bulut { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s-2xs); }
+  .bulut + .bulut {
+    margin-block-start: var(--s-l); padding-block-start: var(--s-l);
     border-block-start: 1px solid var(--c-border);
   }
-  .topics li:last-child { border-block-end: 1px solid var(--c-border); }
-  .topics a, .topics .name {
-    font-family: var(--f-serif);
-    font-size: 1.25rem;
-    text-decoration: none;
+  .bulut a {
+    display: inline-flex; align-items: baseline; gap: .5em;
+    padding: .35em .8em; border-radius: 999px;
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted); text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--c-accent) calc(var(--w) * 40%), var(--c-border));
+    background: color-mix(in srgb, var(--c-accent) calc(var(--w) * 8%), transparent);
+    transition: color .18s ease, background-color .18s ease, border-color .18s ease;
   }
-  .topics li.empty { color: var(--c-muted); }
+  /* Ana konular her zaman görünür ağırlıkta: sitenin kapsamı onlar. */
+  .ana a { font-size: var(--t-base); border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); }
+  .bulut a:hover {
+    color: var(--c-accent);
+    background: color-mix(in srgb, var(--c-accent) 14%, transparent);
+    border-color: var(--c-accent);
+  }
+  .bulut .n { font-size: var(--t-xs); font-variant-numeric: tabular-nums; color: var(--c-mark-ink); }
+  @media (prefers-reduced-motion: reduce) { .bulut a { transition: none; } }
 </style>

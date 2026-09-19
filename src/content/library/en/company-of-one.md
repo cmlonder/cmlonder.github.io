@@ -7,7 +7,7 @@ order: 8
 placeholder: true
 status: "done"
 rating: 3
-tags: ["solo", "scale"]
+topics: [solo, scale]
 ---
 
 It argues that staying small can be a strategy, and I needed that

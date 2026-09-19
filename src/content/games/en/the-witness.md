@@ -5,7 +5,7 @@ year: 2016
 status: "queued"
 platform: "PC"
 note: "Apparently teaches without a single word of text. I want to see how."
-tags: ["puzzles", "teaching"]
+topics: [puzzles, teaching]
 order: 22
 placeholder: true
 ---

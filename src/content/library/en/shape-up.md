@@ -7,7 +7,7 @@ order: 6
 placeholder: true
 status: "done"
 rating: 4
-tags: ["scope", "time"]
+topics: [scope, time]
 ---
 
 Fixed time, variable scope. Simple, and harder to apply than it sounds,

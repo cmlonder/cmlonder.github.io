@@ -7,7 +7,7 @@ order: 6
 placeholder: true
 status: "done"
 rating: 4
-tags: ["scope", "time"]
+topics: [scope, time]
 ---
 
 Sabit süre, değişken kapsam. Basit ama uygulanması sanıldığından zor,

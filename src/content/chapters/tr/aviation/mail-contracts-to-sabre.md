@@ -3,7 +3,7 @@ title: "Posta sözleşmesinden SABRE'ye"
 domain: "aviation"
 summary: "Havayolu rezervasyonunun bugünkü tuhaflıklarının çoğu 1925'te posta uçağındaki tek koltukta başladı. Bu bölüm, envanterle yolcu kaydının neden ayrı doğduğunu ve o ayrılığın hâlâ neden peşimizi bırakmadığını anlatıyor."
 pubDate: 2026-09-18
-topics: ["solution-architecture"]
+topics: [solution-architecture]
 origin:
   tool: "NotebookLM"
   kind: "brifingi"

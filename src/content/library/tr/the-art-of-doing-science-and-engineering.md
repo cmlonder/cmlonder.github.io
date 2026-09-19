@@ -4,7 +4,7 @@ author: "Richard Hamming"
 year: 1997
 status: "queued"
 note: "Hamming'in ünlü dersinin kitap hali. Yıllardır rafta."
-tags: ["career", "method"]
+topics: [career, method]
 order: 22
 placeholder: true
 ---

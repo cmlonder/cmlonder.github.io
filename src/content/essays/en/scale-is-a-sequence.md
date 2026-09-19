@@ -2,8 +2,7 @@
 title: 'Scale Is a Sequence, Not a Destination'
 description: 'Systems do not break at scale. They break in a predictable order, and knowing the order is most of the job.'
 pubDate: 2026-05-07
-topics: [scale-and-performance, solution-architecture]
-tags: [capacity, postgres, queues]
+topics: [scale-and-performance, solution-architecture, capacity, postgres, queues]
 featured: true
 draft: false
 placeholder: true

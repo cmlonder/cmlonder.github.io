@@ -4,8 +4,7 @@ description: 'Yetkinliği ölçmek için kullandığımız işaretler — temiz 
 pubDate: 2026-09-14
 url: https://seangoedecke.com/ai-is-breaking-our-proxies-for-expertise/
 source: 'Sean Goedecke'
-topics: [agentic-development, solo-company]
-tags: [hiring, craft]
+topics: [agentic-development, solo-company, hiring, craft]
 draft: false
 placeholder: true
 ---

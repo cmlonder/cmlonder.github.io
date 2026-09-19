@@ -2,8 +2,7 @@
 title: 'How One Feature From a Failed Startup Can Become a Billion Dollar Idea'
 description: 'Failed products often contain one feature that was worth more than the whole company around it.'
 pubDate: 2022-08-30
-topics: [solo-company]
-tags: [legacy, startup]
+topics: [solo-company, legacy, startup]
 featured: false
 draft: false
 placeholder: false

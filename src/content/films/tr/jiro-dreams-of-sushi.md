@@ -5,7 +5,7 @@ year: 2011
 rating: 5
 runtime: 81
 note: "Aynı işi elli yıl yapmanın sıkıcı değil, giderek daha zor hale geldiğine dair."
-tags: ["craft", "repetition", "mastery"]
+topics: [craft, repetition, mastery]
 order: 1
 placeholder: true
 ---

@@ -34,7 +34,6 @@ export const GET: APIRoute = ({ props }) => {
     `- Published: ${d.pubDate.toISOString().slice(0, 10)}`,
     ...(d.updatedDate ? [`- Updated: ${d.updatedDate.toISOString().slice(0, 10)}`] : []),
     `- Topics: ${d.topics.join(', ')}`,
-    ...(d.tags.length ? [`- Tags: ${d.tags.join(', ')}`] : []),
     ...(d.problem ? [`- Problem: ${d.problem}`] : []),
     ...(d.context ? [`- Context: ${d.context}`] : []),
     ...(d.url ? [`- Source: ${d.source} — ${d.url}`] : []),

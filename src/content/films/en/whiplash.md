@@ -5,7 +5,7 @@ year: 2014
 rating: 4
 runtime: 106
 note: "The thin line between where perfectionism is productive and where it is destructive."
-tags: ["mastery", "cost"]
+topics: [mastery, cost]
 order: 7
 placeholder: true
 ---

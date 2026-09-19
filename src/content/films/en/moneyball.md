@@ -5,7 +5,7 @@ year: 2011
 rating: 4
 runtime: 133
 note: "That deciding with data is a political problem, not a technical one."
-tags: ["systems", "data", "institutions"]
+topics: [systems, data, institutions]
 order: 3
 placeholder: true
 ---

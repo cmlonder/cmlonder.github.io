@@ -4,13 +4,7 @@ description: 'Idempotent olmayan bir endpoint''e retry eklemek, görünür bir h
 pubDate: 2026-07-17
 problem: 'Kararsız bir downstream hata üretiyor ve biri retry ekleyen bir PR açtı.'
 context: 'Uçtan uca sahibi olmadığın servisler arası senkron HTTP veya RPC.'
-symptoms:
-- Bir downstream kararsız
-- Retry eklendi, işler kötüleşti
-- Mükerrer kayıtlar oluşuyor
-tryFirst: 30
-topics: [solution-architecture]
-tags: [reliability, retries]
+topics: [solution-architecture, reliability, retries]
 draft: false
 placeholder: true
 ---

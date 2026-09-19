@@ -7,7 +7,7 @@ order: 7
 placeholder: true
 status: "done"
 rating: 3
-tags: ["craft", "habit"]
+topics: [craft, habit]
 ---
 
 İlk okuduğumda çok etkilenmiştim, şimdi daha sakin bakıyorum. Tavsiyelerin

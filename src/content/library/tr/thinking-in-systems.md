@@ -7,7 +7,7 @@ order: 1
 placeholder: true
 status: "done"
 rating: 5
-tags: ["systems", "feedback"]
+topics: [systems, feedback]
 ---
 
 Geribesleme döngülerini ve gecikmeleri ilk kez burada düzgün gördüm.

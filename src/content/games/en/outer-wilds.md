@@ -6,7 +6,7 @@ rating: 5
 hours: 24
 platform: "PC"
 note: "The only progression mechanic is what you know. No inventory, no levels."
-tags: ["discovery", "knowledge"]
+topics: [discovery, knowledge]
 order: 5
 placeholder: true
 ---

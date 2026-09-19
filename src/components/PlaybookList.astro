@@ -12,10 +12,7 @@ import type { Locale } from '../config';
 
 interface Props { entries: AnyEntry[]; lang: Locale }
 const { entries, lang } = Astro.props as Props;
-const t = {
-  symptom: lang === 'tr' ? 'Belirtiler' : 'Symptoms',
-  problem: lang === 'tr' ? 'Problem' : 'Problem',
-};
+const t = { problem: lang === 'tr' ? 'Problem' : 'Problem' };
 ---
 
 <ul class="katalog">
@@ -26,12 +23,6 @@ const t = {
         <p class="problem">{d.problem}</p>
         <h2>{d.title}</h2>
         <p class="context">{d.context}</p>
-        {d.symptoms?.length > 0 && (
-          <p class="belirti">
-            <span class="lbl">{t.symptom}</span>
-            {d.symptoms.slice(0, 3).map((s: string) => <span class="chip">{s}</span>)}
-          </p>
-        )}
       </a>
     </li>
   ); })}
@@ -77,18 +68,6 @@ const t = {
     margin-block-start: var(--s-3xs);
     font-family: var(--f-sans); font-size: var(--t-sm);
     color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
-  }
-  .belirti {
-    display: flex; flex-wrap: wrap; align-items: baseline; gap: .4em;
-    margin-block-start: var(--s-s);
-    padding-block-start: var(--s-2xs);
-    border-block-start: 1px solid var(--c-border);
-    font-family: var(--f-sans); font-size: var(--t-xs);
-  }
-  .belirti .lbl { color: var(--c-muted); text-transform: uppercase; letter-spacing: .06em; }
-  .belirti .chip {
-    padding: .1em .55em; border-radius: 999px;
-    background: var(--c-tinted); color: var(--c-muted-on-tint);
   }
   @media (prefers-reduced-motion: reduce) { .katalog a, .katalog h2 { transition: none; } }
 </style>

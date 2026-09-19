@@ -4,7 +4,7 @@ director: "Joshua Oppenheimer"
 year: 2012
 status: "queued"
 note: "On my list for years. I keep deferring it because I hear it is hard to watch."
-tags: ["documentary"]
+topics: [documentary]
 order: 21
 placeholder: true
 ---

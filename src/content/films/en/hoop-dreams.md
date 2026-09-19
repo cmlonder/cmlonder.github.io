@@ -4,7 +4,7 @@ director: "Steve James"
 year: 1994
 status: "queued"
 note: "Filmed over five years; I am curious what long-term observation actually shows."
-tags: ["longform"]
+topics: [longform]
 order: 20
 placeholder: true
 ---

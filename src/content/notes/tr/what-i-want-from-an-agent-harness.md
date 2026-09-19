@@ -3,8 +3,7 @@ title: 'Bir ajan koşumundan ne istiyorum'
 description: 'Büyüyen bir liste. Çoğu gözlemlenebilirlik ve işi uçuş halindeyken durdurabilmekle ilgili.'
 pubDate: 2026-05-10
 status: budding
-topics: [agentic-development]
-tags: [tools]
+topics: [agentic-development, tools]
 draft: false
 placeholder: true
 ---

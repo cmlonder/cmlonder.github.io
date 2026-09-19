@@ -1,5 +1,5 @@
 ---
-import { SITE, ENTRY_TYPE, TOPIC_LABELS, type CollectionName, type Locale } from '../config';
+import { SITE, ENTRY_TYPE, topicLabel, type CollectionName, type Locale } from '../config';
 import { parseId, entryPath } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
@@ -47,10 +47,10 @@ if (entry) {
       ...(d.updatedDate && { dateModified: d.updatedDate.toISOString() }),
       inLanguage: lang,
       author: { '@id': `${SITE.url}/#person` },
-      keywords: [...d.topics, ...d.tags].join(', '),
-      about: d.topics.map((t: keyof typeof TOPIC_LABELS) => ({
+      keywords: d.topics.join(', '),
+      about: d.topics.map((t: string) => ({
         '@type': 'Thing',
-        name: TOPIC_LABELS[t].en,
+        name: topicLabel(t, 'en'),
       })),
       genre: ENTRY_TYPE[collection],
       // Ajanlar için: bu sayfanın ham Markdown karşılığı.

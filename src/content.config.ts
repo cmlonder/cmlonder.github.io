@@ -1,6 +1,5 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { TOPICS } from './config';
 
 /**
  * Dosya düzeni:  src/content/<koleksiyon>/<dil>/<slug>.md
@@ -16,10 +15,19 @@ const base = z.object({
   pubDate: z.coerce.date(),
   updatedDate: z.coerce.date().optional(),
   draft: z.boolean().default(false),
-  /** 6 tematik sütundan en az biri. Enum — uydurma konu giremez. */
-  topics: z.array(z.enum(TOPICS)).min(1),
-  /** Serbest etiketler: kafka, postgres, claude-code... */
-  tags: z.array(z.string()).default([]),
+  /**
+   * Konular. Tek eksen: eskiden `topics` (altı sabit enum) ve `tags`
+   * (serbest) diye iki ayrı kavram vardı, ikisi farklı yerlerde farklı
+   * adla görünüyor ve raflarda hiç tıklanmıyordu. Birleştirildi.
+   *
+   * Serbest metin — enum değil. Bedeli: yazım hatası artık şemadan
+   * geçer. Karşılığında `check-topics.mjs` tek kullanımlık ve birbirine
+   * çok benzeyen konuları yakalıyor.
+   *
+   * config.ts'teki TOPICS altı ANA konuyu tutuyor; listelerde önce
+   * onlar geliyor. Gerisi serbest.
+   */
+  topics: z.array(z.string()).min(1),
   /**
    * Tasarımı doldurmak için eklenen yer tutucu içerik.
    * Gerçek yazıyla değiştirilecek. Bulmak için:
@@ -92,7 +100,7 @@ const chapters = defineCollection({
     updatedDate: z.coerce.date().optional(),
     /** Başka bir domaindeki kardeş bölüme çapraz gönderme. */
     crossRef: z.object({ domain: z.string(), slug: z.string(), why: z.string() }).optional(),
-    topics: z.array(z.enum(TOPICS)).default([]),
+    topics: z.array(z.string()).default([]),
     /**
      * Metin makineden geldiyse kaynağı. Radar'la aynı gerekçe: ajanın
      * yazdığı metin kardeş bir bölüm gibi sessizce durmaz, nereden
@@ -153,7 +161,8 @@ const rafBase = {
   /** Tek cümle: neden burada. Kartta görünen metin. */
   note: z.string(),
   url: z.string().url().optional(),
-  tags: z.array(z.string()).default([]),
+  /** Yazılarla AYNI eksen: raf girdileri de konu sayfalarında çıkıyor. */
+  topics: z.array(z.string()).default([]),
   order: z.number().default(0),
   placeholder: z.boolean().default(false),
 };
@@ -211,7 +220,7 @@ const radar = defineCollection({
     // "yığın" hangi vakayı anlatıyor belirsizdi, ve bülten bir veritabanı
     // değil — hikâye anlatıyor.
     category: z.string().optional(),
-    tags: z.array(z.string()).default([]),
+    topics: z.array(z.string()).default([]),
     revenue_source: z.enum(['platform', 'interview', 'self_reported', 'unknown']).optional(),
 
     draft: z.boolean().default(false),
@@ -251,13 +260,6 @@ export const collections = {
       problem: z.string(),
       /** Bu playbook hangi ölçek/bağlamda geçerli. */
       context: z.string(),
-      /**
-       * Karar ağacı için. Kullanıcının gördüğü belirtiler; /playbooks/find
-       * sayfası bunlarla eşleştirme yapar. Boşsa playbook ağaçta çıkmaz.
-       */
-      symptoms: z.array(z.string()).default([]),
-      /** Ağaçta kaba bir "önce buna bak" sırası. Küçük olan önce. */
-      tryFirst: z.number().default(50),
     })
   ),
 

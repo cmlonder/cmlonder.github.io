@@ -7,7 +7,7 @@ order: 0
 placeholder: true
 status: "done"
 rating: 5
-tags: ["distributed", "data", "foundational"]
+topics: [distributed, data, foundational]
 ---
 
 After finishing this the vocabulary I use in architecture discussions

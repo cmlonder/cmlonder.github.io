@@ -6,7 +6,7 @@ rating: 5
 hours: 310
 platform: "PC"
 note: "Teaches what finding a bottleneck means better than any book."
-tags: ["systems", "bottleneck", "automation"]
+topics: [systems, bottleneck, automation]
 order: 1
 placeholder: true
 ---

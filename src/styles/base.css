@@ -433,3 +433,24 @@ h2.section-title a,
   .sidenote { transition: none; }
   .sidenote.vurgu { animation: none; }
 }
+
+/*
+ * Liste kipi: satır (varsayılan) <-> ızgara.
+ *
+ * Izgara kuralları TEK yerde, çünkü üç koleksiyonun gövdesi üç ayrı
+ * bileşen ve her birinde ayrı yazmak üçünün ayrışması demekti.
+ */
+[data-goster='izgara'] :is(.liste, .katalog, .kat ul) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: var(--s-m);
+}
+[data-goster='izgara'] .liste li + li { border-block-start: 0; }
+[data-goster='izgara'] .liste a {
+  block-size: 100%;
+  padding: var(--s-s);
+  margin-inline-start: 0;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+}
+[data-goster='izgara'] .liste a:hover { border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); }

@@ -4,8 +4,7 @@ description: 'On treating low-quality agent output as an engineering problem rat
 pubDate: 2026-07-25
 url: https://ghuntley.com/slop/
 source: 'Geoffrey Huntley'
-topics: [agentic-development]
-tags: [quality]
+topics: [agentic-development, quality]
 draft: false
 placeholder: true
 ---

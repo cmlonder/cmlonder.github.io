@@ -4,8 +4,7 @@ description: 'Sahada çalışan mühendislerin düşüncesini gerçekten değiş
 pubDate: 2026-07-08
 url: https://simonwillison.net/2026/Sep/14/influences/
 source: 'Simon Willison'
-topics: [ai-news]
-tags: [reading]
+topics: [ai-news, reading]
 draft: false
 placeholder: true
 ---

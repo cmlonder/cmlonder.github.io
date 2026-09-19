@@ -5,7 +5,7 @@ year: 2022
 status: "queued"
 platform: "PC"
 note: "Apparently you collect the game's manual inside the game. I love the idea."
-tags: ["solo", "discovery"]
+topics: [solo, discovery]
 order: 21
 placeholder: true
 ---

@@ -5,7 +5,7 @@ year: 2018
 rating: 4
 runtime: 93
 note: "Doğru ürünü on yıl erken yapmanın yanlış ürün yapmakla aynı sonucu verdiği."
-tags: ["timing", "failure"]
+topics: [timing, failure]
 order: 6
 placeholder: true
 ---

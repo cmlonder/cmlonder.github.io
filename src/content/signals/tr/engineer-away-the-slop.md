@@ -4,8 +4,7 @@ description: 'Düşük kaliteli ajan çıktısını model sorunu değil mühendi
 pubDate: 2026-07-25
 url: https://ghuntley.com/slop/
 source: 'Geoffrey Huntley'
-topics: [agentic-development]
-tags: [quality]
+topics: [agentic-development, quality]
 draft: false
 placeholder: true
 ---

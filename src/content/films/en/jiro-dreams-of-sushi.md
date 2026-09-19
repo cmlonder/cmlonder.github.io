@@ -5,7 +5,7 @@ year: 2011
 rating: 5
 runtime: 81
 note: "That doing the same work for fifty years does not get boring, it gets harder."
-tags: ["craft", "repetition", "mastery"]
+topics: [craft, repetition, mastery]
 order: 1
 placeholder: true
 ---

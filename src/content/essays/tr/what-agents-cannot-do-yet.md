@@ -2,8 +2,7 @@
 title: 'Ajanların hâlâ yapamadıkları'
 description: 'Uçtan uca ajanlı akışın nerede tökezlediğine dair, güncel tutulan dürüst bir liste.'
 pubDate: 2025-12-11
-topics: [agentic-development]
-tags: [limits, workflow]
+topics: [agentic-development, limits, workflow]
 featured: false
 draft: false
 placeholder: true

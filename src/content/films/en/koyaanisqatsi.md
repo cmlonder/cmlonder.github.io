@@ -4,7 +4,7 @@ director: "Godfrey Reggio"
 year: 1982
 status: "queued"
 note: "No dialogue. I am curious about it as another way of describing systems."
-tags: ["systems", "form"]
+topics: [systems, form]
 order: 22
 placeholder: true
 ---

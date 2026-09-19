@@ -7,16 +7,16 @@
  * Artık yalnızca GEZİNME var; ciro kaynağı kaynak listesinin yanına taşındı,
  * çünkü o bir künye değil, kaynak bilgisi.
  */
-import { RADAR_CATEGORY, TAG_LABELS } from '../config';
+import { RADAR_CATEGORY, topicLabel } from '../config';
 
 interface Props { data: any }
 const { data } = Astro.props as Props;
 
 // Slug URL'de yaşıyor, etiket ekranda. Sözlükte yoksa slug ham gösteriliyor.
-const etiket = (t: string) => TAG_LABELS[t]?.tr ?? t;
+const etiket = (t: string) => topicLabel(t, 'tr');
 
 const cat: string | null = data.category ?? null;
-const tags: string[] = data.tags ?? [];
+const tags: string[] = data.topics ?? [];
 ---
 
 {(cat || tags.length > 0) && (
@@ -27,7 +27,7 @@ const tags: string[] = data.tags ?? [];
       </a>
     )}
     {tags.map((t) => (
-      <a class="chip tag" href={`/radar/tag/${t}`}>{etiket(t)}</a>
+      <a class="chip tag" href={`/radar/topic/${t}`}>{etiket(t)}</a>
     ))}
   </nav>
 )}

@@ -65,6 +65,14 @@ export const COLLECTION_BLURBS: Record<CollectionName, Dict> = {
   },
 };
 
+/**
+ * Konu etiketleri. Altı ANA konu burada; serbest konular TOPIC_EXTRA'da,
+ * ikisinde de yoksa konu adı olduğu gibi gösteriliyor.
+ *
+ * Tek eksen kararı: eskiden `topics` ve `tags` diye iki kavram vardı,
+ * biri enum biri serbest, biri tıklanabilir biri değil. Aynı şeyin iki
+ * adı olması her sayfada farklı bir isim demekti.
+ */
 export const TOPIC_LABELS: Record<Topic, Dict> = {
   'agentic-development':   { en: 'Agentic Development',   tr: 'Ajanlarla Geliştirme' },
   'solution-architecture': { en: 'Solution Architecture',  tr: 'Çözüm Mimarisi' },
@@ -248,7 +256,8 @@ export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
  * Sözlükte olmayan slug ham haliyle gösteriliyor; yeni etiket eklemek
  * için burayı güncellemek ZORUNLU değil.
  */
-export const TAG_LABELS: Record<string, Record<Locale, string>> = {
+/** Serbest konuların çevirileri. Yoksa konu adı olduğu gibi çıkar. */
+export const TOPIC_EXTRA: Record<string, Record<Locale, string>> = {
   'abstraction': { en: 'abstraction', tr: 'soyutlama' },
   'automation': { en: 'automation', tr: 'otomasyon' },
   'bottleneck': { en: 'bottleneck', tr: 'darboğaz' },
@@ -592,3 +601,10 @@ export const PAGE: Record<Locale, {
     findAction: 'Hangi playbook? Belirtiden bul',
   },
 };
+
+/** Bir konunun o dildeki adı: ana konu -> serbest konu -> ham metin. */
+export function topicLabel(topic: string, lang: Locale): string {
+  return (TOPIC_LABELS as Record<string, Dict>)[topic]?.[lang]
+    ?? TOPIC_EXTRA[topic]?.[lang]
+    ?? topic;
+}

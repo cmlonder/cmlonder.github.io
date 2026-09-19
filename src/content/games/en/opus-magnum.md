@@ -6,7 +6,7 @@ rating: 4
 hours: 40
 platform: "PC"
 note: "Shoves the difference between a working solution and a good one in your face with a histogram."
-tags: ["optimization", "tradeoffs"]
+topics: [optimization, tradeoffs]
 order: 6
 placeholder: true
 ---

@@ -7,7 +7,7 @@ order: 4
 placeholder: true
 status: "done"
 rating: 4
-tags: ["design", "complexity"]
+topics: [design, complexity]
 ---
 
 Two hundred pages and one idea: **complexity is buried in depth.** A good

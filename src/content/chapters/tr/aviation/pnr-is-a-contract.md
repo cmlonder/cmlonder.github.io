@@ -3,7 +3,7 @@ title: "PNR bir kayıt değil, bir sözleşme"
 domain: "aviation"
 summary: "Rezervasyonu bir satır olarak modellersen ilk ay çalışır, ikinci ay çöker. Sebebi PNR'ın ne olduğunu değil, neyi temsil ettiğini yanlış anlamak."
 pubDate: 2026-09-10
-topics: ["solution-architecture"]
+topics: [solution-architecture]
 crossRef:
   domain: "ecommerce"
   slug: "cart-is-a-time-window"

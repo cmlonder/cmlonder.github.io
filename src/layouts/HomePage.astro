@@ -172,10 +172,12 @@ const more = lang === 'tr' ? 'Devamı' : 'Learn more';
     font-family: var(--f-serif);
     font-variation-settings: var(--axis-display);
     font-weight: 400;
-    font-size: var(--t-3xl);
+    /* Önce --t-3xl'di; ekranı dolduruyor ve altındaki her şeyi
+       ezip geçiyordu. Bir kademe indi. */
+    font-size: var(--t-2xl);
     line-height: var(--lh-tight);
-    letter-spacing: -0.015em;
-    max-inline-size: 30ch;
+    letter-spacing: -0.012em;
+    max-inline-size: 32ch;
     text-wrap: pretty;
   }
   h1 strong { font-weight: 700; }

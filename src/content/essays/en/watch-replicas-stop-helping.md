@@ -2,8 +2,7 @@
 title: 'Watch read replicas stop helping'
 description: 'Replicas fix read saturation and nothing else. Here is the exact point where adding another one stops paying for itself.'
 pubDate: 2026-01-17
-topics: [scale-and-performance, solution-architecture]
-tags: [postgres, database, capacity, interactive]
+topics: [scale-and-performance, solution-architecture, postgres, database, capacity, interactive]
 featured: true
 draft: false
 placeholder: false

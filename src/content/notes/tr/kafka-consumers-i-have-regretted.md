@@ -4,8 +4,7 @@ description: 'Kendi hatalarımın kataloğu; yarısı kefaret, yarısı kontrol 
 pubDate: 2026-02-24
 updatedDate: 2026-07-28
 status: evergreen
-topics: [scale-and-performance]
-tags: [kafka, queues]
+topics: [scale-and-performance, kafka, queues]
 draft: false
 placeholder: true
 ---

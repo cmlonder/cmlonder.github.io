@@ -5,7 +5,7 @@ year: 2016
 rating: 5
 runtime: 116
 note: "Bir sistemi anlamanın onu değiştirmekle aynı şey olduğu fikri."
-tags: ["language", "models", "time"]
+topics: [language, models, time]
 order: 5
 placeholder: true
 ---

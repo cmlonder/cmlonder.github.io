@@ -7,7 +7,7 @@ order: 4
 placeholder: true
 status: "done"
 rating: 4
-tags: ["design", "complexity"]
+topics: [design, complexity]
 ---
 
 İki yüz sayfa ve tek bir fikri var: **karmaşıklık derinliğe gömülür.**

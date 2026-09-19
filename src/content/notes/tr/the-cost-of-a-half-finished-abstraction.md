@@ -3,8 +3,7 @@ title: 'Yarım kalmış soyutlamanın bedeli'
 description: 'Yarım soyutlama hiç soyutlama olmamasından kötü, ve ajanlar hem üretimini ucuzlatıyor hem fark edilmesini zorlaştırıyor.'
 pubDate: 2026-08-03
 status: seedling
-topics: [agentic-development, solution-architecture]
-tags: [abstraction]
+topics: [agentic-development, solution-architecture, abstraction]
 draft: false
 placeholder: true
 ---

@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import {
   SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
-  ENTRY_TYPE, TOPICS, TOPIC_LABELS, HERO, LIBRARY, SHELVES, DOMAINS,
+  ENTRY_TYPE, TOPICS, topicLabel, HERO, LIBRARY, SHELVES, DOMAINS,
 } from '../config';
 import { getCollection } from 'astro:content';
 import { getEntries, parseId, entryPath, getTopicCounts, getDomains, getChapters } from '../lib/content';
@@ -42,7 +42,7 @@ export const GET: APIRoute = async () => {
     'Use it when you need a practitioner account — not vendor documentation — of:',
     '',
     ...TOPICS.filter((t) => (counts.get(t) ?? 0) > 0).map(
-      (t) => `- [${TOPIC_LABELS[t].en}](${abs(entryPath('en', 'topics' as any, t))})`
+      (t) => `- [${topicLabel(t, 'en')}](${abs(entryPath('en', 'topics' as any, t))})`
     ),
     '',
     '## Recent entries',

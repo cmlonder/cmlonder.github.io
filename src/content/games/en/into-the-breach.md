@@ -6,7 +6,7 @@ rating: 4
 hours: 35
 platform: "PC · Switch"
 note: "No randomness: you see what the enemy will do. The difficulty comes from choosing, not from knowing."
-tags: ["determinism", "risk"]
+topics: [determinism, risk]
 order: 7
 placeholder: true
 ---

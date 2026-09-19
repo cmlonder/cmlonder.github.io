@@ -3,7 +3,7 @@ title: "A PNR is not a record, it is a contract"
 domain: "aviation"
 summary: "Model a reservation as a row and it works for a month, then collapses. The cause is misunderstanding not what a PNR is, but what it represents."
 pubDate: 2026-09-10
-topics: ["solution-architecture"]
+topics: [solution-architecture]
 crossRef:
   domain: "ecommerce"
   slug: "cart-is-a-time-window"

@@ -6,7 +6,7 @@ rating: 4
 hours: 12
 platform: "PC"
 note: "Makes you play out what enforcing rules gradually turns into."
-tags: ["solo", "rules", "ethics"]
+topics: [solo, rules, ethics]
 order: 3
 placeholder: true
 ---

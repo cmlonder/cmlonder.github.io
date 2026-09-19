@@ -4,14 +4,7 @@ description: 'Darboğaz okuma yüküyse en ucuz doğru cevap neredeyse hiçbir z
 pubDate: 2026-02-19
 problem: 'Veritabanı doyuyor ve ekip bir sharding projesi öneriyor.'
 context: 'Tek bölgeli OLTP Postgres/MySQL, ~2 TB altı, okuma ağırlıklı (>%80 okuma).'
-symptoms:
-- Veritabanı CPU'su dibe vurmuş
-- Okumalar yavaş, yazmalar normal
-- Biri sharding önerdi
-- Trafik artmadan sorgu gecikmesi yükseldi
-tryFirst: 10
-topics: [scale-and-performance, solution-architecture]
-tags: [postgres, database, capacity]
+topics: [scale-and-performance, solution-architecture, postgres, database, capacity]
 draft: false
 placeholder: true
 ---

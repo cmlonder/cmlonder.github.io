@@ -4,8 +4,7 @@ description: 'The clearest public writing on when an agent loop beats a fixed wo
 pubDate: 2026-08-28
 url: https://www.anthropic.com/engineering/building-effective-agents
 source: 'Anthropic Engineering'
-topics: [agentic-development, ai-news]
-tags: [patterns]
+topics: [agentic-development, ai-news, patterns]
 draft: false
 placeholder: true
 ---

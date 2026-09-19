@@ -5,7 +5,7 @@ year: 2016
 status: "queued"
 platform: "PC"
 note: "Tek kelime metin olmadan öğretiyormuş. Nasıl yaptığını görmek istiyorum."
-tags: ["puzzles", "teaching"]
+topics: [puzzles, teaching]
 order: 22
 placeholder: true
 ---

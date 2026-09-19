@@ -8,7 +8,7 @@ import { Image } from 'astro:assets';
 import Base from './Base.astro';
 import Rating from '../components/Rating.astro';
 import LangNote from '../components/LangNote.astro';
-import { SHELVES, TAG_LABELS, type ShelfName, type Locale } from '../config';
+import { SHELVES, topicLabel, type ShelfName, type Locale } from '../config';
 import { localePath } from '../lib/content';
 
 const kapaklar = import.meta.glob<{ default: ImageMetadata }>(
@@ -65,8 +65,10 @@ const inceleme = (entry.body ?? '').trim().length > 0;
           {kunye.map((r) => (<><dt>{r.k}</dt><dd>{r.v}</dd></>))}
         </dl>
 
-        {d.tags?.length > 0 && (
-          <p class="tags">{d.tags.map((t: string) => <span class="tag">{TAG_LABELS[t]?.[lang] ?? t}</span>)}</p>
+        {d.topics?.length > 0 && (
+          <p class="tags">{d.topics.map((t: string) => (
+            <a class="tag" href={localePath(lang, 'topics', t)}>{topicLabel(t, lang)}</a>
+          ))}</p>
         )}
 
         {d.url && (

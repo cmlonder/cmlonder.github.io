@@ -2,8 +2,7 @@
 title: 'How buying an iPhone helped me to land my first job as a Developer?'
 description: 'No, not by writing an iOS application. A story about noticing what nobody else in the room noticed.'
 pubDate: 2022-08-28
-topics: [solo-company]
-tags: [legacy, career]
+topics: [solo-company, legacy, career]
 featured: false
 draft: false
 placeholder: false

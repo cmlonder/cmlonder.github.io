@@ -6,7 +6,7 @@ rating: 4
 hours: 35
 platform: "PC · Switch"
 note: "Rastgelelik yok: düşmanın ne yapacağını görüyorsun. Zorluk bilgiden değil, seçimden."
-tags: ["determinism", "risk"]
+topics: [determinism, risk]
 order: 7
 placeholder: true
 ---

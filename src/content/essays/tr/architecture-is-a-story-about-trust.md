@@ -2,8 +2,7 @@
 title: 'Mimari, Güven Hakkında Bir Hikâyedir'
 description: 'Bir sistemdeki her sınır, hangi ekibin seni bozmayacağına güvendiğinin ifadesidir.'
 pubDate: 2026-07-19
-topics: [solution-architecture]
-tags: [boundaries, teams]
+topics: [solution-architecture, boundaries, teams]
 featured: false
 draft: false
 placeholder: true

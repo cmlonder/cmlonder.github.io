@@ -11,8 +11,8 @@
  */
 import Base from './Base.astro';
 import TypeMark from '../components/TypeMark.astro';
-import { COLLECTIONS, COLLECTION_LABELS, PAGE, UI,
-         type CollectionName, type Locale } from '../config';
+import { COLLECTIONS, COLLECTION_LABELS, SHELVES, PAGE, UI,
+         type CollectionName, type ShelfName, type Locale } from '../config';
 import { formatDate, entryPath, parseId, localePath } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
@@ -21,9 +21,11 @@ interface Props {
   blurb: string;
   lang: Locale;
   items: { collection: CollectionName; entry: AnyEntry }[];
+  /** Raf girdileri de aynı konuda: kitap, film, oyun. */
+  shelves?: { shelf: ShelfName; items: any[] }[];
   altLocale?: { lang: Locale; href: string } | null;
 }
-const { title, blurb, lang, items, altLocale = null } = Astro.props as Props;
+const { title, blurb, lang, items, shelves = [], altLocale = null } = Astro.props as Props;
 
 // Tip sırası COLLECTIONS'tan geliyor: olgunluk sırası, alfabe değil.
 const gruplar = COLLECTIONS
@@ -47,8 +49,14 @@ const gruplar = COLLECTIONS
       <h1>{title}</h1>
       <p class="blurb">{blurb}</p>
 
-      {gruplar.length > 1 && (
+      {(gruplar.length + shelves.length) > 1 && (
         <nav class="turler" aria-label={title}>
+          {shelves.map((g) => (
+            <a href={`#raf-${g.shelf}`}>
+              <span>{SHELVES[g.shelf].name[lang]}</span>
+              <span class="n">{g.items.length}</span>
+            </a>
+          ))}
           {gruplar.map((g) => (
             <a href={`#tur-${g.collection}`}>
               <TypeMark collection={g.collection} size={14} />
@@ -60,7 +68,7 @@ const gruplar = COLLECTIONS
       )}
     </header>
 
-    {items.length === 0 ? <p class="meta empty">{UI[lang].empty}</p> : (
+    {items.length === 0 && shelves.length === 0 ? <p class="meta empty">{UI[lang].empty}</p> : (
       gruplar.map((g) => (
         <section class="grup" id={`tur-${g.collection}`}>
           <h2>
@@ -87,6 +95,22 @@ const gruplar = COLLECTIONS
         </section>
       ))
     )}
+    {shelves.map((g) => (
+      <section class="grup" id={`raf-${g.shelf}`}>
+        <h2>{SHELVES[g.shelf].name[lang]}<span class="n">{g.items.length}</span></h2>
+        <ul>
+          {g.items.map((e: any) => (
+            <li>
+              <a href={localePath(lang, SHELVES[g.shelf].path, e.id.split('/').pop())}>
+                <h3>{e.data.title}</h3>
+                <p class="dek">{e.data.note}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
     <slot name="after" />
   </div>
 </Base>

@@ -3,7 +3,7 @@ title: "Overbooking is not a mistake, it is a model"
 domain: "aviation"
 summary: "Airlines sell more tickets than seats, and that is a deliberate decision rather than a software bug. What is interesting is not the decision but how the system carries it."
 pubDate: 2026-09-13
-topics: ["solution-architecture", "scale-and-performance"]
+topics: [solution-architecture, scale-and-performance]
 crossRef:
   domain: "ecommerce"
   slug: "stock-is-a-reservation"

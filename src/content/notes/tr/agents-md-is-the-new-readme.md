@@ -3,8 +3,7 @@ title: 'AGENTS.md yeni README'
 description: 'README bir kere göz gezdirecek insan için yazılmıştı. Bu dosya her çalıştırmada baştan sona okunuyor.'
 pubDate: 2026-07-29
 status: budding
-topics: [agentic-development]
-tags: [conventions]
+topics: [agentic-development, conventions]
 draft: false
 placeholder: true
 ---

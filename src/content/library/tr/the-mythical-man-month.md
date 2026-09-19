@@ -7,7 +7,7 @@ order: 2
 placeholder: true
 status: "done"
 rating: 4
-tags: ["team", "communication"]
+topics: [teams, communication]
 ---
 
 Elli yıllık ve hâlâ doğru, bu biraz da moral bozucu.

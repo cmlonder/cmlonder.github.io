@@ -1,39 +1,25 @@
 ---
-import RadarStrip from '../../components/RadarStrip.astro';
 import TopicPage from '../../layouts/TopicPage.astro';
-import { TOPICS, TOPIC_LABELS, type Locale, PAGE } from '../../config';
-import { getEntriesByTopic, localePath } from '../../lib/content';
+import { topicLabel, PAGE, type Locale } from '../../config';
+import { getAllTopics, getEntriesByTopic, getShelfTopicEntries, localePath } from '../../lib/content';
 
 export async function getStaticPaths() {
-  // Boş konu sayfası üretme — ince içerikli sayfa SEO'ya zarar verir.
-  const withEntries = await Promise.all(
-    TOPICS.map(async (topic) => ({
-      topic,
-      count: (await getEntriesByTopic(topic, 'en')).length,
-    }))
-  );
-  return withEntries.filter((t) => t.count > 0).map(({ topic }) => ({ params: { topic } }));
+  const topics = await getAllTopics('en');
+  return topics.map(({ slug }) => ({ params: { topic: slug } }));
 }
 
 const lang: Locale = 'en';
-const other = 'tr' as const;
-const { topic } = Astro.params as { topic: typeof TOPICS[number] };
+const { topic } = Astro.params as { topic: string };
 
 const items = await getEntriesByTopic(topic, lang);
-const otherItems = await getEntriesByTopic(topic, other);
+const shelves = await getShelfTopicEntries(topic, lang);
+const otherItems = await getEntriesByTopic(topic, 'tr');
 const altLocale = otherItems.length
-  ? { lang: other, href: localePath(other, 'topics', topic) }
+  ? { lang: 'tr' as const, href: localePath('tr', 'topics', topic) }
   : null;
 
-const blurb = PAGE[lang].topicBlurb(TOPIC_LABELS[topic][lang]);
+const ad = (await getAllTopics(lang)).find((t) => t.slug === topic)?.topic ?? topic;
 ---
 
-<TopicPage
-  title={TOPIC_LABELS[topic][lang]}
-  blurb={blurb}
-  lang={lang}
-  items={items}
-  altLocale={altLocale}
->
-  {topic === 'solo-company' && <RadarStrip slot="after" lang={lang} />}
-</TopicPage>
+<TopicPage title={topicLabel(ad, lang)} blurb={PAGE[lang].topicBlurb(topicLabel(ad, lang))}
+           lang={lang} items={items} shelves={shelves} altLocale={altLocale} />

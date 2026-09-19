@@ -1,7 +1,7 @@
 ---
 import GrowthBadge from './GrowthBadge.astro';
-import { COLLECTION_LABELS, STATUS_LABELS, TOPIC_LABELS,
-         type CollectionName, type Locale, type Topic } from '../config';
+import { COLLECTION_LABELS, STATUS_LABELS, topicLabel,
+         type CollectionName, type Locale } from '../config';
 import TypeMark from './TypeMark.astro';
 import { formatDate, relativeDate, entryPath, parseId } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
@@ -33,7 +33,7 @@ const href = entryPath(lang, collection, slug);
 const typeLabel = COLLECTION_LABELS[collection][lang].replace(/lar$|ler$|s$/, '');
 // Kapakta illüstrasyon yok — kopyalanacak çizim yok, uydurma da yok.
 // Yerine yazının ana konusu tipografik olarak duruyor.
-const coverTopic = TOPIC_LABELS[(d.topics as Topic[])[0]][lang];
+const coverTopic = topicLabel((d.topics as string[])[0] ?? '', lang);
 ---
 
 {variant === 'card' ? (

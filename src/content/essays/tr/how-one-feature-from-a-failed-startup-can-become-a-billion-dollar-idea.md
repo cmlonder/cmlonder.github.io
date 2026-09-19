@@ -2,8 +2,7 @@
 title: 'Batmış bir girişimin tek bir özelliği nasıl milyar dolarlık fikre dönüşür'
 description: 'Batan ürünlerin içinde çoğu zaman, etrafındaki şirketin tamamından değerli tek bir özellik duruyor.'
 pubDate: 2022-08-30
-topics: [solo-company]
-tags: [legacy, startup]
+topics: [solo-company, legacy, startup]
 featured: false
 draft: false
 placeholder: false

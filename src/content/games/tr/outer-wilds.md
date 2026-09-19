@@ -6,7 +6,7 @@ rating: 5
 hours: 24
 platform: "PC"
 note: "Tek ilerleme mekanizması senin ne bildiğin. Envanter yok, seviye yok."
-tags: ["discovery", "knowledge"]
+topics: [discovery, knowledge]
 order: 5
 placeholder: true
 ---

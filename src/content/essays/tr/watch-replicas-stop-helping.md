@@ -2,8 +2,7 @@
 title: 'Read replica ne zaman işe yaramaz oluyor'
 description: 'Replika yalnızca okuma doygunluğunu çözer, başka hiçbir şeyi. Bir tane daha eklemenin kendini ödemeyi bıraktığı nokta tam olarak burası.'
 pubDate: 2026-01-17
-topics: [scale-and-performance, solution-architecture]
-tags: [postgres, database, capacity, interactive]
+topics: [scale-and-performance, solution-architecture, postgres, database, capacity, interactive]
 featured: true
 draft: false
 placeholder: false

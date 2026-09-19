@@ -6,7 +6,7 @@ rating: 5
 hours: 16
 platform: "PC"
 note: "Tek kişilik üretimin nereye kadar gidebileceğinin kanıtı."
-tags: ["solo", "deduction", "design"]
+topics: [solo, deduction, design]
 order: 2
 placeholder: true
 ---

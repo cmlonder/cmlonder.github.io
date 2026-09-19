@@ -4,8 +4,7 @@ description: 'Ajanların kendilerine özel tool yerine insanların zaten kulland
 pubDate: 2026-08-11
 url: https://seangoedecke.com/dont-build-tools-for-ai-agents/
 source: 'Sean Goedecke'
-topics: [agentic-development]
-tags: [tools]
+topics: [agentic-development, tools]
 draft: false
 placeholder: true
 ---

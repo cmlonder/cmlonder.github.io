@@ -5,7 +5,7 @@ year: 2014
 rating: 4
 runtime: 106
 note: "Mükemmeliyetçiliğin üretken olduğu yer ile yıkıcı olduğu yer arasındaki ince çizgi."
-tags: ["mastery", "cost"]
+topics: [mastery, cost]
 order: 7
 placeholder: true
 ---

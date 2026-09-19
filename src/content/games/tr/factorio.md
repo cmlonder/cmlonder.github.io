@@ -6,7 +6,7 @@ rating: 5
 hours: 310
 platform: "PC"
 note: "Darboğaz bulmanın ne demek olduğunu bir kitaptan daha iyi öğreten oyun."
-tags: ["systems", "bottleneck", "automation"]
+topics: [systems, bottleneck, automation]
 order: 1
 placeholder: true
 ---

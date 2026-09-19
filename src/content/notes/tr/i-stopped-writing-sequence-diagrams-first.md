@@ -3,8 +3,7 @@ title: 'Sıra diyagramını önce çizmeyi bıraktım'
 description: 'Mutlu yol yerine hata hallerinden başlamanın neden daha iyi tasarım ürettiğini anlatmaya çalışıyorum.'
 pubDate: 2026-08-17
 status: seedling
-topics: [solution-architecture]
-tags: [design, diagrams]
+topics: [solution-architecture, design, diagrams]
 draft: false
 placeholder: true
 ---

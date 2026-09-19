@@ -7,7 +7,7 @@ order: 8
 placeholder: true
 status: "done"
 rating: 3
-tags: ["solo", "scale"]
+topics: [solo, scale]
 ---
 
 Küçük kalmanın bir strateji olabileceğini savunuyor ve bu savunmaya

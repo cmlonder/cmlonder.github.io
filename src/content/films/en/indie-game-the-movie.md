@@ -5,7 +5,7 @@ year: 2012
 rating: 4
 runtime: 94
 note: "Solo production as it actually is: lonely and maddening rather than romantic."
-tags: ["solo", "games", "risk"]
+topics: [solo, games, risk]
 order: 2
 placeholder: true
 ---

@@ -1,29 +1,29 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
-import { RADAR, TAG_LABELS, type Locale } from '../../../config';
+import { RADAR, topicLabel, type Locale } from '../../../config';
 import { formatDate } from '../../../lib/content';
 
 export async function getStaticPaths() {
   const all = (await getCollection('radar')).filter((e) => !e.data.draft);
-  const tags = new Set(all.flatMap((e) => e.data.tags ?? []));
-  return [...tags].map((tag) => ({
-    params: { tag },
+  const topics = new Set(all.flatMap((e) => e.data.topics ?? []));
+  return [...topics].map((topic) => ({
+    params: { topic },
     props: {
-      tag,
+      topic,
       entries: all
-        .filter((e) => (e.data.tags ?? []).includes(tag))
+        .filter((e) => (e.data.topics ?? []).includes(topic))
         .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
     },
   }));
 }
 
 const lang: Locale = 'tr';
-const { tag, entries } = Astro.props;
-const ad = TAG_LABELS[tag]?.tr ?? tag;
+const { topic, entries } = Astro.props;
+const ad = topicLabel(topic, 'tr');
 ---
 
-<Base title={`${ad} — ${RADAR.name.tr}`} description={`${tag} etiketli bültenler.`}
+<Base title={`${ad} — ${RADAR.name.tr}`} description={`${topic} konulu bültenler.`}
       lang={lang} ogImage="/og/radar.png">
   <div class="wrap">
     <header class="head">

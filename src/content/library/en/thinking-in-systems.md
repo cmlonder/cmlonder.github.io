@@ -7,7 +7,7 @@ order: 1
 placeholder: true
 status: "done"
 rating: 5
-tags: ["systems", "feedback"]
+topics: [systems, feedback]
 ---
 
 The first place I properly saw feedback loops and delays. Especially the

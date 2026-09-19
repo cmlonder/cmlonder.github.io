@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import Base from './Base.astro';
 import {
-  COLLECTION_LABELS, TOPIC_LABELS, STATUS_LABELS,
+  COLLECTION_LABELS, topicLabel, STATUS_LABELS,
   type CollectionName, type Locale,
 } from '../config';
 import GrowthBadge from '../components/GrowthBadge.astro';
@@ -10,7 +10,7 @@ import Backlinks from '../components/Backlinks.astro';
 import EntryCard from '../components/EntryCard.astro';
 import Comments from '../components/Comments.astro';
 import Toc from '../components/Toc.astro';
-import { formatDate, localePath, entryPath, getTranslations, parseId, getRelated, getNeighbours, tagSlug } from '../lib/content';
+import { formatDate, localePath, entryPath, getTranslations, parseId, getRelated, getNeighbours } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
 interface Props {
@@ -100,18 +100,11 @@ const t = {
 
     <footer class="entry-foot">
       <p class="topics meta">
-        {d.topics.map((topic: keyof typeof TOPIC_LABELS) => (
-          <a href={localePath(lang, 'topics', topic)}>{TOPIC_LABELS[topic][lang]}</a>
+        {d.topics.map((topic: string) => (
+          <a href={localePath(lang, 'topics', topic)}>{topicLabel(topic, lang)}</a>
         ))}
       </p>
 
-      {d.tags?.length > 0 && (
-        <p class="tags meta">
-          {d.tags.map((tag: string) => (
-            <a href={localePath(lang, 'tags', tagSlug(tag))}>{tag}</a>
-          ))}
-        </p>
-      )}
 
       {(newer || older) && (
         <nav class="neighbours" aria-label={COLLECTION_LABELS[collection][lang]}>

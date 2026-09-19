@@ -4,13 +4,7 @@ description: 'Ölçülmeden eklenen bir önbellek, bilinmeyen bir kazanç için 
 pubDate: 2026-06-10
 problem: 'Bir şey yavaş ve önerilen çözüm önüne Redis koymak.'
 context: 'Bayatlığın gerçek bir maliyeti olduğu ve erişim deseninin henüz bilinmediği okuma yolları.'
-symptoms:
-- Bir şey yavaş ve kimse nedenini bilmiyor
-- Çözüm olarak önbellek öneriliyor
-- Okumalar yavaş, yazmalar normal
-tryFirst: 20
-topics: [scale-and-performance]
-tags: [cache, redis]
+topics: [scale-and-performance, cache, redis]
 draft: false
 placeholder: true
 ---

@@ -5,7 +5,7 @@ year: 2016
 rating: 5
 runtime: 116
 note: "The idea that understanding a system is the same act as changing it."
-tags: ["language", "models", "time"]
+topics: [language, models, time]
 order: 5
 placeholder: true
 ---

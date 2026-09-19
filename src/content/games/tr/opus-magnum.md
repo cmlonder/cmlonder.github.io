@@ -6,7 +6,7 @@ rating: 4
 hours: 40
 platform: "PC"
 note: "Çalışan çözüm ile iyi çözüm arasındaki farkı histogramla yüzüne vuruyor."
-tags: ["optimization", "tradeoffs"]
+topics: [optimization, tradeoffs]
 order: 6
 placeholder: true
 ---

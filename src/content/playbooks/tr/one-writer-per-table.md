@@ -4,13 +4,7 @@ description: 'Paylaşımlı bir veritabanının dağıtık monolite dönüşmesi
 pubDate: 2026-05-04
 problem: 'İki ya da daha fazla servis aynı tabloya yazıyor ve şema değişiklikleri korkutucu hale geldi.'
 context: 'Servislere geçiş sürecinin ortasındaki paylaşımlı veritabanı mimarileri.'
-symptoms:
-- Şema değişiklikleri korkutucu
-- İki servis aynı tabloya yazıyor
-- Veritabanı ile broker uyuşmuyor
-tryFirst: 40
-topics: [solution-architecture]
-tags: [database, boundaries]
+topics: [solution-architecture, database, boundaries]
 draft: false
 placeholder: true
 ---

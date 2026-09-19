@@ -7,7 +7,7 @@ order: 2
 placeholder: true
 status: "done"
 rating: 4
-tags: ["team", "communication"]
+topics: [teams, communication]
 ---
 
 Fifty years old and still correct, which is a little demoralising.

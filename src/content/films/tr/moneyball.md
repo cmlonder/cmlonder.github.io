@@ -5,7 +5,7 @@ year: 2011
 rating: 4
 runtime: 133
 note: "Veriyle karar vermenin teknik değil, politik bir problem olduğu."
-tags: ["systems", "data", "institutions"]
+topics: [systems, data, institutions]
 order: 3
 placeholder: true
 ---

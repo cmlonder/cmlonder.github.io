@@ -7,7 +7,7 @@ order: 5
 placeholder: true
 status: "done"
 rating: 4
-tags: ["bottleneck", "systems"]
+topics: [bottleneck, systems]
 ---
 
 The novel format felt unnecessary at first, then I understood: if it had

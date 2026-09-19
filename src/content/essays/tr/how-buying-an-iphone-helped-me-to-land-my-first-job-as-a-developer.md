@@ -2,8 +2,7 @@
 title: 'Bir iPhone almak ilk işimi bulmama nasıl yardım etti'
 description: 'Bir grup mülakatında, verilen verinin dışından gelen bir fikrin nasıl fark yarattığı.'
 pubDate: 2022-08-28
-topics: [solo-company]
-tags: [legacy, career]
+topics: [solo-company, legacy, career]
 featured: false
 draft: false
 placeholder: false

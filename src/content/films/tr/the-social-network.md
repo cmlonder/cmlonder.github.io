@@ -5,7 +5,7 @@ year: 2010
 rating: 3
 runtime: 120
 note: "Ortaklığın nasıl dağıldığına dair, teknolojiden çok sözleşme filmi."
-tags: ["founding", "partnership"]
+topics: [founding, partnership]
 order: 4
 placeholder: true
 ---

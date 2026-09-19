@@ -5,7 +5,7 @@ year: 2010
 rating: 3
 runtime: 120
 note: "A film about contracts rather than technology, and about how a partnership comes apart."
-tags: ["founding", "partnership"]
+topics: [founding, partnership]
 order: 4
 placeholder: true
 ---

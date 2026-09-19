@@ -11,7 +11,7 @@
  */
 import { render } from 'astro:content';
 import Base from './Base.astro';
-import { TOPIC_LABELS, UI, PAGE, type Locale, type Topic } from '../config';
+import { topicLabel, UI, PAGE, type Locale } from '../config';
 import { formatDate, localePath, entryPath, parseId } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
@@ -59,8 +59,8 @@ const t = {
           <li class="sm">
             <p class="top">
               <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
-              {(d.topics as Topic[]).map((k) => (
-                <a class="chip" href={localePath(lang, 'topics', k)}>{TOPIC_LABELS[k][lang]}</a>
+              {(d.topics as string[]).map((k) => (
+                <a class="chip" href={localePath(lang, 'topics', k)}>{topicLabel(k, lang)}</a>
               ))}
             </p>
 

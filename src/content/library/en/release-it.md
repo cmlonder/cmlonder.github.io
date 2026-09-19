@@ -7,7 +7,7 @@ order: 3
 placeholder: true
 status: "done"
 rating: 4
-tags: ["production", "resilience"]
+topics: [production, resilience]
 ---
 
 A catalogue of the many ways production breaks. Circuit breaker,

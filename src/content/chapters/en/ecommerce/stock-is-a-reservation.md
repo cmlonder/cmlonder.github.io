@@ -3,7 +3,7 @@ title: "Stock is not a number, it is a reservation"
 domain: "ecommerce"
 summary: "Decrementing a stock counter and promising something to a customer are not the same operation. Overselling almost always comes from confusing the two."
 pubDate: 2026-09-11
-topics: ["solution-architecture", "scale-and-performance"]
+topics: [solution-architecture, scale-and-performance]
 crossRef:
   domain: "aviation"
   slug: "overbooking-is-a-model"
