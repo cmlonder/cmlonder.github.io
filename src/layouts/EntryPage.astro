@@ -55,16 +55,29 @@ const t = {
       structured={{ collection, entry }}>
   <div class="reading" data-reading data-toc="acik" data-notes="acik">
     <aside class="rail toc-rail" data-rail="toc">
-      <button type="button" class="ray-ok" data-toggle="toc" aria-expanded="true" aria-label={t.toc} title={t.toc}>
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
-             stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M15 6l-6 6 6 6" />
-        </svg>
-      </button>
       <div class="ray-ic"><Toc headings={headings} label={t.toc} /></div>
     </aside>
 
     <article class="narrow">
+      <div class="ray-tut sol">
+        <button type="button" class="ray-ok" data-toggle="toc" aria-expanded="true"
+                aria-label={t.toc} title={t.toc}>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
+        </button>
+      </div>
+      <div class="ray-tut sag">
+        <button type="button" class="ray-ok" data-toggle="notes" aria-expanded="true"
+                aria-label={t.notes} title={t.notes}>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
+        </button>
+      </div>
+
     <header class="entry-head">
       <p class="meta kicker">
         <a href={localePath(lang, collection)}>{COLLECTION_LABELS[collection][lang]}</a>
@@ -127,12 +140,6 @@ const t = {
     </article>
 
     <aside class="rail notes-rail" data-rail="notes" aria-label={t.notes}>
-      <button type="button" class="ray-ok" data-toggle="notes" aria-expanded="true" aria-label={t.notes} title={t.notes}>
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
-             stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M15 6l-6 6 6 6" />
-        </svg>
-      </button>
       <div class="ray-ic"></div>
     </aside>
   </div>
@@ -180,24 +187,31 @@ const t = {
     inline-size: min(100% - var(--s-l), var(--w-narrow));
     margin-inline: auto;
   }
-  .reading > .rail { display: none; }
+  .reading > .rail, .ray-tut { display: none; }
 
   @media (min-width: 78rem) {
+    /*
+     * Boşluk ızgara gap'i değil, rayların iç kenar boşluğu. Böylece ray
+     * kapanınca boşluğu da götürüyor ve yazı tam ortalanıyor — 2rem'lik
+     * ölü şerit, yanında koca bir gutter kalmıyor.
+     */
     .reading {
       display: grid;
       grid-template-columns: var(--ray-toc) minmax(0, var(--w-narrow)) var(--ray-not);
-      gap: var(--bosluk);
       justify-content: center;
       align-items: start;
-      inline-size: min(100% - var(--s-l),
-        calc(var(--ray-toc) + var(--w-narrow) + var(--ray-not) + 2 * var(--bosluk)));
+      inline-size: min(100% - var(--s-l), calc(var(--ray-toc) + var(--w-narrow) + var(--ray-not)));
     }
     .reading > .rail { display: block; }
-    .reading > .narrow { inline-size: 100%; }
+    .reading > .toc-rail   { padding-inline-end: var(--bosluk); }
+    .reading > .notes-rail { padding-inline-start: var(--bosluk); }
+    .reading > .narrow { inline-size: 100%; position: relative; }
+    .ray-tut { display: block; }
 
-    /* Kapalı ray şeride düşüyor; ok orada kalsın diye yok olmuyor. */
-    .reading[data-toc='kapali']   { --ray-toc: 2rem; }
-    .reading[data-notes='kapali'] { --ray-not: 2rem; }
+    .reading[data-toc='kapali']   { --ray-toc: 0rem; }
+    .reading[data-notes='kapali'] { --ray-not: 0rem; }
+    .reading[data-toc='kapali']   > .toc-rail,
+    .reading[data-notes='kapali'] > .notes-rail { display: none; }
   }
 
   .toc-rail { position: sticky; inset-block-start: var(--s-l); max-block-size: 80vh; overflow-y: auto; }

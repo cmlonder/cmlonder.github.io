@@ -26,7 +26,20 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-img, picture, svg { display: block; max-width: 100%; }
+/*
+ * height: auto ŞART. Eski yazıların <img>'leri width/height niteliği
+ * taşıyor (sayfa zıplamasın diye, doğru); max-width görseli sütuna
+ * sığdırınca yükseklik nitelikte kalıyor ve görsel eziliyordu.
+ */
+img, picture, svg { display: block; max-width: 100%; height: auto; }
+
+/* Yazı içindeki görsel: kenarlık, köşe, üstte-altta nefes. */
+.prose > img, .prose > p > img {
+  margin-block: var(--s-m);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  background: var(--c-surface);
+}
 
 :focus-visible {
   outline: 2px solid var(--c-accent);
@@ -283,44 +296,54 @@ h2.section-title a,
 }
 
 /*
- * Ray okları — içindekiler ve kenar notlarını açıp kapatan tek kontrol.
+ * Ray okları — içindekiler ve kenar notlarını açıp kapatan kontrol.
  *
- * Metin düğmesi yerine ok: ray zaten orada duruyor, ok sadece onu
- * kenara itiyor. Kapalıyken ray yok olmuyor, ince bir şeride dönüşüyor
- * ve ok orada kalıyor — geri açmak için ayrı bir tutamak aramak
- * gerekmiyor.
+ * Ok rayın İÇİNDE değil, yazının kenarına sabitli bir tutamakta duruyor.
+ * Böylece ray açıkken de kapalıyken de aynı yerde; kapanınca ray
+ * tamamen gidiyor, geri açmak için tutamak orada. Tutamak yazının boyu
+ * kadar uzanan sıfır genişlikli bir şerit; içindeki düğme yapışkan,
+ * kaydırınca okuyucuyla geliyor.
+ *
+ * Görünürlüğü düzenler veriyor (yalnızca raylı geniş ekranda).
  */
-.rail { display: flex; flex-direction: column; }
-.toc-rail .ray-ok { align-self: flex-end; }
-.notes-rail .ray-ok { align-self: flex-start; }
+.ray-tut {
+  position: absolute; inset-block: 0;
+  inline-size: 0;
+  pointer-events: none;
+}
+.ray-tut.sol { inset-inline-start: calc(-1 * var(--s-2xl) / 2 - .9rem); }
+.ray-tut.sag { inset-inline-end:   calc(-1 * var(--s-2xl) / 2 - .9rem); }
 
 .ray-ok {
-  appearance: none; background: none; cursor: pointer;
+  position: sticky; inset-block-start: var(--s-l);
+  pointer-events: auto;
+  appearance: none; cursor: pointer;
   display: grid; place-items: center;
-  inline-size: 1.6rem; block-size: 1.6rem;
-  margin-block-end: var(--s-2xs);
+  inline-size: 1.8rem; block-size: 1.8rem;
   border: 1px solid var(--c-border); border-radius: 999px;
   background: var(--c-surface);
   color: var(--c-muted);
-  transition: color .18s ease, border-color .18s ease, background-color .18s ease;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--c-text) 8%, transparent);
+  transition: color .18s ease, border-color .18s ease, background-color .18s ease,
+              transform .18s ease, box-shadow .18s ease;
 }
-.ray-ok:hover {
+.ray-ok:hover, .ray-ok:focus-visible {
   color: var(--c-accent);
   border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border));
-  background: var(--c-bg);
+  transform: scale(1.08);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--c-text) 12%, transparent);
 }
 .ray-ok svg { transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
 
-/* Ok, rayın kapanacağı yönü gösteriyor; kapalıyken tersine dönüyor. */
-.toc-rail .ray-ok[aria-expanded='false'] svg,
-.notes-rail .ray-ok[aria-expanded='true'] svg { transform: rotate(180deg); }
+/* Ok, rayın gideceği yönü gösteriyor: sol ray kapanırken sola, kapalıyken sağa. */
+.ray-tut.sol .ray-ok[aria-expanded='false'] svg,
+.ray-tut.sag .ray-ok[aria-expanded='true']  svg { transform: rotate(180deg); }
 
 .ray-ic { min-inline-size: 0; }
-[data-toc='kapali'] .toc-rail .ray-ic,
-[data-notes='kapali'] .notes-rail .ray-ic { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .ray-ok, .ray-ok svg { transition: none; }
+  .ray-ok:hover { transform: none; }
 }
 
 /*
