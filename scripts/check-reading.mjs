@@ -27,6 +27,7 @@ class El {
   }
   setAttribute(k, v) { this.attrs[k] = String(v); }
   getAttribute(k) { return this.attrs[k] ?? null; }
+  removeAttribute(k) { delete this.attrs[k]; }
   addEventListener(t, f) { (this.listeners[t] ??= []).push(f); }
   dispatch(t) { (this.listeners[t] ?? []).forEach((f) => f({ target: this, preventDefault() {} })); }
   append(...n) { n.forEach((x) => { x.parent = this; this.children.push(x); }); }
@@ -85,12 +86,23 @@ globalThis.requestAnimationFrame = (f) => f();
 
 // Paket adı hash taşıyor; dist içinde bulup içeri alıyoruz.
 const dizin = 'dist/_astro';
-const dosya = readFileSync ? readdirSync(dizin).find((f) => /^reading\..*\.js$/.test(f)) : null;
-if (!dosya) {
-  console.error('reading chunk bulunamadı — önce `pnpm build` çalıştır.');
+
+/** Paketler hash taşıyor; dist içinde bulup içeri alıyoruz. */
+function bulVeOku(kalip, ad) {
+  const f = readdirSync(dizin).find((x) => kalip.test(x));
+  if (f) return readFileSync(join(dizin, f), 'utf8');
+  // Küçük script'ler sayfaya gömülüyor: HTML'den çıkar.
+  const html = readdirSync('dist/tr/essays', { withFileTypes: true }).length
+    ? readFileSync('dist/tr/essays/index.html', 'utf8') : '';
+  const m = [...html.matchAll(/<script(?![^>]*src)[^>]*>([\s\S]*?)<\/script>/g)]
+    .map((x) => x[1]).find((x) => x.includes('data-kip') || x.includes('liste-kip'));
+  if (m) return m;
+  console.error(`${ad} paketi bulunamadı — önce \`pnpm build\` çalıştır.`);
   process.exit(1);
 }
-await import(pathToFileURL(join(process.cwd(), dizin, dosya)).href);
+
+const dosya = readdirSync(dizin).find((f) => /^reading\..*\.js$/.test(f)) ?? '(gömülü)';
+await import('data:text/javascript,' + encodeURIComponent(bulVeOku(/^reading\..*\.js$/, 'reading')));
 
 const sonuc = [];
 sonuc.push(['başlangıç data-toc', kok.dataset.toc, 'acik']);
@@ -109,5 +121,33 @@ for (const [ad, oldu, beklenen] of sonuc) {
   if (!ok) hata++;
   console.log(`${ok ? '✓' : '✗'} ${ad.padEnd(26)} = ${String(oldu).padEnd(8)} (beklenen ${beklenen})`);
 }
-if (hata) { console.error('\nOkuma düzeni doğrulaması başarısız.'); process.exit(1); }
-console.log('Okuma düzeni doğrulaması geçti.');
+/* — İkinci senaryo: liste sayfalarındaki satır <-> ızgara düğmesi — */
+const kipCubuk = new El('p'); kipCubuk.dataset.kipBar = ''; kipCubuk.setAttribute('hidden', '');
+const kipListe = new El('div'); kipListe.dataset.liste = '';
+const kipSatir = new El('button'); kipSatir.dataset.kip = 'satir';
+const kipIzgara = new El('button'); kipIzgara.dataset.kip = 'izgara';
+const kipHarita = { '[data-kip-bar]': kipCubuk, '[data-liste]': kipListe };
+
+globalThis.document.querySelector = (s) => kipHarita[s] ?? null;
+globalThis.document.querySelectorAll = (s) => (s === '[data-kip]' ? [kipSatir, kipIzgara] : []);
+
+const kipKod = bulVeOku(/^layout-toggle\..*\.js$/, 'layout-toggle');
+await import('data:text/javascript,' + encodeURIComponent(kipKod));
+
+const kipSonuc = [
+  ['kip çubuğu görünür', kipCubuk.getAttribute('hidden'), null],
+  ['başlangıç kipi', kipListe.dataset.goster, 'satir'],
+];
+kipIzgara.dispatch('click');
+kipSonuc.push(['ızgaraya geçiş', kipListe.dataset.goster, 'izgara']);
+kipSatir.dispatch('click');
+kipSonuc.push(['satıra dönüş', kipListe.dataset.goster, 'satir']);
+
+for (const [ad, oldu, beklenen] of kipSonuc) {
+  const ok = oldu === beklenen;
+  if (!ok) hata++;
+  console.log(`${ok ? '✓' : '✗'} ${ad.padEnd(26)} = ${String(oldu).padEnd(8)} (beklenen ${beklenen})`);
+}
+
+if (hata) { console.error('\nArayüz doğrulaması başarısız.'); process.exit(1); }
+console.log('Arayüz doğrulaması geçti.');

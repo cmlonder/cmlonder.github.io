@@ -1,6 +1,7 @@
 ---
 import WorkPage from '../../layouts/WorkPage.astro';
-import type { Locale } from '../../config';
+import { KARIYER_BASLANGIC, type Locale } from '../../config';
+const yil = new Date().getFullYear() - KARIYER_BASLANGIC;
 const lang: Locale = 'tr';
 ---
 
@@ -8,17 +9,16 @@ const lang: Locale = 'tr';
   lang={lang}
   altHref="/work"
   baslik="Nasıl Çalışıyorum"
-  blurb="On yılı aşkın süredir dağıtık sistemler tasarlıyorum ve işletilebilir hale getiriyorum. Yöntemim, nerede çalıştığımdan daha çok şey anlatıyor."
+  blurb={`${yil} yıldır dağıtık sistemler tasarlıyorum ve işletilebilir hale getiriyorum. Yöntemim, nerede çalıştığımdan daha çok şey anlatıyor.`}
   giris={[
     'Çözüm mimarıyım. İşim mimarinin operasyonla kesiştiği yerde duruyor: dağıtık sistemler tasarlıyorum, sonra o sistemlerin gerçekten işletilebildiğinden emin oluyorum — ölçülebilir, ölçeklenebilir, kurtarılabilir ve devredilebilir olmasından.',
     'Havacılık, e-ticaret, çağrılı taşımacılık ve telekomda çalıştım. Aradaki ortak çizgi hep aynı: tek bir ekibin elinde çalışan bir sistemi, bütün organizasyonun özelliği haline getirmek.',
     'Son iki yıldır kendi disiplinimin araçlarını da yazıyorum, ve bu giderek ajanlar üzerinden ilerliyor — ham mühendislik girdisini mimari karar kaydına, inceleme notuna ve performans analizine çeviren beceriler.',
   ]}
   rakamlar={[
-    { deger: '10+', etiket: 'yıl yazılım' },
+    { deger: String(yil), etiket: 'yıl yazılım' },
     { deger: '100+', etiket: 'servisli platformda NFR mimarisi' },
     { deger: '2M', etiket: 'istek/dakika taşıyan servisler' },
-    { deger: '105×', etiket: 'kural değerlendirmede gecikme iyileştirmesi' },
   ]}
   ilkeBaslik="Nasıl çalışıyorum"
   ilkeler={[

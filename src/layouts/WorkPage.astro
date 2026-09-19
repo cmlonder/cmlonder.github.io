@@ -56,13 +56,13 @@ const other = p.lang === 'tr' ? 'en' : 'tr';
       {p.giris.map((c) => <p class="lead">{c}</p>)}
     </header>
 
-    <ul class="figures">
+    <ul class="figures" data-reveal>
       {p.rakamlar.map((r) => (
         <li><b>{r.deger}</b><span>{r.etiket}</span></li>
       ))}
     </ul>
 
-    <section class="block">
+    <section class="block" data-reveal>
       <h2>{p.ilkeBaslik}</h2>
       <ol class="principles">
         {p.ilkeler.map((i) => (
@@ -75,28 +75,30 @@ const other = p.lang === 'tr' ? 'en' : 'tr';
       <h2>{p.rolBaslik}</h2>
       <ol class="roles">
         {p.roller.map((r) => (
-          <li>
-            <p class="when">{r.donem}</p>
+          <li data-reveal>
+            <p class="when"><span class="dot" aria-hidden="true"></span>{r.donem}</p>
             <div class="what">
               <h3>{r.unvan}</h3>
               <p class="org">{r.org}{r.not && <span class="note"> — {r.not}</span>} · {r.yer}</p>
               {r.ozet && <p class="sum">{r.ozet}</p>}
               <ul class="pts">{r.maddeler.map((m) => <li>{m}</li>)}</ul>
-              {r.yigin && <p class="stack">{r.yigin}</p>}
+              {r.yigin && (
+                <p class="stack">{r.yigin.split(' · ').map((x) => <span>{x}</span>)}</p>
+              )}
             </div>
           </li>
         ))}
       </ol>
     </section>
 
-    <section class="block">
+    <section class="block" data-reveal>
       <h2>{p.bilgiBaslik}</h2>
       <dl class="know">
         {p.bilgi.map((b) => (<><dt>{b.grup}</dt><dd>{b.oge}</dd></>))}
       </dl>
     </section>
 
-    <section class="block">
+    <section class="block" data-reveal>
       <h2>{p.egitimBaslik}</h2>
       <ul class="edu">
         {p.egitim.map((e) => (
@@ -118,7 +120,24 @@ const other = p.lang === 'tr' ? 'en' : 'tr';
   </div>
 </Base>
 
+<script>
+  import './../scripts/reveal';
+</script>
+
 <style>
+  /* — Kaydırınca beliren bölüm — */
+  [data-reveal] { opacity: 0; transform: translateY(10px); }
+  [data-reveal].gorunur {
+    opacity: 1; transform: none;
+    transition: opacity .5s ease, transform .5s cubic-bezier(.4, 0, .2, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1; transform: none; }
+    [data-reveal].gorunur { transition: none; }
+    .when .dot, .stack span, .figures li, .figures b { transition: none; }
+    .roles > li:hover .dot { transform: none; }
+  }
+
   .work { padding-block: var(--s-xl) var(--s-2xl); }
   .head { max-inline-size: 40rem; margin-block-end: var(--s-xl); }
   h1 { margin-block-end: var(--s-s); }
@@ -149,23 +168,48 @@ const other = p.lang === 'tr' ? 'en' : 'tr';
   .principles h3 { font-size: var(--t-md); margin-block-end: .3em; }
   .principles p { color: var(--c-muted); margin: 0; }
 
-  /* Roller: solda dönem, sağda içerik. Dar ekranda alt alta. */
-  .roles { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s-xl); }
-  .roles > li { display: grid; gap: var(--s-2xs) var(--s-l); }
+  /*
+   * Roller bir zaman çizgisi: solda dönem, ortada çizgi, sağda içerik.
+   * Çizgi kariyerin sürekliliğini taşıyor; düz bir liste bunu
+   * söylemiyordu. Dar ekranda çizgi sola yapışıyor, dönem üstte kalıyor.
+   */
+  .roles { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s-2xl); }
+  .roles > li { position: relative; display: grid; gap: var(--s-2xs) var(--s-l); }
+
   .when {
+    position: relative;
     font-family: var(--f-mono); font-size: var(--t-xs); color: var(--c-muted);
     margin: 0; padding-block-start: .35em; white-space: nowrap;
   }
+  .when .dot {
+    position: absolute; inset-inline-start: -1rem; inset-block-start: .75em;
+    inline-size: 9px; block-size: 9px; border-radius: 999px;
+    background: var(--c-bg);
+    border: 2px solid var(--c-border);
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  /* En üstteki rol güncel olan: düğümü dolu. */
+  .roles > li:first-child .dot { background: var(--c-accent); border-color: var(--c-accent); }
+  .roles > li:hover .dot { border-color: var(--c-accent); transform: scale(1.25); }
   .what h3 { font-size: var(--t-md); margin-block-end: .15em; }
   .org { font-size: var(--t-xs); color: var(--c-muted); margin-block-end: var(--s-2xs); }
   .note { font-style: italic; }
   .sum { max-inline-size: 42rem; margin-block-end: var(--s-2xs); }
   .pts { margin: 0 0 var(--s-2xs); padding-inline-start: 1.1em; max-inline-size: 42rem; }
   .pts li { margin-block-end: .35em; }
+  /* Yığın: virgülle ayrılmış bir cümle değil, taranabilir çipler. */
   .stack {
-    font-family: var(--f-mono); font-size: var(--t-xs);
-    color: var(--c-muted); margin: 0; max-inline-size: 42rem;
+    display: flex; flex-wrap: wrap; gap: .3em;
+    margin: 0; max-inline-size: 42rem;
   }
+  .stack span {
+    font-family: var(--f-mono); font-size: var(--t-xs);
+    color: var(--c-muted-on-tint);
+    padding: .1em .5em; border-radius: var(--radius-sm);
+    background: var(--c-tinted);
+    transition: color .15s ease, background-color .15s ease;
+  }
+  .stack span:hover { color: var(--c-accent); background: color-mix(in srgb, var(--c-accent) 12%, transparent); }
 
   .know { display: grid; gap: var(--s-2xs) var(--s-l); margin: 0; max-inline-size: 52rem; }
   .know dt { font-size: var(--t-xs); font-weight: 600; }
@@ -179,8 +223,24 @@ const other = p.lang === 'tr' ? 'en' : 'tr';
   .contact p { max-inline-size: 42rem; }
   .links { display: flex; flex-wrap: wrap; gap: var(--s-m); margin-block-start: var(--s-s); }
 
+  /* Rakamlar: hover'da aksan alan sayı tabelası. */
+  .figures li { transition: border-color .2s ease; }
+  .figures li:hover { border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); }
+  .figures b { transition: color .2s ease; }
+  .figures li:hover b { color: var(--c-accent); }
+
   @media (min-width: 46rem) {
     .roles > li { grid-template-columns: 8.5rem 1fr; }
+    /* Çizgi dönem sütunuyla içerik sütunu arasından geçiyor. */
+    .roles > li::before {
+      content: ''; position: absolute;
+      inset-inline-start: calc(8.5rem + var(--s-l) / 2 - 1px);
+      inset-block: .9em calc(var(--s-2xl) * -1);
+      inline-size: 1px; background: var(--c-border);
+    }
+    .roles > li:last-child::before { display: none; }
+    .when .dot { inset-inline-start: calc(8.5rem + var(--s-l) / 2 - 4.5px); }
+    .when { padding-inline-end: var(--s-s); }
     .know { grid-template-columns: 13rem 1fr; }
     .know dd { margin-block-end: var(--s-2xs); }
   }

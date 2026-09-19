@@ -478,6 +478,9 @@ export const HUB = {
 };
 
 /** Anasayfa hero'su. Maggie'nin kalıbı: kalın isim + cümlenin devamı. */
+/** Yazılımda ilk yıl. Deneyim süresi buradan hesaplanıyor, elle yazılmıyor. */
+export const KARIYER_BASLANGIC = 2015;
+
 export const HERO: Record<Locale, { name: string; rest: string; role: string; now: string }> = {
   en: {
     name: 'Cemal Önder',

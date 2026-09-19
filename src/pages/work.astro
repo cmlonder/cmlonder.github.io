@@ -1,6 +1,7 @@
 ---
 import WorkPage from '../layouts/WorkPage.astro';
-import type { Locale } from '../config';
+import { KARIYER_BASLANGIC, type Locale } from '../config';
+const yil = new Date().getFullYear() - KARIYER_BASLANGIC;
 const lang: Locale = 'en';
 ---
 
@@ -8,17 +9,16 @@ const lang: Locale = 'en';
   lang={lang}
   altHref="/tr/work"
   baslik="How I Work"
-  blurb="Over a decade designing distributed systems and making them operable. The method says more than the list of employers does."
+  blurb={`${yil} years designing distributed systems and making them operable. The method says more than the list of employers does.`}
   giris={[
     'I am a solutions architect. My work sits where architecture meets operations: I design distributed systems, then make sure they can actually be run — measured, scaled, recovered and handed over.',
     'I have worked across aviation, e-commerce, ride-hailing and telecom. The through-line is always the same: take a system that works in one team’s hands and make it work as a property of the whole organization.',
     'For the past two years I have also been building the tooling my own discipline runs on, and that increasingly means agents — skills that turn raw engineering input into architecture decision records, review notes and performance analyses.',
   ]}
   rakamlar={[
-    { deger: '10+', etiket: 'years in software' },
+    { deger: String(yil), etiket: 'years in software' },
     { deger: '100+', etiket: 'service estate under NFR architecture' },
     { deger: '2M', etiket: 'requests/min sustained' },
-    { deger: '105×', etiket: 'latency improvement in rule evaluation' },
   ]}
   ilkeBaslik="How I work"
   ilkeler={[
