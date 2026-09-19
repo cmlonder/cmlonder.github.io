@@ -16,7 +16,8 @@
     "radar": "node scripts/check-radar.mjs",
     "covers": "node scripts/fetch-covers.mjs",
     "measure": "node scripts/measure-legacy.mjs",
-    "deck": "node scripts/ingest-deck.mjs"
+    "deck": "node scripts/ingest-deck.mjs",
+    "og": "node scripts/make-og.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.1",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@pagefind/default-ui": "^1.5.2",
+    "opentype.js": "^1.3.4",
     "sharp": "^0.35.4",
     "typescript": "^6.0.3",
     "yaml": "^2.9.1"
