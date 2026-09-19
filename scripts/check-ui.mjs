@@ -83,6 +83,7 @@ globalThis.matchMedia = () => ({ matches: true, addEventListener() {} });
 globalThis.localStorage = { getItem: () => null, setItem() {} };
 globalThis.IntersectionObserver = class { observe() {} };
 globalThis.addEventListener = () => {};
+globalThis.scrollY = 0;
 globalThis.HTMLElement = El;
 
 // ---- Paketleri bul: hash'li chunk ya da sayfaya gömülü ----

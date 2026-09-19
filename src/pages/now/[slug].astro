@@ -1,0 +1,37 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { PAGE, LOCALE_TAG, type Locale } from '../../config';
+import { formatDate, localePath } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('now')).filter((e) => e.id.startsWith('en/'));
+  return all.map((entry) => ({ params: { slug: entry.id.split('/').pop()! }, props: { entry } }));
+}
+const lang: Locale = 'en';
+const { entry } = Astro.props;
+const slug = entry.id.split('/').pop()!;
+const { Content } = await render(entry);
+const ayAdi = entry.data.date.toLocaleDateString(LOCALE_TAG[lang], { month: 'long', year: 'numeric' });
+const diger = (await getCollection('now')).some((e) => e.id === `tr/${slug}`);
+---
+
+<Base title={`${ayAdi} — ${PAGE[lang].nowTitle}`} description={PAGE[lang].nowBlurb} lang={lang}
+      altLocale={diger ? { lang: 'tr' as Locale, href: localePath('tr', 'now', slug) } : null}>
+  <article class="narrow" data-reader>
+    <p class="kicker"><a href={localePath(lang, 'now')}>{PAGE[lang].nowTitle}</a></p>
+    <h1>{ayAdi}</h1>
+    <p class="meta"><time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date, lang)}</time></p>
+    <div class="prose"><Content /></div>
+    <p class="hepsi"><a href={localePath(lang, 'now')}>&#8592; {PAGE[lang].nowAll}</a></p>
+  </article>
+</Base>
+
+<style>
+  .kicker { font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 { margin-block-start: var(--s-2xs); font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-weight: 400; line-height: var(--lh-tight); }
+  .meta { margin-block: var(--s-3xs) var(--s-l); }
+  .hepsi { margin-block-start: var(--s-2xl); font-family: var(--f-sans); font-size: var(--t-sm); }
+  .hepsi a { color: var(--c-accent); text-decoration: none; }
+</style>

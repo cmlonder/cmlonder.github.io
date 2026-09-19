@@ -82,6 +82,15 @@ for (const kok of document.querySelectorAll<HTMLElement>('[data-reader]')) {
     if (n) kok.setAttribute('data-has-notes', '');
   }
 
+  /* — 2b. Kaydırma yönü: aşağı inerken içindekiler kenara çekilir — */
+  let sonY = scrollY;
+  addEventListener('scroll', () => {
+    const y = scrollY;
+    if (Math.abs(y - sonY) < 12) return;
+    kok.dataset.scroll = y > sonY && y > 120 ? 'down' : 'up';
+    sonY = y;
+  }, { passive: true });
+
   /* — 3. Okunan bölüm — */
   const baglar = [...kok.querySelectorAll<HTMLAnchorElement>('.toc a[href^="#"]')];
   if (baglar.length && yazi && 'IntersectionObserver' in window) {

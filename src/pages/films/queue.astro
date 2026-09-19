@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import ShelfIndex from '../../layouts/ShelfIndex.astro';
+import { type Locale } from '../../config';
+import { localePath } from '../../lib/content';
+
+const lang: Locale = 'en';
+const shelf = 'films' as const;
+
+// Raf içeriği dile bağlı değil: Türkçesi yoksa İngilizce liste gösterilir.
+const all = await getCollection(shelf);
+const kendi = all.filter((e) => e.id.startsWith(`${lang}/`));
+// Hangi dilden gösterdiğimizi ShelfIndex'e bildiriyoruz: sessiz geri
+// düşüş okuru şaşırtıyor.
+const yedek = all.filter((e) => e.id.startsWith('tr/')).length ? 'tr' : 'en';
+const shown: Locale = kendi.length ? lang : (yedek as Locale);
+const items = (kendi.length ? kendi : all.filter((e) => e.id.startsWith(yedek)))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<ShelfIndex shelf={shelf} lang={lang} shown={shown} items={items} mode="queued"
+            altHref={localePath('tr', 'films', 'queue')} />

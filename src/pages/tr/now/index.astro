@@ -1,0 +1,52 @@
+---
+/**
+ * Şu sıralar — dikkat arşivi. Her ay kendi sayfası; burada hepsi
+ * yeniden eskiye, ay başlığı o sayfaya bağlantı.
+ */
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { PAGE, LOCALE_TAG, type Locale } from '../../../config';
+import { formatDate, localePath } from '../../../lib/content';
+
+const lang: Locale = 'tr';
+const girdiler = (await getCollection('now'))
+  .filter((e) => e.id.startsWith(`${lang}/`))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const cizgi = await Promise.all(girdiler.map(async (e) => ({
+  e, slug: e.id.split('/').pop()!, Content: (await render(e)).Content,
+})));
+const ayAdi = (d: Date) => d.toLocaleDateString(LOCALE_TAG[lang], { month: 'long', year: 'numeric' });
+---
+
+<Base title={`${PAGE[lang].nowTitle} — Cemal Önder`} description={PAGE[lang].nowBlurb} lang={lang}
+      altLocale={{ lang: 'en' as Locale, href: localePath('en', 'now') }}>
+  <article class="narrow">
+    <h1>{PAGE[lang].nowTitle}</h1>
+    <p class="intro">{PAGE[lang].nowIntro}</p>
+
+    <ol class="timeline">
+      {cizgi.map(({ e, slug, Content }) => (
+        <li>
+          <h2><a href={localePath(lang, 'now', slug)}>{ayAdi(e.data.date)}</a></h2>
+          <p class="meta"><time datetime={e.data.date.toISOString()}>{formatDate(e.data.date, lang)}</time></p>
+          <div class="prose"><Content /></div>
+        </li>
+      ))}
+    </ol>
+  </article>
+</Base>
+
+<style>
+  h1 { font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-weight: 400; line-height: var(--lh-tight); }
+  .intro { margin-block: var(--s-2xs) var(--s-2xl); font-family: var(--f-serif); font-size: var(--t-md); color: var(--c-muted); line-height: 1.4; text-wrap: pretty; }
+  .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+  .timeline > li { position: relative; padding-inline-start: var(--s-l); padding-block-end: var(--s-2xl); border-inline-start: 1px solid var(--c-border); }
+  .timeline > li:last-child { border-inline-start-color: transparent; padding-block-end: 0; }
+  .timeline > li::before { content: ''; position: absolute; inset-inline-start: -5px; inset-block-start: .55em; inline-size: 9px; block-size: 9px; border-radius: 999px; background: var(--c-bg); border: 2px solid var(--c-accent); }
+  .timeline h2 { font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-weight: 400; font-size: var(--t-lg); line-height: var(--lh-tight); }
+  .timeline h2 a { color: inherit; text-decoration: none; background-image: linear-gradient(var(--c-accent), var(--c-accent)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0 1px; transition: background-size .28s cubic-bezier(.4, 0, .2, 1), color .18s ease; }
+  .timeline h2 a:hover { color: var(--c-accent); background-size: 100% 1px; }
+  .timeline .meta { margin-block: var(--s-3xs) var(--s-s); }
+  .timeline .prose :global(h2) { font-size: var(--t-base); }
+  @media (prefers-reduced-motion: reduce) { .timeline h2 a { transition: none; } }
+</style>

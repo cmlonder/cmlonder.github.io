@@ -90,6 +90,20 @@ const domains = defineCollection({
   }),
 });
 
+/**
+ * Şu sıralar — her ay kendi girdisi, kendi adresi (/now/2026-09).
+ * Tek dosyalık now.md'de ay başlığına tıklamak yalnızca odak
+ * kaydırıyordu; Maggie'deki gibi her güncelleme ayrı sayfa olmalı.
+ */
+const now = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/now' }),
+  schema: z.object({
+    /** Girdinin gerçek tarihi; slug ay (2026-09), tarih gün. */
+    date: z.coerce.date(),
+    title: z.string().optional(),
+  }),
+});
+
 const chapters = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/chapters' }),
   schema: z.object({
@@ -233,6 +247,7 @@ export const collections = {
   projects,
   domains,
   chapters,
+  now,
   library,
   films,
   games,

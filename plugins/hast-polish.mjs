@@ -19,6 +19,15 @@ export const disLinkler = {
 
   element: [
     {
+      /* Kaynağı 1200px'ten geniş görsel yazı sütununu taşabilir. */
+      filter: ['img'],
+      visit(node) {
+        const w = Number(node.properties?.width);
+        if (!(w >= 1200)) return;
+        return { ...node, properties: { ...node.properties, className: [...(node.properties.className ?? []), 'genis'] } };
+      },
+    },
+    {
       filter: ['a'],
       visit(node) {
         const href = node.properties?.href;

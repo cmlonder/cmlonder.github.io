@@ -422,151 +422,142 @@ h2.section-title a,
 @media (prefers-reduced-motion: reduce) { .timeline .ay-bag { transition: none; } }
 
 /* ============================================================
- * OKUYUCU — sol içindekiler, sağ kenar notları, ikisi de kapanabilir.
+ * OKUYUCU — içindekiler şeffaf üst katman, kenar notları sağda yüzer.
  *
- * Kural: yerleşim yalnızca CSS. Notlar Tufte "float" tekniğiyle sağ
- * kenara yüzüyor (clear:right ⇒ üst üste binemezler); içindekiler
- * ızgaranın sol sütunu. JS sadece data-toc / data-notes yazıyor.
- *
- * Kök: [data-reader]. Üç sütunlu ızgara yalnızca geniş ekranda.
+ * Maggie kalıbı (growing-a-human): içindekiler sayfayı DARALTMAZ,
+ * yazının solunda yarı saydam bir katman olarak durur; aşağı kaydırınca
+ * kendini gizler, yukarı kaydırınca döner. Notlar Tufte float ile sağ
+ * kenarda (clear:right ⇒ üst üste binemez). Görsel gerekirse metin
+ * sütununu taşar. JS yalnızca data-* yazıyor.
  * ============================================================ */
-[data-reader] {
-  --toc-w: 14rem;
-  --not-w: 14rem;
-  --oluk: var(--s-2xl);
-}
+[data-reader] { --not-w: 14rem; --oluk: var(--s-2xl); --toc-w: 15rem; }
 
-/* — Dar ekran: tek sütun; içindekiler details, notlar tıklayınca açılır — */
-[data-reader] > .toc-col, .toc-geri, .not-geri, .not-col { display: none; }
+/* — Dar ekran — */
+.toc-col, .toc-geri, .not-geri, .not-col { display: none; }
 .toc-mobil {
   margin-block-end: var(--s-l);
   border: 1px solid var(--c-border); border-radius: var(--radius-lg);
-  background: var(--c-surface);
-  font-family: var(--f-sans); font-size: var(--t-sm);
+  background: var(--c-surface); font-family: var(--f-sans); font-size: var(--t-sm);
 }
 .toc-mobil summary { cursor: pointer; padding: var(--s-s) var(--s-m); color: var(--c-muted); }
 .toc-mobil ol { list-style: none; margin: 0; padding: 0 var(--s-m) var(--s-s); display: grid; gap: .45em; }
 .toc-mobil li[data-d='3'] { padding-inline-start: var(--s-s); }
 .toc-mobil a { color: var(--c-text); text-decoration: none; }
 
-.note {
-  display: grid; grid-template-rows: 0fr;
-  transition: grid-template-rows .28s cubic-bezier(.4, 0, .2, 1);
-}
+.note { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.4, 0, .2, 1); }
 .note[data-open] { grid-template-rows: 1fr; }
 .note > .note-ic { overflow: hidden; min-block-size: 0; }
-.note[data-open] > .note-ic {
-  margin-block: var(--s-2xs) var(--s-s);
-  padding: var(--s-s) var(--s-m);
-  border-radius: var(--radius-lg);
-  background: var(--c-tinted);
-}
+.note[data-open] > .note-ic { margin-block: var(--s-2xs) var(--s-s); padding: var(--s-s) var(--s-m); border-radius: var(--radius-lg); background: var(--c-tinted); }
 .note-ic { font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted-on-tint); line-height: 1.55; text-wrap: pretty; }
 .note-ic p { margin: 0; }
 .note-ic p + p { margin-block-start: var(--s-2xs); }
 .note-n { color: var(--c-accent); font-variant-numeric: tabular-nums; margin-inline-end: .45em; }
 
 .prose a[data-footnote-ref] {
-  cursor: pointer; text-decoration: none;
-  display: inline-block; min-inline-size: 1.4em; text-align: center;
+  cursor: pointer; text-decoration: none; display: inline-block; min-inline-size: 1.4em; text-align: center;
   padding-inline: .25em; margin-inline-start: .1em; border-radius: 999px;
   font-family: var(--f-sans); font-size: .72em; line-height: 1.5;
   color: var(--c-accent); background: color-mix(in srgb, var(--c-accent) 12%, transparent);
   transition: background-color .15s ease, color .15s ease;
 }
-.prose a[data-footnote-ref]:hover,
-.prose a[data-footnote-ref][aria-expanded='true'] { background: var(--c-accent); color: var(--c-bg); }
+.prose a[data-footnote-ref]:hover, .prose a[data-footnote-ref][aria-expanded='true'] { background: var(--c-accent); color: var(--c-bg); }
 [data-reader][data-has-notes] [data-footnotes] { display: none; }
 
-/* — Geniş ekran: üç sütun — */
+/* — Tam genişlik görsel: metin sütununu taşar, ekranı geçmez — */
+.prose .slide, .prose .genis {
+  --tasma: 0px;
+  inline-size: calc(100% + var(--tasma) * 2);
+  margin-inline: calc(var(--tasma) * -1);
+}
+@media (min-width: 60rem) {
+  .prose .slide, .prose .genis { --tasma: min(8rem, calc((100vw - var(--w-narrow)) / 2 - var(--s-l))); }
+}
+.prose img.genis { border: 1px solid var(--c-border); border-radius: var(--radius-lg); }
+
+/* — Geniş ekran — */
 @media (min-width: 76rem) {
   [data-reader] {
     display: grid;
-    grid-template-columns: var(--toc-w) minmax(0, var(--w-narrow)) var(--not-w);
+    grid-template-columns: minmax(0, var(--w-narrow)) var(--not-w);
     column-gap: var(--oluk);
-    justify-content: center;
-    align-items: start;
-    inline-size: min(100% - var(--s-l), calc(var(--toc-w) + var(--not-w) + var(--w-narrow) + 2 * var(--oluk)));
+    justify-content: center; align-items: start;
+    inline-size: min(100% - var(--s-l), calc(var(--w-narrow) + var(--not-w) + var(--oluk)));
     margin-inline: auto;
   }
   [data-reader] > .narrow, [data-reader] > .chapter { inline-size: 100%; min-inline-size: 0; }
-  [data-reader] > .toc-col, [data-reader] > .not-col { display: block; position: sticky; inset-block-start: var(--s-l); }
+  [data-reader] > .not-col { display: block; position: sticky; inset-block-start: var(--s-l); }
   .toc-mobil { display: none; }
 
-  /* Kapalı sütun: genişlik 0, oluk yok, içerik gizli. */
-  [data-reader][data-toc='off']   { --toc-w: 0px; }
-  [data-reader][data-notes='off'] { --not-w: 0px; }
-  [data-reader][data-toc='off'] > .toc-col,
+  [data-reader][data-notes='off'] { --not-w: 0px; column-gap: 0; }
   [data-reader][data-notes='off'] > .not-col { display: none; }
-  [data-reader][data-toc='off']   { column-gap: 0 var(--oluk); }
-  [data-reader][data-toc='off'][data-notes='off'] { column-gap: 0; }
 
-  /* Kenar notu: sağ sütuna yüzer. clear:right ⇒ art arda dizilir. */
+  /* Kenar notu sağ sütuna yüzer. */
   [data-reader]:not([data-notes='off']) .prose .note {
-    float: right; clear: right;
-    inline-size: var(--not-w);
+    float: right; clear: right; inline-size: var(--not-w);
     margin-inline-end: calc(-1 * (var(--not-w) + var(--oluk)));
     margin-block: .2em var(--s-s);
-    display: block; grid-template-rows: none;
-    transition: none;
+    display: block; grid-template-rows: none; transition: none;
   }
   [data-reader]:not([data-notes='off']) .prose .note > .note-ic {
-    overflow: visible; margin: 0; padding: 0; background: none;
+    overflow: visible; margin: 0; padding: 0; background: none; border-radius: 0;
     font-size: var(--t-xs); color: var(--c-muted); line-height: 1.5;
-    border-radius: 0;
   }
   [data-reader]:not([data-notes='off']) .prose .note.vurgu > .note-ic { animation: notVurgu 1.2s ease both; }
-  @keyframes notVurgu {
-    from { background: color-mix(in srgb, var(--c-accent) 14%, transparent); }
-    to   { background: transparent; }
-  }
+  @keyframes notVurgu { from { background: color-mix(in srgb, var(--c-accent) 14%, transparent); } to { background: transparent; } }
 
-  /* Kapalıyken kenarda geri-aç düğmeleri (ızgaradan bağımsız, fixed). */
-  [data-reader][data-toc='off']   ~ .toc-geri,
-  [data-reader][data-toc='off']   .toc-geri { display: grid; }
+  /*
+   * İçindekiler: sabit, yarı saydam katman. Sayfayı daraltmaz; sol
+   * boşlukta durur (sütun ortalı olduğu için oradan yer var), yazının
+   * üstüne geldiği yerde arkasını buğulayıp okunur kalır.
+   */
+  [data-reader] > .toc-col {
+    display: block; position: fixed; z-index: 30;
+    inset-inline-start: clamp(.75rem, calc((100vw - var(--w-narrow) - var(--not-w) - var(--oluk)) / 2 - var(--toc-w) - var(--s-l)), 4rem);
+    inset-block-start: var(--s-2xl);
+    inline-size: var(--toc-w); max-block-size: calc(100vh - var(--s-2xl) * 2); overflow-y: auto;
+    padding: var(--s-s) var(--s-m);
+    border: 1px solid color-mix(in srgb, var(--c-border) 70%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--c-surface) 78%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 28px color-mix(in srgb, var(--c-text) 8%, transparent);
+    transition: opacity .28s ease, translate .28s cubic-bezier(.4, 0, .2, 1), visibility 0s;
+  }
+  /* Aşağı kaydırınca gizlenir, yukarı kaydırınca döner (reader.ts data-scroll). */
+  [data-reader][data-scroll='down'] > .toc-col { opacity: 0; translate: -.75rem 0; visibility: hidden; transition: opacity .28s ease, translate .28s ease, visibility 0s linear .28s; }
+  [data-reader][data-toc='off'] > .toc-col { display: none; }
+  [data-reader][data-toc='off'] .toc-geri { display: grid; }
   [data-reader][data-notes='off'] .not-geri { display: grid; }
 }
 
-/* — İçindekiler sütunu (Maggie kalıbı: sessiz liste, aksanlı aktif) — */
+/* — İçindekiler içi — */
 .toc-col .toc-h {
   display: flex; align-items: center; justify-content: space-between;
-  font-family: var(--f-sans); font-size: var(--t-xs);
-  text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
-  padding-block-end: var(--s-2xs); margin-block-end: var(--s-2xs);
-  border-block-end: 1px solid var(--c-border);
+  font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+  padding-block-end: var(--s-2xs); margin-block-end: var(--s-2xs); border-block-end: 1px solid var(--c-border);
 }
 .toc-col ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .45em; }
 .toc-col li[data-d='3'] { padding-inline-start: var(--s-s); }
 .toc-col a {
-  display: block; font-family: var(--f-sans); font-size: var(--t-xs);
-  color: var(--c-muted); text-decoration: none; line-height: 1.4;
-  border-inline-start: 2px solid transparent;
-  padding-inline-start: .6em; margin-inline-start: -.6em;
+  display: block; font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); text-decoration: none; line-height: 1.4;
+  border-inline-start: 2px solid transparent; padding-inline-start: .6em; margin-inline-start: -.6em;
   transition: color .15s ease, border-color .15s ease;
 }
 .toc-col a:hover { color: var(--c-text); }
 .toc-col a[data-aktif] { color: var(--c-accent); border-inline-start-color: var(--c-accent); }
 
-/* Sütun başlığındaki gizle ve notlar sütunundaki gizle: aynı sessiz düğme. */
 .toc-gizle, .not-gizle {
   appearance: none; background: none; border: 0; cursor: pointer;
-  display: grid; place-items: center; inline-size: 1.75rem; block-size: 1.75rem;
-  border-radius: 999px; color: var(--c-muted);
+  display: grid; place-items: center; inline-size: 1.75rem; block-size: 1.75rem; border-radius: 999px; color: var(--c-muted);
   transition: color .15s ease, background-color .15s ease;
 }
 .toc-gizle:hover, .not-gizle:hover { color: var(--c-accent); background: var(--c-tinted); }
-.not-col .not-h {
-  display: flex; align-items: center; justify-content: space-between;
-  font-family: var(--f-sans); font-size: var(--t-xs);
-  text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
-}
+.not-col .not-h { display: flex; align-items: center; justify-content: space-between; font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted); }
 
-/* Geri-aç: kenarda küçük yuvarlak, ekranın ortasında. */
 .toc-geri, .not-geri {
   position: fixed; inset-block-start: 50%; translate: 0 -50%; z-index: 30;
   place-items: center; inline-size: 2.25rem; block-size: 2.25rem;
-  border: 1px solid var(--c-border); border-radius: 999px;
-  background: var(--c-surface); color: var(--c-muted); cursor: pointer;
+  border: 1px solid var(--c-border); border-radius: 999px; background: var(--c-surface); color: var(--c-muted); cursor: pointer;
   box-shadow: 0 2px 8px color-mix(in srgb, var(--c-text) 10%, transparent);
   transition: color .15s ease, border-color .15s ease;
 }
@@ -575,5 +566,6 @@ h2.section-title a,
 .toc-geri:hover, .not-geri:hover { color: var(--c-accent); border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); }
 
 @media (prefers-reduced-motion: reduce) {
-  .note, .toc-col a, .toc-gizle, .not-gizle, .toc-geri, .not-geri, .prose a[data-footnote-ref] { transition: none; }
+  .note, .toc-col, .toc-col a, .toc-gizle, .not-gizle, .toc-geri, .not-geri, .prose a[data-footnote-ref] { transition: none; }
+  [data-reader][data-scroll='down'] > .toc-col { opacity: 1; translate: none; visibility: visible; }
 }

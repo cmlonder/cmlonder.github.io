@@ -481,6 +481,9 @@ export const HUB = {
 /** Yazılımda ilk yıl. Deneyim süresi buradan hesaplanıyor, elle yazılmıyor. */
 export const KARIYER_BASLANGIC = 2015;
 
+/** Tarih biçimleme için BCP-47 etiketi. Sayfa dosyalarında lang === 'tr' dallanması yasak. */
+export const LOCALE_TAG: Record<Locale, string> = { en: 'en-GB', tr: 'tr-TR' };
+
 export const HERO: Record<Locale, { name: string; rest: string; role: string; now: string }> = {
   en: {
     name: 'Cemal Önder',
@@ -498,8 +501,8 @@ export const HERO: Record<Locale, { name: string; rest: string; role: string; no
 
 /** Üst navigasyon — Maggie gibi 3 öğe, biri dropdown. */
 export const NAV: Record<Locale, { label: string; href: string }[]> = {
-  en: [{ label: 'Work', href: '/work' }, { label: 'Uses', href: '/uses' }, { label: 'Now', href: '/now' }, { label: 'About', href: '/about' }],
-  tr: [{ label: 'Mesleğim', href: '/work' }, { label: 'Kullandıklarım', href: '/uses' }, { label: 'Şu Sıralar', href: '/now' }, { label: 'Hakkında', href: '/about' }],
+  en: [{ label: 'About', href: '/about' }, { label: 'Uses', href: '/uses' }, { label: 'Now', href: '/now' }],
+  tr: [{ label: 'Hakkında', href: '/about' }, { label: 'Kullandıklarım', href: '/uses' }, { label: 'Şu Sıralar', href: '/now' }],
 };
 
 /**
@@ -521,6 +524,10 @@ export const PAGE: Record<Locale, {
   tagBlurb: (tag: string) => string;
   archiveTitle: string;
   archiveBlurb: string;
+  nowTitle: string;
+  nowBlurb: string;
+  nowIntro: string;
+  nowAll: string;
   draftNotice: string;
   draftNoticeLink: string;
   draftNoticeTail: string;
@@ -551,6 +558,10 @@ export const PAGE: Record<Locale, {
     tagBlurb: (t) => `Everything tagged ${t}.`,
     archiveTitle: 'Archive',
     archiveBlurb: 'Everything I have written here, newest first. Yearly, in one list.',
+    nowTitle: 'Now',
+    nowBlurb: 'A log of where my attention goes — appended irregularly, never overwritten.',
+    nowIntro: 'This is a now page, but not the kind that gets overwritten: each update stacks on the last. Every month has its own address.',
+    nowAll: 'All updates',
     draftNotice:
       'Most of the content here is AI-generated. I am working on the design right now and ' +
       'letting an agent fill the pages in the meantime. If you have landed here, the one ' +
@@ -584,6 +595,10 @@ export const PAGE: Record<Locale, {
     tagBlurb: (t) => `${t} etiketli her şey.`,
     archiveTitle: 'Arşiv',
     archiveBlurb: 'Burada yazdığım her şey, yeniden eskiye. Yıl yıl, tek listede.',
+    nowTitle: 'Şu Sıralar',
+    nowBlurb: 'Neye baktığımın günlüğü — düzensiz aralıklarla eklenir, silinmez.',
+    nowIntro: 'Bu bir now sayfası, ama silinen türden değil: her güncelleme öncekinin üstüne ekleniyor. Her ayın kendi adresi var.',
+    nowAll: 'Bütün güncellemeler',
     draftNotice:
       'Çoğu içerik AI üretimi. Şu anda taslak üzerine yoğunlaştım, içeriği de geçici olarak ' +
       'AI\'a ürettiriyorum. Bir şekilde denk geldiyseniz şu anda düzgün içerik olarak ' +

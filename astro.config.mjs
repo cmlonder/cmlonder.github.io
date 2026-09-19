@@ -77,6 +77,9 @@ export default defineConfig({
   site: SITE_URL,
 
   redirects: {
+    // /work /about ile birleşti (19 Eyl 2026): eski adres gitmesin.
+    '/work': '/about',
+    '/tr/work': '/tr/about',
     ...domainYonlendirmeleri,
     ...(IS_CUTOVER
       ? Object.fromEntries(
