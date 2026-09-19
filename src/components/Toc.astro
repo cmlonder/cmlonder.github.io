@@ -1,0 +1,52 @@
+---
+/**
+ * İçindekiler — yazının kendi başlıklarından, build sırasında.
+ *
+ * JS'e ihtiyacı yok: liste sunucuda basılıyor. JS yalnızca okunan bölümü
+ * işaretliyor ve rayı açıp kapatıyor.
+ *
+ * h2 ve h3 alınıyor; daha derini listeyi merdivene çeviriyor ve kimse
+ * o seviyede gezinmiyor.
+ */
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+  label: string;
+}
+const { headings, label } = Astro.props as Props;
+const oge = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{oge.length > 1 && (
+  <nav class="toc" aria-labelledby="toc-h">
+    <p class="toc-h" id="toc-h">{label}</p>
+    <ol>
+      {oge.map((h) => (
+        <li data-d={h.depth}><a href={`#${h.slug}`}>{h.text}</a></li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+<style>
+  .toc-h {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--c-muted);
+    padding-block-end: var(--s-2xs);
+    margin-block-end: var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .45em; }
+  .toc li[data-d='3'] { padding-inline-start: var(--s-s); }
+  .toc a {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted); text-decoration: none;
+    line-height: 1.4; display: block;
+    border-inline-start: 2px solid transparent;
+    padding-inline-start: .6em; margin-inline-start: -.6em;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .toc a:hover { color: var(--c-text); }
+  /* Okunan bölüm: renk değil çizgi taşıyor — liste sakin kalsın. */
+  .toc a[data-aktif] { color: var(--c-accent); border-inline-start-color: var(--c-accent); }
+</style>

@@ -278,3 +278,38 @@ h2.section-title a,
   align-items: center;
   min-block-size: 24px;
 }
+
+/*
+ * Kenar notları — hem yazı hem bölüm sayfalarında. Markup'ı
+ * scripts/reading.ts üretiyor; kaynağı standart markdown dipnotu.
+ */
+/* — Kenar notları — */
+.notes-rail { position: relative; }
+.sidenote {
+  position: absolute; inset-inline: 0; inset-block-start: 0;
+  font-family: var(--f-sans); font-size: var(--t-xs);
+  color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
+  transition: transform .25s cubic-bezier(.4, 0, .2, 1);
+}
+.sidenote p { margin: 0; }
+.sidenote p + p { margin-block-start: var(--s-2xs); }
+.sidenote .sn-n {
+  color: var(--c-accent); font-variant-numeric: tabular-nums;
+  margin-inline-end: .4em;
+}
+/* Referansa tıklanınca notu bir an belirt — kaybolmasın diye. */
+@keyframes notVurgu {
+  from { background: color-mix(in srgb, var(--c-mark) 22%, transparent); }
+  to   { background: transparent; }
+}
+.sidenote.vurgu { animation: notVurgu 1.2s ease both; }
+
+/* Notlar kenara taşındıysa alttaki dipnot bölümü tekrarlanmasın. */
+[data-sidenotes='var'] [data-footnotes] { display: none; }
+
+.prose a[data-footnote-ref] { text-decoration: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sidenote { transition: none; }
+  .sidenote.vurgu { animation: none; }
+}

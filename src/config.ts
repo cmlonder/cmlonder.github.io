@@ -207,6 +207,7 @@ export const DOMAINS = {
 export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
   en: {
     chapters: 'chapters',
+    notes: 'Margin notes',
     written: 'chapters written',
     contents: 'Contents',
     note: 'Unwritten chapters are listed too. The line beneath each is a promise of what it will cover.',
@@ -221,6 +222,7 @@ export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
   },
   tr: {
     chapters: 'bölüm',
+    notes: 'Kenar notları',
     written: 'bölüm yazıldı',
     contents: 'İçindekiler',
     note: 'Yazılmamış bölümler de listede. Altlarındaki cümle, ne anlatacaklarına dair söz.',

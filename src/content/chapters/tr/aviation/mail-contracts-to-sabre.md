@@ -54,7 +54,11 @@ mesajı geçiyor ve sistem yavaş ama güvenli olan eski mantığa dönüyordu.
 ![Slayt iki envanter modelini karşılaştırıyor. Solda talep ve yanıt: acente kalkış şehrini arar, boş yer sorulur, onay gelir ve PNR kartına yazılır. Sağda sat ve bildir: acenteler serbestçe satar, satışı durdur mesajı gelir, sistem eski mantığa döner.](/decks/crs-evolution/04.webp "Soldaki zincir her satışta bir telefon demek. Sağdaki döngü telefonu sadece eşiğe yaklaşınca çalıyor.")
 
 Bunu bugünün diliyle okursan ne olduğu ortaya çıkıyor: her satışta senkron
-kilit almak yerine **eventual consistency**'ye geçmişler. Uygunluk bilgisi,
+kilit almak yerine **eventual consistency**'ye geçmişler.[^tutarlilik]
+
+[^tutarlilik]: 1939'da kimse buna böyle demiyordu, ama yaptıkları buydu:
+    doğruluğu her işlemde garanti etmek yerine, yanlışlığı haber veren bir
+    mesaj beklemek. Kavramın adı kırk yıl sonra kondu. Uygunluk bilgisi,
 aksini söyleyen bir mesaj gelene kadar doğru varsayılıyor. Aynı fikir hâlâ
 sahada: eski GDS dağıtımındaki AVS mesajları bu stop sale mesajının torunu.
 
@@ -80,7 +84,11 @@ edilemediği için son birkaç koltuk satışa kapatılıyor, sistemde **tampon*
 bırakılıyordu. Çifte rezervasyon (oversale) ve yolcunun uçağa alınamaması
 riskini böyle yönetiyorlardı.
 
-Tampon bedava değil. Boş uçan koltuk demek — sektörün adı **spoilage**.
+Tampon bedava değil. Boş uçan koltuk demek — sektörün adı **spoilage**.[^spoilage]
+
+[^spoilage]: Spoilage ile overbooking aynı madalyonun iki yüzü: biri boş
+    uçmak, diğeri fazla satmak. Gelir yönetimi dediğimiz şey, ikisi arasında
+    bir yer seçmekten ibaret.
 Modern gelir yönetiminin tek cümlelik tarifi buradan çıkıyor: overbooking'i
 doğru yönetirken spoilage'ı en aza indirmek. İkisi de aynı senkronizasyon
 probleminin faturası.
@@ -128,7 +136,10 @@ sistemi, koltuk takip etmek için de uygun altyapıyı sunuyordu.
 
 SAGE, IBM'in ACP'sine dönüştü; ACP de TPF'ye. **TPF bugün hâlâ büyük
 GDS'lerin çekirdeğinde koşuyor** — altmış yıllık bir işletim sistemi, hâlâ
-üretimde.
+üretimde.[^tpf]
+
+[^tpf]: Bu bölümde adı geçen her şeyin içinde en uzun yaşayan yazılım o.
+    Bir hava savunma sisteminden doğup bilet satmaya devam ediyor.
 
 ## 1961'de verilen karar hâlâ duruyor
 

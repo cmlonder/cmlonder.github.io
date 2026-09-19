@@ -25,7 +25,7 @@ function kur(kok: HTMLElement) {
   cubuk.setAttribute('role', 'tablist');
   cubuk.setAttribute('aria-label', kok.dataset.label ?? '');
 
-  const dugmeler = paneller.map((panel, i) => {
+  const dugmeler = paneller.map((panel) => {
     const ad = panel.dataset.panel!;
     const d = document.createElement('button');
     d.type = 'button';
@@ -114,3 +114,7 @@ function kur(kok: HTMLElement) {
 }
 
 document.querySelectorAll<HTMLElement>('[data-shelf]').forEach(kur);
+
+// import'u olmayan dosyayı TypeScript modül saymıyor ve kapsamı
+// diğer script'lerle paylaşıyor; bu satır onu modül yapıyor.
+export {};

@@ -48,7 +48,7 @@ const koken = entry.data.origin
 ---
 
 <Base title={`${entry.data.title} — ${dm.data.title}`} description={entry.data.summary} lang={lang}>
-  <div class="book">
+  <div class="book" data-reading data-toc="acik" data-notes="acik">
     <aside class="rail">
       <a class="up" href={localePath(lang, DOMAINS.path, dSlug)}>{dm.data.title}</a>
       <Outline outline={dm.data.outline} yazilan={yazilan} domain={dSlug}
@@ -101,6 +101,8 @@ const koken = entry.data.origin
           )}
       </nav>
     </article>
+
+    <aside class="rail notes-rail" data-rail="notes" aria-label={t.notes}></aside>
   </div>
 </Base>
 
@@ -113,10 +115,10 @@ const koken = entry.data.origin
   }
 
   .book {
-    inline-size: min(100% - var(--s-l), calc(15rem + var(--w-narrow) + 6rem));
+    inline-size: min(100% - var(--s-l), calc(15rem + var(--w-narrow) + var(--ray-not, 15rem) + 2 * var(--s-2xl)));
     margin-inline: auto;
     display: grid;
-    grid-template-columns: minmax(0, 15rem) minmax(0, var(--w-narrow));
+    grid-template-columns: minmax(0, 15rem) minmax(0, var(--w-narrow)) minmax(0, var(--ray-not, 15rem));
     gap: var(--s-2xl);
     justify-content: center;
     align-items: start;
@@ -189,6 +191,7 @@ const koken = entry.data.origin
 
   @media (max-width: 62rem) {
     .book { grid-template-columns: minmax(0, var(--w-narrow)); }
+    .book > .notes-rail { display: none; }
     .rail { display: none; }
   }
 </style>

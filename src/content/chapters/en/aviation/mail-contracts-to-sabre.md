@@ -55,7 +55,11 @@ method.
 
 Read that in today's vocabulary and it is obvious what happened: instead of
 taking a synchronous lock on every sale, they moved to **eventual
-consistency.** Availability is assumed correct until a message says otherwise.
+consistency.**[^consistency]
+
+[^consistency]: Nobody called it that in 1939, but that is what it was:
+    instead of guaranteeing correctness on every transaction, you wait for a
+    message that tells you when it is wrong. The name arrived forty years later. Availability is assumed correct until a message says otherwise.
 The idea is still in the field — the AVS messages in legacy GDS distribution
 are the grandchildren of that stop sale.
 
@@ -81,7 +85,11 @@ closed to sale and a **buffer** was kept. That was how oversales and denied
 boarding were managed.
 
 A buffer is not free. It means flying with empty seats — the industry calls it
-**spoilage**. The one-sentence definition of modern revenue management comes
+**spoilage**.[^spoilage]
+
+[^spoilage]: Spoilage and overbooking are two sides of one coin: flying empty
+    versus selling too many. Revenue management is the job of choosing a point
+    between them. The one-sentence definition of modern revenue management comes
 from here: minimise spoilage while managing overbooking correctly. Both are
 invoices for the same synchronisation problem.
 
@@ -128,7 +136,10 @@ tracking seats.
 ![Slide showing the transfer of military technology to the commercial sector in three steps: SAGE in 1951, an IBM computer, a reservation system. Below, the foundations SAGE provided: real-time interactive computing, magnetic core memory, active standby dual processors, digital communication over voice lines, and a front-end interface taking live data from tracking devices.](/decks/crs-evolution/08.webp "Every item on that list is ordinary today. In 1951 none of them were.")
 
 SAGE became IBM's ACP; ACP became TPF. **TPF still runs inside the big GDSs
-today** — a sixty-year-old operating system, still in production.
+today** — a sixty-year-old operating system, still in production.[^tpf]
+
+[^tpf]: The longest-lived piece of software in this chapter. It was born in an
+    air defence system and it is still selling tickets.
 
 ## A decision made in 1961 is still standing
 
