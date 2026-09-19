@@ -20,12 +20,15 @@ const ortu = document.querySelector<HTMLElement>('[data-toc-ortu]');
 if (tab && panel) {
   tab.hidden = false;
 
-  const ayarla = (acik: boolean) => {
+  panel.tabIndex = -1;
+  const ayarla = (acik: boolean, odak = false) => {
     panel.toggleAttribute('data-open', acik);
     ortu?.toggleAttribute('data-open', acik);
     document.documentElement.toggleAttribute('data-toc-open', acik);
     tab.setAttribute('aria-expanded', String(acik));
     try { localStorage.setItem(DEPO, acik ? '1' : '0'); } catch { /* gizli sekme */ }
+    // Klavye kullanıcısı için odak paneli takip etsin; fareyle açılınca dokunma.
+    if (odak) (acik ? panel : tab).focus();
   };
 
   // Geniş ekranda son tercih hatırlanır; dar ekranda her zaman kapalı başlar.
@@ -33,10 +36,12 @@ if (tab && panel) {
   try { ilk = GENIS.matches && localStorage.getItem(DEPO) === '1'; } catch { /* yok say */ }
   ayarla(ilk);
 
-  tab.addEventListener('click', () => ayarla(tab.getAttribute('aria-expanded') !== 'true'));
+  tab.addEventListener('click', (e) => ayarla(tab.getAttribute('aria-expanded') !== 'true', e.detail === 0));
   ortu?.addEventListener('click', () => ayarla(false));
   panel.querySelector('[data-toc-kapat]')?.addEventListener('click', () => ayarla(false));
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') ayarla(false); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.hasAttribute('data-open')) ayarla(false, true);
+  });
   // Dar ekranda bir başlığa gidince çekmece kapansın.
   panel.addEventListener('click', (e) => {
     if ((e.target as HTMLElement).closest('a') && !GENIS.matches) ayarla(false);
