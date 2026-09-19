@@ -1,45 +1,49 @@
 ---
 /**
- * İçindekiler — sayfa düzeninden BAĞIMSIZ.
+ * İçindekiler — Maggie Appleton kalıbı: sol sütunda, yapışkan, sessiz
+ * bir liste; okunan bölüm aksanla işaretli. Üstünde küçük bir "gizle".
  *
- * Panel `position: fixed`; hiçbir ızgara sütunu, hiçbir konum hesabı
- * yok. Geniş ekranda sol kenara yaslı durur, dar ekranda karartmalı
- * çekmece olur. Sekme sol kenarda, ekranın ortasında.
- *
- * Liste sunucuda basılıyor; JS yalnızca açıp kapatıyor ve okunan bölümü
- * işaretliyor. JS yoksa sekme görünmüyor, sayfa etkilenmiyor.
+ * Geniş ekranda ızgaranın sol sütunu (EntryPage), dar ekranda yazının
+ * başında açılır-kapanır bir <details>. İkisi de sunucuda basılıyor;
+ * JS yalnızca gizle/göster ve okunan bölüm.
  */
 import type { Locale } from '../config';
 interface Props {
   headings: { depth: number; slug: string; text: string }[];
   label: string;
   lang: Locale;
+  /** 'col' = sol sütun, 'mobile' = yazı başındaki details */
+  variant?: 'col' | 'mobile';
 }
-const { headings, label, lang } = Astro.props as Props;
+const { headings, label, lang, variant = 'col' } = Astro.props as Props;
 const oge = headings.filter((h) => h.depth === 2 || h.depth === 3);
-const kapat = lang === 'tr' ? 'Kapat' : 'Close';
+const t = lang === 'tr' ? { hide: 'Gizle' } : { hide: 'Hide' };
 ---
 
-{oge.length > 1 && (
-  <>
-    <button type="button" class="toc-tab" data-toc-tab aria-expanded="false" aria-controls="toc-panel" hidden>
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
-           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M9 6l6 6-6 6" />
-      </svg>
-      <span class="lbl">{label}</span>
-    </button>
-    <div class="toc-ortu" data-toc-ortu></div>
-    <nav class="toc-panel" id="toc-panel" data-toc-panel aria-label={label}>
-      <p class="toc-h">
-        <span>{label}</span>
-        <button type="button" class="kapat" data-toc-kapat aria-label={kapat}>&times;</button>
-      </p>
-      <ol>
-        {oge.map((h) => (
-          <li data-d={h.depth}><a href={`#${h.slug}`}>{h.text}</a></li>
-        ))}
-      </ol>
-    </nav>
-  </>
+{oge.length > 1 && variant === 'col' && (
+  <nav class="toc" aria-label={label}>
+    <p class="toc-h">
+      <span>{label}</span>
+      <button type="button" class="toc-gizle" data-toggle="toc" aria-label={t.hide} title={t.hide}>
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+    </p>
+    <ol>
+      {oge.map((h) => (
+        <li data-d={h.depth}><a href={`#${h.slug}`}>{h.text}</a></li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+{oge.length > 1 && variant === 'mobile' && (
+  <details class="toc-mobil">
+    <summary>{label}</summary>
+    <ol>
+      {oge.map((h) => (
+        <li data-d={h.depth}><a href={`#${h.slug}`}>{h.text}</a></li>
+      ))}
+    </ol>
+  </details>
 )}

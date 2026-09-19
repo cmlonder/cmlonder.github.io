@@ -53,7 +53,16 @@ const t = {
 <Base title={`${d.title} — ${COLLECTION_LABELS[collection][lang]}`}
       description={d.description} lang={lang} altLocale={altLocale}
       structured={{ collection, entry }}>
-  <article class="narrow" data-reader>
+  <div class="reading" data-reader data-toc="on" data-notes="on">
+  <aside class="toc-col">
+    <Toc headings={headings} label={t.toc} lang={lang} />
+  </aside>
+  <button type="button" class="toc-geri" data-toggle="toc" aria-label={t.toc} title={t.toc}>
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+
+  <article class="narrow">
     <header class="entry-head">
       <p class="meta kicker">
         <a href={localePath(lang, collection)}>{COLLECTION_LABELS[collection][lang]}</a>
@@ -85,6 +94,7 @@ const t = {
       )}
     </header>
 
+    <Toc headings={headings} label={t.toc} lang={lang} variant="mobile" />
     <div class="prose"><Content /></div>
 
     <footer class="entry-foot">
@@ -115,7 +125,20 @@ const t = {
     <Backlinks entryId={entry.id} lang={lang} />
   </article>
 
-  <Toc headings={headings} label={t.toc} lang={lang} />
+  <aside class="not-col" data-has-toggle>
+    <p class="not-h">
+      <span>{t.notes}</span>
+      <button type="button" class="not-gizle" data-toggle="notes" aria-label={t.notes} title={t.notes}>
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </p>
+  </aside>
+  <button type="button" class="not-geri" data-toggle="notes" aria-label={t.notes} title={t.notes}>
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
+  </div>
 
   {related.length > 0 && (
     <aside class="narrow related">

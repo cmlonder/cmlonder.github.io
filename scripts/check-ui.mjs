@@ -28,11 +28,12 @@ class El {
   toggleAttribute(k, f) { const on = f ?? !this.hasAttribute(k); if (on) this.attrs[k] = ''; else delete this.attrs[k]; return on; }
   addEventListener(t, f) { (this.listeners[t] ??= []).push(f); }
   dispatch(t, ev = {}) { (this.listeners[t] ?? []).forEach((f) => f({ preventDefault() {}, target: this, ...ev })); }
+  get offsetWidth() { return 1; }
   append(...n) { n.forEach((x) => { if (x instanceof El) { x.parent = this; } this.children.push(x); }); }
   after(n) { const i = this.parent.children.indexOf(this); n.parent = this.parent; this.parent.children.splice(i + 1, 0, n); }
   remove() { if (this.parent) this.parent.children = this.parent.children.filter((c) => c !== this); }
   cloneNode() { const c = new El(this.tagName); c.textContent = this.textContent; return c; }
-  closest(sel) { const t = sel.split(',').map((x) => x.trim().toUpperCase()); let e = this; while (e) { if (t.includes(e.tagName)) return e; e = e.parent; } return null; }
+  closest(sel) { let e = this; while (e) { if (sel.split(',').some((x) => e._eslesir(x.trim().replace(/^button/i,'BUTTON')) || e.tagName === x.trim().toUpperCase())) return e; e = e.parent; } return null; }
   get childNodes() { return this.children; }
   get hash() { return this.attrs.href ?? ''; }
   _hepsi() { return this.children.flatMap((c) => c instanceof El ? [c, ...c._hepsi()] : []); }
@@ -52,19 +53,17 @@ class El {
   querySelector(sel) { return this.querySelectorAll(sel)[0] ?? null; }
 }
 
-// ---- Sahne ----
+// ---- Sahne (okuyucu v4: kök [data-reader], toggle'lar data-toc/data-notes) ----
 const html = new El('html');
-const okuyucu = new El('article'); okuyucu.dataset.reader = ''; okuyucu.attrs['data-reader'] = '';
+const kok = new El('div'); kok.attrs['data-reader'] = ''; kok.dataset.toc = 'on'; kok.dataset.notes = 'on';
 const prose = new El('div'); prose.className = 'prose';
 const p = new El('p');
 const ref = new El('a'); ref.attrs['data-footnote-ref'] = ''; ref.attrs.href = '#user-content-fn-x'; ref.textContent = '1';
-p.append(new El('span'), ref); prose.append(p); okuyucu.append(prose);
+p.append(new El('span'), ref); prose.append(p);
+const tocGizle = new El('button'); tocGizle.dataset.toggle = 'toc'; tocGizle.attrs['data-toggle'] = 'toc';
+const notGizle = new El('button'); notGizle.dataset.toggle = 'notes'; notGizle.attrs['data-toggle'] = 'notes';
+kok.append(tocGizle, prose, notGizle); html.append(kok);
 const kayit = new El('li'); kayit.attrs.id = 'user-content-fn-x'; const kp = new El('p'); kp.textContent = 'not gövdesi'; kayit.append(kp);
-
-const tab = new El('button'); tab.attrs['data-toc-tab'] = ''; tab.hidden = true; tab.setAttribute('aria-expanded', 'false');
-const panel = new El('nav'); panel.attrs['data-toc-panel'] = '';
-const ortu = new El('div'); ortu.attrs['data-toc-ortu'] = '';
-html.append(okuyucu, tab, panel, ortu);
 
 const kipCubuk = new El('p'); kipCubuk.attrs['data-kip-bar'] = ''; kipCubuk.setAttribute('hidden', '');
 const kipListe = new El('div'); kipListe.attrs['data-liste'] = '';
@@ -74,13 +73,11 @@ const kipIzgara = new El('button'); kipIzgara.dataset.kip = 'izgara';
 globalThis.window = globalThis;
 globalThis.document = {
   documentElement: html,
-  querySelector: (s) => ({ '[data-toc-tab]': tab, '[data-toc-panel]': panel, '[data-toc-ortu]': ortu,
-                           '[data-kip-bar]': kipCubuk, '[data-liste]': kipListe })[s] ?? html.querySelector(s),
-  querySelectorAll: (s) => (s === '[data-kip]' ? [kipSatir, kipIzgara] : s === '[data-reader]' ? [okuyucu] : html.querySelectorAll(s)),
+  querySelector: (s) => ({ '[data-kip-bar]': kipCubuk, '[data-liste]': kipListe })[s] ?? html.querySelector(s),
+  querySelectorAll: (s) => (s === '[data-kip]' ? [kipSatir, kipIzgara] : s === '[data-reader]' ? [kok] : html.querySelectorAll(s)),
   getElementById: (id) => (id === 'user-content-fn-x' ? kayit : null),
   createElement: (t) => new El(t),
   addEventListener() {},
-  fonts: { ready: Promise.resolve() },
 };
 globalThis.matchMedia = () => ({ matches: true, addEventListener() {} });
 globalThis.localStorage = { getItem: () => null, setItem() {} };
@@ -100,24 +97,25 @@ function bul(chunkKalip, gomuluIz, ornekHtml) {
 }
 const calistir = (kod) => import('data:text/javascript,' + encodeURIComponent(kod));
 
-await calistir(bul(/^reader\..*\.js$/, 'data-toc-tab', 'dist/tr/domains/aviation/mail-contracts-to-sabre/index.html'));
+await calistir(bul(/^reader\..*\.js$/, 'data-reader', 'dist/tr/domains/aviation/mail-contracts-to-sabre/index.html'));
 await calistir(bul(/^layout-toggle\..*\.js$/, 'data-kip', 'dist/tr/essays/index.html'));
 
 // ---- Kontroller ----
 const sonuc = [];
-sonuc.push(['sekme görünür', tab.hidden, false]);
-tab.dispatch('click');
-sonuc.push(['panel açıldı', panel.hasAttribute('data-open'), true]);
-sonuc.push(['html data-toc-open', html.hasAttribute('data-toc-open'), true]);
-tab.dispatch('click');
-sonuc.push(['panel kapandı', panel.hasAttribute('data-open'), false]);
+sonuc.push(['başlangıç data-toc', kok.dataset.toc, 'on']);
+kok.dispatch('click', { target: tocGizle });
+sonuc.push(['içindekiler kapandı', kok.dataset.toc, 'off']);
+sonuc.push(['aria-expanded', tocGizle.getAttribute('aria-expanded'), 'false']);
+kok.dispatch('click', { target: tocGizle });
+sonuc.push(['içindekiler geri açıldı', kok.dataset.toc, 'on']);
+kok.dispatch('click', { target: notGizle });
+sonuc.push(['notlar kapandı', kok.dataset.notes, 'off']);
 
-const notlar = prose._hepsi().filter((e) => e.className === 'note-inline');
-sonuc.push(['satır içi not üretildi', notlar.length, 1]);
-sonuc.push(['dipnot bölümü gizlendi', okuyucu.hasAttribute('data-notes-inline'), true]);
+const notlar = prose._hepsi().filter((e) => e.className === 'note');
+sonuc.push(['not üretildi', notlar.length, 1]);
+sonuc.push(['dipnot bölümü gizlendi', kok.hasAttribute('data-has-notes'), true]);
 ref.dispatch('click');
 sonuc.push(['nota tıklayınca açıldı', notlar[0]?.hasAttribute('data-open'), true]);
-sonuc.push(['aria-expanded', ref.getAttribute('aria-expanded'), 'true']);
 
 sonuc.push(['kip çubuğu görünür', kipCubuk.getAttribute('hidden'), null]);
 kipIzgara.dispatch('click');

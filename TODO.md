@@ -6,16 +6,10 @@ kendi başına yapmamalı — hepsi kişisel tercih veya dış sistem erişimi g
 > Son gözden geçirme: 19 Eyl 2026. Radar bölümü o gün baştan yazıldı;
 > Google Docs'lu eski akış artık yok.
 
-## 1. Marka kararı
+## 1. Marka kararı — TAMAM ✅
 
-`src/config.ts` içinde tek bir yer tutucu kaldı:
-
-| Sabit | Şu anki değer |
-|---|---|
-| `HUB.name` | "The Workbench" / "Bahçe" |
-
-Nav'da ve anasayfada görünüyor. Beğendiysen yer tutucu işaretini kaldırmak
-yeterli; değiştirmek de tek satır. (`HERO` artık gerçek, dokunma.)
+`HUB.name` karar: "Bahçe" / "The Garden" (digital garden göndermesi).
+19 Eyl 2026'da bağlandı; yer tutucu kalmadı.
 
 ## 2. Yer tutucu içeriği onayla ya da değiştir
 

@@ -470,7 +470,7 @@ export type RadarSeries = keyof typeof RADAR_SERIES;
 
 export const HUB = {
   path: 'workbench',
-  name:  { en: 'The Workbench', tr: 'Bahçe' } as Record<Locale, string>,
+  name:  { en: 'The Garden', tr: 'Bahçe' } as Record<Locale, string>,
   blurb: {
     en: 'A workbench of half-built ideas, finished arguments, and notes to myself — kept in the open.',
     tr: 'Yarım kalmış fikirler, bitirdiğim argümanlar ve kendime aldığım notlar bir arada duruyor. Hepsini açıkta tutuyorum, çünkü ancak düzelte düzelte büyüyorlar.',
