@@ -27,24 +27,6 @@ function kur(kok: HTMLElement) {
   const notRay = kok.querySelector<HTMLElement>('[data-rail="notes"] .ray-ic');
   if (!yazi) return;
 
-  /* — Raylar — */
-  const durum = railDurumu();
-  kok.querySelectorAll<HTMLButtonElement>('[data-toggle]').forEach((d) => {
-    const ad = d.dataset.toggle!;
-    const uygula = (acik: boolean) => {
-      kok.dataset[ad] = acik ? 'acik' : 'kapali';
-      d.setAttribute('aria-expanded', String(acik));
-      if (ad === 'notes') yerlestir();
-    };
-    uygula(durum[ad] ?? true);
-    d.addEventListener('click', () => {
-      const acik = d.getAttribute('aria-expanded') !== 'true';
-      durum[ad] = acik;
-      railYaz(durum);
-      uygula(acik);
-    });
-  });
-
   /* — Kenar notları — */
   const kaynak = kok.querySelector<HTMLElement>('[data-footnotes]');
   const refler = [...yazi.querySelectorAll<HTMLAnchorElement>('a[data-footnote-ref]')];
@@ -100,6 +82,30 @@ function kur(kok: HTMLElement) {
   }
 
   /*
+   * — Raylar —
+   * Not bloğundan SONRA: uygula() kurulumda yerlestir()'i çağırıyor ve
+   * o fonksiyon aşağıdaki const'lara dokunuyor. Ters sırada temporal
+   * dead zone hatası fırlıyor, kur() sessizce düşüyor ve hiçbir
+   * dinleyici bağlanmıyordu — okları tıklamak hiçbir şey yapmıyordu.
+   */
+  const durum = railDurumu();
+  kok.querySelectorAll<HTMLButtonElement>('[data-toggle]').forEach((d) => {
+    const ad = d.dataset.toggle!;
+    const uygula = (acik: boolean) => {
+      kok.dataset[ad] = acik ? 'acik' : 'kapali';
+      d.setAttribute('aria-expanded', String(acik));
+      if (ad === 'notes') yerlestir();
+    };
+    uygula(durum[ad] ?? true);
+    d.addEventListener('click', () => {
+      const acik = d.getAttribute('aria-expanded') !== 'true';
+      durum[ad] = acik;
+      railYaz(durum);
+      uygula(acik);
+    });
+  });
+
+  /*
    * Başlık çapaları. Astro'nun başlık-id eklentisi hast eklentimizden
    * sonra koştuğu için build sırasında id görünmüyor; burada görünüyor.
    * Hover'da beliriyor, klavyeyle odaklanınca da.
@@ -142,7 +148,14 @@ function kur(kok: HTMLElement) {
   yerlestir();
 }
 
-document.querySelectorAll<HTMLElement>('[data-reading]').forEach(kur);
+document.querySelectorAll<HTMLElement>('[data-reading]').forEach((kok) => {
+  try {
+    kur(kok);
+  } catch (e) {
+    // Sessizce ölmesin: bir hata bütün okuma düzenini götürüyordu.
+    console.error('[okuma düzeni]', e);
+  }
+});
 
 // import'u olmayan dosyayı TypeScript modül saymıyor ve kapsamı
 // diğer script'lerle paylaşıyor; bu satır onu modül yapıyor.
