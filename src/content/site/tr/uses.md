@@ -7,11 +7,6 @@ updated: 2026-09-15
 Bir [/uses](https://uses.tech) sayfası. Donanım kısmı sıkıcı. Çalışma şeklimi
 değiştiren şey altındaki ajan kurulumu, o yüzden asıl oraya yer ayırdım.
 
-## Makine
-
-Apple silicon Mac, macOS 26. zsh. Liste gerçekten bu kadar; bu katmanı
-umursamayı bıraktım.
-
 ## Editör ve ajanlar
 
 İşin çoğunu editörde değil, terminalde
@@ -33,21 +28,5 @@ ama işin geçtiği yer artık orası değil.
   edemiyorsa kontrol eden sen oluyorsun — sen de ölçeklenmiyorsun.
 
 Yöntemin tamamı bu. Dosyaların kendisi repoda, etki ettikleri kodun yanında duruyor.
-
-## Terminal
-
-iTerm, arama için `ripgrep`, liste olan her şey için `fzf`, GitHub'la ilgili her
-şey için `gh`. Bir bağımlılık ısrar ederse `docker`.
-
-## Çalışma zamanı
-
-Node 22 ve pnpm, `packageManager` ile sabitlenmiş — CI ile dizüstüm ayrışamasın
-diye. Bu sabitleme var çünkü bir kez ayrıştılar ve build, teşhisi olması
-gerekenden uzun süren bir şekilde bozuldu.
-
-## Başka
-
-Henüz herkese açık olmaya hazır olmayan notlar için Obsidian. Başka birinin
-okuması gereken her şey için Notion.
 
 > ⚠️ Donanım ve uygulama listesi eksik — kendi kurulumunla tamamla.

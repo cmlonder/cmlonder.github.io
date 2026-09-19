@@ -1,0 +1,121 @@
+---
+/**
+ * Araç kutusu: üstte yapışkan kategori şeridi, altında kategori kategori
+ * kart ızgarası. Kartlar kaydırınca beliriyor (reveal.ts). Bağlantısı
+ * olan kartın sağ üstünde dışarı oku var; olmayan kart düz metin.
+ */
+import { USES } from '../data/uses';
+import type { Locale } from '../config';
+interface Props { lang: Locale }
+const { lang } = Astro.props as Props;
+const baslik = lang === 'tr' ? 'Araç kutusu' : 'Toolbox';
+---
+
+<section class="araclar" aria-labelledby="araclar-h">
+  <h2 id="araclar-h">{baslik}</h2>
+
+  <nav class="serit" aria-label={baslik}>
+    {USES.map((g) => <a href={`#arac-${g.id}`}>{g.label[lang]}<span class="n">{g.items.length}</span></a>)}
+  </nav>
+
+  {USES.map((g) => (
+    <section class="grup" id={`arac-${g.id}`} data-reveal>
+      <h3>{g.label[lang]}</h3>
+      <ul>
+        {g.items.map((a) => (
+          <li>
+            {a.url ? (
+              <a class="kart" href={a.url} rel="noopener">
+                <b>{a.name}</b><p>{a.why[lang]}</p><span class="ok" aria-hidden="true">&#8599;</span>
+              </a>
+            ) : (
+              <div class="kart">
+                <b>{a.name}</b><p>{a.why[lang]}</p>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</section>
+
+<style>
+  .araclar { margin-block-start: var(--s-2xl); }
+  .araclar h2 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-lg); line-height: var(--lh-tight);
+  }
+
+  /* Kategori şeridi: kaydırınca üstte yapışık kalır, hedef bölüme atlar. */
+  .serit {
+    position: sticky; inset-block-start: 0; z-index: 2;
+    display: flex; flex-wrap: wrap; gap: var(--s-2xs);
+    padding-block: var(--s-s);
+    margin-block: var(--s-s) var(--s-l);
+    background: color-mix(in srgb, var(--c-bg) 92%, transparent);
+    backdrop-filter: blur(6px);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .serit a {
+    display: inline-flex; align-items: baseline; gap: .45em;
+    padding: .3em .75em; border-radius: 999px;
+    border: 1px solid var(--c-border);
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-muted); text-decoration: none;
+    transition: color .18s ease, border-color .18s ease, background-color .18s ease;
+  }
+  .serit a:hover { color: var(--c-accent); border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); background: var(--c-surface); }
+  .serit .n { font-variant-numeric: tabular-nums; color: var(--c-mark-ink); }
+
+  .grup { scroll-margin-block-start: 4rem; }
+  .grup + .grup { margin-block-start: var(--s-xl); }
+  .grup h3 {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+    margin-block-end: var(--s-s);
+  }
+  .grup ul {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: var(--s-s);
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  }
+  .kart {
+    position: relative; display: block; block-size: 100%;
+    padding: var(--s-s) var(--s-m);
+    border: 1px solid var(--c-border); border-radius: var(--radius-lg);
+    background: var(--c-surface); text-decoration: none; color: inherit;
+    transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  a.kart:hover {
+    border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--c-text) 8%, transparent);
+  }
+  .kart b {
+    display: block; font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-base); color: var(--c-text);
+    transition: color .2s ease;
+  }
+  a.kart:hover b { color: var(--c-accent); }
+  .kart p {
+    margin-block-start: var(--s-3xs);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
+  }
+  .kart .ok {
+    position: absolute; inset-block-start: var(--s-s); inset-inline-end: var(--s-s);
+    font-size: var(--t-xs); color: var(--c-border);
+    transition: color .2s ease, transform .2s ease;
+  }
+  a.kart:hover .ok { color: var(--c-accent); transform: translate(2px, -2px); }
+
+  /* Kaydırınca beliren grup */
+  [data-reveal] { opacity: 0; transform: translateY(10px); }
+  [data-reveal].gorunur { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s cubic-bezier(.4, 0, .2, 1); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1; transform: none; }
+    .kart, .kart b, .kart .ok, .serit a { transition: none; }
+    a.kart:hover { transform: none; }
+  }
+</style>

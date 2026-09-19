@@ -7,11 +7,6 @@ updated: 2026-09-15
 A [/uses](https://uses.tech) page. The hardware section is the boring part — the
 agent setup below it is the part that actually changed how I work.
 
-## Machine
-
-Apple silicon Mac, macOS 26. zsh. That is genuinely the whole list; I have
-stopped caring about this layer.
-
 ## Editor and agents
 
 I do most work through **[Claude Code](https://claude.com/claude-code)** in a
@@ -33,21 +28,5 @@ Every project I care about carries:
   own work, you are the check, and you will not scale.
 
 That is the whole method. The files live in the repository, next to the code they act on.
-
-## Terminal
-
-iTerm, `ripgrep` for search, `fzf` for everything that is a list, `gh` for
-anything GitHub. `docker` when a dependency insists.
-
-## Runtime
-
-Node 22 and pnpm, pinned with `packageManager` so CI and my laptop cannot drift.
-That pin exists because they did drift, and the build broke in a way that took
-longer to diagnose than it should have.
-
-## Elsewhere
-
-Obsidian for notes that are not ready to be public. Notion for anything that
-needs another person to read it.
 
 > ⚠️ Donanım ve uygulama listesi eksik — kendi kurulumunla tamamla.
