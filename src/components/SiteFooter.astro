@@ -19,6 +19,7 @@ const links = [
   ...SHELF_NAMES.map((s) => ({ label: SHELVES[s].name[lang], href: localePath(lang, SHELVES[s].path) })),
   { label: RADAR.name[lang], href: '/radar' },
   { label: PAGE[lang].tagsTitle, href: localePath(lang, 'tags') },
+  { label: PAGE[lang].archiveTitle, href: localePath(lang, 'archive') },
   { label: lang === 'tr' ? 'Yapay zeka kullanımı' : 'AI usage', href: localePath(lang, 'ai') },
   ...NAV[lang].map((n) => ({ label: n.label, href: localePath(lang, n.href.replace(/^\//, '')) })),
 ];

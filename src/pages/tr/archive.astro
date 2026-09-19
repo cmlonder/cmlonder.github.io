@@ -1,0 +1,114 @@
+---
+/**
+ * Arşiv — dört koleksiyonun tamamı, yıl yıl.
+ *
+ * Koleksiyon sayfaları "ne tür" sorusuna, konu ve etiket sayfaları
+ * "ne hakkında" sorusuna cevap veriyor. Burası "ne zaman" sorusunun
+ * yeri: tek, yoğun, gezinmek için liste.
+ */
+import Base from '../../layouts/Base.astro';
+import TypeMark from '../../components/TypeMark.astro';
+import { COLLECTION_LABELS, PAGE, type Locale } from '../../config';
+import { getAllEntries, formatDate, entryPath, parseId, localePath } from '../../lib/content';
+
+const lang: Locale = 'tr';
+const all = (await getAllEntries(lang))
+  .sort((a, b) => (b.entry.data as any).pubDate - (a.entry.data as any).pubDate);
+
+const yillar = [...new Set(all.map(({ entry }) => (entry.data as any).pubDate.getFullYear()))]
+  .map((y) => ({ yil: y, items: all.filter(({ entry }) => (entry.data as any).pubDate.getFullYear() === y) }));
+
+const otherAll = await getAllEntries('en');
+const altLocale = otherAll.length ? { lang: 'en' as const, href: localePath('en', 'archive') } : null;
+---
+
+<Base title={`${PAGE[lang].archiveTitle} — Cemal Önder`} description={PAGE[lang].archiveBlurb}
+      lang={lang} altLocale={altLocale}>
+  <div class="wrap">
+    <header class="head">
+      <p class="kicker">
+        <span class="count">{all.length}</span>
+        <a href={localePath(lang, '')}>{PAGE[lang].back}</a>
+      </p>
+      <h1>{PAGE[lang].archiveTitle}</h1>
+      <p class="blurb">{PAGE[lang].archiveBlurb}</p>
+    </header>
+
+    {yillar.map(({ yil, items }) => (
+      <section class="yil">
+        <h2>{yil}<span class="n">{items.length}</span></h2>
+        <ul>
+          {items.map(({ collection, entry }) => {
+            const d = entry.data as any;
+            return (
+              <li>
+                <a class="satir-vurgu" href={entryPath(lang, collection, parseId(entry.id).slug)}>
+                  <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+                  <span class="mark"><TypeMark collection={collection} size={14} /></span>
+                  <span class="ttl">{d.title}</span>
+                  <span class="tur">{COLLECTION_LABELS[collection][lang]}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .wrap { inline-size: min(100% - var(--s-l), var(--w-narrow)); margin-inline: auto; }
+  .head { margin-block-end: var(--s-2xl); }
+  .kicker {
+    display: flex; align-items: baseline; gap: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+  }
+  .kicker .count { color: var(--c-mark-ink); font-variant-numeric: tabular-nums; }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; line-height: var(--lh-tight);
+  }
+  .blurb {
+    margin-block-start: var(--s-2xs); font-family: var(--f-serif);
+    font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: balance;
+  }
+
+  .yil + .yil { margin-block-start: var(--s-2xl); }
+  .yil h2 {
+    display: flex; align-items: baseline; gap: .6em;
+    position: sticky; inset-block-start: 0; z-index: 1;
+    padding-block: var(--s-2xs);
+    background: var(--c-bg);
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-md);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .yil h2 .n {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    color: var(--c-mark-ink); font-variant-numeric: tabular-nums;
+  }
+
+  .yil ul { list-style: none; margin: 0; padding: 0; }
+  .yil li a {
+    display: grid; align-items: baseline;
+    grid-template-columns: 7.5rem 1.2rem 1fr auto;
+    gap: var(--s-2xs);
+    padding-block: var(--s-2xs);
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    color: var(--c-text); text-decoration: none;
+  }
+  .yil time { font-size: var(--t-xs); color: var(--c-muted); font-variant-numeric: tabular-nums; }
+  .yil .mark { color: var(--c-muted); transition: color .18s ease; }
+  .yil li a:hover .mark { color: var(--c-accent); }
+  .yil .ttl { line-height: 1.4; text-wrap: pretty; transition: color .18s ease; }
+  .yil li a:hover .ttl { color: var(--c-accent); }
+  .yil .tur { font-size: var(--t-xs); color: var(--c-muted); }
+
+  @media (max-width: 40rem) {
+    .yil li a { grid-template-columns: 1.2rem 1fr; }
+    .yil time, .yil .tur { grid-column: 2; font-size: var(--t-xs); }
+  }
+  @media (prefers-reduced-motion: reduce) { .yil .mark, .yil .ttl { transition: none; } }
+</style>

@@ -125,8 +125,23 @@ const coverTopic = TOPIC_LABELS[(d.topics as Topic[])[0]][lang];
   }
 
   /* — Satır — */
-  .row { display: grid; grid-template-columns: auto 1fr; gap: var(--s-2xs); align-items: start; }
+  .row {
+    display: grid; grid-template-columns: auto 1fr; gap: var(--s-2xs); align-items: start;
+    border-inline-start: 2px solid transparent;
+    padding-inline-start: var(--s-s);
+    margin-inline-start: calc(var(--s-s) * -1);
+    padding-block: var(--s-2xs);
+    transition: border-color .18s ease, background-color .18s ease;
+  }
+  /* Satır zıplamıyor: kenarda beliren çizgi ve hafif zemin yetiyor. */
+  .row:hover { border-inline-start-color: var(--c-accent); background: var(--c-surface); }
+  .row .mark :global(svg) { transition: color .18s ease, transform .18s ease; }
+  .row:hover .mark :global(svg) { color: var(--c-accent); transform: scale(1.12); }
   .row .dek { margin-block: .25em .15em; }
   .row .mark { padding-block-start: .3em; }
   .row .coll { color: var(--c-accent); }
+  @media (prefers-reduced-motion: reduce) {
+    .row, .row .mark :global(svg) { transition: none; }
+    .row:hover .mark :global(svg) { transform: none; }
+  }
 </style>

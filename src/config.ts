@@ -507,6 +507,8 @@ export const PAGE: Record<Locale, {
   tagsTitle: string;
   tagsBlurb: string;
   tagBlurb: (tag: string) => string;
+  archiveTitle: string;
+  archiveBlurb: string;
   recently: string;
   findTitle: string;
   findBlurb: string;
@@ -532,6 +534,8 @@ export const PAGE: Record<Locale, {
     tagsTitle: 'Tags',
     tagsBlurb: 'Free-form labels, unlike the six fixed topics. Bigger means more often.',
     tagBlurb: (t) => `Everything tagged ${t}.`,
+    archiveTitle: 'Archive',
+    archiveBlurb: 'Everything I have written here, newest first. Yearly, in one list.',
     recently: 'Recently',
     findTitle: 'Which playbook?',
     findBlurb: 'Pick the symptoms you are seeing. Matching playbooks rise to the top.',
@@ -557,6 +561,8 @@ export const PAGE: Record<Locale, {
     tagsTitle: 'Etiketler',
     tagsBlurb: 'Altı sabit konunun aksine serbest etiketler. Büyük olan daha sık geçiyor.',
     tagBlurb: (t) => `${t} etiketli her şey.`,
+    archiveTitle: 'Arşiv',
+    archiveBlurb: 'Burada yazdığım her şey, yeniden eskiye. Yıl yıl, tek listede.',
     recently: 'Son eklenenler',
     findTitle: 'Hangi playbook?',
     findBlurb: "Gördüğün belirtileri seç. Eşleşen playbook'lar öne çıkar.",
