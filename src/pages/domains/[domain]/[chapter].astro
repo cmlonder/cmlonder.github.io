@@ -4,7 +4,8 @@ import Base from '../../../layouts/Base.astro';
 import Outline from '../../../components/Outline.astro';
 import Sources from '../../../components/Sources.astro';
 import Audience from '../../../components/Audience.astro';
-import { DOMAINS, DOMAIN_UI, ORIGIN_UI, type Locale } from '../../../config';
+import AiMark from '../../../components/AiMark.astro';
+import { DOMAINS, DOMAIN_UI, type Locale } from '../../../config';
 import { localePath, formatDate, getDomains, getChapters } from '../../../lib/content';
 
 export async function getStaticPaths() {
@@ -41,15 +42,9 @@ const t = DOMAIN_UI[lang];
 const { Content } = await render(entry);
 const capraz = entry.data.crossRef;
 
-// Makine kaynağı künyesi: araç ve tür yerine konur, gövdeden önce görünür.
-const koken = entry.data.origin
-  ? ORIGIN_UI[lang].chapter
-      .replace('{tool}', entry.data.origin.tool)
-      .replace('{kind}', entry.data.origin.kind)
-  : null;
 ---
 
-<Base title={`${entry.data.title} — ${dm.data.title}`} description={entry.data.summary} lang={lang}>
+<Base title={`${entry.data.title} — ${dm.data.title}`} description={entry.data.summary} lang={lang} ai={entry.data.ai}>
   <div class="book" data-reader>
     <aside class="rail">
       <a class="up" href={localePath(lang, DOMAINS.path, dSlug)}>{dm.data.title}</a>
@@ -58,7 +53,7 @@ const koken = entry.data.origin
       <a class="one" href={localePath(lang, DOMAINS.path, dSlug, 'read')}>{t.onePage} &#8594;</a>
     </aside>
 
-    <article class="chapter">
+    <article class="chapter" ai-disclosure={entry.data.ai === 'generated' ? 'ai-generated' : undefined}>
       <p class="kicker">
         <a href={localePath(lang, DOMAINS.path, dSlug)}>{dm.data.title}</a>
         <span aria-hidden="true">·</span>
@@ -67,14 +62,11 @@ const koken = entry.data.origin
       <h1>{entry.data.title}</h1>
       <p class="standfirst">{entry.data.summary}</p>
       <Audience text={entry.data.audience} lang={lang} />
-      <p class="meta"><time datetime={entry.data.pubDate.toISOString()}>{formatDate(entry.data.pubDate, lang)}</time></p>
+      <p class="meta">
+        <time datetime={entry.data.pubDate.toISOString()}>{formatDate(entry.data.pubDate, lang)}</time>
+        {entry.data.ai === 'generated' && <><span aria-hidden="true">·</span><AiMark level={entry.data.ai} lang={lang} /></>}
+      </p>
 
-      {koken && (
-        <p class="origin">
-          {koken}
-          {entry.data.origin?.note && <span> {entry.data.origin.note}</span>}
-        </p>
-      )}
 
       <div class="prose"><Content /></div>
 
@@ -119,12 +111,6 @@ const koken = entry.data.origin
 </script>
 
 <style>
-  .origin {
-    margin-block-start: var(--s-m); padding: var(--s-s);
-    border-inline-start: 2px solid var(--c-border); background: var(--c-tinted);
-    font-family: var(--f-sans); font-size: var(--t-xs);
-    color: var(--c-muted-on-tint); line-height: 1.5; text-wrap: pretty;
-  }
 
   .book {
     inline-size: min(100% - var(--s-l), calc(15rem + var(--w-narrow) + var(--not-w, 14rem) + 2 * var(--s-2xl)));
@@ -165,7 +151,7 @@ const koken = entry.data.origin
     font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: balance;
   }
   .meta { margin-block-start: var(--s-2xs); font-family: var(--f-sans);
-          font-size: var(--t-xs); color: var(--c-muted); }
+          font-size: var(--t-xs); color: var(--c-muted); display: flex; gap: .55em; align-items: center; flex-wrap: wrap; }
   .prose { margin-block-start: var(--s-l); }
 
   /* Çapraz gönderme — domainler arası örüntü, bu yapının asıl iddiası. */

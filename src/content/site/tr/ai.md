@@ -67,6 +67,25 @@ Rozetin tek başına yeterli olmadığını biliyorum —
 Okuyucuyu koruyan şey rozet değil, hangi satırın çürük olduğunu görebilmesi.
 Tablo bu yüzden yayınlanıyor.
 
+## Etiket
+
+Metnin tamamını bir ajan yazdıysa yazının künyesinde, tarihin yanında
+kesik çizgili küçük bir işaret var: **ai üretimi**. Konu çiplerinden
+şekli farklı; çünkü bu bir konu değil, köken bilgisi. Radar bültenleri ve
+domain bölümleri bu işareti taşıyor. Tıklayınca buraya geliyor.
+
+İki kademe var, tek işaret:
+
+- **ai üretimi** — metni ajan yazdı (NotebookLM brifingi, Spark çıktısı),
+  ben düzenledim. Argüman ve sıra bana ait; cümlelerin çoğu değil.
+- **AI ile düzeltilmiş** — yazan benim, AI yazım ve akış için okudu. Bu
+  yazılara işaret koymuyorum. Kural [Simon Willison](https://simonwillison.net/2026/Mar/1/ai-writing/)'ınki:
+  fikir bildiren ya da "ben" diyen her cümle benimdir.
+
+Makine tarafı: işaretli sayfalarda `<meta name="ai-disclosure"
+content="ai-generated">` ve yazının `.md` aynasında `AI: ai-generated`
+satırı var ([öneri](https://github.com/dweekly/ai-content-disclosure)).
+
 ## Radar ana beslemede
 
 Radar bültenleri ana [`/rss.xml`](/rss.xml) beslemesinde, yazılarla birlikte

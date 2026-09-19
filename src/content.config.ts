@@ -45,6 +45,11 @@ const base = z.object({
    * anlıyor. Yazar yazıyor; ajan uydurmuyor.
    */
   audience: z.string().optional(),
+  /**
+   * Köken: metni ajan mı yazdı (`generated`), yoksa AI yalnızca düzeltti mi
+   * (`assisted`)? Yalnız `generated` sayfada işaret çıkarır. Boşsa insan.
+   */
+  ai: z.enum(['generated', 'assisted']).optional(),
 });
 
 const collection = (dir: string, extend = z.object({})) =>
@@ -122,16 +127,7 @@ const chapters = defineCollection({
     /** Başka bir domaindeki kardeş bölüme çapraz gönderme. */
     crossRef: z.object({ domain: z.string(), slug: z.string(), why: z.string() }).optional(),
     topics: z.array(z.string()).default([]),
-    /**
-     * Metin makineden geldiyse kaynağı. Radar'la aynı gerekçe: ajanın
-     * yazdığı metin kardeş bir bölüm gibi sessizce durmaz, nereden
-     * geldiği yazının başında yazar.
-     */
-    origin: z.object({
-      tool: z.string(),
-      kind: z.string(),
-      note: z.string().optional(),
-    }).optional(),
+    ai: z.enum(['generated', 'assisted']).optional(),
     placeholder: z.boolean().default(false),
   }),
 });

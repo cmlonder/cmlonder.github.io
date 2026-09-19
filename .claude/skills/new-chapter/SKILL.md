@@ -60,15 +60,13 @@ domain:      # 1. adımdaki domain
 summary:     # tek cümle, standfirst olarak çıkıyor
 pubDate:     # bugün — `date +%F`, tahmin etme
 topics:      # src/config.ts TOPICS enum'undan; uydurma
-origin:      # ZORUNLU, makine kaynaklıysa
-  tool: "NotebookLM"
-  kind: "brifingi"
-  note: "Slaytlar aynı sunumdan; alt metinlerini ve altyazılarını ben yazdım."
+ai: generated   # ZORUNLU, metni makine yazdıysa; künyede "ai üretimi" işareti çıkarır
 crossRef:    # opsiyonel: başka domain'de kardeş bölüm varsa
 ```
 
-`origin` künyesi yazının başında kutu olarak çıkıyor. Metin makineden
-geldiyse **atlanmaz** — radar'daki kuralın aynısı.
+`ai: generated` künyede tarihin yanında "ai üretimi" işareti çıkarıyor;
+araç adı yazıya girmiyor, /ai sayfası anlatıyor. Metin makineden geldiyse
+**atlanmaz** — radar'daki kuralın aynısı.
 
 Gövde kuralları:
 

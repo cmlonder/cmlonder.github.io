@@ -5,10 +5,7 @@ summary: "Havayolu rezervasyonunun bugünkü tuhaflıklarının çoğu 1925'te p
 audience: "Rezervasyon sistemine ilk kez bakan ya da PNR ile envanterin neden ayrı olduğunu merak eden yazılımcı. Havacılık bilgisi gerekmiyor."
 pubDate: 2026-09-18
 topics: [solution-architecture]
-origin:
-  tool: "NotebookLM"
-  kind: "brifingi"
-  note: "Slaytlar aynı sunumdan; alt metinlerini ve altyazılarını ben yazdım."
+ai: generated
 crossRef:
   domain: "ecommerce"
   slug: "stock-is-a-reservation"

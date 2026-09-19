@@ -37,6 +37,7 @@ export const GET: APIRoute = ({ props }) => {
     ...(d.problem ? [`- Problem: ${d.problem}`] : []),
     ...(d.context ? [`- Context: ${d.context}`] : []),
     ...(d.url ? [`- Source: ${d.source} — ${d.url}`] : []),
+    ...(d.ai ? [`- AI: ${d.ai === 'generated' ? 'ai-generated' : 'ai-assisted'}`] : []),
     `- Canonical: ${url}`,
     '',
     '---',

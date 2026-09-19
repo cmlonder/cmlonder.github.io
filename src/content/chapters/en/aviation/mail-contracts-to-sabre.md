@@ -5,10 +5,7 @@ summary: "Most of what looks strange in airline reservation systems today starte
 audience: "Engineers meeting an airline reservation system for the first time, or wondering why the PNR and inventory were ever separate. No aviation background needed."
 pubDate: 2026-09-19
 topics: [solution-architecture]
-origin:
-  tool: "NotebookLM"
-  kind: "briefing"
-  note: "The slides come from the same deck and are in Turkish; the alt text and captions are mine."
+ai: generated
 crossRef:
   domain: "ecommerce"
   slug: "stock-is-a-reservation"

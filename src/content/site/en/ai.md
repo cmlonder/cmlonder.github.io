@@ -72,6 +72,26 @@ shows that an "AI-generated" label does not reduce how persuasive the content
 is. What protects the reader is not the badge but being able to see which line
 is rotten. That is why the sources are published.
 
+## The label
+
+When an agent wrote the whole text, the byline carries a small dashed
+mark next to the date: **ai-written**. It is shaped differently from the
+topic chips on purpose — it is not a topic, it is provenance. Radar
+bulletins and domain chapters carry it. Clicking it brings you here.
+
+Two levels, one mark:
+
+- **ai-written** — an agent produced the text (a NotebookLM briefing, a
+  Spark run) and I edited it. The argument and the order are mine; most
+  of the sentences are not.
+- **AI-assisted** — I wrote it, AI read it for spelling and flow. These
+  get no mark. The rule is [Simon Willison](https://simonwillison.net/2026/Mar/1/ai-writing/)'s:
+  any sentence with an opinion or an "I" in it is mine.
+
+Machine side: marked pages carry `<meta name="ai-disclosure"
+content="ai-generated">`, and the `.md` mirror has an `AI: ai-generated`
+line ([proposal](https://github.com/dweekly/ai-content-disclosure)).
+
 ## Radar is in the main feed
 
 Radar briefings flow through the main [`/rss.xml`](/rss.xml) feed alongside the

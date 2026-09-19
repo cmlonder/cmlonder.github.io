@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
+import AiMark from '../../../components/AiMark.astro';
 import { Image } from 'astro:assets';
 import RadarMeta from '../../../components/RadarMeta.astro';
 import { RADAR, RADAR_SERIES, RADAR_REVENUE_SOURCE, SITE, type Locale } from '../../../config';
@@ -42,8 +43,8 @@ const { Content } = await render(entry);
 ---
 
 <Base title={`${entry.data.title} — ${RADAR.name.tr}`} description={entry.data.summary}
-      lang={lang} ogImage="/og/radar.png">
-  <article class="narrow">
+      lang={lang} ogImage="/og/radar.png" ai="generated">
+  <article class="narrow" ai-disclosure="ai-generated">
     <header>
       <p class="kicker meta">
         <a href="/radar">{RADAR.name.tr}</a>
@@ -51,6 +52,8 @@ const { Content } = await render(entry);
         <a href={`/radar/${series}`}>{meta?.name ?? series}</a>
         <span aria-hidden="true">·</span>
         <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date, lang)}</time>
+        <span aria-hidden="true">·</span>
+        <AiMark level="generated" lang={lang} />
       </p>
       <h1>{entry.data.title}</h1>
       <p class="standfirst">{entry.data.summary}</p>

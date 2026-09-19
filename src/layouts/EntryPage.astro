@@ -9,6 +9,7 @@ import GrowthBadge from '../components/GrowthBadge.astro';
 import Backlinks from '../components/Backlinks.astro';
 import Sources from '../components/Sources.astro';
 import Audience from '../components/Audience.astro';
+import AiMark from '../components/AiMark.astro';
 import EntryCard from '../components/EntryCard.astro';
 import Comments from '../components/Comments.astro';
 import Toc from '../components/Toc.astro';
@@ -54,18 +55,21 @@ const t = {
 
 <Base title={`${d.title} — ${COLLECTION_LABELS[collection][lang]}`}
       description={d.description} lang={lang} altLocale={altLocale}
-      structured={{ collection, entry }}>
+      structured={{ collection, entry }} ai={d.ai}>
   <div class="reading" data-reader data-scroll="up">
   <aside class="toc-col">
     <Toc headings={headings} label={t.toc} lang={lang} />
   </aside>
 
-  <article class="narrow">
+  <article class="narrow" ai-disclosure={d.ai === 'generated' ? 'ai-generated' : undefined}>
     <header class="entry-head">
       <p class="meta kicker">
         <a href={localePath(lang, collection)}>{COLLECTION_LABELS[collection][lang]}</a>
         <span aria-hidden="true">·</span>
         <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+        {d.ai === 'generated' && (
+          <><span aria-hidden="true">·</span><AiMark level={d.ai} lang={lang} /></>
+        )}
         {d.status && (
           <><span aria-hidden="true">·</span><GrowthBadge status={d.status} lang={lang} /></>
         )}

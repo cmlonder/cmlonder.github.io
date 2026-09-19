@@ -18,9 +18,11 @@ interface Props {
   structured?: { collection: CollectionName; entry: AnyEntry } | undefined;
   /** Paylaşım görseli. Verilmezse koleksiyona göre, o da yoksa varsayılan. */
   ogImage?: string;
+  /** AI kökeni — görünmez meta etiketi (ai-disclosure önerisi). */
+  ai?: 'generated' | 'assisted';
 }
 
-const { title, description, lang, altLocale = null, structured, ogImage } = Astro.props;
+const { title, description, lang, altLocale = null, structured, ogImage, ai } = Astro.props;
 
 // Paylaşım görseli: sayfa > koleksiyon > varsayılan
 const ogCandidates = ['essays', 'notes', 'playbooks', 'signals', 'library'];
@@ -60,6 +62,7 @@ const home = localePath(lang, '');
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogUrl} />
 
+    {ai && <meta name="ai-disclosure" content={ai === 'generated' ? 'ai-generated' : 'ai-assisted'} />}
     {/* Makine okurları için: yazının ham Markdown aynası. İnsana görünmez. */}
     {structured && (
       <link rel="alternate" type="text/markdown" href={new URL(Astro.url.pathname.replace(/\/$/, '') + '.md', SITE.url).href} />

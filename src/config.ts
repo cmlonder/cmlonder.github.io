@@ -185,16 +185,15 @@ export const PROJECT_UI: Record<Locale, Record<string, string>> = {
 };
 
 /**
- * Makine kaynaklı metnin künyesi. Cümle kalıbı: araç + ne olduğu + neyin
- * doğrulanmadığı. "Güven bana" demiyor, nereye bakılacağını söylüyor.
+ * AI üretimi işareti. İki kademe: `generated` (metni ajan yazdı; işaret
+ * görünür) ve `assisted` (AI ile düzeltildi; işaret yok, kural /ai'de).
+ * Araç adı (NotebookLM vb.) künyeden çıktı — /ai sayfası anlatıyor.
  */
-export const ORIGIN_UI: Record<Locale, Record<string, string>> = {
-  en: {
-    chapter: 'Written from a {tool} {kind}. I edited it; the argument is mine.',
-  },
-  tr: {
-    chapter: '{tool} {kind} üzerinden yazıldı. Düzenleyen benim; argüman bana ait.',
-  },
+export const AI_UI: Record<Locale, { label: string; mini: string; title: string; anchor: string }> = {
+  en: { label: 'ai-written', mini: 'ai', anchor: '#the-label',
+        title: 'An agent wrote this text; I edited it. Click for how that works.' },
+  tr: { label: 'ai üretimi', mini: 'ai', anchor: '#etiket',
+        title: 'Metni bir ajan yazdı; düzenleyen benim. Nasıl çalıştığı için tıkla.' },
 };
 
 export const DOMAINS = {

@@ -1,4 +1,5 @@
 ---
+import AiMark from './AiMark.astro';
 /**
  * İçindekiler — yazılmamış bölümler dahil.
  *
@@ -43,6 +44,7 @@ const no = (slug: string) => outline.findIndex((b) => b.slug === slug) + 1;
               <span class="txt">
                 <a href={localePath(lang, DOMAINS.path, domain, b.slug)}
                    aria-current={simdiki ? 'page' : undefined}>{b.title}</a>
+                {!compact && yazilan.get(b.slug).data.ai === 'generated' && <AiMark level="generated" lang={lang} mini />}
                 {!compact && <span class="dek">{yazilan.get(b.slug).data.summary}</span>}
               </span>
             ) : (

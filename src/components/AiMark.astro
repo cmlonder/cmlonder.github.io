@@ -1,0 +1,39 @@
+---
+/**
+ * "ai üretimi" işareti — künye satırında, tarihin yanında.
+ *
+ * Konu çiplerinden şekliyle ayrışıyor: kesik çizgili çerçeve, dolgusuz.
+ * Bu bir konu değil, köken bilgisi. Yalnızca metnin tamamı ajan çıktısıysa
+ * görünür (`ai: generated`); AI ile düzeltilmiş yazıya işaret konmuyor,
+ * o kural /ai sayfasında. Tıklayınca oraya gider. Meta'nın "AI info"
+ * yerleşimi + YouTube'un kademesi.
+ */
+import { AI_UI, type Locale } from '../config';
+import { localePath } from '../lib/content';
+interface Props { level: 'generated' | 'assisted' | undefined; lang: Locale; mini?: boolean }
+const { level, lang, mini = false } = Astro.props;
+const t = AI_UI[lang];
+---
+
+{level === 'generated' && (
+  <a class:list={['ai-pill', mini && 'mini']} href={localePath(lang, 'ai') + t.anchor} title={t.title}>
+    {mini ? t.mini : t.label}
+  </a>
+)}
+
+<style>
+  .ai-pill {
+    display: inline-flex; align-items: center;
+    padding: .1em .55em; border-radius: 999px;
+    border: 1px dashed color-mix(in srgb, var(--c-mark-ink) 70%, transparent);
+    font-family: var(--f-sans); font-size: var(--t-xs); font-weight: 500;
+    letter-spacing: .04em; line-height: 1.5; text-decoration: none;
+    color: var(--c-mark-ink); background: transparent;
+    transition: border-color .15s ease, background-color .15s ease;
+  }
+  .ai-pill:hover, .ai-pill:focus-visible {
+    border-style: solid; border-color: var(--c-mark-ink);
+    background: color-mix(in srgb, var(--c-mark) 10%, transparent);
+  }
+  .ai-pill.mini { padding: 0 .45em; font-size: .68rem; letter-spacing: .06em; }
+</style>
