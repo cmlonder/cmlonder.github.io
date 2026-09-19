@@ -33,7 +33,7 @@ Oyunun dönemine göre basit ama cesur bir konsepti var:
 * Gömülü sohbet üzerinden sosyalleş; mesaj ve görsel gönder
 
 Bu oyunda kazanmanın bir yolu yok, sadece başkalarıyla oynamanın keyfini
-çıkarıyorsun: "Game Neverending". Ama çok uzun süre tutunamadı.
+çıkarıyorsun: ["Game Neverending"](https://gamicus.fandom.com/wiki/Game_Neverending). Ama çok uzun süre tutunamadı.
 
 # Kapanış: Game Neverending
 
@@ -91,7 +91,7 @@ döneceğiz.
 
 # Kapanış: Glitch
 
-Oyun yine iş tarafında iyi gitmedi ve
+Oyun yine [iş tarafında iyi gitmedi](https://www.failory.com/cemetery/glitch) ve
 [2012'de kapanacağı duyuruldu](http://web.archive.org/web/20121119062458/http://www.glitch.com/closing/#3).
 
 Stewart [röportajında](https://www.gamedeveloper.com/business/the-story-of-i-glitch-i-why-this-odd-mmo-is-shutting-down#.ULkcf4P-EsQ)
@@ -133,8 +133,8 @@ Böylece "linefeed"i geliştirdiler, 2013'te adını SLACK koydular:
 
 # Başarı: 27,7 milyar dolarlık şirket
 
-Bu uzun ve zorlu yolculuğun sonunda Tiny Speck (sonradan Slack) ekibi kendi iç
-araçlarıyla başarıya ulaştı.
+Bu uzun ve zorlu yolculuğun sonunda Tiny Speck (sonradan [Slack](https://nira.com/slack-history/)) ekibi kendi iç
+araçlarıyla [başarıya ulaştı](https://www.singlegrain.com/casestudies/growth-study-slack-the-fastest-business-app-growth-in-history/).
 
 Temmuz 2020
 [istatistiklerine](https://www.businessofapps.com/data/slack-statistics/)
@@ -182,10 +182,3 @@ Başta önerdiğim müziği dinledin mi? Slack'in yeni özelliği Huddle'ın
 (Slack içindeki hızlı toplantı odası) bekleme müziği — ve o müzik, batan
 (gerçekten mi?) oyunları Glitch'ten geliyor.
 
-# Kaynaklar
-
-* https://gamicus.fandom.com/wiki/Game_Neverending
-* https://www.failory.com/cemetery/glitch
-* https://www.gamedeveloper.com/business/the-story-of-i-glitch-i-why-this-odd-mmo-is-shutting-down
-* https://www.singlegrain.com/casestudies/growth-study-slack-the-fastest-business-app-growth-in-history/
-* https://nira.com/slack-history/

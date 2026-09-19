@@ -610,3 +610,20 @@ h2.section-title a,
 .buyut[open] img { animation: buyutGiris .2s cubic-bezier(.2, .8, .2, 1) both; }
 @keyframes buyutGiris { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .buyut[open] img { animation: none; } .kod-kopyala { transition: none; } }
+
+/* — Kaldığın yer: alt ortada, tek tıkla kayıt yerine gider — */
+.kaldigin {
+  position: fixed; inset-block-end: 1.25rem; inset-inline-start: 50%; transform: translateX(-50%);
+  z-index: 40; display: inline-flex; align-items: center; gap: .55em;
+  padding: .5em 1em; border-radius: 999px; cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--c-border) 80%, transparent);
+  background: color-mix(in srgb, var(--c-surface) 88%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--c-text) 14%, transparent);
+  font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-text);
+  animation: kaldiginGiris .3s cubic-bezier(.2, .8, .2, 1) both;
+}
+.kaldigin b { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--c-accent); }
+.kaldigin:hover { border-color: var(--c-accent); }
+@keyframes kaldiginGiris { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (prefers-reduced-motion: reduce) { .kaldigin { animation: none; } }

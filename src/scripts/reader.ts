@@ -75,6 +75,43 @@ for (const kok of document.querySelectorAll<HTMLElement>('[data-reader]')) {
   addEventListener('scroll', ilerle, { passive: true });
   ilerle();
 
+
+  /* — 2d. Kaldığın yer: uzun yazıda konum hatırlanır, dönünce sessiz bir
+     pill çıkar (Gwern, Kindle). Yalnızca 3 ekrandan uzun sayfalarda; sona
+     gelindiyse kayıt silinir. Depolama yoksa hiçbir şey olmaz. — */
+  const anahtar = 'yer:' + location.pathname;
+  const tr = document.documentElement.lang === 'tr';
+  const oku = () => { try { return Number(localStorage.getItem(anahtar)) || 0; } catch { return 0; } };
+  const yaz = (v: number | null) => { try { v === null ? localStorage.removeItem(anahtar) : localStorage.setItem(anahtar, String(v)); } catch { /* özel pencere */ } };
+  const uzun = () => document.documentElement.scrollHeight > innerHeight * 3;
+  let kayitZ = 0;
+  addEventListener('scroll', () => {
+    if (!uzun()) return;
+    clearTimeout(kayitZ);
+    kayitZ = window.setTimeout(() => {
+      const doc = document.documentElement;
+      const oran = scrollY / (doc.scrollHeight - innerHeight);
+      yaz(oran > 0.95 || oran < 0.08 ? null : oran);
+    }, 250);
+  }, { passive: true });
+  const kaldigi = oku();
+  if (kaldigi > 0.08 && kaldigi < 0.95 && !location.hash && uzun()) {
+    const pill = document.createElement('button');
+    pill.type = 'button'; pill.className = 'kaldigin';
+    pill.innerHTML = `<span>${tr ? 'Kaldığın yer' : 'Pick up where you left'}</span><b>%${Math.round(kaldigi * 100)}</b><span aria-hidden="true">&rarr;</span>`;
+    const kapat = () => { pill.remove(); removeEventListener('scroll', uzaklas); };
+    const uzaklas = () => { if (scrollY > 200) kapat(); };
+    pill.addEventListener('click', () => {
+      const doc = document.documentElement;
+      const az = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: kaldigi * (doc.scrollHeight - innerHeight), behavior: az ? 'auto' : 'smooth' });
+      pill.remove();
+    });
+    document.body.append(pill);
+    setTimeout(() => addEventListener('scroll', uzaklas, { passive: true }), 800);
+    setTimeout(kapat, 10000);
+  }
+
   /* — 3. Okunan bölüm — */
   const baglar = [...kok.querySelectorAll<HTMLAnchorElement>('.toc a[href^="#"]')];
   if (baglar.length && yazi && 'IntersectionObserver' in window) {

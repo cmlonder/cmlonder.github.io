@@ -1,0 +1,62 @@
+---
+/**
+ * Yazının sonunda kaynakça — gövdedeki dış bağlantılar build'de toplanıyor.
+ *
+ * Neden: radar'daki "iddia + kaynak" ilkesi denemelere de uzansın; okur
+ * linkleri paragraf içinde aramasın. Elle liste tutulmuyor, gövde tek kaynak.
+ * Site içi bağlantılar Backlinks'te; burada yalnızca dışarısı. Yoksa hiç çıkmaz.
+ */
+import { SITE, type Locale } from '../config';
+interface Props { body: string | undefined; lang: Locale }
+const { body = '', lang } = Astro.props;
+const t = lang === 'tr' ? 'Bu yazıdaki kaynaklar' : 'Sources in this piece';
+
+const kendi = new URL(SITE.url).hostname;
+const gorulen = new Set<string>();
+const kaynaklar: { href: string; text: string; host: string }[] = [];
+// Markdown bağlantısı: [metin](https://…) — dipnot içindekiler de dahil.
+for (const m of body.matchAll(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)(?:\s+"[^"]*")?\)/g)) {
+  const href = m[2];
+  let host = '';
+  try { host = new URL(href).hostname.replace(/^www\./, ''); } catch { continue; }
+  if (host === kendi || gorulen.has(href)) continue;
+  gorulen.add(href);
+  // Bağlantı metni URL'nin kendisiyse alan adı yeter.
+  const text = /^https?:\/\//.test(m[1]) ? host : m[1].replace(/[*_`]/g, '');
+  kaynaklar.push({ href, text, host });
+}
+---
+
+{kaynaklar.length > 0 && (
+  <section class="kaynakca" aria-label={t}>
+    <h2>{t}</h2>
+    <ol>
+      {kaynaklar.map((k) => (
+        <li>
+          <a href={k.href} rel="noopener">{k.text}</a>
+          {k.text !== k.host && <span class="host">{k.host}</span>}
+        </li>
+      ))}
+    </ol>
+  </section>
+)}
+
+<style>
+  .kaynakca { margin-block-start: var(--s-2xl); }
+  .kaynakca h2 {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--c-muted); font-weight: 400;
+    padding-block-end: var(--s-2xs);
+    border-block-end: 1px solid var(--c-border);
+  }
+  .kaynakca ol {
+    margin-block-start: var(--s-s); padding-inline-start: 1.6em;
+    font-family: var(--f-sans); font-size: var(--t-sm);
+    font-variant-numeric: tabular-nums;
+  }
+  .kaynakca ol::marker { color: var(--c-muted); }
+  .kaynakca li { margin-block-end: var(--s-2xs); }
+  .kaynakca li::marker { color: var(--c-muted); font-size: var(--t-xs); }
+  .host { margin-inline-start: .5em; font-size: var(--t-xs); color: var(--c-muted); }
+</style>

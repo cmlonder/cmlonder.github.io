@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Outline from '../../../components/Outline.astro';
+import Sources from '../../../components/Sources.astro';
 import { DOMAINS, DOMAIN_UI, ORIGIN_UI, type Locale } from '../../../config';
 import { localePath, formatDate, getDomains, getChapters } from '../../../lib/content';
 
@@ -82,6 +83,8 @@ const koken = entry.data.origin
           <a href={localePath(lang, DOMAINS.path, capraz.domain, capraz.slug)}>{capraz.why}</a>
         </aside>
       )}
+
+      <Sources body={entry.body} lang={lang} />
 
       <nav class="chapnav">
         {onceki

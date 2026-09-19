@@ -30,6 +30,7 @@ siteler (Letterboxd, Backloggd, Literal, Gates Notes) listeye alınmadı.
 >
 > İkinci tur (19 Eyl): kod bloğu üst çubuğu (dil + kopyala), görsel/slayt büyütme, makine için görünmez `text/markdown` alternate bağlantısı ve ⌘K arama paleti yapıldı. Kalanlar: anasayfa "son güncellemeler" akışı ve radar changelog ritmi — silinmedi, karar bekliyor.
 
-- **Notlar arası "backlink + önizleme" hover'ı** (Maggie garden, Andy Matuschak): bağlantının üstüne gelince hedef notun ilk paragrafı beliriyor. Bizde backlink listesi var, önizleme yok.
-- **Okuma ilerleme göstergesi / "kaldığın yer"** (Gwern): uzun bölümlerde.
-- **Yazı içi "Assumed audience" satırı** (Maggie): her yazının başında kime yazıldığı. Playbook `context` alanı buna çok yakın; essays'e de eklenebilir.
+> Üçüncü tur (19 Eyl): otomatik kaynakça (gwern.net/design "Links") ve "kaldığın yer" (gwern.net, Kindle) yapıldı. Reddedilenler, geri konmayacak: git tabanlı "dikildi / son bakım" satırı, ilgili yazılar (backlink + konu + not ağı yeterli), konu bazlı RSS ve /subscribe. Karar bekleyen: anasayfa "son güncellemeler" akışı, radar changelog ritmi.
+
+- **Anasayfa "son güncellemeler" akışı** ([brianlovin.com](https://brianlovin.com/), [simonwillison.net](https://simonwillison.net/)): koleksiyon fark etmeksizin son değişen 10 sayfa. Karar bekliyor.
+- **Radar changelog ritmi**: bültenlerin "bu hafta ne değişti" özeti. Karar bekliyor.

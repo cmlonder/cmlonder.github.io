@@ -80,7 +80,9 @@ globalThis.document = {
   addEventListener() {},
 };
 globalThis.matchMedia = () => ({ matches: true, addEventListener() {} });
-globalThis.localStorage = { getItem: () => null, setItem() {} };
+globalThis.localStorage = { getItem: () => null, setItem() {}, removeItem() {} };
+globalThis.location = { pathname: '/x/', hash: '', origin: 'https://cmlonder.com' };
+globalThis.removeEventListener = () => {}; globalThis.scrollTo = () => {};
 globalThis.IntersectionObserver = class { observe() {} };
 globalThis.addEventListener = () => {};
 globalThis.scrollY = 0; globalThis.innerHeight = 800; globalThis.innerWidth = 1200;
