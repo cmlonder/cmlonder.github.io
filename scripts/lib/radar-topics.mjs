@@ -38,7 +38,7 @@ export const TOPIC_ALIASES = {
  */
 export const SUBJECT_KEY = {
   'paper-to-prod':    { key: 'arxiv',    required: true },   // "2403.12345"
-  'github-radar':     { key: 'repo',     required: false },  // "owner/name"
+  'github-radar':     { key: 'repo',     required: true },   // "owner/name" (prompt v2.1'den beri zorunlu)
   'indie-postmortem': { key: 'game',     required: false },  // oyun adı, kebab
   'solo-founder':     { key: 'subjects', required: false, also: ['saas'] },         // ["urun-adi", ...]; iki seri aynı şirketi paylaşmasın
   'saas':             { key: 'subjects', required: false, also: ['solo-founder'] },

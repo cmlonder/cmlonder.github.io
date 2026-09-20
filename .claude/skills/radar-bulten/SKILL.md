@@ -3,7 +3,7 @@ name: radar-bulten
 description: cmlonder.com/radar bültenlerinin ortak sözleşmesi — Spark ajanı bir sayı yazarken, ya da bir bülten/prompt incelenirken kullanılır. Dosya adı, frontmatter, gövde ve kaynak kuralları; kapının (check-radar) neyi durdurup neyi düzelttiği; görülmüş hatalar.
 ---
 
-# Radar bülteni yazma sözleşmesi — v0.4 (taslak, olgunlaşıyor)
+# Radar bülteni yazma sözleşmesi — v0.5 (taslak, olgunlaşıyor)
 
 Bu skill iki yerde yaşar: Spark'ta (bülteni yazan ajan) ve bu repoda
 (prompt ve bülten incelemesi). Seriye özgü ses ve gövde yapısı her serinin
@@ -146,7 +146,10 @@ etiket (`github`, `engineering`, `open-source` her sayıda) konu değildir.
 - **SaaS** (onaylı v2.1): tek ana hikâye/pattern; Günün Hikâyesi / Dağıtım /
   Para / AI'ın Gerçekten Değiştirdiği Şey; sabit konu havuzu; `subjects`
   Solo ile çapraz denetlenir; kategori yazılmaz; 800–1.000.
-- **GitHub Radar**, **Indie Oyun**: inceleme sırada.
+- **GitHub Radar** (onaylı v2.1): tek proje; `repo` zorunlu; `health_score`
+  Sağlık bölümünden türer; Mimari Deep-Dive / Kod ve Topluluk Sağlığı /
+  Production Riski; sabit konu havuzu; 800–1.000.
+- **Indie Oyun**: inceleme sırada.
 
 Prompt'u Spark'a **ham metin** olarak yapıştır: işlenmiş görünümden kopya
 `---`, `##` ve kod çitlerini düşürüyor (iki kez yaşandı).

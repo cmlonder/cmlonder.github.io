@@ -32,6 +32,10 @@ outline:
     title: "PEOPLExpress ve havacılık sektörü: sadakat programları ve dağıtım sistemleri stratejik analizi"
     promise: "Her mil kullanımı bir ücretli yolcunun yerini alır; tarafsız ortak sistem beş kez denendi ve beş kez öldü; ekran sıralaması bir iş kuralıdır."
     part: "Rezervasyon"
+  - slug: crs-to-gds
+    title: "Havacılık rezervasyon ve küresel dağıtım sistemleri (GDS) analizi: stratejik gelişim ve iş mantığı"
+    promise: "MAARS Plus neden battı, 1984'ün dört kuralı neyi yasakladı, MIDT ve BIDT ne işe yarar, dört sistem nasıl üç deve dönüştü."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

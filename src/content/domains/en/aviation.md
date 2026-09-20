@@ -32,6 +32,10 @@ outline:
     title: "PEOPLExpress and the industry: loyalty programmes and distribution systems"
     promise: "Every mile redeemed displaces a paying passenger; the neutral shared system was tried five times and died five times; display order is a business rule."
     part: "Reservation"
+  - slug: crs-to-gds
+    title: "Airline reservation and global distribution systems (GDS): strategic evolution and business logic"
+    promise: "Why MAARS Plus failed, what the four rules of 1984 banned, what MIDT and BIDT are for, and how four systems became three giants."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."
