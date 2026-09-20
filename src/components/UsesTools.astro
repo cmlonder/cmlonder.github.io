@@ -1,121 +1,138 @@
 ---
 /**
- * Araç kutusu: üstte yapışkan kategori şeridi, altında kategori kategori
- * kart ızgarası. Kartlar kaydırınca beliriyor (reveal.ts). Bağlantısı
- * olan kartın sağ üstünde dışarı oku var; olmayan kart düz metin.
+ * /uses araç föyü.
+ *
+ * Üstte marka işaretlerinden bir "yığın" şeridi (her biri kendi satırına
+ * atlar), altında kategori kategori satırlar: ikon karosu, ad, tek satır
+ * neden, dış bağlantı oku. Kart yok; föy gibi okunuyor. İkonlar
+ * simple-icons'tan (CC0) build'de SVG olarak gömülüyor — ağdan çekilmiyor.
+ * İkonu olmayan araç monogram alıyor. "Asıl" araç (primary) aksanlı,
+ * geniş satır: sayfanın fikri o.
  */
+import * as si from 'simple-icons';
 import { USES } from '../data/uses';
 import type { Locale } from '../config';
 interface Props { lang: Locale }
 const { lang } = Astro.props as Props;
-const baslik = lang === 'tr' ? 'Araç kutusu' : 'Toolbox';
+const t = lang === 'tr'
+  ? { h: 'Araç föyü', stack: 'Yığın', primary: 'Çalışma şeklimi değiştiren' }
+  : { h: 'The bench', stack: 'Stack', primary: 'The one that changed how I work' };
+
+const yol = (icon?: string) => (icon && (si as any)[icon]?.path) || null;
+const mono = (name: string) => name.replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase() || '·';
+const hepsi = USES.flatMap((g) => g.items.map((a) => ({ ...a, grup: g.id })));
+const kimlik = (name: string) => 'arac-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 ---
 
-<section class="araclar" aria-labelledby="araclar-h">
-  <h2 id="araclar-h">{baslik}</h2>
+<section class="foy" aria-labelledby="foy-h">
+  <h2 id="foy-h" class="sr-only">{t.h}</h2>
 
-  <nav class="serit" aria-label={baslik}>
-    {USES.map((g) => <a href={`#arac-${g.id}`}>{g.label[lang]}<span class="n">{g.items.length}</span></a>)}
+  <nav class="yigin" aria-label={t.stack}>
+    {hepsi.map((a) => (
+      <a href={`#${kimlik(a.name)}`} title={a.name} class:list={[a.primary && 'asil']}>
+        {yol(a.icon)
+          ? <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d={yol(a.icon)!} fill="currentColor" /></svg>
+          : <span class="mono" aria-hidden="true">{mono(a.name)}</span>}
+        <span class="sr-only">{a.name}</span>
+      </a>
+    ))}
   </nav>
 
   {USES.map((g) => (
     <section class="grup" id={`arac-${g.id}`} data-reveal>
       <h3>{g.label[lang]}</h3>
       <ul>
-        {g.items.map((a) => (
-          <li>
-            {a.url ? (
-              <a class="kart" href={a.url} rel="noopener">
-                <b>{a.name}</b><p>{a.why[lang]}</p><span class="ok" aria-hidden="true">&#8599;</span>
-              </a>
-            ) : (
-              <div class="kart">
-                <b>{a.name}</b><p>{a.why[lang]}</p>
-              </div>
-            )}
-          </li>
-        ))}
+        {g.items.map((a) => {
+          const Etiket = a.url ? 'a' : 'div';
+          return (
+            <li id={kimlik(a.name)} class:list={[a.primary && 'asil']}>
+              <Etiket class="satir" href={a.url} rel={a.url ? 'noopener' : undefined}>
+                <span class="karo" aria-hidden="true">
+                  {yol(a.icon)
+                    ? <svg viewBox="0 0 24 24" width="22" height="22"><path d={yol(a.icon)!} fill="currentColor" /></svg>
+                    : <span class="mono">{mono(a.name)}</span>}
+                </span>
+                <span class="metin">
+                  <b>{a.name}{a.primary && <em>{t.primary}</em>}</b>
+                  <p>{a.why[lang]}</p>
+                </span>
+                {a.url && <span class="ok" aria-hidden="true">&#8599;</span>}
+              </Etiket>
+            </li>
+          );
+        })}
       </ul>
     </section>
   ))}
 </section>
 
 <style>
-  .araclar { margin-block-start: var(--s-2xl); }
-  .araclar h2 {
-    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
-    font-weight: 400; font-size: var(--t-lg); line-height: var(--lh-tight);
-  }
+  .foy { margin-block-start: var(--s-xl); }
 
-  /* Kategori şeridi: kaydırınca üstte yapışık kalır, hedef bölüme atlar. */
-  .serit {
-    position: sticky; inset-block-start: 0; z-index: 2;
-    display: flex; flex-wrap: wrap; gap: var(--s-2xs);
-    padding-block: var(--s-s);
-    margin-block: var(--s-s) var(--s-l);
-    background: color-mix(in srgb, var(--c-bg) 92%, transparent);
-    backdrop-filter: blur(6px);
+  /* — Yığın şeridi: markalar tek sırada, hover'da isim (title) — */
+  .yigin {
+    display: flex; flex-wrap: wrap; gap: .4rem;
+    padding-block-end: var(--s-l); margin-block-end: var(--s-l);
     border-block-end: 1px solid var(--c-border);
   }
-  .serit a {
-    display: inline-flex; align-items: baseline; gap: .45em;
-    padding: .3em .75em; border-radius: 999px;
-    border: 1px solid var(--c-border);
-    font-family: var(--f-sans); font-size: var(--t-xs);
+  .yigin a {
+    display: grid; place-items: center; inline-size: 2.6rem; block-size: 2.6rem;
+    border-radius: 12px; border: 1px solid var(--c-border); background: var(--c-surface);
     color: var(--c-muted); text-decoration: none;
-    transition: color .18s ease, border-color .18s ease, background-color .18s ease;
+    transition: color .18s ease, border-color .18s ease, transform .18s ease, background-color .18s ease;
   }
-  .serit a:hover { color: var(--c-accent); border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); background: var(--c-surface); }
-  .serit .n { font-variant-numeric: tabular-nums; color: var(--c-mark-ink); }
+  .yigin a:hover { color: var(--c-accent); border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); transform: translateY(-2px); }
+  .yigin a.asil { color: var(--c-accent); background: color-mix(in srgb, var(--c-accent) 9%, var(--c-surface)); border-color: color-mix(in srgb, var(--c-accent) 35%, var(--c-border)); }
+  .mono { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .04em; }
 
-  .grup { scroll-margin-block-start: 4rem; }
-  .grup + .grup { margin-block-start: var(--s-xl); }
+  /* — Gruplar: sol etiket, sağ satırlar (föy) — */
+  .grup { display: grid; grid-template-columns: 9rem 1fr; gap: var(--s-m); scroll-margin-block-start: 4rem; }
+  .grup + .grup { margin-block-start: var(--s-l); padding-block-start: var(--s-l); border-block-start: 1px solid var(--c-border); }
   .grup h3 {
-    font-family: var(--f-sans); font-size: var(--t-xs);
+    font-family: var(--f-sans); font-size: var(--t-xs); font-weight: 400;
     text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
-    margin-block-end: var(--s-s);
+    padding-block-start: .9rem;
   }
-  .grup ul {
-    list-style: none; margin: 0; padding: 0;
-    display: grid; gap: var(--s-s);
-    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  .grup ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .25rem; }
+  li { scroll-margin-block-start: 4rem; }
+  .satir {
+    display: grid; grid-template-columns: 2.75rem 1fr auto; align-items: center; gap: var(--s-s);
+    padding: .55rem .75rem .55rem .55rem; border-radius: 14px;
+    text-decoration: none; color: inherit;
+    transition: background-color .18s ease;
   }
-  .kart {
-    position: relative; display: block; block-size: 100%;
-    padding: var(--s-s) var(--s-m);
-    border: 1px solid var(--c-border); border-radius: var(--radius-lg);
-    background: var(--c-surface); text-decoration: none; color: inherit;
-    transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  a.satir:hover { background: var(--c-surface); }
+  .karo {
+    display: grid; place-items: center; inline-size: 2.75rem; block-size: 2.75rem;
+    border-radius: 12px; border: 1px solid var(--c-border); background: var(--c-surface);
+    color: var(--c-text); transition: color .18s ease, border-color .18s ease;
   }
-  a.kart:hover {
-    border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border));
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px color-mix(in srgb, var(--c-text) 8%, transparent);
+  a.satir:hover .karo { color: var(--c-accent); border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); }
+  .metin { min-inline-size: 0; }
+  .metin b {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: .6em;
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; font-size: var(--t-base); color: var(--c-text); line-height: 1.25;
   }
-  .kart b {
-    display: block; font-family: var(--f-serif); font-variation-settings: var(--axis-display);
-    font-weight: 400; font-size: var(--t-base); color: var(--c-text);
-    transition: color .2s ease;
-  }
-  a.kart:hover b { color: var(--c-accent); }
-  .kart p {
-    margin-block-start: var(--s-3xs);
-    font-family: var(--f-sans); font-size: var(--t-sm);
-    color: var(--c-muted); line-height: 1.5; text-wrap: pretty;
-  }
-  .kart .ok {
-    position: absolute; inset-block-start: var(--s-s); inset-inline-end: var(--s-s);
-    font-size: var(--t-xs); color: var(--c-border);
-    transition: color .2s ease, transform .2s ease;
-  }
-  a.kart:hover .ok { color: var(--c-accent); transform: translate(2px, -2px); }
+  .metin b em { font-family: var(--f-sans); font-style: normal; font-size: var(--t-xs); color: var(--c-accent); letter-spacing: .02em; }
+  .metin p { margin-block-start: .15em; font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-muted); line-height: 1.45; text-wrap: pretty; }
+  .ok { font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-border); transition: color .18s ease, transform .18s ease; }
+  a.satir:hover .ok { color: var(--c-accent); transform: translate(2px, -2px); }
 
-  /* Kaydırınca beliren grup */
+  /* Asıl araç: aksanlı karo, hafif tonlu satır. */
+  li.asil .karo { color: var(--c-accent); background: color-mix(in srgb, var(--c-accent) 9%, var(--c-surface)); border-color: color-mix(in srgb, var(--c-accent) 35%, var(--c-border)); }
+  li.asil .satir { background: color-mix(in srgb, var(--c-accent) 4%, transparent); }
+
+  @media (max-width: 40rem) {
+    .grup { grid-template-columns: 1fr; gap: var(--s-2xs); }
+    .grup h3 { padding-block-start: 0; }
+  }
+
   [data-reveal] { opacity: 0; transform: translateY(10px); }
   [data-reveal].gorunur { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s cubic-bezier(.4, 0, .2, 1); }
   @media (prefers-reduced-motion: reduce) {
     [data-reveal] { opacity: 1; transform: none; }
-    .kart, .kart b, .kart .ok, .serit a { transition: none; }
-    a.kart:hover { transform: none; }
+    .yigin a, .satir, .karo, .ok { transition: none; }
+    .yigin a:hover { transform: none; }
   }
 </style>

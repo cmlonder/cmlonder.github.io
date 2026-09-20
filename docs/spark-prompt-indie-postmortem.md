@@ -1,7 +1,7 @@
-# Spark prompt — Indie Game Weekly
+# Spark prompt — Haftalık Indie Oyun Bülteni
 
 Canlı prompt Spark'ta; bu dosya kayıt ve düzeltme notu. Seri: `indie-postmortem`
-(sitede "Indie Game Weekly"), dosya adı `Indie-Postmortem-PARSE-YYYY-MM-DD.md`,
+(sitede "Haftalık Indie Oyun Bülteni"), dosya adı `Indie-Postmortem-PARSE-YYYY-MM-DD.md`,
 haftalık. Eşleşme slug üzerinden (`indie-postmortem`), seri adı farklı olabilir.
 
 ## Frontmatter — site sözleşmesi

@@ -409,7 +409,7 @@ export const NEWSLETTER = {
     'solo-founder': { tag: 'solo-kurucu',   name: { en: 'Solo Founder Bulletin (daily, Turkish)', tr: 'Solo Kurucu Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/solo-founder/rss.xml' },
     'weekly-saas':  { tag: 'haftalik-saas', name: { en: 'Weekly SaaS Bulletin (Sundays, Turkish)', tr: 'Haftalık SaaS Bülteni (pazar)' } as Record<Locale, string>, feed: () => '/radar/weekly-saas/rss.xml' },
     'github-radar': { tag: 'github-radar',  name: { en: 'Weekly GitHub Radar (Saturdays, Turkish)', tr: 'Haftalık GitHub Radar (cumartesi)' } as Record<Locale, string>, feed: () => '/radar/github-radar/rss.xml' },
-    'indie-postmortem': { tag: 'indie-game', name: { en: 'Indie Game Weekly (Turkish)', tr: 'Indie Game Weekly (haftalık)' } as Record<Locale, string>, feed: () => '/radar/indie-postmortem/rss.xml' },
+    'indie-postmortem': { tag: 'indie-game', name: { en: 'Weekly Indie Game Bulletin (Turkish)', tr: 'Haftalık Indie Oyun Bülteni' } as Record<Locale, string>, feed: () => '/radar/indie-postmortem/rss.xml' },
   },
 };
 export type NewsletterList = keyof typeof NEWSLETTER.lists;
@@ -509,7 +509,7 @@ export const RADAR_SERIES = {
     blurb: 'Haftanın bir GitHub projesi: altındaki mimari karar, topluluk sağlığı, production riski. Her cumartesi.',
   },
   'indie-postmortem': {
-    name: 'Indie Game Weekly',
+    name: 'Haftalık Indie Oyun Bülteni',
     driveFolder: 'Radar/Indie Game Weekly',
     blurb: 'Haftada bir bağımsız oyun lansmanı: wishlist mekaniği, dağıtım, gerçek gelir tablosu. Her hafta.',
   },
