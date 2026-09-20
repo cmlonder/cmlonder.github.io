@@ -243,6 +243,12 @@ const radar = defineCollection({
     health_score: z.coerce.number().min(0).max(10).optional(),
     /** Makale Bülteni: production'a hazırlık, 0-10. Ajanın tahmini. */
     readiness_score: z.coerce.number().min(0).max(10).optional(),
+    /**
+     * Konu kimliği — tekrar seçimi kapı buradan yakalar (seri içinde tek olmalı).
+     * Makale Bülteni: arXiv numarası (sürümsüz). Diğer seriler için ileride
+     * repo / oyun / şirket alanı aynı mantıkla gelir.
+     */
+    arxiv: z.string().regex(/^\d{4}\.\d{4,5}$/).optional(),
 
     draft: z.boolean().default(false),
   }),

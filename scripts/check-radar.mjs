@@ -16,7 +16,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync
 import { join } from 'node:path';
 import { parse as parseYaml, stringify as yamlYaz } from 'yaml';
 import { radarSerileri } from './lib/series.mjs';
-import { normalizeRadar } from './lib/radar-topics.mjs';
+import { normalizeRadar, SUBJECT_KEY } from './lib/radar-topics.mjs';
 import { normalizeSources } from './lib/radar-sources.mjs';
 
 const IN  = 'inbox/radar';
@@ -78,6 +78,15 @@ for (const series of readdirSync(IN, { withFileTypes: true }).filter((d) => d.is
 
     // Sınıflandırma sözlükten geçer: tags -> topics, takma adlar, kategori.
     const degisen = normalizeRadar(fm, series.name);
+
+    // Tekrar seçim: kimlik alanı seride daha önce yayınlandıysa kuyrukta kal.
+    const kimlik = SUBJECT_KEY[series.name];
+    if (kimlik) {
+      if (!fm[kimlik]) { die(`${src}: "${kimlik}" alanı zorunlu (tekrar seçim kontrolü)`); hatali++; continue; }
+      const yayinda = existsSync(join(OUT, series.name)) ? readdirSync(join(OUT, series.name)).filter((f) => f.endsWith('.md') && f !== `${date}.md`) : [];
+      const ayni = yayinda.find((f) => new RegExp(`^${kimlik}:\\s*["']?${String(fm[kimlik]).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']?\\s*$`, 'm').test(readFileSync(join(OUT, series.name, f), 'utf8')));
+      if (ayni) { die(`${src}: ${kimlik} ${fm[kimlik]} zaten yayında (${series.name}/${ayni}) — aynı konu ikinci kez seçilmiş`); hatali++; continue; }
+    }
     const kaynak = normalizeSources(body);
     degisen.push(...kaynak.degisen);
     for (const d of degisen) console.log(`  ~ ${name}: ${d}`);

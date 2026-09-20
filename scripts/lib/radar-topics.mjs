@@ -30,6 +30,13 @@ export const TOPIC_ALIASES = {
   'indie-game': 'oyun', 'indie-games': 'oyun', 'gamedev': 'oyun', 'game-dev': 'oyun',
 };
 
+/**
+ * Seri başına konu kimliği alanı: aynı değer seride ikinci kez gelirse
+ * dosya yayına alınmaz. "Son 30 gün tekrar seçme" kuralı prompt'ta
+ * yaşayamaz (ajanın hafızası yok); burada yaşar.
+ */
+export const SUBJECT_KEY = { 'paper-to-prod': 'arxiv' };
+
 /** Seri sabiti olarak yazılan kategoriler: ürün türü değil, bilgi taşımıyor. */
 export const CATEGORY_DROP = new Set(['applied-research', 'research', 'paper']);
 
@@ -66,6 +73,10 @@ export function normalizeRadar(fm, seri = '') {
   if (fm.category) {
     const c = CATEGORY_ALIASES[kebab(fm.category)] ?? kebab(fm.category);
     if (c !== fm.category) { degisen.push(`category ${fm.category} -> ${c}`); fm.category = c; }
+  }
+  if (typeof fm.arxiv === 'string') {
+    const a = fm.arxiv.trim().replace(/^arxiv:\s*/i, '').replace(/v\d+$/i, '');
+    if (a !== fm.arxiv) { degisen.push(`arxiv ${fm.arxiv} -> ${a}`); fm.arxiv = a; }
   }
   const ham = [...(Array.isArray(fm.topics) ? fm.topics : []), ...(Array.isArray(fm.tags) ? fm.tags : [])];
   const gorulen = new Set();
