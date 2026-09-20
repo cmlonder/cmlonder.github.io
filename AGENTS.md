@@ -134,7 +134,11 @@ src/content/radar/<seri>/<YYYY-MM-DD>.md
      -> /radar/<seri>/<tarih>
 ```
 
-Yeni seri açmak: `src/config.ts` -> `RADAR_SERIES` içine bir satır. Hepsi bu.
+Yeni seri açmak: `pnpm radar:seri <slug> "<Seri Adı>" "<açıklama>"` — `src/config.ts` ->
+`RADAR_SERIES` içine tek girdi yazar, başka bir şey değişmez. Bilerek elle: Spark'ın dosya
+adındaki bir yazım hatası sessizce yeni seri açmasın; bilinmeyen ad Drive'da kuyrukta kalır.
+Seri `series.json` yayına çıkmadan (push + deploy) Apps Script eşleştiremez. Anasayfa ve
+`/radar` listesi seriyi ilk bülten gelene kadar göstermez; `/radar/<slug>` sayfası hemen vardır.
 Drive klasörünü Apps Script ilk bültende kendisi açıyor, `src/content/radar/<seri>/`
 klasörünü de `check-radar.mjs` oluşturuyor.
 

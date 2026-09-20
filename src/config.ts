@@ -465,6 +465,11 @@ export const RADAR_SERIES = {
     driveFolder: 'Radar/Solo Kurucu Bülteni',
     blurb: 'Tek kişilik girişim vakaları, doğrulanmış ciro rakamlarıyla. Günlük.',
   },
+  'weekly-saas': {
+    name: 'Haftalık SaaS Bülteni',
+    driveFolder: 'Radar/Haftalık SaaS Bülteni',
+    blurb: 'Haftanın öne çıkan SaaS vakaları, doğrulanmış rakamlarıyla. Her pazar.',
+  },
 } as const;
 
 export type RadarSeries = keyof typeof RADAR_SERIES;

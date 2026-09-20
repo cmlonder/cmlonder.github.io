@@ -17,7 +17,8 @@
     "covers": "node scripts/fetch-covers.mjs",
     "measure": "node scripts/measure-legacy.mjs",
     "deck": "node scripts/ingest-deck.mjs",
-    "og": "node scripts/make-og.mjs"
+    "og": "node scripts/make-og.mjs",
+    "radar:seri": "node scripts/new-series.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.1",
