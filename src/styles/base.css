@@ -492,6 +492,8 @@ h2.section-title a,
   }
   [data-reader] > .narrow, [data-reader] > .chapter { inline-size: 100%; min-inline-size: 0; }
   [data-reader] > .not-col { display: block; position: sticky; inset-block-start: var(--s-l); }
+  /* Slayt/geniş görsel taşması sol oluğu geçmesin (sütun ortalı değil, notlar sağda). */
+  [data-reader] .prose :is(.slide, .genis) { --tasma: max(0rem, min(8rem, calc(var(--sol-oluk) - var(--s-l)))); }
 
   /* Kenar notu sağ sütuna yüzer. */
   [data-reader] .prose .note {
@@ -515,6 +517,8 @@ h2.section-title a,
  */
 @media (min-width: 88rem) {
   .toc-mobil { display: none; }
+  /* Panel varken taşma panelin sağ kenarında durur. */
+  [data-reader] .prose :is(.slide, .genis) { --tasma: max(0rem, min(8rem, calc(var(--sol-oluk) - var(--toc-w) - var(--s-l) - 1rem))); }
   /*
    * İçindekiler: sabit, yarı saydam katman. Sayfayı daraltmaz; sol
    * boşlukta durur (sütun ortalı olduğu için oradan yer var), yazının
@@ -555,6 +559,13 @@ h2.section-title a,
 }
 .toc-col a:hover { color: var(--c-text); }
 .toc-col a[data-aktif] { color: var(--c-accent); border-inline-start-color: var(--c-accent); }
+/* Omurga (domain bölümleri): numara + başlık; yazılmamış bölüm sönük. */
+.toc-col .toc-up { border: 0; padding: 0; margin: 0; color: var(--c-accent); text-transform: none; letter-spacing: 0; font-size: var(--t-xs); }
+.toc-n { display: inline-block; min-inline-size: 1.9em; font-family: var(--f-mono); font-size: .9em; opacity: .65; font-variant-numeric: tabular-nums; }
+.toc-col .toc-todo, .toc-mobil .toc-todo { display: block; font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); opacity: .6; line-height: 1.4; padding-inline-start: .6em; margin-inline-start: -.6em; }
+.toc-col .toc-one { display: inline-block; margin-block-start: var(--s-s); padding: 0; margin-inline-start: 0; border: 0; color: var(--c-muted); }
+.toc-col .toc-one:hover { color: var(--c-accent); }
+.toc-mobil summary { font-family: var(--f-sans); font-size: var(--t-sm); }
 
 @media (prefers-reduced-motion: reduce) {
   .note, .toc-col, .toc-col a, .prose a[data-footnote-ref], .ilerleme, .onizleme { transition: none; }

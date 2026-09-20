@@ -1,0 +1,143 @@
+---
+/**
+ * Domain bölümü — yazı sayfasıyla aynı okuma ızgarası ([data-reader]):
+ * ortalı sütun, sağda kenar notu payı, solda sabit omurga paneli.
+ *
+ * Eski üç sütunlu .book ızgarası sütunu sola itiyor, slaytların taşması
+ * (--tasma) omurganın üstüne biniyordu. Şimdi tek düzen, tek hesap.
+ */
+import { render } from 'astro:content';
+import Base from './Base.astro';
+import Spine from '../components/Spine.astro';
+import Sources from '../components/Sources.astro';
+import Audience from '../components/Audience.astro';
+import AiMark from '../components/AiMark.astro';
+import { DOMAINS, DOMAIN_UI, type Locale } from '../config';
+import { localePath, formatDate } from '../lib/content';
+
+interface Props {
+  lang: Locale; dm: any; entry: any; no: number; toplam: number;
+  onceki: any; sonraki: any; sozVerilen: any; yazilan: Map<string, any>;
+}
+const { lang, dm, entry, no, toplam, onceki, sonraki, sozVerilen, yazilan } = Astro.props;
+const dSlug = dm.id.split('/').pop()!;
+const cSlug = entry.id.split('/').pop()!;
+const t = DOMAIN_UI[lang];
+const { Content } = await render(entry);
+const capraz = entry.data.crossRef;
+const uretim = entry.data.ai === 'generated';
+---
+
+<Base title={`${entry.data.title} — ${dm.data.title}`} description={entry.data.summary} lang={lang} ai={entry.data.ai}>
+  <div class="reading" data-reader data-scroll="up">
+    <aside class="toc-col">
+      <Spine title={dm.data.title} outline={dm.data.outline} yazilan={yazilan} domain={dSlug} lang={lang} aktif={cSlug} />
+    </aside>
+
+    <article class="narrow chapter" ai-disclosure={uretim ? 'ai-generated' : undefined}>
+      <header class="head">
+        <p class="kicker">
+          <a href={localePath(lang, DOMAINS.path, dSlug)}>{dm.data.title}</a>
+          <span aria-hidden="true">·</span>
+          <span>{t.chapter} {no} {t.of} {toplam}</span>
+        </p>
+        <h1>{entry.data.title}</h1>
+        <p class="standfirst">{entry.data.summary}</p>
+        <Audience text={entry.data.audience} lang={lang} />
+        <p class="meta">
+          <time datetime={entry.data.pubDate.toISOString()}>{formatDate(entry.data.pubDate, lang)}</time>
+          {uretim && <><span aria-hidden="true">·</span><AiMark level="generated" lang={lang} /></>}
+        </p>
+      </header>
+
+      <Spine title={dm.data.title} outline={dm.data.outline} yazilan={yazilan} domain={dSlug} lang={lang} aktif={cSlug} variant="mobile" />
+
+      <div class="prose"><Content /></div>
+
+      {capraz && (
+        <aside class="cross">
+          <p class="lbl">{t.crossRef}</p>
+          <a href={localePath(lang, DOMAINS.path, capraz.domain, capraz.slug)}>{capraz.why}</a>
+        </aside>
+      )}
+
+      <Sources body={entry.body} lang={lang} />
+
+      <nav class="chapnav" aria-label={dm.data.title}>
+        {onceki
+          ? <a class="prev" href={localePath(lang, DOMAINS.path, dSlug, onceki.slug)} rel="prev">
+              <span class="dir">&#8592;</span><span class="ttl">{onceki.title}</span>
+            </a>
+          : <span />}
+        {sonraki
+          ? <a class="next" href={localePath(lang, DOMAINS.path, dSlug, sonraki.slug)} rel="next">
+              <span class="dir">{t.nextUp} &#8594;</span><span class="ttl">{sonraki.title}</span>
+            </a>
+          : sozVerilen && (
+            <span class="next soon">
+              <span class="dir">{t.nextUp}</span>
+              <span class="ttl">{sozVerilen.title}</span>
+              <span class="soonlbl">{t.notYet}</span>
+            </span>
+          )}
+      </nav>
+    </article>
+
+    <aside class="not-col" aria-hidden="true"></aside>
+  </div>
+</Base>
+
+<script>
+  import '../scripts/reader';
+  import '../scripts/explainers/boot';
+</script>
+
+<style>
+  .kicker {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+    display: flex; gap: .55em; flex-wrap: wrap;
+  }
+  .kicker a { color: var(--c-accent); text-decoration: none; }
+  h1 {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-weight: 400; line-height: var(--lh-tight); margin-block-start: var(--s-2xs);
+  }
+  .standfirst {
+    margin-block-start: var(--s-s); font-family: var(--f-serif);
+    font-size: var(--t-md); color: var(--c-muted); line-height: 1.35; text-wrap: balance;
+  }
+  .meta {
+    margin-block-start: var(--s-2xs); font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
+    display: flex; gap: .55em; align-items: center; flex-wrap: wrap;
+  }
+  .prose { margin-block-start: var(--s-l); }
+
+  /* Çapraz gönderme — domainler arası örüntü, bu yapının asıl iddiası. */
+  .cross {
+    margin-block-start: var(--s-xl); padding: var(--s-s) var(--s-m);
+    border-inline-start: 2px solid var(--c-mark);
+    background: color-mix(in srgb, var(--c-mark) 7%, transparent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .cross .lbl {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted-on-tint);
+    margin-block-end: .3em;
+  }
+  .cross a { font-family: var(--f-serif); font-size: var(--t-sm); }
+
+  .chapnav {
+    display: flex; justify-content: space-between; gap: var(--s-s);
+    margin-block-start: var(--s-2xl); padding-block-start: var(--s-s);
+    border-block-start: 1px solid var(--c-border); font-family: var(--f-sans);
+  }
+  .chapnav a, .chapnav .soon { display: grid; gap: .15em; text-decoration: none; max-inline-size: 22ch; }
+  .chapnav .next { text-align: end; }
+  .chapnav .dir { font-size: var(--t-sm); color: var(--c-accent); }
+  .chapnav .ttl { font-size: var(--t-xs); color: var(--c-muted); }
+  .chapnav a:hover .ttl { color: var(--c-text); }
+  /* Sıradaki bölüm henüz yazılmadıysa da gösteriliyor — söz açıkta duruyor. */
+  .chapnav .soon .dir { color: var(--c-muted); }
+  .chapnav .soonlbl { font-size: var(--t-xs); font-style: italic; color: var(--c-muted); }
+</style>
