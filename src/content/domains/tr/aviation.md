@@ -36,6 +36,10 @@ outline:
     title: "Havacılık rezervasyon ve küresel dağıtım sistemleri (GDS) analizi: stratejik gelişim ve iş mantığı"
     promise: "MAARS Plus neden battı, 1984'ün dört kuralı neyi yasakladı, MIDT ve BIDT ne işe yarar, dört sistem nasıl üç deve dönüştü."
     part: "Rezervasyon"
+  - slug: industry-standards
+    title: "Havacılık endüstri standartları ve yönetişim: stratejik analiz belgesi"
+    promise: "Kuralı IATA ve A4A yazar, mesajı SITA ve ARINC taşır, tarifeyi OAG ve ATPCO dağıtır, parayı BSP ve takas odaları hareket ettirir; PCA'daki tam içerik maddesi ve kayıtlı satıcı sorusu."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

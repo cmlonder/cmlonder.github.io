@@ -36,6 +36,10 @@ outline:
     title: "Airline reservation and global distribution systems (GDS): strategic evolution and business logic"
     promise: "Why MAARS Plus failed, what the four rules of 1984 banned, what MIDT and BIDT are for, and how four systems became three giants."
     part: "Reservation"
+  - slug: industry-standards
+    title: "Aviation industry standards and governance: a strategic analysis"
+    promise: "IATA and A4A write the rules, SITA and ARINC carry the messages, OAG and ATPCO distribute schedules and fares, BSP and the clearing houses move the money; the full-content clause and the merchant-of-record question."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."
