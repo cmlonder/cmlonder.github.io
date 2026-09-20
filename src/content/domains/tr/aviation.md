@@ -24,6 +24,10 @@ outline:
     title: "Yield Management: rekabet stratejileri ve PEOPLExpress analizi"
     promise: "Yılda bir milyar dolar daha düşük maliyet neden yetmedi; kaybeden tarafın kendi sözleriyle marjinal trafik ve envanter kontrolü."
     part: "Rezervasyon"
+  - slug: revenue-management-operations
+    title: "Gelir yönetimi ve stratejik operasyonlar: PEOPLExpress ve American Airlines analizi"
+    promise: "Bacak bazlı kontrolden O&D'ye, hub-and-spoke'un %30/%70 matematiği, zeytin ve boya düzeyinde maliyet kültürü ve AAdvantage'ın verisi tek formülde."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

@@ -24,6 +24,10 @@ outline:
     title: "Yield management: competitive strategy and the PEOPLExpress case"
     promise: "Why a billion-dollar cost advantage was not enough; marginal traffic and inventory control in the losing side's own words."
     part: "Reservation"
+  - slug: revenue-management-operations
+    title: "Revenue management and strategic operations: PEOPLExpress and American Airlines"
+    promise: "From leg-based to O&D control, the 30/70 math of hub-and-spoke, a cost culture down to the olive and the paint, and AAdvantage as a data tool, all in one formula."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."
