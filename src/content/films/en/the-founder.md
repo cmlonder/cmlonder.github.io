@@ -5,7 +5,7 @@ year: 2016
 rating: 3
 runtime: 115
 note: "On why the person who builds the product is not the person who scales it."
-topics: [scale, systems, distribution]
+topics: [scale-and-performance, systems, distribution]
 order: 8
 placeholder: true
 ---

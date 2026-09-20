@@ -5,7 +5,7 @@ year: 2012
 rating: 4
 runtime: 94
 note: "Tek kişilik üretimin romantik değil, yalnız ve sinir bozucu hali."
-topics: [solo, games, risk]
+topics: [solo-company, games, risk]
 order: 2
 placeholder: true
 ---

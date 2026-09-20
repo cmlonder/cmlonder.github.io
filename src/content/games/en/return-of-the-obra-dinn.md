@@ -6,7 +6,7 @@ rating: 5
 hours: 16
 platform: "PC"
 note: "Proof of how far solo production can go."
-topics: [solo, deduction, design]
+topics: [solo-company, deduction, design]
 order: 2
 placeholder: true
 ---

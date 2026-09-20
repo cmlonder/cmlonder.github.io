@@ -6,7 +6,7 @@ rating: 4
 hours: 52
 platform: "PC · mobil"
 note: "Tek kişi yapmış, basit bir kural setinden çıkan bileşim patlaması."
-topics: [solo, combinatorics]
+topics: [solo-company, combinatorics]
 order: 8
 placeholder: true
 ---

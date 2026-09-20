@@ -5,7 +5,7 @@ year: 2022
 status: "queued"
 platform: "PC"
 note: "Oyunun kılavuzunu oyunun içinde topluyormuşsun. Fikir çok hoşuma gitti."
-topics: [solo, discovery]
+topics: [solo-company, discovery]
 order: 21
 placeholder: true
 ---

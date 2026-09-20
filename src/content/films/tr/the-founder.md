@@ -5,7 +5,7 @@ year: 2016
 rating: 3
 runtime: 115
 note: "Ürünü kuranla ölçekleyenin neden aynı kişi olmadığına dair."
-topics: [scale, systems, distribution]
+topics: [scale-and-performance, systems, distribution]
 order: 8
 placeholder: true
 ---

@@ -35,7 +35,7 @@ Alanları: `title`, `author`, `year`, `note` (tek cümle), `url`, `order`.
 
 **Konular ayrı bir eksen.** `src/config.ts` içindeki `TOPICS` altı sabit
 sütundur ve zod enum'u olarak zorunludur. Yeni konu uydurma — build patlar.
-Serbest etiket gerekiyorsa `tags` alanını kullan.
+Serbest konu gerekiyorsa `topics`'e yeni bir kebab-case ad ekle; `check-topics` ikizleri yakalar.
 
 **Çeviri opsiyoneldir.** Aynı slug iki dilde varsa otomatik bağlanır. Bir yazı
 tek dilde yaşayabilir. Kullanıcı açıkça istemedikçe çeviri üretme.
@@ -73,7 +73,7 @@ pubDate: YYYY-MM-DD
 topics: [...]           # TOPICS enum'undan en az bir tane
 ```
 
-Opsiyonel: `updatedDate`, `draft` (varsayılan false), `tags: []`
+Opsiyonel: `updatedDate`, `draft` (varsayılan false), `audience`, `ai`
 
 Koleksiyona özel zorunlu alanlar:
 
@@ -171,7 +171,10 @@ pnpm verify:radar
 pnpm verify
 ```
 
-**Frontmatter'ı Spark yazıyor.** `check-radar.mjs` yalnızca doğruluyor. Türkçe kesme
+**Frontmatter'ı Spark yazıyor.** `check-radar.mjs` doğruluyor ve sınıflandırmayı
+`scripts/lib/radar-topics.mjs` sözlüğünden geçiriyor: `tags` -> `topics`, İngilizce/Türkçe
+ikizler tek ada, kategoriyle aynı konu düşer. Yeni ikiz görürsen sözlüğe ekle; `check-topics`
+sözlükteki bir takma adın içerikte kaldığını hata sayar. Türkçe kesme
 işareti (`BuiltWith'in`) elle tırnaklanan YAML'ı bozuyor — bu hata hem ajanda
 hem bu repoda ayrı ayrı gerçekleşti.
 

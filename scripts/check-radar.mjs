@@ -14,8 +14,9 @@
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
-import { parse as parseYaml } from 'yaml';
+import { parse as parseYaml, stringify as yamlYaz } from 'yaml';
 import { radarSerileri } from './lib/series.mjs';
+import { normalizeRadar } from './lib/radar-topics.mjs';
 
 const IN  = 'inbox/radar';
 const OUT = 'src/content/radar';
@@ -74,9 +75,14 @@ for (const series of readdirSync(IN, { withFileTypes: true }).filter((d) => d.is
     const body = raw.slice(m[0].length).trim();
     if (body.length < 500) { die(`${src}: gövde çok kısa (${body.length} karakter)`); hatali++; continue; }
 
+    // Sınıflandırma sözlükten geçer: tags -> topics, takma adlar, kategori.
+    const degisen = normalizeRadar(fm);
+    for (const d of degisen) console.log(`  ~ ${name}: ${d}`);
+    const cikti = degisen.length ? `---\n${yamlYaz(fm)}---\n\n${body}\n` : raw;
+
     mkdirSync(join(OUT, series.name), { recursive: true });
     const dest = join(OUT, series.name, `${date}.md`);
-    writeFileSync(dest, raw);
+    writeFileSync(dest, cikti);
     rmSync(src);
     console.log(`✓ ${dest}  (${body.split(/\s+/).length} kelime)`);
     islenen++;

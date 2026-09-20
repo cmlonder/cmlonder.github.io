@@ -7,7 +7,7 @@ order: 8
 placeholder: true
 status: "done"
 rating: 3
-topics: [solo, scale]
+topics: [solo-company, scale-and-performance]
 ---
 
 It argues that staying small can be a strategy, and I needed that

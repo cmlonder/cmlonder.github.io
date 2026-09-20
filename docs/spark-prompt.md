@@ -79,7 +79,7 @@ düzeltmiyor, dönüştürmüyor. Yazdığın bayt neyse sitede o yayınlanıyor
 title: "Solo Kurucu Bülteni — <D Ay YYYY>"
 date: YYYY-MM-DD
 category: "<yukarıdaki matristen bir etiket>"
-tags: ["konuya özel 2-4 etiket", "örn: chrome-extension", "seo"]
+topics: ["konuya özel 2-4 konu", "örn: eklenti", "seo"]
 revenue_source: "<platform | interview | self_reported | unknown>"
 summary: "<tek cümle, yüklemli, en fazla 25 kelime>"
 generator: "Gemini Spark"
@@ -88,6 +88,15 @@ promptVersion: "v13"
 ```
 
 Kurallar:
+
+- `topics`: 2-4 konu, küçük harf, kebab-case, kategoriyle aynı kelimeyi
+  tekrar etme (kategori `saas` ise konuya `saas` yazma). Önce mevcut
+  sözlükten seç, yoksa yeni aç: cmlonder.com/radar/topic altındaki adlar.
+  Sık kullanılanlar: `b2b`, `tools`, `bulten`, `dizin`, `sablon`, `ajans`,
+  `pricing`, `analytics`, `open-core`, `ai-agents`, `solo-company`, `design`,
+  `automation`, `hizmet-urunu`, `bilgi-urunu`. İngilizce/Türkçe ikizi
+  yazma (`devtool` değil `tools`, `chrome-extension` değil `eklenti`);
+  yazsan da giriş kapısı sözlükle düzeltir ama sözlükte olmayan ikizler kalır.
 
 - `---` satırları **tam olarak üç tire**, öncesinde sonrasında boşluk yok.
 - `title` ve `summary` **çift tırnak içinde**. Türkçe kesme işareti

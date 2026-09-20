@@ -6,7 +6,7 @@ rating: 5
 hours: 28
 platform: "PC · Switch"
 note: "The rare idea of changing the rules of the game from inside the game."
-topics: [solo, rules, abstraction]
+topics: [solo-company, rules, abstraction]
 order: 4
 placeholder: true
 ---

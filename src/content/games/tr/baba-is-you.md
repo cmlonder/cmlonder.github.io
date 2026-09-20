@@ -6,7 +6,7 @@ rating: 5
 hours: 28
 platform: "PC · Switch"
 note: "Oyunun kurallarını oyunun içinde değiştirdiğin, nadir bir fikir."
-topics: [solo, rules, abstraction]
+topics: [solo-company, rules, abstraction]
 order: 4
 placeholder: true
 ---

@@ -302,10 +302,8 @@ export const TOPIC_EXTRA: Record<string, Record<Locale, string>> = {
   'resilience': { en: 'resilience', tr: 'dayanıklılık' },
   'risk': { en: 'risk', tr: 'risk' },
   'rules': { en: 'rules', tr: 'kural' },
-  'scale': { en: 'scale', tr: 'ölçek' },
   'scope': { en: 'scope', tr: 'kapsam' },
   'simulation': { en: 'simulation', tr: 'simülasyon' },
-  'solo': { en: 'solo', tr: 'tek kişi' },
   'systems': { en: 'systems', tr: 'sistem' },
   'teaching': { en: 'teaching', tr: 'öğretme' },
   'team': { en: 'team', tr: 'ekip' },
@@ -434,6 +432,8 @@ export const RADAR_CATEGORY: Record<string, string> = {
   otomasyon: 'Otomasyon',
   donanim: 'Donanım',
   'hizmet-urunu': 'Hizmet ürünü',
+  'pazar-yeri': 'Pazar yeri',
+  'e-ticaret': 'E-ticaret',
 };
 
 

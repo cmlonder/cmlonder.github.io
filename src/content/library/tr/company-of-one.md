@@ -7,7 +7,7 @@ order: 8
 placeholder: true
 status: "done"
 rating: 3
-topics: [solo, scale]
+topics: [solo-company, scale-and-performance]
 ---
 
 Küçük kalmanın bir strateji olabileceğini savunuyor ve bu savunmaya

@@ -6,7 +6,7 @@ rating: 4
 hours: 52
 platform: "PC · mobil"
 note: "Made by one person; a combinatorial explosion out of a very small rule set."
-topics: [solo, combinatorics]
+topics: [solo-company, combinatorics]
 order: 8
 placeholder: true
 ---
