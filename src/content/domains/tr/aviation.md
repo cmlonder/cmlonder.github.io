@@ -20,6 +20,10 @@ outline:
     title: "Yield Management: erken dönem stratejik analiz ve iş mantığı"
     promise: "Kısıtlı indirim, kontrollü overbooking ve Littlewood kuralı 1985'te DINAMO'da nasıl birleşti; ucuz bilet satarken kârlı kalmanın formülü."
     part: "Rezervasyon"
+  - slug: yield-management-peoplexpress
+    title: "Yield Management: rekabet stratejileri ve PEOPLExpress analizi"
+    promise: "Yılda bir milyar dolar daha düşük maliyet neden yetmedi; kaybeden tarafın kendi sözleriyle marjinal trafik ve envanter kontrolü."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

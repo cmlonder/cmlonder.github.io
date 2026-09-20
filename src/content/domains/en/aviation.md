@@ -20,6 +20,10 @@ outline:
     title: "Yield management: the early strategy and its business logic"
     promise: "How restricted discounts, controlled overbooking and Littlewood's rule converged in DINAMO in 1985, and the formula for staying profitable while selling cheap seats."
     part: "Reservation"
+  - slug: yield-management-peoplexpress
+    title: "Yield management: competitive strategy and the PEOPLExpress case"
+    promise: "Why a billion-dollar cost advantage was not enough; marginal traffic and inventory control in the losing side's own words."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."
