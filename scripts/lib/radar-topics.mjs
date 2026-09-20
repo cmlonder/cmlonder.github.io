@@ -25,7 +25,12 @@ export const TOPIC_ALIASES = {
   'marketplace': 'pazar-yeri',
   'developer-tools': 'tools', 'mikro-saas': 'saas', 'ai-saas': 'saas', 'medya': 'icerik',
   'veri-urunu': 'dizin-veri', 'dijital-urun': 'dijital-varlik',
+  'architecture': 'solution-architecture', 'software-architecture': 'solution-architecture',
+  'opensource': 'open-source', 'oss': 'open-source',
 };
+
+/** Hiçbir şey söylemeyen etiketler: seri adının tekrarı ya da her yazıya yapışan jenerikler. */
+export const TOPIC_DROP = new Set(['github', 'engineering', 'software', 'programming', 'tech', 'technology']);
 
 /** Kategori takma adı -> RADAR_CATEGORY anahtarı (src/config.ts). */
 export const CATEGORY_ALIASES = {
@@ -49,8 +54,10 @@ const kebab = (s) => String(s).trim().toLowerCase()
  *   tekrar ve kategoriyle aynı olanlar düşer, en çok 6.
  * - category takma adı çözülür.
  */
-export function normalizeRadar(fm) {
+export function normalizeRadar(fm, seri = '') {
   const degisen = [];
+  // Kategori serinin kendisiyse (github-radar serisinde category: github-radar) bilgi taşımıyor.
+  if (fm.category && seri && kebab(fm.category) === seri) { degisen.push(`category ${fm.category} silindi (seri adı)`); delete fm.category; }
   if (fm.category) {
     const c = CATEGORY_ALIASES[kebab(fm.category)] ?? kebab(fm.category);
     if (c !== fm.category) { degisen.push(`category ${fm.category} -> ${c}`); fm.category = c; }
@@ -61,6 +68,7 @@ export function normalizeRadar(fm) {
   for (const t of ham) {
     const k = kebab(t); if (!k) continue;
     const son = TOPIC_ALIASES[k] ?? k;
+    if (TOPIC_DROP.has(son) || son === seri) continue;
     // Kategorinin kendisi ya da onun bir takma adı konu olarak tekrar edilmez.
     const kategoriGibi = son === fm.category || (CATEGORY_ALIASES[son] ?? son) === fm.category;
     if (kategoriGibi || gorulen.has(son)) continue;

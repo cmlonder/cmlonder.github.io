@@ -17,9 +17,10 @@ const etiket = (t: string) => topicLabel(t, 'tr');
 
 const cat: string | null = data.category ?? null;
 const tags: string[] = data.topics ?? [];
+const saglik: number | null = data.health_score ?? null;
 ---
 
-{(cat || tags.length > 0) && (
+{(cat || tags.length > 0 || saglik) && (
   <nav class="chips" aria-label="Kategori ve etiketler">
     {cat && (
       <a class="chip cat" href={`/radar/category/${cat}`}>
@@ -29,6 +30,13 @@ const tags: string[] = data.topics ?? [];
     {tags.map((t) => (
       <a class="chip tag" href={`/radar/topic/${t}`}>{etiket(t)}</a>
     ))}
+    {saglik && (
+      <span class="chip saglik" title="Ajanın tahmini: issue kapanma hızı, sürüm düzeni, bakımcı ekibi">
+        <span class="lbl">Sağlık</span>
+        <span class="bar" aria-hidden="true"><span style={`--p:${saglik * 10}%`} /></span>
+        {saglik}/10
+      </span>
+    )}
   </nav>
 )}
 
@@ -65,4 +73,9 @@ const tags: string[] = data.topics ?? [];
   }
   .tag::before { content: '#'; opacity: .5; margin-inline-end: .15em; }
   .tag:hover { color: var(--c-accent); border-color: currentColor; }
+  /* Sağlık puanı: gezinme değil ölçüm — dolgusuz, minik bir çubukla. */
+  .saglik { gap: .5em; color: var(--c-muted); border: 1px dashed var(--c-border); font-variant-numeric: tabular-nums; cursor: help; }
+  .saglik .lbl { text-transform: uppercase; letter-spacing: .06em; font-size: .85em; }
+  .saglik .bar { inline-size: 3.5rem; block-size: 4px; border-radius: 2px; background: var(--c-border); overflow: hidden; }
+  .saglik .bar > span { display: block; block-size: 100%; inline-size: var(--p); background: var(--c-accent); }
 </style>

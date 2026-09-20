@@ -470,6 +470,11 @@ export const RADAR_SERIES = {
     driveFolder: 'Radar/Haftalık SaaS Bülteni',
     blurb: 'Haftanın öne çıkan SaaS vakaları, doğrulanmış rakamlarıyla. Her pazar.',
   },
+  'github-radar': {
+    name: 'Haftalık GitHub Radar',
+    driveFolder: 'Radar/Haftalık GitHub Radar',
+    blurb: 'Haftanın bir GitHub projesi: altındaki mimari karar, topluluk sağlığı, production riski. Her cumartesi.',
+  },
 } as const;
 
 export type RadarSeries = keyof typeof RADAR_SERIES;

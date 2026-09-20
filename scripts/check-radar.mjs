@@ -76,7 +76,7 @@ for (const series of readdirSync(IN, { withFileTypes: true }).filter((d) => d.is
     if (body.length < 500) { die(`${src}: gövde çok kısa (${body.length} karakter)`); hatali++; continue; }
 
     // Sınıflandırma sözlükten geçer: tags -> topics, takma adlar, kategori.
-    const degisen = normalizeRadar(fm);
+    const degisen = normalizeRadar(fm, series.name);
     for (const d of degisen) console.log(`  ~ ${name}: ${d}`);
     const cikti = degisen.length ? `---\n${yamlYaz(fm)}---\n\n${body}\n` : raw;
 
