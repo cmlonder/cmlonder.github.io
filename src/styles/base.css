@@ -179,13 +179,7 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
  * Metin sütununu biraz taşıyor: slaytın kendi içindeki yazı, gövde
  * genişliğinde küçülünce okunmaz oluyor. Taşma sadece geniş ekranda.
  */
-.slide {
-  --tasma: 0px;
-  margin-block: var(--s-l);
-  margin-inline: calc(var(--tasma) * -1);
-  inline-size: calc(100% + var(--tasma) * 2);
-}
-@media (min-width: 62rem) { .slide { --tasma: 3.5rem; } }
+.slide { margin-block: var(--s-l); }
 
 .slide img {
   display: block;
@@ -505,8 +499,14 @@ h2.section-title a,
   [data-reader] .prose .note.vurgu > .note-ic { animation: notVurgu 1.2s ease both; }
   @keyframes notVurgu { from { background: color-mix(in srgb, var(--c-accent) 14%, transparent); } to { background: transparent; } }
 
-  /* Panel varken taşma panelin sağ kenarında durur. */
-  [data-reader] .prose :is(.slide, .genis) { --tasma: max(0rem, min(8rem, calc(var(--oluk) - var(--toc-w) - var(--s-l) - 1rem))); }
+  /*
+   * Taşma payı: oluktan panel ve iki boşluk düşülünce kalan, en çok 8rem.
+   * Panel bu pay kadar sola kayar; görsel panelin sağ kenarında biter.
+   * Geniş görsel bir kenar notunun yanına gelirse notun ALTINA düşer
+   * (clear) — üstüne binmez, daralmaz.
+   */
+  [data-reader] { --tasma-r: max(0rem, min(8rem, calc(var(--oluk) - var(--toc-w) - var(--s-l) - .75rem))); }
+  [data-reader] .prose :is(.slide, .genis) { --tasma: var(--tasma-r); clear: right; }
 
   /*
    * İçindekiler: sabit, yarı saydam katman. Sol olukta durur, sütunu
@@ -515,7 +515,7 @@ h2.section-title a,
    */
   [data-reader] > .toc-col {
     display: block; position: fixed; z-index: 30;
-    inset-inline-start: max(.75rem, calc(var(--oluk) - var(--toc-w) - var(--s-l)));
+    inset-inline-start: max(.75rem, calc(var(--oluk) - var(--toc-w) - var(--s-l) - var(--tasma-r)));
     inset-block-start: var(--s-2xl);
     inline-size: var(--toc-w); max-block-size: calc(100vh - var(--s-2xl) * 2); overflow-y: auto;
     padding: var(--s-s) var(--s-m);
