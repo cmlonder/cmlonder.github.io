@@ -1,107 +1,93 @@
 ---
 title: 'AI usage'
-description: 'Which parts of this site I write, which parts a machine writes, and what happens when it does.'
-updated: 2026-09-18
+description: 'How AI-generated content is labelled on this site, and why.'
+updated: 2026-09-21
 ---
 
-Short answer: **The writing is mine. [Radar](/radar) is not.**
+Short answer: **The writing is mine. [Radar](/radar) is AI-compiled digests;
+I do not write those.**
 
-> The Radar briefings themselves are written in Turkish. This page explains the
+> The Radar briefings themselves are in Turkish. This page explains the
 > process in English; the mechanics are identical.
 
-## Who writes which part
+## Method
 
-| Section | Who writes it |
-|---|---|
-| Essays, Notes, Playbooks, Signals, Library | Me |
-| [Radar](/radar) | An agent (Gemini Spark). Not me. |
+Every sentence in the essays, notes, playbooks and shelves is mine. I use
+agents while writing: correction, research, code. But any sentence with an
+opinion or an "I" in it is mine; the rule is [Simon Willison](https://simonwillison.net/2026/Mar/1/ai-writing/)'s. Those
+pieces carry no mark.
 
-I use agents while writing — for correction, research and code. But the
-sentences and the claims are mine, and so is the responsibility for them. Radar
-is categorically different: the machine produces the text and I do not see it
-first.
+Radar is different. For topics I follow, I produce daily briefings through
+pipelines I built, with my own templates and rules. An agent writes the text:
+it gathers from many sources, summarises, and drops a publish-ready file.
+Nobody reads or edits it in between. In return, two rules hold:
 
-## How Radar works
+- Every claim is numbered inline and its full link sits at the foot of the
+  piece. Verification is left to the reader.
+- The agent's own "verified" claims have no place. I watched it write
+  "pulled from the profile" for a page it could not fetch; that column is gone.
 
-A daily agent task searches for solo-founder cases and produces publish-ready
-markdown, dropping a file like `2026-09-16.md` into Drive. An Apps Script pushes
-that file to the repository unchanged, a GitHub Action checks that the
-frontmatter is well-formed and moves it into place, and the site rebuilds.
-Nobody in between reads, corrects or rewrites the text — no human and no other
-model.
+## What the big platforms do
 
-Every claim is numbered inline, and each number resolves to a linked entry in
-the source list at the foot of the piece. You can check the figures yourself; I
-am leaving the verification to you rather than claiming it was done on my
-behalf.
+Meta and YouTube are solving the same problem and both landed in the same
+place: not hiding the content, but **stating its origin with a visible label**.
 
-## Why I do not trust the agent's own assertions
+**Meta** (Facebook, Instagram, Threads) puts an "AI info" label on
+AI-generated posts. It launched in May 2024 as "Made with AI" and was renamed
+in July 2024. The label sits at the top of the post; clicking it opens a panel
+explaining what was AI. [Meta's announcement](https://about.fb.com/news/2024/04/metas-approach-to-labeling-ai-generated-content-and-manipulated-media/).
 
-The agent used to fill in its own "confidence" column. On one round I watched it
-do this: it **guessed** the address of a page it could not reach, wrapped the
-guess in a Google search link, and wrote *"metric pulled directly from the
-profile"* into the table. The address it guessed was a 404.
+<figure class="ai-ornek" data-kim="meta">
+  <div class="ornek-kart" aria-hidden="true">
+    <div class="ornek-bas"><span class="ornek-avatar"></span><span class="ornek-ad">an account</span><span class="ornek-zaman">2h</span></div>
+    <div class="ornek-govde"></div>
+    <div class="ornek-etiket"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg> <span>AI info</span></div>
+  </div>
+  <figcaption>Meta: an "AI info" label in the post header. Schematic drawing, not a screenshot.</figcaption>
+</figure>
 
-The agent cannot fetch URLs. When it could not, instead of saying so it claimed
-to have verified. So the confidence column came out of the prompt — the agent
-now supplies only claims and sources, with no commentary attached.
+**YouTube** requires uploaders to disclose realistic AI-generated or altered
+content; the video gets an "Altered or synthetic content" label. On most
+videos it sits in the expanded description; on sensitive topics such as
+health, news, elections and finance it moves onto the player. YouTube may add
+the label itself when nothing was disclosed and the content could mislead.
+In force since March 2024. [YouTube's announcement](https://blog.youtube/news-and-events/disclosing-ai-generated-content/) and
+[help page](https://support.google.com/youtube/answer/14328491).
 
-For a while I ran a script that fetched the source behind each claim and looked
-for the cited value in the text. It worked: one day it caught the agent
-reporting a real listing correctly but **inventing the price** — the listing was
-on the page, the number was not. But it had two problems. Live sources drift: a
-page saying `$6,441` one day said `$6,491` the next, and a published piece would
-turn itself into "unverified" overnight. And the page filled up with verification
-tables that nobody read. I have removed it for now; I think making the sources
-visible serves the reader better.
-
-## Transparency markers
-
-Every Radar piece carries:
-
-- A single clear statement on the [`/radar`](/radar) page covering the whole
-  series: an agent produces the text, I do not write it
-- A numbered source for every claim, with a full link list at the foot
-- Machine-readable marking: IPTC
-  [`trainedAlgorithmicMedia`](http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia)
-  and `creativeWorkStatus: Machine-generated`
-
-I know the badge alone is not enough —
-[research](https://hai.stanford.edu/policy/labeling-ai-generated-content-may-not-change-its-persuasiveness)
-shows that an "AI-generated" label does not reduce how persuasive the content
-is. What protects the reader is not the badge but being able to see which line
-is rotten. That is why the sources are published.
+<figure class="ai-ornek" data-kim="youtube">
+  <div class="ornek-kart" aria-hidden="true">
+    <div class="ornek-bas"><span class="ornek-avatar"></span><span class="ornek-ad">a channel</span><span class="ornek-zaman">1.2M views</span></div>
+    <div class="ornek-govde"></div>
+    <div class="ornek-etiket"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg> <span>Altered or synthetic content<span class="ornek-alt">Sound or visuals were significantly edited or digitally generated.</span></span></div>
+  </div>
+  <figcaption>YouTube: a two-line label in the description panel. Schematic drawing, not a screenshot.</figcaption>
+</figure>
 
 ## The label
 
-When an agent wrote the whole text, the byline carries a small dashed
-mark next to the date: **ai-written**. It is shaped differently from the
-topic chips on purpose — it is not a topic, it is provenance. Radar
-bulletins and domain chapters carry it. Clicking it brings you here.
+Here is the equivalent on this site: when an agent wrote the whole text, the
+byline carries a small dashed mark next to the date: **ai-written**. It is
+shaped differently from the topic chips on purpose; it is not a topic, it is
+provenance. Radar bulletins and the domain chapters built from NotebookLM
+briefings carry it, and it also sits next to Radar's name in the menu.
+Clicking it brings you here.
 
-Two levels, one mark:
+<figure class="ai-ornek" data-kim="biz">
+  <div class="ornek-kart ornek-biz" aria-hidden="true">
+    <span class="ornek-baslik"></span>
+    <span class="ornek-kunye">21 September 2026 <span aria-hidden="true">·</span> <span class="ornek-pill">ai-written</span></span>
+  </div>
+  <figcaption>This site: in the byline, next to the date.</figcaption>
+</figure>
 
-- **ai-written** — an agent produced the text (a NotebookLM briefing, a
-  Spark run) and I edited it. The argument and the order are mine; most
-  of the sentences are not.
-- **AI-assisted** — I wrote it, AI read it for spelling and flow. These
-  get no mark. The rule is [Simon Willison](https://simonwillison.net/2026/Mar/1/ai-writing/)'s:
-  any sentence with an opinion or an "I" in it is mine.
-
-Machine side: marked pages carry `<meta name="ai-disclosure"
-content="ai-generated">`, and the `.md` mirror has an `AI: ai-generated`
-line ([proposal](https://github.com/dweekly/ai-content-disclosure)).
-
-## Radar is in the main feed
-
-Radar briefings flow through the main [`/rss.xml`](/rss.xml) feed alongside the
-writing. I kept a separate feed for a while, but subscribing to two addresses
-served nobody. The feed entries mark the briefings as machine-produced, so your
-reader does not have to guess who wrote what.
+The machine side carries the same information: marked pages have
+`<meta name="ai-disclosure" content="ai-generated">`, the `.md` mirror has an
+`AI: ai-generated` line, and RSS and JSON-LD use IPTC
+[`trainedAlgorithmicMedia`](http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia).
 
 ## If you find an error
 
 If you see a claim that is wrong,
 [open an issue in the repository](https://github.com/cmlonder/cmlonder.github.io/issues)
 or leave a comment under the piece. Every error the agent gets away with is a
-rule to add to the prompt.
+rule to add to the template.

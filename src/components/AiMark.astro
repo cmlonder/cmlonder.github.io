@@ -10,15 +10,20 @@
  */
 import { AI_UI, type Locale } from '../config';
 import { localePath } from '../lib/content';
-interface Props { level: 'generated' | 'assisted' | undefined; lang: Locale; mini?: boolean }
-const { level, lang, mini = false } = Astro.props;
+interface Props {
+  level: 'generated' | 'assisted' | undefined; lang: Locale; mini?: boolean;
+  /** false: <span> olarak basılır — işaret zaten bir <a> içindeyse (menü hücresi). */
+  link?: boolean;
+}
+const { level, lang, mini = false, link = true } = Astro.props;
 const t = AI_UI[lang];
 ---
 
-{level === 'generated' && (
-  <a class:list={['ai-pill', mini && 'mini']} href={localePath(lang, 'ai') + t.anchor} title={t.title}>
-    {mini ? t.mini : t.label}
-  </a>
+{level === 'generated' && (link
+  ? <a class:list={['ai-pill', mini && 'mini']} href={localePath(lang, 'ai') + t.anchor} title={t.title}>
+      {mini ? t.mini : t.label}
+    </a>
+  : <span class:list={['ai-pill', mini && 'mini']} title={t.title}>{mini ? t.mini : t.label}</span>
 )}
 
 <style>

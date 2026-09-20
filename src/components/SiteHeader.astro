@@ -6,6 +6,7 @@ import {
   HUB, NAV, SHELVES, SHELF_NAMES, RADAR, DOMAINS, PROJECTS, type Locale,
 } from '../config';
 import NavIcon from './NavIcon.astro';
+import AiMark from './AiMark.astro';
 import { localePath } from '../lib/content';
 
 interface Props {
@@ -88,7 +89,7 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
           <a class="item machine" href="/radar">
             <NavIcon name="radar" />
             <span class="txt">
-              <strong>{RADAR.name[lang]}</strong>
+              <strong>{RADAR.name[lang]} <AiMark level="generated" lang={lang} mini link={false} /></strong>
               <span class="dek">{RADAR.blurb[lang]}</span>
             </span>
           </a>

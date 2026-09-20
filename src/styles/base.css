@@ -706,3 +706,43 @@ h2.section-title a,
   .prose img { filter: none !important; max-inline-size: 100% !important; }
   .genis, .slide { --tasma: 0; }
 }
+
+/* — /ai sayfasındaki platform etiketi çizimleri (Meta, YouTube, biz).
+   Ekran görüntüsü değil, şematik: telif yok, tema ile birlikte değişiyor. — */
+.prose .ai-ornek { margin-block: var(--s-m) var(--s-l); }
+.prose .ai-ornek .ornek-kart {
+  max-inline-size: 24rem; padding: var(--s-s);
+  border: 1px solid var(--c-border); border-radius: var(--radius-lg);
+  background: var(--c-surface);
+  font-family: var(--f-sans); font-size: var(--t-sm); color: var(--c-text);
+}
+.prose .ai-ornek .ornek-bas { display: flex; align-items: center; gap: .6em; }
+.prose .ai-ornek .ornek-avatar { inline-size: 2rem; block-size: 2rem; border-radius: 50%; background: var(--c-tinted); flex: none; }
+.prose .ai-ornek .ornek-ad { font-weight: 600; }
+.prose .ai-ornek .ornek-zaman { margin-inline-start: auto; font-size: var(--t-xs); color: var(--c-muted); }
+.prose .ai-ornek .ornek-govde {
+  block-size: 6rem; margin-block: var(--s-xs); border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--c-tinted), color-mix(in srgb, var(--c-tinted) 35%, var(--c-surface)));
+}
+.prose .ai-ornek .ornek-etiket {
+  display: inline-flex; align-items: flex-start; gap: .45em;
+  padding: .3em .75em; border-radius: 999px;
+  background: var(--c-tinted); font-size: var(--t-xs); font-weight: 600; line-height: 1.35;
+}
+.prose .ai-ornek .ornek-etiket svg { flex: none; margin-block-start: .2em; color: var(--c-muted); }
+.prose .ai-ornek[data-kim='youtube'] .ornek-etiket { border-radius: var(--radius); }
+.prose .ai-ornek .ornek-alt { display: block; font-weight: 400; color: var(--c-muted); }
+/* Meta'da etiket başlıkta, gövdenin üstünde duruyor. */
+.prose .ai-ornek[data-kim='meta'] .ornek-kart { display: flex; flex-direction: column; }
+.prose .ai-ornek[data-kim='meta'] .ornek-etiket { order: 1; align-self: flex-start; }
+.prose .ai-ornek[data-kim='meta'] .ornek-govde { order: 2; margin-block-end: 0; }
+/* Bizim künye satırı. */
+.prose .ai-ornek .ornek-biz { display: grid; gap: var(--s-2xs); }
+.prose .ai-ornek .ornek-baslik { display: block; block-size: 1.1em; inline-size: 70%; border-radius: var(--radius-sm); background: var(--c-tinted); }
+.prose .ai-ornek .ornek-kunye { display: flex; align-items: center; gap: .5em; font-size: var(--t-xs); color: var(--c-muted); }
+.prose .ai-ornek .ornek-pill {
+  display: inline-flex; padding: .1em .55em; border-radius: 999px;
+  border: 1px dashed color-mix(in srgb, var(--c-mark-ink) 70%, transparent);
+  color: var(--c-mark-ink); font-weight: 500; letter-spacing: .04em;
+}
+.prose .ai-ornek figcaption { margin-block-start: var(--s-2xs); font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); }

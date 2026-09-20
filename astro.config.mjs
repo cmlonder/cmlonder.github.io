@@ -52,11 +52,14 @@ const CHAPTER_SLUGS = {
   'eticaret/stok-bir-sayi-degil':         'ecommerce/stock-is-a-reservation',
   'eticaret/sepet-bir-tablo-degil':       'ecommerce/cart-is-a-time-window',
 };
-/* Proje slug'ları da aynı sebeple İngilizceye çevrildi. */
-const PROJECT_SLUGS = {
-  'radar-boru-hatti': 'radar-pipeline',
-  'spark-prompt-sozlesmesi': 'spark-prompt-contract',
-};
+/* Proje slug'ları da aynı sebeple İngilizceye çevrilmişti. Üç proje sayfası
+   21 Eyl 2026'da kaldırıldı (cmlonder-com, radar-pipeline, spark-prompt-contract);
+   eski ve yeni adresleri proje listesine düşer. */
+const REMOVED_PROJECTS = [
+  'radar-boru-hatti', 'radar-pipeline',
+  'spark-prompt-sozlesmesi', 'spark-prompt-contract',
+  'cmlonder-com',
+];
 
 /* Her ikisi de iki dilde yayındaydı: /domains/... ve /tr/domains/... */
 const domainYonlendirmeleri = Object.fromEntries(
@@ -69,7 +72,7 @@ const domainYonlendirmeleri = Object.fromEntries(
       [`${on}/domains/${e}/read`, `${on}/domains/${y}`],
       [`${on}/domains/${y}/read`, `${on}/domains/${y}`],
     ]),
-    ...Object.entries(PROJECT_SLUGS).map(([e, y]) => [`${on}/projects/${e}`, `${on}/projects/${y}`]),
+    ...REMOVED_PROJECTS.map((e) => [`${on}/projects/${e}`, `${on}/projects`]),
   ])
 );
 

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { RADAR, RADAR_SERIES, type Locale } from '../../config';
 import { formatDate } from '../../lib/content';
+import AiMark from '../../components/AiMark.astro';
 
 /* Radar içeriğini Spark Türkçe üretiyor, o yüzden bu sayfa İngilizce kökte
    dursa da Türkçe. Menüdeki tanıtım bunu İngilizce okura söylüyor. */
@@ -24,11 +25,13 @@ const series = Object.entries(RADAR_SERIES)
       <p class="kicker"><span class="count">{all.length}</span><a href="/">Ana sayfa</a></p>
       <h1>{RADAR.name[lang]}</h1>
       <p class="lead">
-          Buradaki bültenleri <strong>Gemini Spark</strong> ile üretiyorum,
-          tek tek ben yazmıyorum. Her iddianın kaynağı yazının içinde
-          numarayla gösteriliyor, hepsinin bağlantısı yazının altında —
-          okurken kendin kontrol edebilirsin. Yöntem: <a href="/ai">/ai</a>.
-        </p>
+        Burada ilgimi çeken birçok bülteni, kendi kurduğum boru hatlarıyla,
+        kendi belirlediğim şablon ve kurallarla üretiyorum. Bu sayfadaki bütün
+        içerikler birçok kaynaktan toplanıp AI ile derlenmiş özetler. Blogumdaki
+        AI üretimi içerikler her zaman <AiMark level="generated" lang={lang} />{' '}
+        işaretini taşır; yöntemi ve neyi neden böyle gösterdiğimi{' '}
+        <a href="/ai">yapay zeka kullanımı</a> sayfasında anlattım.
+      </p>
     </header>
 
     {series.map((s) => (

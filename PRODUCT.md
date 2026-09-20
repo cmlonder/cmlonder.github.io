@@ -70,9 +70,9 @@ cümle yok, eksik olanı saklama).
 
 ## Evidence on Hand
 
-Gerçek: radar boru hattı ve bültenleri, projeler (cmlonder-com,
-radar-pipeline, spark-prompt-contract; RewindBPF ve RIGGED hackathon
-işleri), havacılık bölümü `mail-contracts-to-sabre` (NotebookLM
+Gerçek: radar boru hattı ve bültenleri, projeler (RewindBPF ve RIGGED
+hackathon işleri; cmlonder-com, radar-pipeline ve spark-prompt-contract
+sayfaları 21 Eyl 2026'da kaldırıldı), havacılık bölümü `mail-contracts-to-sabre` (NotebookLM
 brifinginden, künyeli), `/work` mesleki geçmiş, `watch-replicas-stop-helping`.
 Yer tutucu: 128 girdi `placeholder: true` taşıyor (raf 68, görüş metni
 40, signal yorumu 12, dummy bölüm 8) — gerçek gibi sunulmaz. Anasayfada
