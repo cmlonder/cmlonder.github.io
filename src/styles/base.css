@@ -431,15 +431,19 @@ h2.section-title a,
  * sütununu taşar. JS yalnızca data-* yazıyor.
  * ============================================================ */
 [data-reader] {
-  --not-w: 14rem; --oluk: var(--s-2xl);
-  /* Sol oluk: sütun ortalı olduğu için ekranın yarısından sütun ve not payı düşülür. */
-  --sol-oluk: calc((100vw - var(--w-narrow) - var(--not-w) - var(--oluk)) / 2);
-  /* Panel oluğa sığar: en çok 15rem, hiçbir zaman yazının üstüne taşmaz. */
-  --toc-w: min(15rem, calc(var(--sol-oluk) - var(--s-l) - .75rem));
+  /*
+   * Sütun her zaman ekranın ORTASINDA. Sağ ve sol oluk eşit: (ekran - ölçü) / 2.
+   * Notlar sağ oluğa, içindekiler sol oluğa taşar; ikisi de sütunu itmez.
+   * Oluk dar kaldığında notlar satır içinde açılır, içindekiler <details> olur.
+   */
+  --oluk: calc((100vw - var(--w-narrow)) / 2);
+  --not-bosluk: 2rem;
+  --not-w: min(14rem, calc(var(--oluk) - var(--not-bosluk) - 1rem));
+  --toc-w: min(15rem, calc(var(--oluk) - var(--s-l) - .75rem));
 }
 
 /* — Dar ekran — */
-.toc-col, .not-col { display: none; }
+.toc-col { display: none; }
 .toc-mobil {
   margin-block-end: var(--s-l);
   border: 1px solid var(--c-border); border-radius: var(--radius-lg);
@@ -469,36 +473,28 @@ h2.section-title a,
 .prose a[data-footnote-ref]:hover, .prose a[data-footnote-ref][aria-expanded='true'] { background: var(--c-accent); color: var(--c-bg); }
 [data-reader][data-has-notes] [data-footnotes] { display: none; }
 
-/* — Tam genişlik görsel: metin sütununu taşar, ekranı geçmez — */
+/* — Tam genişlik görsel: metin sütununu taşar, oluğu geçmez — */
 .prose .slide, .prose .genis {
   --tasma: 0px;
   inline-size: calc(100% + var(--tasma) * 2);
   margin-inline: calc(var(--tasma) * -1);
 }
 @media (min-width: 60rem) {
-  .prose .slide, .prose .genis { --tasma: min(8rem, calc((100vw - var(--w-narrow)) / 2 - var(--s-l))); }
+  .prose .slide, .prose .genis { --tasma: max(0rem, min(8rem, calc((100vw - var(--w-narrow)) / 2 - var(--s-l)))); }
 }
 .prose img.genis { border: 1px solid var(--c-border); border-radius: var(--radius-lg); }
 
-/* — Geniş ekran — */
-@media (min-width: 76rem) {
-  [data-reader] {
-    display: grid;
-    grid-template-columns: minmax(0, var(--w-narrow)) var(--not-w);
-    column-gap: var(--oluk);
-    justify-content: center; align-items: start;
-    inline-size: min(100% - var(--s-l), calc(var(--w-narrow) + var(--not-w) + var(--oluk)));
-    margin-inline: auto;
-  }
-  [data-reader] > .narrow, [data-reader] > .chapter { inline-size: 100%; min-inline-size: 0; }
-  [data-reader] > .not-col { display: block; position: sticky; inset-block-start: var(--s-l); }
-  /* Slayt/geniş görsel taşması sol oluğu geçmesin (sütun ortalı değil, notlar sağda). */
-  [data-reader] .prose :is(.slide, .genis) { --tasma: max(0rem, min(8rem, calc(var(--sol-oluk) - var(--s-l)))); }
+/*
+ * — Geniş ekran (≥80rem): oluk 17rem'i geçince notlar sağa yüzer,
+ *   içindekiler solda sabit panel olur. Sütun yerinden oynamaz.
+ */
+@media (min-width: 80rem) {
+  .toc-mobil { display: none; }
 
-  /* Kenar notu sağ sütuna yüzer. */
+  /* Kenar notu sağ oluğa yüzer (Tufte). clear:right ⇒ üst üste binmez. */
   [data-reader] .prose .note {
     float: right; clear: right; inline-size: var(--not-w);
-    margin-inline-end: calc(-1 * (var(--not-w) + var(--oluk)));
+    margin-inline-end: calc(-1 * (var(--not-w) + var(--not-bosluk)));
     margin-block: .2em var(--s-s);
     display: block; grid-template-rows: none; transition: none;
   }
@@ -509,24 +505,17 @@ h2.section-title a,
   [data-reader] .prose .note.vurgu > .note-ic { animation: notVurgu 1.2s ease both; }
   @keyframes notVurgu { from { background: color-mix(in srgb, var(--c-accent) 14%, transparent); } to { background: transparent; } }
 
-}
-
-/*
- * Sabit içindekiler yalnızca sol olukta 10rem'den fazla yer varsa (≈88rem).
- * Daha darda açılır <details> kalır; panel yazının üstüne binmez.
- */
-@media (min-width: 88rem) {
-  .toc-mobil { display: none; }
   /* Panel varken taşma panelin sağ kenarında durur. */
-  [data-reader] .prose :is(.slide, .genis) { --tasma: max(0rem, min(8rem, calc(var(--sol-oluk) - var(--toc-w) - var(--s-l) - 1rem))); }
+  [data-reader] .prose :is(.slide, .genis) { --tasma: max(0rem, min(8rem, calc(var(--oluk) - var(--toc-w) - var(--s-l) - 1rem))); }
+
   /*
-   * İçindekiler: sabit, yarı saydam katman. Sayfayı daraltmaz; sol
-   * boşlukta durur (sütun ortalı olduğu için oradan yer var), yazının
-   * üstüne geldiği yerde arkasını buğulayıp okunur kalır.
+   * İçindekiler: sabit, yarı saydam katman. Sol olukta durur, sütunu
+   * daraltmaz; aşağı kaydırınca küçülür, yukarı kaydırınca ya da üstüne
+   * gelince eski boyuna döner.
    */
   [data-reader] > .toc-col {
     display: block; position: fixed; z-index: 30;
-    inset-inline-start: max(.75rem, calc(var(--sol-oluk) - var(--toc-w) - var(--s-l)));
+    inset-inline-start: max(.75rem, calc(var(--oluk) - var(--toc-w) - var(--s-l)));
     inset-block-start: var(--s-2xl);
     inline-size: var(--toc-w); max-block-size: calc(100vh - var(--s-2xl) * 2); overflow-y: auto;
     padding: var(--s-s) var(--s-m);
@@ -538,7 +527,6 @@ h2.section-title a,
     transform-origin: top left;
     transition: transform .3s cubic-bezier(.4, 0, .2, 1), opacity .3s ease;
   }
-  /* Aşağı kaydırınca küçülür, yukarı kaydırınca ya da üstüne gelince eski boyuna döner. */
   [data-reader][data-scroll='down'] > .toc-col { transform: scale(.82); opacity: .78; }
   [data-reader][data-scroll='down'] > .toc-col:hover,
   [data-reader][data-scroll='down'] > .toc-col:focus-within { transform: none; opacity: 1; }
@@ -695,7 +683,7 @@ h2.section-title a,
 
 /* — Baskı: yalnızca yazı. Kenar takımı gider, bağlantılar adresini gösterir — */
 @media print {
-  header, footer, nav, .toc-col, .toc-mobil, .not-col, .rail, .ilerleme, .kaldigin,
+  header, footer, nav, .toc-col, .toc-mobil, .rail, .ilerleme, .kaldigin,
   .onizleme, .buyut, .kod-bar, .search, .backlinks, .chapnav, .neighbours, .capa { display: none !important; }
   [data-reader], .book { display: block !important; inline-size: auto !important; }
   .narrow, .chapter { max-inline-size: none !important; }
