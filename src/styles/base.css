@@ -439,6 +439,7 @@ h2.section-title a,
 /* — Dar ekran — */
 .toc-col { display: none; }
 .toc-mobil {
+  margin-block-start: var(--s-m);
   margin-block-end: var(--s-l);
   border: 1px solid var(--c-border); border-radius: var(--radius-lg);
   background: var(--c-surface); font-family: var(--f-sans); font-size: var(--t-sm);
@@ -477,6 +478,8 @@ h2.section-title a,
   .prose .slide, .prose .genis { --tasma: max(0rem, min(8rem, calc((100vw - var(--w-narrow)) / 2 - var(--s-l)))); }
 }
 .prose img.genis { border: 1px solid var(--c-border); border-radius: var(--radius-lg); }
+/* Slaytın içindeki görsel figürle birlikte taşar; ikinci kez taşmasın. */
+.prose .slide img { --tasma: 0px; margin-inline: 0; inline-size: 100%; }
 
 /*
  * — Geniş ekran (≥80rem): oluk 17rem'i geçince notlar sağa yüzer,

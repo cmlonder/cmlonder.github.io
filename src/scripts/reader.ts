@@ -50,7 +50,7 @@ for (const kok of document.querySelectorAll<HTMLElement>('[data-reader]')) {
    * göremiyor. İşaret burada konuyor: 1200px'ten geniş kaynak metin
    * sütununu taşabilir (.genis, CSS'te).
    */
-  yazi?.querySelectorAll<HTMLImageElement>('img[width]').forEach((img) => {
+  yazi?.querySelectorAll<HTMLImageElement>(':not(.slide) > img[width]').forEach((img) => {
     if (Number(img.getAttribute('width')) >= 1200) img.classList.add('genis');
   });
 
