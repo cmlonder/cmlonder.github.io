@@ -407,7 +407,7 @@ export const NEWSLETTER = {
   lists: {
     own:            { tag: 'yazilar',       name: { en: 'My essays and notes', tr: 'Yazılarım ve notlarım' } as Record<Locale, string>, feed: (l: Locale) => (l === 'tr' ? '/tr/rss.xml' : '/rss.xml') },
     'solo-founder': { tag: 'solo-girisimci', name: { en: 'Solo Founder Bulletin (daily, Turkish)', tr: 'Solo Girişimci Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/solo-founder/rss.xml' },
-    'weekly-saas':  { tag: 'haftalik-saas', name: { en: 'SaaS Bulletin (daily, Turkish)', tr: 'SaaS Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/weekly-saas/rss.xml' },
+    'saas':         { tag: 'saas', name: { en: 'SaaS Bulletin (daily, Turkish)', tr: 'SaaS Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/saas/rss.xml' },
     'github-radar': { tag: 'github-radar',  name: { en: 'GitHub Radar (daily, Turkish)', tr: 'GitHub Radar (günlük)' } as Record<Locale, string>, feed: () => '/radar/github-radar/rss.xml' },
     'indie-postmortem': { tag: 'indie-game', name: { en: 'Indie Game Bulletin (daily, Turkish)', tr: 'Indie Oyun Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/indie-postmortem/rss.xml' },
   },
@@ -495,33 +495,23 @@ export const RADAR = {
 export const RADAR_SERIES = {
   'solo-founder': {
     name: 'Solo Girişimci Bülteni',
-    driveFolder: 'Radar/Solo Kurucu Bülteni',
-    aliases: ['Solo Kurucu Bülteni'],
+    driveFolder: 'Radar/Solo Girişimci Bülteni',
     blurb: 'Tek kişilik girişim vakaları, doğrulanmış ciro rakamlarıyla. Günlük.',
   },
-  /*
-   * `aliases`: Spark'ın dosya adında kullandığı ESKİ adlar. Apps Script
-   * dosya adını /radar/series.json'daki ad ve slug'la eşleştiriyor; seri
-   * adı değişince eski dosya adı kuyrukta kalmasın diye takma adlar da
-   * yayınlanıyor (series.json her birini ayrı satır olarak basar).
-   */
-  'weekly-saas': {
+  'saas': {
     name: 'SaaS Bülteni',
-    driveFolder: 'Radar/Haftalık SaaS Bülteni',
+    driveFolder: 'Radar/SaaS Bülteni',
     blurb: 'Günün SaaS vakası, doğrulanmış rakamlarıyla. Günlük.',
-    aliases: ['Haftalık SaaS Bülteni'],
   },
   'github-radar': {
     name: 'GitHub Radar',
-    driveFolder: 'Radar/Haftalık GitHub Radar',
+    driveFolder: 'Radar/GitHub Radar',
     blurb: 'Günün bir GitHub projesi: altındaki mimari karar, topluluk sağlığı, production riski. Günlük.',
-    aliases: ['Haftalık GitHub Radar'],
   },
   'indie-postmortem': {
     name: 'Indie Oyun Bülteni',
-    driveFolder: 'Radar/Indie Game Weekly',
+    driveFolder: 'Radar/Indie Oyun Bülteni',
     blurb: 'Her gün bir bağımsız oyun lansmanı: wishlist mekaniği, dağıtım, gerçek gelir tablosu. Günlük.',
-    aliases: ['Haftalık Indie Oyun Bülteni', 'Indie Game Weekly'],
   },
 } as const;
 

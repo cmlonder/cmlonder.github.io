@@ -156,7 +156,7 @@ sürece sayfaya form düşmüyor. Açmak için:
 2. `NEWSLETTER.username`'e kullanıcı adını yaz → push. Formlar açılır:
    `/subscribe`, footer, her radar bülteni ve seri sayfası.
 3. Etiketler formdan kendiliğinden oluşur (`yazilar`, `solo-girisimci`,
-   `haftalik-saas`, `github-radar`, `indie-game`). İlk abone gelince
+   `saas`, `github-radar`, `indie-game`). İlk abone gelince
    Subscribers → Tags altında görürsün.
 4. Settings → RSS-to-email: her seri için bir otomasyon, kaynak seri
    beslemesi (`/radar/<seri>/rss.xml`), hedef kitle o etiket. Solo günlük;

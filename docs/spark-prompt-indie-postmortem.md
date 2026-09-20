@@ -1,13 +1,12 @@
 # Spark prompt — Indie Oyun Bülteni
 
 Canlı prompt Spark'ta; bu dosya kayıt ve düzeltme notu. Seri: `indie-postmortem`
-(sitede "Indie Oyun Bülteni"), dosya adı `Indie-Postmortem-PARSE-YYYY-MM-DD.md`,
-günlük. Eşleşme slug üzerinden (`indie-postmortem`), seri adı farklı olabilir.
+(sitede "Indie Oyun Bülteni"), dosya adı `Indie-Oyun-Bulteni-PARSE-YYYY-MM-DD.md`, günlük.
 
 ## Frontmatter — site sözleşmesi
 
 ```yaml
-title: "Indie Postmortem — <Oyun Adı>"     # canlı prompt'ta " — :" yazıyor, iki noktayı sil
+title: "Indie Oyun Bülteni — <Oyun Adı>"
 date: YYYY-MM-DD
 category: "oyun"                            # gamedev yazarsan kapı oyun'a çevirir
 topics: ["<oyuna özgü 2-4: steam, godot, next-fest, regional-pricing, publisher…>"]

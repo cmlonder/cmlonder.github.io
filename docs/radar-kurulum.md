@@ -12,14 +12,14 @@ kaldırıldı; script ana dizini tarıyor.)
 Spark bülteni Drive'ın **ana dizinine** şu adla yazıyor:
 
     <Seri Adı>-PARSE-YYYY-MM-DD.md
-    örn. Solo-Kurucu-Bulteni-PARSE-2026-09-18.md
+    örn. Solo-Girisimci-Bulteni-PARSE-2026-09-18.md
 
 Apps Script günde bir kez ana dizine bakıyor ve bu kalıba uyan dosyalar için:
 
 1. Addaki seri adını `cmlonder.com/radar/series.json` ile eşleştiriyor
 2. GitHub'a `inbox/radar/<slug>/<tarih>.md` olarak itiyor
 3. Drive'da seri klasörüne taşıyıp adını `<tarih>.md` yapıyor
-   (`Radar/Solo Kurucu Bülteni/` — klasör yoksa oluşturuyor)
+   (`Radar/Solo Girişimci Bülteni/` — klasör yoksa oluşturuyor)
 
 Kalıba uymayan dosyalara dokunulmuyor; ana dizindeki kişisel dosyaların
 hiçbiri görülmüyor bile. Seri adı eşleşmezse dosya olduğu yerde kalıyor ve
@@ -30,23 +30,23 @@ yürütme kaydına sebebi yazılıyor.
 **Apps Script'e dokunmuyorsun.** Üç adım:
 
 ```bash
-pnpm radar:seri weekly-saas "Haftalık SaaS Bülteni" "Haftanın öne çıkan SaaS vakaları. Her pazar."
+pnpm radar:seri saas "SaaS Bülteni" "Günün SaaS vakası. Günlük."
 pnpm verify
 git push            # series.json yayına çıkmadan Drive tarafı seriyi tanımaz
 ```
 
 Komut `src/config.ts` → `RADAR_SERIES`'e tek girdi yazar ve Spark'ın
 kullanması gereken dosya adını basar. Slug kebab-case ve ASCII olmalı
-(`weekly-saas`), ad ve açıklama tek tırnak içeremez.
+(`saas`), ad ve açıklama tek tırnak içeremez.
 
 Sonra Spark'ta dosya adını şu kalıba göre ver — **`-PARSE-` şart**:
 
 ```
-Haftalik-SaaS-Bulteni-PARSE-2026-09-20.md
+SaaS-Bulteni-PARSE-2026-09-20.md
 ```
 
-Eşleşme Türkçe harfe ve büyük-küçüğe duyarsız: "Haftalık SaaS Bülteni",
-"haftalik-saas-bulteni", "HAFTALIK SAAS BULTENI" hepsi aynı seriye gider.
+Eşleşme Türkçe harfe ve büyük-küçüğe duyarsız: "SaaS Bülteni",
+"saas-bulteni", "SAAS BULTENI" hepsi aynı seriye gider.
 Boşluk yerine tire kullan; `-PARSE-` olmayan dosyaya hiç dokunulmuyor.
 
 Ne olur, ne olmaz:
@@ -59,8 +59,8 @@ Ne olur, ne olmaz:
   hatasının sessizce yeni seri açmaması için böyle.
 - Apps Script her gün 08:00'de bakıyor; bir gün önce yazılan bülten ertesi
   sabah GitHub'a düşer. Daha erken istiyorsan Apps Script'te `kur()` içindeki saati değiştir.
-- Seri adını değiştirirsen `aliases` alanına eski adı yaz: Spark'ın eski dosya
-  adı eşleşmeye devam eder, hiçbir şey kuyrukta kalmaz.
+- Seri adını değiştirirsen Spark'taki dosya adını da değiştir; eşleşme ad
+  üzerinden, eski ad kuyrukta kalır.
 
 ## 1. `GITHUB_TOKEN` — github.com'dan
 
@@ -95,9 +95,9 @@ Ne olur, ne olmaz:
 
    `deneme()` hiçbir şeye dokunmaz; sadece ne olacağını yazar:
 
-       → Solo-Kurucu-Bulteni-PARSE-2026-09-18.md
+       → Solo-Girisimci-Bulteni-PARSE-2026-09-18.md
           GitHub : inbox/radar/solo-founder/2026-09-18.md
-          Drive  : Radar/Solo Kurucu Bülteni/2026-09-18.md
+          Drive  : Radar/Solo Girişimci Bülteni/2026-09-18.md
 
 5. Çıktı doğruysa **`kur`** fonksiyonunu çalıştır. Günlük 08:00
    tetikleyicisini kurar ve hemen bir kez işler.

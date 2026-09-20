@@ -9,12 +9,9 @@ import { RADAR_SERIES } from '../../config';
  * diye var: liste orada, burada sadece yayınlanıyor.
  */
 export const GET: APIRoute = () => {
-  // Takma adlar ayrı satır: Apps Script ad -> slug haritasını satır satır
-  // kuruyor, script'e dokunmadan eski dosya adları da eşleşiyor.
-  const series = Object.entries(RADAR_SERIES).flatMap(([slug, s]) =>
-    [s.name, ...((s as { aliases?: readonly string[] }).aliases ?? [])].map((name) => ({
-      slug, name, driveFolder: s.driveFolder,
-    })));
+  const series = Object.entries(RADAR_SERIES).map(([slug, s]) => ({
+    slug, name: s.name, driveFolder: s.driveFolder,
+  }));
 
   return new Response(JSON.stringify({ series }, null, 2), {
     headers: {

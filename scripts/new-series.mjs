@@ -3,7 +3,7 @@
  * Yeni radar serisi açar: src/config.ts -> RADAR_SERIES'e tek girdi.
  *
  *   pnpm radar:seri <slug> "<Seri Adı>" "<tek cümle açıklama>"
- *   örn. pnpm radar:seri weekly-saas "Haftalık SaaS Bülteni" "Haftanın SaaS vakaları. Her pazar."
+ *   örn. pnpm radar:seri saas "SaaS Bülteni" "Günün SaaS vakası. Günlük."
  *
  * Gerisi otomatik: /radar/<slug> sayfası, /radar/series.json girdisi
  * (Apps Script buradan eşleştirir), check-radar'ın tanıdığı klasör.

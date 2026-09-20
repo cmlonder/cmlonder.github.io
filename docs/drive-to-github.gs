@@ -4,7 +4,7 @@
  * Spark her bülteni Drive'ın ANA DİZİNİNE şu adla yazıyor:
  *
  *     <Seri Adı>-PARSE-YYYY-MM-DD.md
- *     örn. Solo-Kurucu-Bulteni-PARSE-2026-09-18.md
+ *     örn. Solo-Girisimci-Bulteni-PARSE-2026-09-18.md
  *
  * Bu script dört iş yapıyor:
  *   1. Ana dizinde bu kalıba uyan dosyaları bulur — başka hiçbir şeye dokunmaz
@@ -52,7 +52,7 @@ function kur() {
  * Karşılaştırma anahtarı: Türkçe harfler katlanır, küçültülür, harf ve
  * rakam dışındaki her şey atılır.
  *
- *   "Solo Kurucu Bülteni" -> solokurucubulteni
+ *   "Solo Girişimci Bülteni" -> sologirisimcibulteni
  *   "Solo-Kurucu-Bulteni" -> solokurucubulteni
  *   "solo-founder"        -> solofounder
  *
@@ -83,7 +83,7 @@ function seriHaritasi() {
   return harita;
 }
 
-/** 'Radar/Solo Kurucu Bülteni' -> klasörü bulur, yoksa sırayla oluşturur. */
+/** 'Radar/Solo Girişimci Bülteni' -> klasörü bulur, yoksa sırayla oluşturur. */
 function klasorYolu(yol) {
   var parca = yol.split('/').filter(function (p) { return p.trim().length; });
   var klasor = DriveApp.getRootFolder();

@@ -149,7 +149,7 @@ olarak yayınlıyor, Drive'daki Apps Script oradan okuyor. Seri listesi
 **Spark dosyayı Drive'ın ana dizinine yazıyor**, klasöre değil:
 
 ```
-<Seri Adı>-PARSE-YYYY-MM-DD.md      örn. Solo-Kurucu-Bulteni-PARSE-2026-09-18.md
+<Seri Adı>-PARSE-YYYY-MM-DD.md      örn. Solo-Girisimci-Bulteni-PARSE-2026-09-18.md
 ```
 
 Apps Script addaki seri adını normalleştirip (`Türkçe harf katlanır, harf ve

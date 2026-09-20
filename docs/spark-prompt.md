@@ -218,7 +218,7 @@ düzelten, biçimlendiren hiçbir adım yok:
 Araştırma ve dosya oluşturma adımlarını otonom yürüt; tarayıcı kontrolü
 veya kullanıcı etkileşimi gerektiren araçları kullanma.
 
-Çıktıyı Google Drive'daki `Radar/Solo Kurucu Bülteni` klasörüne
+Çıktıyı Google Drive'daki `Radar/Solo Girişimci Bülteni` klasörüne
 (Folder ID: `1DMwBhWi2EkxCzWLwclfEb7Cy-9VgQtHR`) `<YYYY-MM-DD>.md`
 adıyla **ham .md dosyası** olarak kaydet — Google Doc formatına
 dönüştürme. Tıklanabilir bağlantıyı ve makaleyi Türkçe olarak sohbette
