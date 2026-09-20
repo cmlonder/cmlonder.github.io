@@ -90,17 +90,21 @@ for (const series of readdirSync(IN, { withFileTypes: true }).filter((d) => d.is
         console.warn(`  ! ${name}: "${tanim.key}" alanı yok — tekrar seçim denetlenemiyor`);
       } else {
         if (Array.isArray(fm[tanim.key])) fm[tanim.key] = benim; else fm[tanim.key] = benim[0];
-        const klasor = join(OUT, series.name);
-        const yayinda = existsSync(klasor) ? readdirSync(klasor).filter((f) => f.endsWith('.md') && f !== `${date}.md`) : [];
+        // Kendi serisi + `also` ile bağlı seriler (Solo ve SaaS aynı şirketi paylaşmasın).
         let cakisan = null;
-        for (const f of yayinda) {
-          const m2 = /^---\n([\s\S]*?)\n---/.exec(readFileSync(join(klasor, f), 'utf8'));
-          let eskiFm; try { eskiFm = parseYaml(m2?.[1] ?? ''); } catch { continue; }
-          const onceki = kimlikler(eskiFm ?? {}, series.name);
-          const ortak = benim.find((k) => onceki.includes(k));
-          if (ortak) { cakisan = `${f}: ${ortak}`; break; }
+        for (const seriAdi of [series.name, ...(tanim.also ?? [])]) {
+          const klasor = join(OUT, seriAdi);
+          const yayinda = existsSync(klasor) ? readdirSync(klasor).filter((f) => f.endsWith('.md') && !(seriAdi === series.name && f === `${date}.md`)) : [];
+          for (const f of yayinda) {
+            const m2 = /^---\n([\s\S]*?)\n---/.exec(readFileSync(join(klasor, f), 'utf8'));
+            let eskiFm; try { eskiFm = parseYaml(m2?.[1] ?? ''); } catch { continue; }
+            const onceki = kimlikler(eskiFm ?? {}, seriAdi);
+            const ortak = benim.find((k) => onceki.includes(k));
+            if (ortak) { cakisan = `${seriAdi}/${f}: ${ortak}`; break; }
+          }
+          if (cakisan) break;
         }
-        if (cakisan) { die(`${src}: ${tanim.key} zaten yayında (${series.name}/${cakisan}) — aynı konu ikinci kez seçilmiş`); hatali++; continue; }
+        if (cakisan) { die(`${src}: ${tanim.key} zaten yayında (${cakisan}) — aynı konu ikinci kez seçilmiş`); hatali++; continue; }
       }
     }
 

@@ -28,6 +28,7 @@ export const TOPIC_ALIASES = {
   'architecture': 'solution-architecture', 'software-architecture': 'solution-architecture',
   'opensource': 'open-source', 'oss': 'open-source',
   'indie-game': 'oyun', 'indie-games': 'oyun', 'gamedev': 'oyun', 'game-dev': 'oyun',
+  'solo-founder': 'solo-company', 'bootstrapped': 'solo-company', 'ai-integration': 'ai-news',
 };
 
 /**
@@ -39,8 +40,8 @@ export const SUBJECT_KEY = {
   'paper-to-prod':    { key: 'arxiv',    required: true },   // "2403.12345"
   'github-radar':     { key: 'repo',     required: false },  // "owner/name"
   'indie-postmortem': { key: 'game',     required: false },  // oyun adı, kebab
-  'solo-founder':     { key: 'subjects', required: false },  // ["urun-adi", ...] üç vaka
-  'saas':             { key: 'subjects', required: false },
+  'solo-founder':     { key: 'subjects', required: false, also: ['saas'] },         // ["urun-adi", ...]; iki seri aynı şirketi paylaşmasın
+  'saas':             { key: 'subjects', required: false, also: ['solo-founder'] },
 };
 
 const kebabKimlik = (v) => String(v).trim().toLowerCase().replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\.git$/, '')
