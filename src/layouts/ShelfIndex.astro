@@ -2,14 +2,16 @@
 /**
  * Raf listesi — /library, /films, /games için ortak.
  *
- * Maggie'nin library / antilibrary ayrımı: bitirdiklerim bu sayfada,
- * sırada bekleyenler /<raf>/queue altında. Sekme yok, gruplama yok —
- * kapak ızgarası ve üstte kardeş sayfaya tek bağlantı.
+ * Tasarım maggieappleton.com/library'den: sayaç üstte küçük ve mavi,
+ * başlıkta iki bölüm yan yana — "Kitaplık | Sırada" — aktif olan metin
+ * renginde, kardeş sayfa gri bir bağlantı. Sekme yok, gruplama yok:
+ * bitirdiklerim bu sayfada, sırada bekleyenler /<raf>/queue altında
+ * (Maggie'nin library / antilibrary ayrımı).
  */
 import Base from './Base.astro';
 import ShelfCard from '../components/ShelfCard.astro';
 import LangNote from '../components/LangNote.astro';
-import { SHELVES, UI, PAGE, type ShelfName, type Locale } from '../config';
+import { SHELVES, UI, type ShelfName, type Locale } from '../config';
 import { localePath } from '../lib/content';
 
 interface Props {
@@ -25,7 +27,6 @@ const yol = (e: any) => localePath(lang, meta.path, e.id.split('/').pop()!);
 
 const bitmis = items.filter((e) => e.data.status !== 'queued');
 const sirada = items.filter((e) => e.data.status === 'queued');
-// Maggie'nin library / antilibrary ayrımı: iki sayfa, sekme yok.
 const gosterilen = mode === 'queued' ? sirada : bitmis;
 const baslik = mode === 'queued' ? meta.queued[lang] : meta.name[lang];
 const aciklama = mode === 'queued' ? meta.queuedBlurb[lang] : meta.blurb[lang];
@@ -38,15 +39,17 @@ const kardes = mode === 'queued'
       lang={lang} altLocale={{ lang: other as Locale, href: altHref }}>
   <div class="wrap">
     <header class="head">
-      <p class="kicker">
-        <span class="count">{gosterilen.length}</span>
-        <a href={localePath(lang, '')}>{PAGE[lang].back}</a>
-      </p>
-      <h1>{baslik}</h1>
+      <p class="count" aria-hidden="true">{gosterilen.length}</p>
+      <h1>
+        <span class="current">{baslik}</span>
+        {kardes.n > 0 && (
+          <>
+            <span class="sep" aria-hidden="true">|</span>
+            <a class="sibling" href={kardes.href}>{kardes.label}</a>
+          </>
+        )}
+      </h1>
       <p class="blurb">{aciklama}</p>
-      {kardes.n > 0 && (
-        <p class="kardes"><a href={kardes.href}>{kardes.label} <span class="n">{kardes.n}</span> <span aria-hidden="true">&#8594;</span></a></p>
-      )}
     </header>
 
     <LangNote lang={lang} shown={shown} />
@@ -63,36 +66,67 @@ const kardes = mode === 'queued'
 
 <style>
   .wrap { max-inline-size: var(--w-page); margin-inline: auto; }
-  .head { margin-block-end: var(--s-2xl); max-inline-size: 60ch; }
-  .kicker {
-    margin-block-end: var(--s-2xs);
-    font-family: var(--f-sans); font-size: var(--t-xs);
-    text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted);
+  .head { margin-block-end: var(--s-2xl); }
+
+  .count {
+    margin: 0;
+    font-family: var(--f-serif);
+    font-size: var(--t-md);
+    line-height: 1;
+    color: var(--c-mark-ink);
+    font-variant-numeric: tabular-nums;
   }
-  .kicker .count { color: var(--c-mark-ink); margin-inline-end: .7em; }
-  .kicker a { color: var(--c-accent); text-decoration: none; }
+
   h1 {
-    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
-    font-weight: 400; line-height: var(--lh-tight);
+    margin: var(--s-3xs) 0 var(--s-s);
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-display);
+    font-size: var(--t-3xl);
+    font-weight: 400;
+    line-height: var(--lh-tight);
+    text-wrap: balance;
   }
+  .current { color: var(--c-text); }
+  .sep {
+    margin-inline: .12em;
+    font-weight: 200;
+    color: var(--c-border);
+  }
+  .sibling {
+    color: var(--c-muted);
+    text-decoration: none;
+    transition: color .4s ease-in-out;
+  }
+  .sibling:is(:hover, :focus-visible) { color: var(--c-accent-lo); }
+
   .blurb {
-    margin-block-start: var(--s-2xs);
-    font-family: var(--f-serif); font-size: var(--t-md);
-    color: var(--c-muted); line-height: 1.35; text-wrap: balance;
+    margin: 0;
+    max-inline-size: 60ch;
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-text);
+    font-size: var(--t-lg);
+    font-weight: 300;
+    line-height: var(--lh-snug);
+    color: var(--c-muted);
+    text-wrap: pretty;
   }
 
   .grid {
-    list-style: none; padding: 0;
+    list-style: none; padding: 0; margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-    gap: var(--s-l) var(--s-m);
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--s-s);
   }
+  .grid li { margin: 0; }
 
-  .kardes { margin-block-start: var(--s-s); font-family: var(--f-sans); font-size: var(--t-sm); }
-  .kardes a { color: var(--c-accent); text-decoration: none; }
-  .kardes .n { color: var(--c-mark-ink); font-variant-numeric: tabular-nums; }
+  .meta { font-family: var(--f-sans); color: var(--c-muted); }
 
+  @media (max-width: 48rem) {
+    h1 { font-size: var(--t-2xl); }
+    .blurb { font-size: var(--t-md); }
+  }
   @media (max-width: 34rem) {
-    .grid { grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: var(--s-m) var(--s-s); }
+    .head { margin-block-end: var(--s-xl); }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: var(--s-xs); }
   }
 </style>

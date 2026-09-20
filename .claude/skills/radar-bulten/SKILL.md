@@ -3,7 +3,7 @@ name: radar-bulten
 description: cmlonder.com/radar bültenlerinin ortak sözleşmesi — Spark ajanı bir sayı yazarken, ya da bir bülten/prompt incelenirken kullanılır. Dosya adı, frontmatter, gövde ve kaynak kuralları; kapının (check-radar) neyi durdurup neyi düzelttiği; görülmüş hatalar.
 ---
 
-# Radar bülteni yazma sözleşmesi — v0.2 (taslak, olgunlaşıyor)
+# Radar bülteni yazma sözleşmesi — v0.3 (taslak, olgunlaşıyor)
 
 Bu skill iki yerde yaşar: Spark'ta (bülteni yazan ajan) ve bu repoda
 (prompt ve bülten incelemesi). Seriye özgü ses ve gövde yapısı her serinin
@@ -136,7 +136,19 @@ etiket (`github`, `engineering`, `open-source` her sayıda) konu değildir.
 | `BuiltWith'in` tek tırnaklı YAML | frontmatter bozuldu | çift tırnak |
 | Aynı şirket 4 kaynak gibi | sahte kaynak zenginliği | alan adı başına bir kaynak |
 
-## 8. Son kontrol (yazmadan önce, yazıya koymadan)
+## 8. Seriye özgü olanlar (prompt'ta yaşar, burada yalnız işaret)
+
+- **Solo Girişimci** (onaylı v14.2): günün kategorisi DD%10 matrisi; üç vaka
+  (AI öncesi / AI çağı / ulaşılabilir olan); her vakada kurucunun birebir
+  blok alıntısı; ilk iki vakada ≥4 alan adı, üçüncüde ≥2; 1.000–1.200 kelime.
+- **Makale** (onaylı v1.4): `arxiv` zorunlu; sabit konu havuzu; giriş +
+  İddia ve Gerçeklik / Kod ve Entegrasyon Haritası / Ticari Etki; 800–1.000.
+- **GitHub Radar**, **Indie Oyun**, **SaaS**: inceleme sırada.
+
+Prompt'u Spark'a **ham metin** olarak yapıştır: işlenmiş görünümden kopya
+`---`, `##` ve kod çitlerini düşürüyor (iki kez yaşandı).
+
+## 9. Son kontrol (yazmadan önce, yazıya koymadan)
 
 - Frontmatter geçerli YAML, `---` üç tire, her alan kendi satırında?
 - `title` kalıbı, `date` bugün, `topics` (tags değil), kimlik alanı dolu?

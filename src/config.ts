@@ -96,11 +96,13 @@ export const UI: Record<Locale, Record<string, string>> = {
     topics: 'Topics', allTopics: 'All topics', readMore: 'Read',
     empty: 'Nothing here yet.',
     home: 'Home', latest: 'Latest',
+    openNote: 'Read the note',
   },
   tr: {
     topics: 'Konular', allTopics: 'Tüm konular', readMore: 'Oku',
     empty: 'Burada henüz bir şey yok.',
     home: 'Ana sayfa', latest: 'Son eklenenler',
+    openNote: 'Notu oku',
   },
 };
 

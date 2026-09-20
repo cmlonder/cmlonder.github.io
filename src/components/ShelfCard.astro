@@ -2,6 +2,12 @@
 /**
  * Raf kartı — kitap, film ve oyun için ortak.
  *
+ * Tasarım maggieappleton.com/library'den: kartın tamamı tek bağlantı,
+ * kapak üstte, altında başlık ve yapan. Hover'da kapak soluyor ve
+ * üstünde "Notu oku" rozeti beliriyor; başlık vurgu rengine dönüyor,
+ * metin bloğu birkaç piksel aşağı kayıyor. Not ve puan kartta yok —
+ * onlar yazı sayfasında; kart yalnızca kapak + ad.
+ *
  * Kapak görseli KONVANSİYONLA bulunuyor: src/assets/covers/<slug>.jpg
  * Kitaplarda gerçek kapak var (Open Library). Film ve oyunlarda görsel
  * kaynağı yok — afiş telifi serbest değil — o yüzden tipografik kapağa
@@ -9,8 +15,7 @@
  * ortamın oranını ve kendi paletimizi koruyor.
  */
 import { Image } from 'astro:assets';
-import Rating from './Rating.astro';
-import { SHELVES, type ShelfName, type Locale } from '../config';
+import { SHELVES, UI, type ShelfName, type Locale } from '../config';
 
 const kapaklar = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/covers/*.{jpg,jpeg,png,webp}', { eager: true });
@@ -32,49 +37,131 @@ const tone = [...d.title].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 5;
 ---
 
 <article class="card">
-  <a class="cover" href={href} style={`--ratio:${meta.ratio}`}
-     data-img={kapak ? 'true' : 'false'} data-tone={tone}>
-    {kapak
-      ? <Image src={kapak} alt="" widths={[200, 400]} sizes="(max-width: 46rem) 42vw, 200px" loading="lazy" />
-      : (
-        <span class="typo">
-          <span class="t">{d.title}</span>
-          <span class="a">{yapan}</span>
-        </span>
-      )}
-  </a>
+  <a class="link" href={href}>
+    <span class="hint" aria-hidden="true">
+      {UI[lang].openNote}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+           stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </span>
 
-  <div class="body">
-    <H><a href={href}>{d.title}</a></H>
-    <p class="who">{yapan}{d.year && <> · {d.year}</>}</p>
-    {d.rating && <Rating value={d.rating} compact />}
-    <p class="note">{d.note}</p>
-  </div>
+    <span class="cover" style={`--ratio:${meta.ratio}`} data-img={kapak ? 'true' : 'false'} data-tone={tone}>
+      {kapak
+        ? <Image src={kapak} alt="" widths={[230, 460]} sizes="(max-width: 46rem) 44vw, 230px" loading="lazy" />
+        : (
+          <span class="typo">
+            <span class="t">{d.title}</span>
+            <span class="a">{yapan}</span>
+          </span>
+        )}
+    </span>
+
+    <div class="body">
+      <H class="title">{d.title}</H>
+      {yapan && <span class="who">{yapan}</span>}
+    </div>
+  </a>
 </article>
 
 <style>
-  .card { display: grid; gap: var(--s-2xs); align-content: start; }
+  .card { display: block; }
 
-  .cover {
+  .link {
     position: relative;
-    display: grid;
-    aspect-ratio: var(--ratio);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
     border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--c-tinted);
-    border: 1px solid var(--c-border);
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    /* Sağdaki boşluk Maggie'de de var: kapak sola yaslı, sütun ondan geniş. */
+    padding-block-end: var(--s-s);
   }
-  .cover:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px -12px color-mix(in srgb, var(--c-text) 45%, transparent);
-    border-color: color-mix(in srgb, var(--c-text) 22%, transparent);
+
+  /* — Kapak — */
+  .cover {
+    display: grid;
+    align-items: start;
+    inline-size: 100%;
+    max-inline-size: 14.4rem;   /* 230px */
+    aspect-ratio: var(--ratio);
   }
+  .cover :global(img) {
+    inline-size: 100%;
+    block-size: auto;
+    max-block-size: 100%;
+    object-fit: contain;
+  }
+  .cover .typo { inline-size: 100%; block-size: 100%; }
+  .cover :global(img),
+  .cover .typo {
+    border-radius: var(--radius);
+    border: 1px solid var(--c-tinted);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--c-text) 10%, transparent),
+                0 2px 6px color-mix(in srgb, var(--c-text) 8%, transparent);
+    transition: transform .3s ease-in-out, opacity .3s ease-in-out, box-shadow .3s ease-in-out;
+  }
+
+  /* — Hover rozeti — */
+  .hint {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 33%;
+    inset-inline-start: 14%;
+    display: inline-flex;
+    align-items: center;
+    gap: .4em;
+    padding: var(--s-3xs) var(--s-2xs);
+    border-radius: var(--radius);
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+    white-space: nowrap;
+    background: var(--c-text);
+    color: var(--c-bg);
+    box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--c-text) 55%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease-in-out;
+  }
+
+  /* — Metin — */
+  .body {
+    display: block;
+    transition: transform .3s ease-in-out;
+  }
+  .title {
+    margin: var(--s-xs) 0 var(--s-3xs);
+    font-family: var(--f-serif);
+    font-variation-settings: var(--axis-text);
+    font-size: var(--t-base);
+    font-weight: 400;
+    line-height: var(--lh-snug);
+    color: var(--c-text);
+    text-wrap: pretty;
+    transition: color .3s ease-in-out;
+  }
+  .who {
+    display: block;
+    font-family: var(--f-sans);
+    font-size: var(--t-sm);
+    color: var(--c-muted);
+  }
+
+  /* — Hover / klavye odağı — */
+  .link:is(:hover, :focus-visible) .cover :global(img),
+  .link:is(:hover, :focus-visible) .cover .typo {
+    transform: scale3d(1.02, 1.02, 1.02);
+    opacity: .2;
+    box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--c-text) 30%, transparent);
+  }
+  .link:is(:hover, :focus-visible) .hint { opacity: 1; }
+  .link:is(:hover, :focus-visible) .title { color: var(--c-accent); }
+  .link:is(:hover, :focus-visible) .body { transform: translateY(4px); }
+  .link:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; }
+
   @media (prefers-reduced-motion: reduce) {
-    .cover, .cover:hover { transition: none; transform: none; }
-  }
-  .cover[data-img='true'] :global(img) {
-    inline-size: 100%; block-size: 100%; object-fit: cover; display: block;
+    .cover :global(img), .cover .typo, .hint, .body, .title { transition: none; }
+    .link:is(:hover, :focus-visible) .cover :global(img),
+    .link:is(:hover, :focus-visible) .cover .typo { transform: none; }
+    .link:is(:hover, :focus-visible) .body { transform: none; }
   }
 
   /* — Tipografik kapak: görseli olmayan ortamlar için — */
@@ -83,7 +170,6 @@ const tone = [...d.title].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 5;
     align-content: space-between;
     gap: var(--s-2xs);
     padding: var(--s-xs);
-    block-size: 100%;
     background:
       linear-gradient(160deg,
         color-mix(in srgb, var(--tint) 24%, var(--c-surface)),
@@ -111,23 +197,10 @@ const tone = [...d.title].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 5;
     border-block-start: 1px solid color-mix(in srgb, var(--c-text) 12%, transparent);
   }
 
-
-  .body { display: grid; gap: .15em; }
-  h2, h3 {
-    font-family: var(--f-serif);
-    font-variation-settings: var(--axis-text);
-    font-size: var(--t-sm);
-    font-weight: 600;
-    line-height: 1.25;
-    margin: 0;
+  @media (max-width: 34rem) {
+    .link { padding-block-end: var(--s-xs); }
+    .hint { inset-inline-start: 9%; font-size: var(--t-xs); }
+    .title { margin-block-start: var(--s-2xs); font-size: var(--t-sm); }
+    .who { font-size: var(--t-xs); }
   }
-  h2 a, h3 a { text-decoration: none; }
-  h2 a:hover, h3 a:hover { color: var(--c-accent); }
-  .who, .note {
-    font-family: var(--f-sans);
-    font-size: var(--t-xs);
-    color: var(--c-muted);
-    margin: 0;
-  }
-  .note { margin-block-start: .35em; line-height: 1.5; }
 </style>
