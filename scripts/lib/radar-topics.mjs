@@ -30,6 +30,9 @@ export const TOPIC_ALIASES = {
   'indie-game': 'oyun', 'indie-games': 'oyun', 'gamedev': 'oyun', 'game-dev': 'oyun',
 };
 
+/** Seri sabiti olarak yazılan kategoriler: ürün türü değil, bilgi taşımıyor. */
+export const CATEGORY_DROP = new Set(['applied-research', 'research', 'paper']);
+
 /** Hiçbir şey söylemeyen etiketler: seri adının tekrarı ya da her yazıya yapışan jenerikler. */
 export const TOPIC_DROP = new Set(['github', 'engineering', 'software', 'programming', 'tech', 'technology']);
 
@@ -59,7 +62,7 @@ const kebab = (s) => String(s).trim().toLowerCase()
 export function normalizeRadar(fm, seri = '') {
   const degisen = [];
   // Kategori serinin kendisiyse (github-radar serisinde category: github-radar) bilgi taşımıyor.
-  if (fm.category && seri && kebab(fm.category) === seri) { degisen.push(`category ${fm.category} silindi (seri adı)`); delete fm.category; }
+  if (fm.category && ((seri && kebab(fm.category) === seri) || CATEGORY_DROP.has(kebab(fm.category)))) { degisen.push(`category ${fm.category} silindi (seri sabiti)`); delete fm.category; }
   if (fm.category) {
     const c = CATEGORY_ALIASES[kebab(fm.category)] ?? kebab(fm.category);
     if (c !== fm.category) { degisen.push(`category ${fm.category} -> ${c}`); fm.category = c; }

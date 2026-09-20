@@ -17,10 +17,14 @@ const etiket = (t: string) => topicLabel(t, 'tr');
 
 const cat: string | null = data.category ?? null;
 const tags: string[] = data.topics ?? [];
-const saglik: number | null = data.health_score ?? null;
+// Ölçüm çipleri: alan -> etiket. Ajanın tahmini; title bunu söylüyor.
+const olcumler = [
+  { v: data.health_score ?? null, lbl: 'Sağlık', t: 'Ajanın tahmini: issue kapanma hızı, sürüm düzeni, bakımcı ekibi' },
+  { v: data.readiness_score ?? null, lbl: 'Hazırlık', t: 'Ajanın tahmini: production için ne kadar hazır — kod, bağımlılıklar, entegrasyon' },
+].filter((o) => o.v !== null) as { v: number; lbl: string; t: string }[];
 ---
 
-{(cat || tags.length > 0 || saglik) && (
+{(cat || tags.length > 0 || olcumler.length > 0) && (
   <nav class="chips" aria-label="Kategori ve etiketler">
     {cat && (
       <a class="chip cat" href={`/radar/category/${cat}`}>
@@ -30,13 +34,13 @@ const saglik: number | null = data.health_score ?? null;
     {tags.map((t) => (
       <a class="chip tag" href={`/radar/topic/${t}`}>{etiket(t)}</a>
     ))}
-    {saglik && (
-      <span class="chip saglik" title="Ajanın tahmini: issue kapanma hızı, sürüm düzeni, bakımcı ekibi">
-        <span class="lbl">Sağlık</span>
-        <span class="bar" aria-hidden="true"><span style={`--p:${saglik * 10}%`} /></span>
-        {String(saglik).replace('.', ',')}/10
+    {olcumler.map((o) => (
+      <span class="chip saglik" title={o.t}>
+        <span class="lbl">{o.lbl}</span>
+        <span class="bar" aria-hidden="true"><span style={`--p:${o.v * 10}%`} /></span>
+        {String(o.v).replace('.', ',')}/10
       </span>
-    )}
+    ))}
   </nav>
 )}
 

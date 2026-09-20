@@ -241,6 +241,8 @@ const radar = defineCollection({
     revenue_source: z.enum(['platform', 'interview', 'self_reported', 'developer_blog', 'estimated', 'unknown']).optional(),
     /** GitHub Radar: projenin yaşam belirtisi, 0-10; ondalık olabilir ("9.2"). Ajanın tahmini; künyede öyle yazıyor. */
     health_score: z.coerce.number().min(0).max(10).optional(),
+    /** Makale Bülteni: production'a hazırlık, 0-10. Ajanın tahmini. */
+    readiness_score: z.coerce.number().min(0).max(10).optional(),
 
     draft: z.boolean().default(false),
   }),

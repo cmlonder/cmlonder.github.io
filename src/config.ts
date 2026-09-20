@@ -409,6 +409,7 @@ export const NEWSLETTER = {
     'solo-founder': { tag: 'solo-girisimci', name: { en: 'Solo Founder Bulletin (daily, Turkish)', tr: 'Solo Girişimci Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/solo-founder/rss.xml' },
     'saas':         { tag: 'saas', name: { en: 'SaaS Bulletin (daily, Turkish)', tr: 'SaaS Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/saas/rss.xml' },
     'github-radar': { tag: 'github-radar',  name: { en: 'GitHub Radar (daily, Turkish)', tr: 'GitHub Radar (günlük)' } as Record<Locale, string>, feed: () => '/radar/github-radar/rss.xml' },
+    'paper-to-prod':  { tag: 'makale',        name: { en: 'Paper-to-Prod (daily, Turkish)', tr: 'Makale Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/paper-to-prod/rss.xml' },
     'indie-postmortem': { tag: 'indie-game', name: { en: 'Indie Game Bulletin (daily, Turkish)', tr: 'Indie Oyun Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/indie-postmortem/rss.xml' },
   },
 };
@@ -512,6 +513,11 @@ export const RADAR_SERIES = {
     name: 'Indie Oyun Bülteni',
     driveFolder: 'Radar/Indie Oyun Bülteni',
     blurb: 'Her gün bir bağımsız oyun lansmanı: wishlist mekaniği, dağıtım, gerçek gelir tablosu. Günlük.',
+  },
+  'paper-to-prod': {
+    name: 'Makale Bülteni',
+    driveFolder: 'Radar/Makale Bülteni',
+    blurb: 'Her gün bir arXiv makalesi mühendislik süzgecinden: kod var mı, kim entegre etti, kimin faturasını düşürür. Günlük.',
   },
 } as const;
 
