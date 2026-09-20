@@ -35,13 +35,9 @@ AI-generated posts. It launched in May 2024 as "Made with AI" and was renamed
 in July 2024. The label sits at the top of the post; clicking it opens a panel
 explaining what was AI. [Meta's announcement](https://about.fb.com/news/2024/04/metas-approach-to-labeling-ai-generated-content-and-manipulated-media/).
 
-<figure class="ai-ornek" data-kim="meta">
-  <div class="ornek-kart" aria-hidden="true">
-    <div class="ornek-bas"><span class="ornek-avatar"></span><span class="ornek-ad">an account</span><span class="ornek-zaman">2h</span></div>
-    <div class="ornek-govde"></div>
-    <div class="ornek-etiket"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg> <span>AI info</span></div>
-  </div>
-  <figcaption>Meta: an "AI info" label in the post header. Schematic drawing, not a screenshot.</figcaption>
+<figure class="ai-ornek">
+  <img src="/img/ai/meta-ai-info.webp" width="1400" height="788" loading="lazy" decoding="async" alt="Meta’s example image: a white “AI info” label in the corner of AI-generated photos on Instagram and Facebook.">
+  <figcaption>From Meta’s announcement: the “AI info” label sits on the image. Image belongs to <a href="https://about.fb.com/news/2024/04/metas-approach-to-labeling-ai-generated-content-and-manipulated-media/">Meta Newsroom</a>.</figcaption>
 </figure>
 
 **YouTube** requires uploaders to disclose realistic AI-generated or altered
@@ -52,13 +48,14 @@ the label itself when nothing was disclosed and the content could mislead.
 In force since March 2024. [YouTube's announcement](https://blog.youtube/news-and-events/disclosing-ai-generated-content/) and
 [help page](https://support.google.com/youtube/answer/14328491).
 
-<figure class="ai-ornek" data-kim="youtube">
-  <div class="ornek-kart" aria-hidden="true">
-    <div class="ornek-bas"><span class="ornek-avatar"></span><span class="ornek-ad">a channel</span><span class="ornek-zaman">1.2M views</span></div>
-    <div class="ornek-govde"></div>
-    <div class="ornek-etiket"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg> <span>Altered or synthetic content<span class="ornek-alt">Sound or visuals were significantly edited or digitally generated.</span></span></div>
-  </div>
-  <figcaption>YouTube: a two-line label in the description panel. Schematic drawing, not a screenshot.</figcaption>
+<figure class="ai-ornek">
+  <img src="/img/ai/youtube-description.webp" width="800" height="744" loading="lazy" decoding="async" alt="YouTube Shorts description panel: under “How this content was made”, the label “Altered or synthetic content — Sound or visuals were significantly edited or digitally generated.”">
+  <figcaption>From YouTube’s announcement: the label in the expanded description. Image belongs to <a href="https://blog.youtube/news-and-events/disclosing-ai-generated-content/">YouTube Official Blog</a>.</figcaption>
+</figure>
+
+<figure class="ai-ornek">
+  <img src="/img/ai/youtube-player.webp" width="895" height="672" loading="lazy" decoding="async" alt="Two phone screens: a small “AI” label next to the title on a regular video and next to the channel name on Shorts.">
+  <figcaption>From YouTube’s help page: the short “AI” label right under the player and on Shorts. Image belongs to <a href="https://support.google.com/youtube/answer/14328491">YouTube Help</a>.</figcaption>
 </figure>
 
 ## The label

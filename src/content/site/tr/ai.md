@@ -36,13 +36,9 @@ Temmuz 2024'te adı değişti. Etiket paylaşımın üstünde duruyor; tıklayı
 neyin AI olduğunu anlatan bir panel açılıyor.
 [Meta'nın duyurusu](https://about.fb.com/news/2024/04/metas-approach-to-labeling-ai-generated-content-and-manipulated-media/).
 
-<figure class="ai-ornek" data-kim="meta">
-  <div class="ornek-kart" aria-hidden="true">
-    <div class="ornek-bas"><span class="ornek-avatar"></span><span class="ornek-ad">bir hesap</span><span class="ornek-zaman">2 sa</span></div>
-    <div class="ornek-govde"></div>
-    <div class="ornek-etiket"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg> <span>AI info</span></div>
-  </div>
-  <figcaption>Meta: paylaşımın başlığında "AI info" etiketi. Şematik çizim, ekran görüntüsü değil.</figcaption>
+<figure class="ai-ornek">
+  <img src="/img/ai/meta-ai-info.webp" width="1400" height="788" loading="lazy" decoding="async" alt="Meta’nın örnek görseli: Instagram ve Facebook’ta AI ile üretilmiş fotoğrafların köşesinde beyaz “AI info” etiketi.">
+  <figcaption>Meta’nın duyurusundan: “AI info” etiketi görselin üstünde. Görsel <a href="https://about.fb.com/news/2024/04/metas-approach-to-labeling-ai-generated-content-and-manipulated-media/">Meta Newsroom</a>’a ait.</figcaption>
 </figure>
 
 **YouTube** yükleyenden gerçekçi görünen AI ya da değiştirilmiş içeriği beyan
@@ -52,13 +48,14 @@ konularda oynatıcının üstünde. Beyan edilmemişse ve yanıltma ihtimali var
 YouTube etiketi kendisi de ekleyebiliyor. Mart 2024'ten beri yürürlükte.
 [YouTube'un duyurusu](https://blog.youtube/news-and-events/disclosing-ai-generated-content/) ve [yardım sayfası](https://support.google.com/youtube/answer/14328491).
 
-<figure class="ai-ornek" data-kim="youtube">
-  <div class="ornek-kart" aria-hidden="true">
-    <div class="ornek-bas"><span class="ornek-avatar"></span><span class="ornek-ad">bir kanal</span><span class="ornek-zaman">1,2 Mn görüntüleme</span></div>
-    <div class="ornek-govde"></div>
-    <div class="ornek-etiket"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg> <span>Altered or synthetic content<span class="ornek-alt">Sound or visuals were significantly edited or digitally generated.</span></span></div>
-  </div>
-  <figcaption>YouTube: açıklama bölümünde iki satırlık etiket. Şematik çizim, ekran görüntüsü değil.</figcaption>
+<figure class="ai-ornek">
+  <img src="/img/ai/youtube-description.webp" width="800" height="744" loading="lazy" decoding="async" alt="YouTube Shorts açıklama paneli: “How this content was made” başlığı altında “Altered or synthetic content — Sound or visuals were significantly edited or digitally generated.”">
+  <figcaption>YouTube’un duyurusundan: etiket genişletilmiş açıklamada. Görsel <a href="https://blog.youtube/news-and-events/disclosing-ai-generated-content/">YouTube Official Blog</a>’a ait.</figcaption>
+</figure>
+
+<figure class="ai-ornek">
+  <img src="/img/ai/youtube-player.webp" width="895" height="672" loading="lazy" decoding="async" alt="İki telefon ekranı: normal videoda başlığın yanında, Shorts’ta kanal adının yanında küçük “AI” etiketi.">
+  <figcaption>YouTube’un yardım sayfasından: kısa “AI” etiketi oynatıcının hemen altında ve Shorts’ta. Görsel <a href="https://support.google.com/youtube/answer/14328491">YouTube Help</a>’e ait.</figcaption>
 </figure>
 
 ## Etiket
