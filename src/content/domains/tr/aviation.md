@@ -16,6 +16,10 @@ outline:
     title: "1978: kâr garantisi kalkınca gelir yönetimi doğdu"
     promise: "%55 dolulukla %12 kâr garantisi bitince fiyat, rota ve envanter kararını kim verdi; gelir yönetimi neden hayatta kalma şartı oldu."
     part: "Rezervasyon"
+  - slug: yield-management-origins
+    title: "Yield Management: erken dönem stratejik analiz ve iş mantığı"
+    promise: "Kısıtlı indirim, kontrollü overbooking ve Littlewood kuralı 1985'te DINAMO'da nasıl birleşti; ucuz bilet satarken kârlı kalmanın formülü."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

@@ -16,6 +16,10 @@ outline:
     title: "1978: when the profit guarantee ended, revenue management was born"
     promise: "Who decided fares, routes and inventory once the 55%-load, 12%-return guarantee was gone, and why revenue management became a survival skill."
     part: "Reservation"
+  - slug: yield-management-origins
+    title: "Yield management: the early strategy and its business logic"
+    promise: "How restricted discounts, controlled overbooking and Littlewood's rule converged in DINAMO in 1985, and the formula for staying profitable while selling cheap seats."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."
