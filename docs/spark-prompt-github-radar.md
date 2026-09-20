@@ -1,8 +1,8 @@
-# Spark prompt — Haftalık GitHub Radar
+# Spark prompt — GitHub Radar
 
 Canlı prompt Spark'ta; bu dosya kayıt ve düzeltme notu. Seri: `github-radar`,
-dosya adı `Haftalik-Github-Radar-PARSE-YYYY-MM-DD.md`, her cumartesi.
-Apps Script pazar 08:00'de alır (aynı gün istersen `kur()`'daki saati değiştir).
+dosya adı `Haftalik-Github-Radar-PARSE-YYYY-MM-DD.md` (eski ad takma ad olarak
+eşleşmeye devam ediyor; `Github-Radar-PARSE-…` de olur), günlük. Apps Script her gün 08:00'de alır.
 
 ## Frontmatter — site sözleşmesi
 

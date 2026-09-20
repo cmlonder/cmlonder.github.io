@@ -57,9 +57,10 @@ Ne olur, ne olmaz:
 - Seri kendiliğinden açılmaz. Spark bilinmeyen bir ad yazarsa dosya Drive
   ana dizininde kalır, yürütme kaydına "seri eşleşmedi" düşer. Yazım
   hatasının sessizce yeni seri açmaması için böyle.
-- Apps Script her gün 08:00'de bakıyor. Pazar yazılan haftalık bülten
-  pazartesi 08:00'de GitHub'a düşer; aynı gün istiyorsan Apps Script'te
-  `kur()` içindeki saati değiştir.
+- Apps Script her gün 08:00'de bakıyor; bir gün önce yazılan bülten ertesi
+  sabah GitHub'a düşer. Daha erken istiyorsan Apps Script'te `kur()` içindeki saati değiştir.
+- Seri adını değiştirirsen `aliases` alanına eski adı yaz: Spark'ın eski dosya
+  adı eşleşmeye devam eder, hiçbir şey kuyrukta kalmaz.
 
 ## 1. `GITHUB_TOKEN` — github.com'dan
 
