@@ -63,7 +63,12 @@ const domainYonlendirmeleri = Object.fromEntries(
   ['', '/tr'].flatMap((on) => [
     ...Object.entries(DOMAIN_SLUGS).map(([e, y]) => [`${on}/domains/${e}`, `${on}/domains/${y}`]),
     ...Object.entries(CHAPTER_SLUGS).map(([e, y]) => [`${on}/domains/${e}`, `${on}/domains/${y}`]),
-    ...Object.entries(DOMAIN_SLUGS).map(([e, y]) => [`${on}/domains/${e}/read`, `${on}/domains/${y}/read`]),
+    /* "Tek sayfa" görünümü 21 Eyl 2026'da kaldırıldı; eski ve yeni slug'ın
+       /read adresi domain sayfasına düşer. */
+    ...Object.entries(DOMAIN_SLUGS).flatMap(([e, y]) => [
+      [`${on}/domains/${e}/read`, `${on}/domains/${y}`],
+      [`${on}/domains/${y}/read`, `${on}/domains/${y}`],
+    ]),
     ...Object.entries(PROJECT_SLUGS).map(([e, y]) => [`${on}/projects/${e}`, `${on}/projects/${y}`]),
   ])
 );

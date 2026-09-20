@@ -166,6 +166,24 @@ sürece sayfaya form düşmüyor. Açmak için:
 Otomasyonun etikete göre süzüp süzmediğini panelde teyit et (dokümantasyon
 "audience filter" diyor); süzmüyorsa seri başına ayrı newsletter aç.
 
+## Domain kitabı PDF — abone karşılığı (backlog)
+
+"Tek sayfa" görünümü (`/domains/<domain>/read`) 21 Eyl 2026'da kaldırıldı:
+bölümleri art arda dizen sayfa okunmuyordu ve içindekiler paneliyle
+yarışıyordu. Yerine düşünülen şey:
+
+- Her domain'in yazılmış bölümleri **kitaplaşmış PDF** olarak üretilsin
+  (build adımı; kaynak aynı Markdown, kapak + içindekiler + bölümler).
+- PDF herkese açık **değil**: e-posta abonesi olanlara Buttondown'ın
+  karşılama e-postasıyla (ya da abonelere özel bir bağlantıyla) gitsin.
+  Bu, madde 10'daki Buttondown kurulumuna bağlı — o açılmadan yapılamaz.
+- Yazı ve bölüm sayfalarına "PDF'ini almak için abone ol" cümlesi düşsün;
+  Subscribe.astro zaten var, metin ve etiket eklenir.
+- Açık soru: PDF'i kim üretir? Repoda `pnpm deck` gibi bir script mi
+  (Chromium headless print), yoksa elle NotebookLM/Pages çıktısı mı?
+  Repoya PDF konmuyor kuralı burada da geçerli — üretim build'de olmalı
+  ya da dosya Buttondown/Drive'da durmalı.
+
 ## Radar zinciri hakkında yazı (backlog)
 
 Spark → Drive → Apps Script → GitHub Actions → site zincirini uçtan uca

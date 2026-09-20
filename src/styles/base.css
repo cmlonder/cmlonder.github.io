@@ -558,8 +558,6 @@ h2.section-title a,
 .toc-col .toc-up { border: 0; padding: 0; margin: 0; color: var(--c-accent); text-transform: none; letter-spacing: 0; font-size: var(--t-xs); }
 .toc-n { display: inline-block; min-inline-size: 1.9em; font-family: var(--f-mono); font-size: .9em; opacity: .65; font-variant-numeric: tabular-nums; }
 .toc-col .toc-todo, .toc-mobil .toc-todo { display: block; font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); opacity: .6; line-height: 1.4; padding-inline-start: .6em; margin-inline-start: -.6em; }
-.toc-col .toc-one { display: inline-block; margin-block-start: var(--s-s); padding: 0; margin-inline-start: 0; border: 0; color: var(--c-muted); }
-.toc-col .toc-one:hover { color: var(--c-accent); }
 .toc-mobil summary { font-family: var(--f-sans); font-size: var(--t-sm); }
 
 @media (prefers-reduced-motion: reduce) {

@@ -18,17 +18,12 @@ interface Props {
   aktif?: string;
   /** 'col' = sabit panel, 'mobile' = yazı başındaki <details> */
   variant?: 'col' | 'mobile';
-  /** Tek sayfa modunda bölümler aynı sayfada: #bNN çapaları. */
-  hash?: boolean;
-  onePage?: boolean;
 }
-const { title, outline, yazilan, domain, lang, aktif, variant = 'col', hash = false, onePage = true } = Astro.props as Props;
+const { title, outline, yazilan, domain, lang, aktif, variant = 'col' } = Astro.props as Props;
 const t = DOMAIN_UI[lang];
 const no = (i: number) => String(i + 1).padStart(2, '0');
-const href = (b: { slug: string }, i: number) =>
-  hash ? `#b${i + 1}` : localePath(lang, DOMAINS.path, domain, b.slug);
-const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }))
-  .filter((x) => !hash || x.var_);
+const href = (b: { slug: string }) => localePath(lang, DOMAINS.path, domain, b.slug);
+const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }));
 ---
 
 {variant === 'col' ? (
@@ -38,7 +33,7 @@ const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }))
       {satirlar.map(({ b, i, var_ }) => (
         <li>
           {var_
-            ? <a href={href(b, i)} data-aktif={aktif === b.slug ? '' : undefined}
+            ? <a href={href(b)} data-aktif={aktif === b.slug ? '' : undefined}
                  aria-current={aktif === b.slug ? 'page' : undefined}>
                 <span class="toc-n">{no(i)}</span>{b.title}
               </a>
@@ -46,9 +41,6 @@ const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }))
         </li>
       ))}
     </ol>
-    {onePage && !hash && (
-      <a class="toc-one" href={localePath(lang, DOMAINS.path, domain, 'read')}>{t.onePage} &#8594;</a>
-    )}
   </nav>
 ) : (
   <details class="toc-mobil">
@@ -57,7 +49,7 @@ const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }))
       {satirlar.map(({ b, i, var_ }) => (
         <li>
           {var_
-            ? <a href={href(b, i)} aria-current={aktif === b.slug ? 'page' : undefined}>
+            ? <a href={href(b)} aria-current={aktif === b.slug ? 'page' : undefined}>
                 <span class="toc-n">{no(i)}</span>{b.title}
               </a>
             : <span class="toc-todo"><span class="toc-n">{no(i)}</span>{b.title}</span>}

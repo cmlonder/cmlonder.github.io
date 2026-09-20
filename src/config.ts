@@ -205,7 +205,6 @@ export const DOMAINS = {
     en: 'One domain at a time, written in chapters. The outline is public from day one — including what is not written yet.',
     tr: 'Tek bir alanı bölüm bölüm yazıyorum. İçindekiler listesi ilk günden açıkta duruyor, daha yazmadığım bölümler de dahil.',
   } as Record<Locale, string>,
-  readAll: { en: 'read', tr: 'oku' },
 };
 
 /**
@@ -221,13 +220,11 @@ export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
     written: 'chapters written',
     contents: 'Contents',
     note: 'Unwritten chapters are listed too. The line beneath each is a promise of what it will cover.',
-    readAll: 'Read written chapters on one page',
     chapter: 'Chapter',
     of: 'of',
     nextUp: 'Next chapter',
     notYet: 'Not written yet',
     backToSpine: 'All chapters',
-    onePage: 'One page',
     crossRef: 'Related, in another domain',
   },
   tr: {
@@ -237,13 +234,11 @@ export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
     written: 'bölüm yazıldı',
     contents: 'İçindekiler',
     note: 'Yazılmamış bölümler de listede. Altlarındaki cümle, ne anlatacaklarına dair söz.',
-    readAll: 'Yazılmış bölümleri tek sayfada oku',
     chapter: 'Bölüm',
     of: '/',
     nextUp: 'Sıradaki bölüm',
     notYet: 'Henüz yazılmadı',
     backToSpine: 'Tüm bölümler',
-    onePage: 'Tek sayfa',
     crossRef: 'Başka bir domainde, aynı problem',
   },
 };

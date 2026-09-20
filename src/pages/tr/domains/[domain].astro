@@ -43,14 +43,6 @@ const ilk = entry.data.outline.find((b) => yazilan.has(b.slug));
       <Outline outline={entry.data.outline} yazilan={yazilan} domain={slug} lang={lang} />
     </section>
 
-    {yazilan.size > 0 && (
-      <p class="readall">
-        <a href={localePath(lang, DOMAINS.path, slug, 'read')}>
-          {DOMAIN_UI[lang].readAll}
-          <span aria-hidden="true">&#8594;</span>
-        </a>
-      </p>
-    )}
   </article>
 </Base>
 
@@ -79,5 +71,4 @@ const ilk = entry.data.outline.find((b) => yazilan.has(b.slug));
             font-weight: 400; font-size: var(--t-lg); }
   .note { font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
           margin-block: var(--s-2xs) var(--s-m); max-inline-size: 52ch; }
-  .readall { margin-block-start: var(--s-xl); font-family: var(--f-sans); font-size: var(--t-sm); }
 </style>
