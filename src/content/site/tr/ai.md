@@ -1,26 +1,27 @@
 ---
 title: 'Yapay zeka kullanımı'
-description: 'Bu sitede AI ile üretilen içerik nasıl işaretleniyor ve neden böyle.'
+description: 'Bu sitedeki "ai üretimi" işareti ne anlama geliyor, nerede görürsen gör.'
 updated: 2026-09-21
 ---
 
-Kısa cevap: **Yazılar benim. [Radar](/radar) ise AI ile derlenmiş özetler;
-onları ben yazmıyorum.**
+Kısa cevap: **İşaretsiz metin benim. İşaretli metni bir ajan üretti.**
+Bu işareti sitenin neresinde görürsen gör anlamı aynı; hangi bölümde
+olduğu fark etmez.
 
 ## Yöntem
 
-Yazı, not, kılavuz ve raflardaki her cümle bana ait. Yazarken ajan
-kullanıyorum: düzeltme, araştırma, kod. Ama fikir bildiren ya da "ben" diyen
-her cümle benimdir; kural [Simon Willison](https://simonwillison.net/2026/Mar/1/ai-writing/)'ınki. Bu yazılara işaret
-koymuyorum.
+İşaret taşımayan her cümle bana ait. Yazarken ajan kullanıyorum: düzeltme,
+araştırma, kod. Ama fikir bildiren ya da "ben" diyen her cümle benimdir;
+kural [Simon Willison](https://simonwillison.net/2026/Mar/1/ai-writing/)'ınki.
+AI'ın yalnızca okuyup düzelttiği yazıya işaret koymuyorum.
 
-Radar farklı. İlgimi çeken konularda günlük bültenleri kendi kurduğum boru
-hatlarıyla, kendi belirlediğim şablon ve kurallarla üretiyorum. Metni bir ajan
-yazıyor: birçok kaynaktan topluyor, özetliyor, yayına hazır dosyayı bırakıyor.
-Arada okuyan ya da düzelten kimse yok. Bunun karşılığında iki kural var:
+İşaretli içerik farklı. Onu kendi kurduğum boru hatlarıyla, kendi
+belirlediğim şablon ve kurallarla üretiyorum: bir ajan birçok kaynaktan
+topluyor, özetliyor ve yayına hazır metni bırakıyor. Cümleler benim değil;
+konu seçimi, şablon ve kurallar benim. Bunun karşılığında iki kural var:
 
-- Her iddianın kaynağı yazının içinde numarayla, tam bağlantısı yazının
-  altında. Doğrulamayı okura bırakıyorum.
+- İddia içeren metinlerde her iddianın kaynağı yazının içinde numarayla,
+  tam bağlantısı yazının altında. Doğrulamayı okura bırakıyorum.
 - Ajanın kendi "doğruladım" beyanına yer yok. URL çekemediği bir sayfa için
   bile "profilden çekildi" yazdığını gördüm; o sütun kaldırıldı.
 
@@ -64,10 +65,9 @@ YouTube etiketi kendisi de ekleyebiliyor. Mart 2024'ten beri yürürlükte.
 
 Bu sitedeki karşılığı şu: metnin tamamını bir ajan yazdıysa yazının
 künyesinde, tarihin yanında kesik çizgili küçük bir işaret var: **ai üretimi**.
-Konu çiplerinden şekli farklı, çünkü bu bir konu değil, köken bilgisi.
-Radar bültenleri ve NotebookLM brifinginden çıkan domain bölümleri bu
-işareti taşıyor; menüde Radar'ın adının yanında da duruyor. Tıklayınca
-buraya geliyor.
+Konu çiplerinden şekli farklı, çünkü bu bir konu değil, köken bilgisi. Aynı
+işaret liste kartlarında, içindekiler tablosunda ve menüde de çıkıyor;
+gördüğün her yerde aynı şeyi söylüyor. Tıklayınca buraya geliyor.
 
 <figure class="ai-ornek" data-kim="biz">
   <div class="ornek-kart ornek-biz" aria-hidden="true">
@@ -84,7 +84,7 @@ Makine tarafı için de aynı bilgi var: işaretli sayfalarda
 
 ## Hata bulursan
 
-Yanlış bir iddia görürsen
+İşaretli bir metinde yanlış bir iddia görürsen
 [depoda bir issue aç](https://github.com/cmlonder/cmlonder.github.io/issues)
 ya da yazının altına yorum yaz. Ajanın kaçırdığı her hata, şablona eklenecek
 bir kural.

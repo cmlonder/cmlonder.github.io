@@ -1,29 +1,27 @@
 ---
 title: 'AI usage'
-description: 'How AI-generated content is labelled on this site, and why.'
+description: 'What the "ai-written" mark on this site means, wherever you see it.'
 updated: 2026-09-21
 ---
 
-Short answer: **The writing is mine. [Radar](/radar) is AI-compiled digests;
-I do not write those.**
-
-> The Radar briefings themselves are in Turkish. This page explains the
-> process in English; the mechanics are identical.
+Short answer: **Unmarked text is mine. Marked text was produced by an
+agent.** The mark means the same thing wherever you see it on this site,
+whichever section it is in.
 
 ## Method
 
-Every sentence in the essays, notes, playbooks and shelves is mine. I use
-agents while writing: correction, research, code. But any sentence with an
-opinion or an "I" in it is mine; the rule is [Simon Willison](https://simonwillison.net/2026/Mar/1/ai-writing/)'s. Those
-pieces carry no mark.
+Every sentence without the mark is mine. I use agents while writing:
+correction, research, code. But any sentence with an opinion or an "I" in it
+is mine; the rule is [Simon Willison](https://simonwillison.net/2026/Mar/1/ai-writing/)'s.
+Pieces that AI only read and corrected carry no mark.
 
-Radar is different. For topics I follow, I produce daily briefings through
-pipelines I built, with my own templates and rules. An agent writes the text:
-it gathers from many sources, summarises, and drops a publish-ready file.
-Nobody reads or edits it in between. In return, two rules hold:
+Marked content is different. I produce it through pipelines I built, with my
+own templates and rules: an agent gathers from many sources, summarises, and
+drops publish-ready text. The sentences are not mine; the choice of topic,
+the template and the rules are. In return, two rules hold:
 
-- Every claim is numbered inline and its full link sits at the foot of the
-  piece. Verification is left to the reader.
+- Where the text makes claims, every claim is numbered inline and its full
+  link sits at the foot of the piece. Verification is left to the reader.
 - The agent's own "verified" claims have no place. I watched it write
   "pulled from the profile" for a page it could not fetch; that column is gone.
 
@@ -68,9 +66,8 @@ In force since March 2024. [YouTube's announcement](https://blog.youtube/news-an
 Here is the equivalent on this site: when an agent wrote the whole text, the
 byline carries a small dashed mark next to the date: **ai-written**. It is
 shaped differently from the topic chips on purpose; it is not a topic, it is
-provenance. Radar bulletins and the domain chapters built from NotebookLM
-briefings carry it, and it also sits next to Radar's name in the menu.
-Clicking it brings you here.
+provenance. The same mark appears on list cards, in tables of contents and in
+the menu, and it says the same thing everywhere. Clicking it brings you here.
 
 <figure class="ai-ornek" data-kim="biz">
   <div class="ornek-kart ornek-biz" aria-hidden="true">
@@ -87,7 +84,7 @@ The machine side carries the same information: marked pages have
 
 ## If you find an error
 
-If you see a claim that is wrong,
+If you see a wrong claim in a marked piece,
 [open an issue in the repository](https://github.com/cmlonder/cmlonder.github.io/issues)
 or leave a comment under the piece. Every error the agent gets away with is a
 rule to add to the template.
