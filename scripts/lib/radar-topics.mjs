@@ -29,6 +29,7 @@ export const TOPIC_ALIASES = {
   'opensource': 'open-source', 'oss': 'open-source',
   'indie-game': 'oyun', 'indie-games': 'oyun', 'gamedev': 'oyun', 'game-dev': 'oyun',
   'solo-founder': 'solo-company', 'bootstrapped': 'solo-company', 'ai-integration': 'ai-news',
+  'solo-dev': 'solo-company', 'steam-next-fest': 'next-fest', 'conversion-rate': 'conversion',
 };
 
 /**
@@ -60,7 +61,7 @@ export function kimlikler(fm, seri) {
 export const CATEGORY_DROP = new Set(['applied-research', 'research', 'paper']);
 
 /** Hiçbir şey söylemeyen etiketler: seri adının tekrarı ya da her yazıya yapışan jenerikler. */
-export const TOPIC_DROP = new Set(['github', 'engineering', 'software', 'programming', 'tech', 'technology']);
+export const TOPIC_DROP = new Set(['github', 'engineering', 'software', 'programming', 'tech', 'technology', 'postmortem', 'indie-game']);
 
 /** Kategori takma adı -> RADAR_CATEGORY anahtarı (src/config.ts). */
 export const CATEGORY_ALIASES = {

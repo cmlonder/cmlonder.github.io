@@ -251,6 +251,7 @@ const radar = defineCollection({
     arxiv: z.string().regex(/^\d{4}\.\d{4,5}$/).optional(),
     repo: z.string().optional(),                 // GitHub Radar: owner/name
     game: z.string().optional(),                 // Indie: oyun adı (kebab)
+    game_genre: z.string().optional(),           // Indie: tür, İngilizce kısa ("Roguelike")
     subjects: z.array(z.string()).optional(),    // Solo/SaaS: üç vakanın ürün adı (kebab)
 
     draft: z.boolean().default(false),
