@@ -163,6 +163,9 @@ Sıra şu yüzden önemli: **önce GitHub, sonra taşıma.** Push patlarsa dosya
 dizinde kalıyor ve ertesi gün tekrar deneniyor; bu yüzden ayrıca
 "gönderildi mi" defteri tutulmuyor.
 
+Ortak sözleşme (dosya adı, frontmatter, gövde, kaynak, görülmüş hatalar):
+`.claude/skills/radar-bulten/SKILL.md` — Spark'a da aynı dosya skill olarak veriliyor.
+
 ### Yeni bülten ekleme
 
 ```bash

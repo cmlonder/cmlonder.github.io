@@ -35,7 +35,25 @@ export const TOPIC_ALIASES = {
  * dosya yayına alınmaz. "Son 30 gün tekrar seçme" kuralı prompt'ta
  * yaşayamaz (ajanın hafızası yok); burada yaşar.
  */
-export const SUBJECT_KEY = { 'paper-to-prod': 'arxiv' };
+export const SUBJECT_KEY = {
+  'paper-to-prod':    { key: 'arxiv',    required: true },   // "2403.12345"
+  'github-radar':     { key: 'repo',     required: false },  // "owner/name"
+  'indie-postmortem': { key: 'game',     required: false },  // oyun adı, kebab
+  'solo-founder':     { key: 'subjects', required: false },  // ["urun-adi", ...] üç vaka
+  'saas':             { key: 'subjects', required: false },
+};
+
+const kebabKimlik = (v) => String(v).trim().toLowerCase().replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\.git$/, '')
+  .replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c')
+  .replace(/[^a-z0-9/]+/g, '-').replace(/^-|-$/g, '');
+
+/** Kimlik değerlerini normalize eder (liste ya da tek), boşsa [] döner. */
+export function kimlikler(fm, seri) {
+  const t = SUBJECT_KEY[seri]; if (!t) return [];
+  const v = fm[t.key]; if (v == null || v === '') return [];
+  const liste = Array.isArray(v) ? v : [v];
+  return liste.map((x) => t.key === 'arxiv' ? String(x) : kebabKimlik(x)).filter(Boolean);
+}
 
 /** Seri sabiti olarak yazılan kategoriler: ürün türü değil, bilgi taşımıyor. */
 export const CATEGORY_DROP = new Set(['applied-research', 'research', 'paper']);

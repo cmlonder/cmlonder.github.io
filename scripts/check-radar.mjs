@@ -16,7 +16,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync
 import { join } from 'node:path';
 import { parse as parseYaml, stringify as yamlYaz } from 'yaml';
 import { radarSerileri } from './lib/series.mjs';
-import { normalizeRadar, SUBJECT_KEY } from './lib/radar-topics.mjs';
+import { normalizeRadar, SUBJECT_KEY, kimlikler } from './lib/radar-topics.mjs';
 import { normalizeSources } from './lib/radar-sources.mjs';
 
 const IN  = 'inbox/radar';
@@ -79,14 +79,31 @@ for (const series of readdirSync(IN, { withFileTypes: true }).filter((d) => d.is
     // Sınıflandırma sözlükten geçer: tags -> topics, takma adlar, kategori.
     const degisen = normalizeRadar(fm, series.name);
 
-    // Tekrar seçim: kimlik alanı seride daha önce yayınlandıysa kuyrukta kal.
-    const kimlik = SUBJECT_KEY[series.name];
-    if (kimlik) {
-      if (!fm[kimlik]) { die(`${src}: "${kimlik}" alanı zorunlu (tekrar seçim kontrolü)`); hatali++; continue; }
-      const yayinda = existsSync(join(OUT, series.name)) ? readdirSync(join(OUT, series.name)).filter((f) => f.endsWith('.md') && f !== `${date}.md`) : [];
-      const ayni = yayinda.find((f) => new RegExp(`^${kimlik}:\\s*["']?${String(fm[kimlik]).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']?\\s*$`, 'm').test(readFileSync(join(OUT, series.name, f), 'utf8')));
-      if (ayni) { die(`${src}: ${kimlik} ${fm[kimlik]} zaten yayında (${series.name}/${ayni}) — aynı konu ikinci kez seçilmiş`); hatali++; continue; }
+    // Tekrar seçim: kimlik alanı (arxiv / repo / game / subjects) seride daha
+    // önce yayınlandıysa kuyrukta kal. Alan yalnız bazı serilerde zorunlu;
+    // diğerlerinde varsa denetlenir, yoksa uyarı.
+    const tanim = SUBJECT_KEY[series.name];
+    if (tanim) {
+      const benim = kimlikler(fm, series.name);
+      if (!benim.length) {
+        if (tanim.required) { die(`${src}: "${tanim.key}" alanı zorunlu (tekrar seçim kontrolü)`); hatali++; continue; }
+        console.warn(`  ! ${name}: "${tanim.key}" alanı yok — tekrar seçim denetlenemiyor`);
+      } else {
+        if (Array.isArray(fm[tanim.key])) fm[tanim.key] = benim; else fm[tanim.key] = benim[0];
+        const klasor = join(OUT, series.name);
+        const yayinda = existsSync(klasor) ? readdirSync(klasor).filter((f) => f.endsWith('.md') && f !== `${date}.md`) : [];
+        let cakisan = null;
+        for (const f of yayinda) {
+          const m2 = /^---\n([\s\S]*?)\n---/.exec(readFileSync(join(klasor, f), 'utf8'));
+          let eskiFm; try { eskiFm = parseYaml(m2?.[1] ?? ''); } catch { continue; }
+          const onceki = kimlikler(eskiFm ?? {}, series.name);
+          const ortak = benim.find((k) => onceki.includes(k));
+          if (ortak) { cakisan = `${f}: ${ortak}`; break; }
+        }
+        if (cakisan) { die(`${src}: ${tanim.key} zaten yayında (${series.name}/${cakisan}) — aynı konu ikinci kez seçilmiş`); hatali++; continue; }
+      }
     }
+
     const kaynak = normalizeSources(body);
     degisen.push(...kaynak.degisen);
     for (const d of degisen) console.log(`  ~ ${name}: ${d}`);
