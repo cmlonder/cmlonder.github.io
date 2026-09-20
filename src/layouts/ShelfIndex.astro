@@ -4,7 +4,9 @@
  *
  * Tasarım maggieappleton.com/library'den: sayaç üstte küçük ve mavi,
  * başlıkta iki bölüm yan yana — "Kitaplık | Sırada" — aktif olan metin
- * renginde, kardeş sayfa gri bir bağlantı. Sekme yok, gruplama yok:
+ * renginde, kardeş sayfa gri bir bağlantı. Sıra SABİT: bitirdiklerim hep
+ * solda, sırada bekleyenler hep sağda. Aktif olanı sola almak sayfalar
+ * arası geçişte kelimeleri yer değiştiriyordu. Sekme yok, gruplama yok:
  * bitirdiklerim bu sayfada, sırada bekleyenler /<raf>/queue altında
  * (Maggie'nin library / antilibrary ayrımı).
  */
@@ -41,11 +43,15 @@ const kardes = mode === 'queued'
     <header class="head">
       <p class="count" aria-hidden="true">{gosterilen.length}</p>
       <h1>
-        <span class="current">{baslik}</span>
-        {kardes.n > 0 && (
+        {mode === 'queued'
+          ? <a class="sibling" href={kardes.href}>{meta.name[lang]}</a>
+          : <span class="current">{meta.name[lang]}</span>}
+        {(mode === 'queued' || kardes.n > 0) && (
           <>
             <span class="sep" aria-hidden="true">|</span>
-            <a class="sibling" href={kardes.href}>{kardes.label}</a>
+            {mode === 'queued'
+              ? <span class="current">{meta.queued[lang]}</span>
+              : <a class="sibling" href={kardes.href}>{meta.queued[lang]}</a>}
           </>
         )}
       </h1>
