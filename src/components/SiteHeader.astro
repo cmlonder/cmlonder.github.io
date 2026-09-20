@@ -103,7 +103,16 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
     <div class="controls">
       <Search lang={lang} />
       {altLocale && (
-        <a class="lang" href={altLocale.href} lang={altLocale.lang}>{altLocale.lang.toUpperCase()}</a>
+        <a class="lang" href={altLocale.href} lang={altLocale.lang}
+           title={altLocale.lang === 'tr' ? 'Türkçe' : 'English'}
+           aria-label={altLocale.lang === 'tr' ? 'Türkçe sürüm' : 'English version'}>
+          <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none"
+               stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+          </svg>
+          <span class="kod">{altLocale.lang.toUpperCase()}</span>
+        </a>
       )}
       <ThemeToggle />
     </div>
@@ -166,14 +175,18 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
   }
   /* WCAG 2.2 AA 2.5.8: en küçük hedef 24x24. Bağlantılar 23px'ti. */
   /* WCAG 2.2 AA 2.5.8: dil anahtarı 25x21 idi. */
+  /* Dil: dünya simgesi + hedef dilin kodu. Arama ve tema düğmeleriyle aynı
+     yükseklik ve daire-pill dili; kod küçük, simge konuşuyor. */
   .lang {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-block-size: 24px;
-    min-inline-size: 28px;
-    text-decoration: none;
+    display: inline-flex; align-items: center; gap: .3em;
+    block-size: 2rem; padding-inline: .55em .7em;
+    border: 1px solid transparent; border-radius: 999px;
+    color: var(--c-muted); text-decoration: none;
+    font-family: var(--f-sans); font-size: var(--t-xs); font-weight: 600; letter-spacing: .06em;
+    transition: color 120ms ease, border-color 120ms ease;
   }
+  .lang:hover { color: var(--c-accent); border-color: var(--c-border); }
+  .lang .kod { line-height: 1; }
   nav a.top { text-decoration: none; display: inline-flex; align-items: center; min-block-size: 24px; }
   .hub summary { min-block-size: 24px; }
 

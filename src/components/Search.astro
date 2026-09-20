@@ -74,8 +74,10 @@ const turler: Record<string, string> = {
   #search-open:hover { color: var(--c-accent); border-color: var(--c-border); }
 
   .palet {
-    inline-size: min(92vw, 42rem); max-block-size: min(70vh, 34rem);
-    margin-block-start: 14vh; padding: 0;
+    /* Ekranın ortasında; yüksekliği sabit ki sonuç geldikçe zıplamasın.
+       Boş durum (bölüm kısayolları) kutuyu zaten dolduruyor. */
+    inline-size: min(92vw, 42rem); block-size: min(70vh, 30rem);
+    margin: auto; padding: 0;
     border: 1px solid color-mix(in srgb, var(--c-border) 80%, transparent);
     border-radius: 16px;
     background: color-mix(in srgb, var(--c-surface) 86%, transparent);
@@ -87,7 +89,7 @@ const turler: Record<string, string> = {
   }
   .palet[open] { display: grid; animation: paletGiris .18s cubic-bezier(.2, .8, .2, 1) both; }
   .palet::backdrop { background: color-mix(in srgb, var(--c-bg) 55%, transparent); backdrop-filter: blur(4px); }
-  @keyframes paletGiris { from { opacity: 0; transform: translateY(-6px) scale(.985); } to { opacity: 1; transform: none; } }
+  @keyframes paletGiris { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
 
   .palet-kutu {
     display: flex; align-items: center; gap: var(--s-xs);
