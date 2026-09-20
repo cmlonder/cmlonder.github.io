@@ -40,6 +40,10 @@ outline:
     title: "Aviation industry standards and governance: a strategic analysis"
     promise: "IATA and A4A write the rules, SITA and ARINC carry the messages, OAG and ATPCO distribute schedules and fares, BSP and the clearing houses move the money; the full-content clause and the merchant-of-record question."
     part: "Reservation"
+  - slug: gds-ecosystem
+    title: "GDS and the airline distribution ecosystem: strategy and business logic"
+    promise: "The GDS's customers are four clusters; how the 1994 e-ticket, the 2004 DOT sunset and the OTAs' demand for a thousand bookless results broke the mainframe; look-to-book from 10:1 to 10,000:1."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."

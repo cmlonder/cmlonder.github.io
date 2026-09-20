@@ -40,6 +40,10 @@ outline:
     title: "Havacılık endüstri standartları ve yönetişim: stratejik analiz belgesi"
     promise: "Kuralı IATA ve A4A yazar, mesajı SITA ve ARINC taşır, tarifeyi OAG ve ATPCO dağıtır, parayı BSP ve takas odaları hareket ettirir; PCA'daki tam içerik maddesi ve kayıtlı satıcı sorusu."
     part: "Rezervasyon"
+  - slug: gds-ecosystem
+    title: "GDS ve havacılık dağıtım ekosistemi: stratejik analiz ve iş mantığı rehberi"
+    promise: "GDS'in müşterisi dört küme; 1994 e-bilet, 2004 DOT ve OTA'ların rezervasyonsuz bin sonuç talebi mainframe'i nasıl çökertti; look-to-book 10:1'den 10.000:1'e."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

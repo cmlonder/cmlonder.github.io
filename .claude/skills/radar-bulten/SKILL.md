@@ -1,14 +1,14 @@
 ---
 name: radar-bulten
-description: cmlonder.com/radar bültenlerinin ortak sözleşmesi — Spark ajanı bir sayı yazarken, ya da bir bülten/prompt incelenirken kullanılır. Dosya adı, frontmatter, gövde ve kaynak kuralları; kapının (check-radar) neyi durdurup neyi düzelttiği; görülmüş hatalar.
+description: cmlonder.com/radar bültenlerinin ortak sözleşmesi — Spark ajanı bir sayı yazarken, ya da bir bülten/prompt incelenirken kullanılır. Dosya adı, frontmatter, gövde ve kaynak kuralları; kapının (check-radar) neyi durdurup neyi düzelttiği; görülmüş hatalar. Beş seri onaylı; v1.0.
 ---
 
-# Radar bülteni yazma sözleşmesi — v0.5 (taslak, olgunlaşıyor)
+# Radar bülteni yazma sözleşmesi — v1.0 (21 Eyl 2026)
 
-Bu skill iki yerde yaşar: Spark'ta (bülteni yazan ajan) ve bu repoda
-(prompt ve bülten incelemesi). Seriye özgü ses ve gövde yapısı her serinin
-kendi prompt'unda; burada **hepsinde aynı olan** kurallar var. Çelişirse bu
-dosya kazanır — kapı bu dosyaya göre çalışıyor.
+Bu dosya iki yerde yaşar: Spark'ta (bülteni yazan ajanın skill'i) ve bu
+repoda (prompt ve bülten incelemesi). Seriye özgü ses ve gövde yapısı her
+serinin kendi prompt'unda (`docs/spark-prompt*.md`); burada **hepsinde aynı
+olan** kurallar var. Çelişirse bu dosya kazanır — kapı buna göre çalışır.
 
 ## 1. Zincir ve kapı
 
@@ -16,106 +16,107 @@ dosya kazanır — kapı bu dosyaya göre çalışıyor.
 Spark → Drive kökü → Apps Script (08:00) → GitHub inbox/radar/<seri>/ → check-radar → site
 ```
 
-Arada insan yok. Yazdığın bayt sitede yayınlanır. `check-radar` ("kapı") iki
-şey yapar: **durdurur** (frontmatter bozuk, alan eksik, seri bilinmiyor, aynı
-konu ikinci kez) ya da **düzeltir** (tags→topics, ikiz konular, düz `[1]`
-atıflar, kaynak listesi biçimi, ondalık puanlar). Düzeltiyor diye gevşeme:
-sözlükte olmayan hata düzelmez, kuyrukta kalan dosyayı kimse görmez.
+Arada insan yok; yazdığın bayt sitede yayınlanır. `check-radar` ("kapı")
+iki şey yapar: **durdurur** (frontmatter bozuk, alan eksik, seri bilinmiyor,
+aynı konu ikinci kez) ya da **düzeltir** (tags→topics, ikiz konular, düz
+`[1]` atıflar, kaynak listesi biçimi, ondalık puanlar, sürüm ekleri).
+Düzeltiyor diye gevşeme: sözlükte olmayan hata düzelmez; kuyrukta kalan
+dosyayı kimse görmez, bir sonraki sabah yeniden denenir.
 
 ## 2. Seriler
 
-| Seri (slug) | Site adı | Dosya adı | `title:` | Kimlik alanı |
-|---|---|---|---|---|
-| `solo-founder` | Solo Girişimci Bülteni | `Solo-Girisimci-Bulteni-PARSE-YYYY-MM-DD.md` | `"Solo Girişimci Bülteni — <D Ay YYYY>"` | `subjects: [üç ürün]` |
-| `saas` | SaaS Bülteni | `SaaS-Bulteni-PARSE-YYYY-MM-DD.md` | `"SaaS Bülteni — <D Ay YYYY>"` | `subjects: [...]` |
-| `github-radar` | GitHub Radar | `GitHub-Radar-PARSE-YYYY-MM-DD.md` | `"GitHub Radar — <Proje>"` | `repo: "owner/name"` |
-| `indie-postmortem` | Indie Oyun Bülteni | `Indie-Oyun-Bulteni-PARSE-YYYY-MM-DD.md` | `"Indie Oyun Bülteni — <Oyun>"` | `game: "oyun-adi"` |
-| `paper-to-prod` | Makale Bülteni | `Makale-Bulteni-PARSE-YYYY-MM-DD.md` | `"Makale Bülteni — <Makale>"` | `arxiv: "2403.12345"` |
+| Seri (slug) | Site adı | Dosya adı | `title:` | Kimlik (zorunlu) | Ek alan |
+|---|---|---|---|---|---|
+| `solo-founder` | Solo Girişimci Bülteni | `Solo-Girisimci-Bulteni-PARSE-YYYY-MM-DD.md` | `"Solo Girişimci Bülteni — <D Ay YYYY>"` | `subjects: [üç ürün]` | `category` (matris), `revenue_source` |
+| `saas` | SaaS Bülteni | `SaaS-Bulteni-PARSE-YYYY-MM-DD.md` | `"SaaS Bülteni — <D Ay YYYY>"` | `subjects: [...]` | `revenue_source` |
+| `github-radar` | GitHub Radar | `GitHub-Radar-PARSE-YYYY-MM-DD.md` | `"GitHub Radar — <Proje>"` | `repo: "owner/name"` | `health_score` |
+| `indie-postmortem` | Indie Oyun Bülteni | `Indie-Oyun-Bulteni-PARSE-YYYY-MM-DD.md` | `"Indie Oyun Bülteni — <Oyun>"` | `game: "oyun-adi"` | `game_genre`, `revenue_source` |
+| `paper-to-prod` | Makale Bülteni | `Makale-Bulteni-PARSE-YYYY-MM-DD.md` | `"Makale Bülteni — <Makale>"` | `arxiv: "2403.12345"` | `readiness_score` |
 
 Dosya adı = seri adı (Türkçe harf ve büyük-küçük fark etmez, boşluk yerine
 tire) + `-PARSE-` + bugünün tarihi. Kalıba uymayan dosyaya kimse dokunmaz.
 Drive kökünde, `application/x-markdown`, klasöre taşıma yok, Google Doc'a
-çevirme yok, tek dosya.
+çevirme yok, tek dosya. `category` yalnız Solo'da (ürün türü matrisi);
+diğer serilerde yazılmaz — seri sabiti bilgi taşımaz, kapı siler.
 
 ## 3. Frontmatter
 
 ```yaml
 ---
-title: "<Seri adı> — <sayı adı>"        # çift tırnak; tarih başlığa yalnız günlük serilerde girer
+title: "<Seri adı> — <sayı adı>"        # çift tırnak; tarih yalnız Solo/SaaS başlığında
 date: YYYY-MM-DD                          # tırnaksız, bugünün tarihi
-topics: ["<2-4 konu>"]                    # tags DEĞİL
+topics: ["<2-4 konu>"]                    # tags DEĞİL; serinin havuzundan
 summary: "<tek cümle, yüklemli, en fazla 25 kelime>"
 generator: "Gemini Spark"
 promptVersion: "<sürüm>"
-# seriye göre:
-category: "<ürün türü>"                   # yalnız Solo/SaaS; matristen. GitHub/Indie/Makale YAZMAZ
+# seriye göre (tablo):
+subjects: ["urun-bir", "urun-iki"]        # küçük harf, tire
+repo: "owner/name"
+game: "oyun-adi"
+arxiv: "2403.12345"                       # sürümsüz, "arXiv:" öneksiz
+category: "<matristen>"                   # yalnız Solo
 revenue_source: "<platform | interview | self_reported | developer_blog | estimated | unknown>"
-health_score: 7.5                         # GitHub; tırnaksız sayı, 0-10
-readiness_score: 6.5                      # Makale; tırnaksız sayı, 0-10
-arxiv: "2403.12345"                       # Makale; sürümsüz, "arXiv:" öneksiz
-repo: "owner/name"                        # GitHub
-game: "oyun-adi"                          # Indie; küçük harf, tire
-subjects: ["urun-bir", "urun-iki"]        # Solo/SaaS; her vaka için ürün adı, küçük harf, tire
+health_score: 7.5                         # tırnaksız sayı, 0-10
+readiness_score: 6.5                      # tırnaksız sayı, 0-10
+game_genre: "Roguelike"                   # İngilizce, kısa
 ---
 ```
 
-Kurallar: `---` tam üç tire, öncesi sonrası boşluk yok. `title` ve `summary`
-çift tırnak (Türkçe kesme işareti tek tırnaklı YAML'ı bozuyor). Listede
-olmayan alan ekleme. Puanlar tırnaksız sayı; ondalık serbest.
+Kurallar: `---` tam üç tire, öncesi sonrası boşluk yok; her alan kendi
+satırında. `title` ve `summary` çift tırnak (Türkçe kesme işareti tek
+tırnaklı YAML'ı bozuyor). Listede olmayan alan ekleme. Puanlar tırnaksız
+sayı, ondalık serbest.
 
-**Kimlik alanı tekrar seçimi engeller.** Ajanın hafızası yoktur; "son 30 gün
-aynı konuyu seçme" kuralı prompt'ta değil kapıda yaşar: kimlik değeri seride
-daha önce yayınlandıysa dosya kuyrukta kalır. Kimlik değeri her sayıda dolu
-olsun; boşsa denetlenemez.
+**Kimlik alanı tekrar seçimi engeller.** Ajanın hafızası yoktur; "aynı
+konuyu seçme" kuralı prompt'ta değil kapıda yaşar: kimlik değeri seride
+(Solo ve SaaS için iki seride birden) daha önce yayınlandıysa dosya kuyrukta
+kalır. Boş bırakılamaz.
 
-**Konular:** küçük harf, kebab-case, kategoriyle aynı kelimeyi tekrar etme.
-Önce mevcut sözlükten: `b2b`, `tools`, `bulten`, `dizin`, `sablon`, `ajans`,
-`pricing`, `analytics`, `open-core`, `ai-agents`, `solo-company`, `design`,
-`automation`, `hizmet-urunu`, `bilgi-urunu`, `steam`, `postmortem`,
-`latency`, `memory`, `compute`, `gpu`, `kernel`, `vllm`, `systems`,
-`deployment`, `inference`, `quantization`, `database`, `cryptography`, `edge`.
-İngilizce/Türkçe ikiz yazma (`devtool` değil `tools`, `chrome-extension`
-değil `eklenti`, `indie-game` değil kategori `oyun`). Her sayıda aynı olan
-etiket (`github`, `engineering`, `open-source` her sayıda) konu değildir.
+**Konular:** küçük harf, kebab-case, serinin sabit havuzundan; kategoriyle
+aynı kelimeyi tekrar etme. İngilizce/Türkçe ikiz yazma (`devtool` değil
+`tools`, `chrome-extension` değil `eklenti`). Her sayıda aynı olan etiket
+(`github`, `postmortem`, `indie-game`, `engineering`) konu değildir, kapı
+düşürür. Eşleşen takma adlar: `solo-founder`/`solo-dev`/`bootstrapped` →
+`solo-company`, `ai-integration`/`ai` → `ai-news`, `architecture` →
+`solution-architecture`, `steam-next-fest` → `next-fest`.
 
 ## 4. Gövde
 
-- **Giriş başlıksız**, ilk cümle konunun adıyla başlar. "Bu hafta X'i
+- **Giriş başlıksız**, ilk cümle konunun adıyla başlar. "Bugün X'i
   inceliyoruz", "Trending listesi yine…" gibi ısınma yok.
-- **Girişin son paragrafı üç kalın rakam** taşır (serinin en önemli üç
-  sayısı). Rakam yoksa "rakam yok" yazılır, uydurulmaz.
+- **Girişin son paragrafı üç kalın rakam** taşır (serinin prompt'unda hangi
+  üçü olduğu yazar). Rakam yoksa "rakam yok" yazılır, uydurulmaz.
 - Başlıklar yalnız `##`; `#` hiç yok; serinin prompt'undaki adlar ve sıra;
   son `##` her zaman `Kaynaklar`.
 - Madde işareti yalnız `## Kaynaklar` altında. Etiket satırı (`**Durum:** x`)
-  yok. "Sonuç" / "Karşılaştırma" / "Çıkarım" diye ayrı bölüm yok; çıkarım
-  okura kalır.
+  yok. Ayrı "Sonuç"/"Karşılaştırma"/"Çıkarım" bölümü yok; çıkarım okura kalır.
 - Kalın: paragraf başına en fazla üç; rakam, yüzde, teknoloji adı.
 - Sayılar Türkçe: `6.441 dolar`, `2,5 milyon`, `%30`, `17 bin`.
 - Teknik terim orijinal (compute, latency, wishlist, churn); zorlama çeviri yok.
 - Kelime tavanı serinin prompt'unda; aşma.
+- Kurucu/geliştirici/yazar alıntısı: `>` blok alıntı, birebir, çevirisiz,
+  düzeltmesiz; bağlamı Türkçe.
 - LLM gevezeliği yok: "gözler önüne seriyor", "derinlemesine incelendiğinde",
   "şüphesiz ki", "devrim niteliğinde", "büyüleyici", "önümüze koyuyor".
-  "Kategori Uygunluk Testi" gibi iç kontrol metni yazıya girmez.
+  İç kontrol metni ("Kategori Uygunluk Testi") yazıya girmez.
 
 ## 5. Kaynaklar
 
 - Cümle içinde: `<sup><a href="https://tam-url">3</a></sup>`, noktadan önce.
-  Düz `[3]`, bağlantısız `<sup>3</sup>` yazma (kapı çevirir ama sözleşme bu).
+  Düz `[3]`, bağlantısız `<sup>3</sup>` yazma.
 - Sonda `## Kaynaklar`, sıralı liste: `3. [Kaynağın ne olduğu](https://tam-url)`.
-  Adı olup URL'si olmayan satır geçersiz. Numaralar gövdeyle aynı.
-- Aynı yazının/aynı alan adının kopyaları ayrı kaynak sayılmaz. Arama
-  motoru bağlantısı (`google.com/search?…`) yasak. Tahmin edilmiş URL yasak.
-- Kurucu/yazar alıntısı varsa `>` blok alıntı, birebir, çevirisiz,
-  düzeltmesiz; bağlamı Türkçe açıklanır.
+  URL'siz satır geçersiz. Numaralar gövdeyle eş.
+- Aynı yazının/alan adının kopyaları ayrı kaynak sayılmaz. Arama motoru
+  bağlantısı yasak. Tahmin edilmiş URL yasak.
 
 ## 6. Dürüstlük
 
 - Kaynakta olmayan rakam yazılmaz. Tahminse cümlede "tahmin" der, yöntemi
-  yazar (`Boxleiter: yorum × 30`), frontmatter'da `revenue_source: estimated`.
+  yazar (`Boxleiter: yorum × 30`), `revenue_source: estimated`.
 - "Doğrulandı", "teyit edildi" yazılmaz — doğrulamayı site yapar.
 - Teyit edemedin: "…ama bunu ikinci bir kaynakta bulamadım." Rakam eski:
   "Ağustos 2025'teki son açıklanan rakam…". Portföy toplamı: söyle.
-- Güncel kaynak yoksa "hâlâ ayakta" deme.
+  Güncel kaynak yoksa "hâlâ ayakta" deme.
 - **Emniyet sübabı:** kaynak, kod, PR, alıntı ya da rakam bulamıyorsan
   uydurma; vakayı değiştir ya da kuralı gevşet (4 kaynak yerine 2) ve bunu
   yazıda söyle. Doğruluk, kural setinden önemli.
@@ -124,35 +125,32 @@ etiket (`github`, `engineering`, `open-source` her sayıda) konu değildir.
 
 | Hata | Sonuç | Kural |
 |---|---|---|
-| `health_score: "9.2"` (şema tam sayı) | sayı işlenemedi, sonra şema gevşetildi | puan tırnaksız sayı, ondalık serbest |
+| `health_score: "9.2"` (şema tam sayı) | sayı işlenemedi | puan tırnaksız sayı, ondalık serbest |
 | Kaynaklar `[1] https://…` düz satır | tek paragrafa katlandı | sıralı liste, markdown bağlantı |
 | Gövdede düz `[1]` | tıklanamaz atıf | `<sup><a href>` |
 | `tags:` yazıldı, şema `topics` | 21 bültenin etiketi hiç okunmadı | `topics` |
-| `category: github-radar` | seri adının tekrarı | ürün türü değilse kategori yazma |
-| `tags: ["architecture","open-source","github","engineering"]` her sayıda | konu sayfaları anlamsız | konuya özgü, değişen konular |
+| `category: github-radar` / `applied-research` | seri adının tekrarı | ürün türü değilse kategori yazma |
+| Her sayıda aynı `tags` | konu sayfaları anlamsız | konuya özgü, değişen konular |
 | `title: "Github Radar — : TigerBeetle"` | başlıkta " — :" | `<Seri> — <Ad>` |
 | `Haftalik-…-PARSE` dosya adı, seri adı değişti | eşleşmedi, kuyrukta kaldı | dosya adı = güncel seri adı |
 | "profilden çekildi" diyen 404 adres, Google arama linki | yanlış kaynak | URL uydurma; arama linki yasak |
 | `BuiltWith'in` tek tırnaklı YAML | frontmatter bozuldu | çift tırnak |
 | Aynı şirket 4 kaynak gibi | sahte kaynak zenginliği | alan adı başına bir kaynak |
+| Prompt işlenmiş görünümden kopyalandı | `---`, `##`, `<sup>` yutuldu | prompt'u `docs/spark-prompt*.md`'den ham kopyala |
 
-## 8. Seriye özgü olanlar (prompt'ta yaşar, burada yalnız işaret)
+## 8. Seriye özgü (prompt'ta yaşar; burada yalnız işaret)
 
-- **Solo Girişimci** (onaylı v14.2): günün kategorisi DD%10 matrisi; üç vaka
-  (AI öncesi / AI çağı / ulaşılabilir olan); her vakada kurucunun birebir
-  blok alıntısı; ilk iki vakada ≥4 alan adı, üçüncüde ≥2; 1.000–1.200 kelime.
-- **Makale** (onaylı v1.4): `arxiv` zorunlu; sabit konu havuzu; giriş +
-  İddia ve Gerçeklik / Kod ve Entegrasyon Haritası / Ticari Etki; 800–1.000.
-- **SaaS** (onaylı v2.1): tek ana hikâye/pattern; Günün Hikâyesi / Dağıtım /
-  Para / AI'ın Gerçekten Değiştirdiği Şey; sabit konu havuzu; `subjects`
-  Solo ile çapraz denetlenir; kategori yazılmaz; 800–1.000.
-- **GitHub Radar** (onaylı v2.1): tek proje; `repo` zorunlu; `health_score`
-  Sağlık bölümünden türer; Mimari Deep-Dive / Kod ve Topluluk Sağlığı /
-  Production Riski; sabit konu havuzu; 800–1.000.
-- **Indie Oyun**: inceleme sırada.
-
-Prompt'u Spark'a **ham metin** olarak yapıştır: işlenmiş görünümden kopya
-`---`, `##` ve kod çitlerini düşürüyor (iki kez yaşandı).
+- **Solo Girişimci** (v14.2): DD%10 kategori matrisi; üç vaka (AI öncesi /
+  AI çağı / ulaşılabilir olan); her vakada blok alıntı; ilk iki vakada ≥4
+  alan adı; 1.000–1.200 kelime.
+- **SaaS** (v2.1): tek ana hikâye/pattern; Günün Hikâyesi / Dağıtım / Para /
+  AI'ın Gerçekten Değiştirdiği Şey; `subjects` Solo ile çapraz; 800–1.000.
+- **GitHub Radar** (v2.1): tek proje; Mimari Deep-Dive / Kod ve Topluluk
+  Sağlığı / Production Riski; `health_score` Sağlık bölümünden; 800–1.000.
+- **Indie Oyun** (v2.2): Lansman Anatomisi / Wishlist ve Dağıtım Mekaniği /
+  Ekonomi; Boxleiter tahmini → `estimated`; `game_genre`; 800–1.000.
+- **Makale** (v1.4): İddia ve Gerçeklik / Kod ve Entegrasyon Haritası /
+  Ticari Etki; `arxiv` sürümsüz; `readiness_score`; 800–1.000.
 
 ## 9. Son kontrol (yazmadan önce, yazıya koymadan)
 
