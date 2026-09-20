@@ -8,6 +8,10 @@ outline:
     title: "From mail contracts to SABRE"
     promise: "Why inventory and the passenger record were born apart, and why that split still costs us."
     part: "Reservation"
+  - slug: sabre-to-pss
+    title: "From SABRE to PSS: why one architecture lived 60 years"
+    promise: "Why the 1964 data model still sits inside today's PSS, and why standardisation was missed on the first try."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."
