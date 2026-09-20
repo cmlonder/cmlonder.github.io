@@ -12,6 +12,10 @@ outline:
     title: "SABRE'den PSS'e: bir mimari neden 60 yıl yaşadı"
     promise: "1964'ün veri modeli bugünkü PSS'lerde hâlâ neden duruyor; standartlaşma ilk denemede neden kaçırıldı."
     part: "Rezervasyon"
+  - slug: deregulation-1978
+    title: "1978: kâr garantisi kalkınca gelir yönetimi doğdu"
+    promise: "%55 dolulukla %12 kâr garantisi bitince fiyat, rota ve envanter kararını kim verdi; gelir yönetimi neden hayatta kalma şartı oldu."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

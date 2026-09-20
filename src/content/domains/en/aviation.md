@@ -12,6 +12,10 @@ outline:
     title: "From SABRE to PSS: why one architecture lived 60 years"
     promise: "Why the 1964 data model still sits inside today's PSS, and why standardisation was missed on the first try."
     part: "Reservation"
+  - slug: deregulation-1978
+    title: "1978: when the profit guarantee ended, revenue management was born"
+    promise: "Who decided fares, routes and inventory once the 55%-load, 12%-return guarantee was gone, and why revenue management became a survival skill."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."
