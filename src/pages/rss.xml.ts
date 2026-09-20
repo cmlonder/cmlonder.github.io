@@ -2,24 +2,8 @@ import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { SITE, HERO, ENTRY_TYPE } from '../config';
 import { getAllEntries, parseId, entryPath, getDomains, getChapters } from '../lib/content';
-import { getCollection, render } from 'astro:content';
-import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-
-/*
- * Tam metin: okuyucu (Reeder, NetNewsWire) yazıyı beslemede okusun, siteye
- * tıklamak zorunda kalmasın. Markdown container API ile HTML'e çevriliyor;
- * göreli yollar mutlaklaştırılıyor, açıklayıcı custom element'ler (canvas
- * simülasyonu, beslemede boş kutu) atılıyor.
- */
-const kap = await AstroContainer.create();
-async function tamMetin(entry: any): Promise<string> {
-  const { Content } = await render(entry);
-  const html = await kap.renderToString(Content);
-  return html
-    .replace(/<c-[a-z-]+[^>]*>[\s\S]*?<\/c-[a-z-]+>/g, '')
-    .replace(/(src|href|srcset)="\/(?!\/)/g, `$1="${SITE.url.replace(/\/$/, '')}/`)
-    .replace(/srcset="([^"]*)"/g, (_m, v) => `srcset="${v.replace(/(^|,\s*)\/(?!\/)/g, `$1${SITE.url.replace(/\/$/, '')}/`)}"`);
-}
+import { getCollection } from 'astro:content';
+import { tamMetin } from '../lib/rss';
 
 export async function GET(context: APIContext) {
   const lang = 'en' as const;

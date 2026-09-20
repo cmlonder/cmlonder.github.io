@@ -238,9 +238,9 @@ const radar = defineCollection({
     // değil — hikâye anlatıyor.
     category: z.string().optional(),
     topics: z.array(z.string()).default([]),
-    revenue_source: z.enum(['platform', 'interview', 'self_reported', 'unknown']).optional(),
-    /** GitHub Radar: projenin yaşam belirtisi, 1-10. Ajanın tahmini; künyede öyle yazıyor. */
-    health_score: z.coerce.number().int().min(1).max(10).optional(),
+    revenue_source: z.enum(['platform', 'interview', 'self_reported', 'developer_blog', 'estimated', 'unknown']).optional(),
+    /** GitHub Radar: projenin yaşam belirtisi, 0-10; ondalık olabilir ("9.2"). Ajanın tahmini; künyede öyle yazıyor. */
+    health_score: z.coerce.number().min(0).max(10).optional(),
 
     draft: z.boolean().default(false),
   }),

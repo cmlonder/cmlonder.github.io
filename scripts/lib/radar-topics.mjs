@@ -27,6 +27,7 @@ export const TOPIC_ALIASES = {
   'veri-urunu': 'dizin-veri', 'dijital-urun': 'dijital-varlik',
   'architecture': 'solution-architecture', 'software-architecture': 'solution-architecture',
   'opensource': 'open-source', 'oss': 'open-source',
+  'indie-game': 'oyun', 'indie-games': 'oyun', 'gamedev': 'oyun', 'game-dev': 'oyun',
 };
 
 /** Hiçbir şey söylemeyen etiketler: seri adının tekrarı ya da her yazıya yapışan jenerikler. */
@@ -42,6 +43,7 @@ export const CATEGORY_ALIASES = {
   'automation': 'otomasyon',
   'productized-service': 'hizmet-urunu',
   'directory': 'dizin-veri', 'dizin': 'dizin-veri',
+  'gamedev': 'oyun', 'game': 'oyun', 'games': 'oyun', 'indie-game': 'oyun', 'video-game': 'oyun',
 };
 
 const kebab = (s) => String(s).trim().toLowerCase()

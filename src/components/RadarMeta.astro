@@ -34,7 +34,7 @@ const saglik: number | null = data.health_score ?? null;
       <span class="chip saglik" title="Ajanın tahmini: issue kapanma hızı, sürüm düzeni, bakımcı ekibi">
         <span class="lbl">Sağlık</span>
         <span class="bar" aria-hidden="true"><span style={`--p:${saglik * 10}%`} /></span>
-        {saglik}/10
+        {String(saglik).replace('.', ',')}/10
       </span>
     )}
   </nav>

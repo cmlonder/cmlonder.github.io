@@ -146,6 +146,26 @@ Ajanın onaysız dokunmadığı her şey burada; ayrıntı ilgili bölümde.
 - Colophon'u kendi sesinle; ajan taslak çıkarır, yayın kararı sende (bölüm 3)
 - Radar zinciri yazısı: taslağı ajan yazar, yayın kararı sende (aşağıda)
 
+## 10. E-posta aboneliği — Buttondown (sen)
+
+Site tarafı hazır ve KAPALI: `src/config.ts` → `NEWSLETTER.username` boş olduğu
+sürece sayfaya form düşmüyor. Açmak için:
+
+1. <https://buttondown.com> hesabı aç (ilk 100 abone ücretsiz; RSS-to-email
+   eklentisi +9 $/ay). Settings → tracking pikselini kapat, double opt-in açık.
+2. `NEWSLETTER.username`'e kullanıcı adını yaz → push. Formlar açılır:
+   `/subscribe`, footer, her radar bülteni ve seri sayfası.
+3. Etiketler formdan kendiliğinden oluşur (`yazilar`, `solo-kurucu`,
+   `haftalik-saas`, `github-radar`, `indie-game`). İlk abone gelince
+   Subscribers → Tags altında görürsün.
+4. Settings → RSS-to-email: her seri için bir otomasyon, kaynak seri
+   beslemesi (`/radar/<seri>/rss.xml`), hedef kitle o etiket. Solo günlük;
+   istersen "weekly digest" seç. Yazılar için `/tr/rss.xml`.
+5. Doğrula: kendi adresinle abone ol, onay maili, ilk bülten, çıkış bağlantısı.
+
+Otomasyonun etikete göre süzüp süzmediğini panelde teyit et (dokümantasyon
+"audience filter" diyor); süzmüyorsa seri başına ayrı newsletter aç.
+
 ## Radar zinciri hakkında yazı (backlog)
 
 Spark → Drive → Apps Script → GitHub Actions → site zincirini uçtan uca

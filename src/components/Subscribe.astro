@@ -1,0 +1,80 @@
+---
+/**
+ * E-posta abonelik formu — Buttondown'a düz POST, JS yok.
+ *
+ * `full`: /subscribe sayfası — liste seçimi (checkbox = tag).
+ * compact: bülten ve seri sayfaları — tek satır, o serinin etiketi gizli.
+ * NEWSLETTER.username boşsa hiç render edilmez.
+ */
+import { NEWSLETTER, NEWSLETTER_UI, type NewsletterList, type Locale } from '../config';
+import { localePath } from '../lib/content';
+interface Props { lang: Locale; variant?: 'full' | 'compact'; preset?: NewsletterList[] }
+const { lang, variant = 'compact', preset = ['own'] } = Astro.props;
+const t = NEWSLETTER_UI[lang];
+const acik = Boolean(NEWSLETTER.username);
+const action = `https://buttondown.com/api/emails/embed-subscribe/${NEWSLETTER.username}`;
+const listeler = Object.entries(NEWSLETTER.lists) as [NewsletterList, (typeof NEWSLETTER.lists)[NewsletterList]][];
+const id = `abone-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+{acik && variant === 'full' && (
+  <form class="abone full" action={action} method="post" target="_blank">
+    <input type="hidden" name="embed" value="1" />
+    <fieldset>
+      <legend class="sr-only">{t.title}</legend>
+      {listeler.map(([k, l]) => (
+        <label class="secim">
+          <input type="checkbox" name="tag" value={l.tag} checked={preset.includes(k)} />
+          <span>{l.name[lang]}</span>
+        </label>
+      ))}
+    </fieldset>
+    <div class="satir">
+      <label class="sr-only" for={id}>{t.email}</label>
+      <input id={id} type="email" name="email" required autocomplete="email" placeholder={t.email} />
+      <button type="submit">{t.go}</button>
+    </div>
+    <p class="not">{t.note}</p>
+  </form>
+)}
+
+{acik && variant === 'compact' && (
+  <form class="abone compact" action={action} method="post" target="_blank">
+    <input type="hidden" name="embed" value="1" />
+    {preset.map((k) => <input type="hidden" name="tag" value={NEWSLETTER.lists[k].tag} />)}
+    <p class="baslik">{t.compact}</p>
+    <div class="satir">
+      <label class="sr-only" for={id}>{t.email}</label>
+      <input id={id} type="email" name="email" required autocomplete="email" placeholder={t.email} />
+      <button type="submit">{t.go}</button>
+    </div>
+    <p class="not"><a href={localePath(lang, 'subscribe')}>{t.all} &#8594;</a></p>
+  </form>
+)}
+
+<style>
+  .abone { font-family: var(--f-sans); }
+  .abone.compact {
+    margin-block-start: var(--s-2xl); padding: var(--s-m);
+    border: 1px solid var(--c-border); border-radius: var(--radius-lg); background: var(--c-surface);
+  }
+  .baslik { font-size: var(--t-sm); font-weight: 600; margin-block-end: var(--s-2xs); }
+  fieldset { border: 0; padding: 0; margin: 0 0 var(--s-s); display: grid; gap: .4em; }
+  .secim { display: flex; align-items: center; gap: .6em; font-size: var(--t-sm); cursor: pointer; }
+  .secim input { accent-color: var(--c-accent); inline-size: 1.05em; block-size: 1.05em; margin: 0; }
+  .satir { display: flex; gap: var(--s-2xs); flex-wrap: wrap; }
+  .satir input {
+    flex: 1 1 14rem; min-inline-size: 0; padding: .6em .85em;
+    border: 1px solid var(--c-border); border-radius: var(--radius); background: var(--c-bg); color: var(--c-text);
+    font: inherit; font-size: var(--t-sm);
+  }
+  .satir input:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 1px; border-color: var(--c-accent); }
+  .satir button {
+    padding: .6em 1.1em; border: 1px solid var(--c-accent); border-radius: var(--radius);
+    background: var(--c-accent); color: var(--c-bg); font: inherit; font-size: var(--t-sm); font-weight: 600; cursor: pointer;
+    transition: opacity .15s ease;
+  }
+  .satir button:hover { opacity: .9; }
+  .not { margin-block-start: var(--s-2xs); font-size: var(--t-xs); color: var(--c-muted); }
+  .not a { color: var(--c-accent); text-decoration: none; }
+</style>

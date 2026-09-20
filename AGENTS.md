@@ -308,6 +308,13 @@ metin katmanı yok, ekran okuyucu ve pagefind yalnızca alt metnini görüyor.
 Bölümü sıfırdan kurmak için `new-chapter` skill'i var: domain, başlık, PDF ve
 brifing verildiğinde slaytları üretip yazıya yerleştiriyor.
 
+## E-posta aboneliği
+
+Buttondown, `src/config.ts` → `NEWSLETTER`. `username` boşken sayfaya **hiçbir
+şey** düşmez. Form düz HTML POST (`Subscribe.astro`), JS yok; seri seçimi
+`tag` alanıyla. Seri beslemeleri `/radar/<seri>/rss.xml`, hepsi `/radar/rss.xml`;
+yeni seri açınca `NEWSLETTER.lists`'e de bir satır ekle. Açma adımları TODO.md 10.
+
 ## Yorumlar
 
 giscus (GitHub Discussions). `src/config.ts` içindeki `COMMENTS.enabled`

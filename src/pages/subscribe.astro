@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Subscribe from '../components/Subscribe.astro';
+import { NEWSLETTER, NEWSLETTER_UI, PAGE, type Locale, type NewsletterList } from '../config';
+import { localePath } from '../lib/content';
+
+const lang: Locale = 'en';
+const t = NEWSLETTER_UI[lang];
+const listeler = Object.entries(NEWSLETTER.lists) as [NewsletterList, (typeof NEWSLETTER.lists)[NewsletterList]][];
+---
+
+<Base title={`${t.title} — Cemal Önder`} description={t.blurb} lang={lang}
+      altLocale={{ lang: 'tr' as Locale, href: localePath('tr', 'subscribe') }}>
+  <article class="narrow">
+    <h1>{t.title}</h1>
+    <p class="blurb">{t.blurb}</p>
+
+    <Subscribe lang={lang} variant="full" preset={['own']} />
+
+    <h2>{t.feeds}</h2>
+    <ul class="feeds">
+      {listeler.map(([, l]) => (
+        <li>
+          <span>{l.name[lang]}</span>
+          <a href={l.feed(lang)} class="rss">{t.rss}</a>
+        </li>
+      ))}
+      <li><span>{t.allRadar}</span><a href="/radar/rss.xml" class="rss">{t.rss}</a></li>
+    </ul>
+    <p class="meta">{PAGE[lang].back && <a href={localePath(lang, '')}>&#8592; {PAGE[lang].home}</a>}</p>
+  </article>
+</Base>
+
+<style>
+  h1 { font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-weight: 400; line-height: var(--lh-tight); }
+  .blurb { margin-block: var(--s-2xs) var(--s-l); font-family: var(--f-serif); font-size: var(--t-md); color: var(--c-muted); line-height: 1.4; text-wrap: pretty; }
+  h2 { margin-block: var(--s-2xl) var(--s-s); font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--c-muted); font-weight: 400; padding-block-end: var(--s-2xs); border-block-end: 1px solid var(--c-border); }
+  .feeds { list-style: none; padding: 0; margin: 0; font-family: var(--f-sans); font-size: var(--t-sm); }
+  .feeds li { display: flex; justify-content: space-between; gap: var(--s-s); padding-block: var(--s-2xs); border-block-end: 1px solid var(--c-border); }
+  .rss { color: var(--c-accent); text-decoration: none; font-variant-numeric: tabular-nums; }
+  .rss:hover { text-decoration: underline; }
+  .meta { margin-block-start: var(--s-xl); }
+  .meta a { color: var(--c-accent); text-decoration: none; }
+</style>

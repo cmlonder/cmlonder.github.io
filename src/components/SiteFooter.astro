@@ -3,6 +3,7 @@ import {
   SITE, CONTACT, PAGE, COLLECTIONS, COLLECTION_LABELS, HUB, NAV, SHELVES, SHELF_NAMES, RADAR, DOMAINS, PROJECTS, type Locale,
 } from '../config';
 import { localePath } from '../lib/content';
+import Subscribe from './Subscribe.astro';
 
 interface Props { lang: Locale }
 const { lang } = Astro.props;
@@ -19,6 +20,7 @@ const links = [
   ...SHELF_NAMES.map((s) => ({ label: SHELVES[s].name[lang], href: localePath(lang, SHELVES[s].path) })),
   { label: RADAR.name[lang], href: '/radar' },
   { label: PAGE[lang].archiveTitle, href: localePath(lang, 'archive') },
+  { label: PAGE[lang].subscribe, href: localePath(lang, 'subscribe') },
   { label: lang === 'tr' ? 'Yapay zeka kullanımı' : 'AI usage', href: localePath(lang, 'ai') },
   ...NAV[lang].map((n) => ({ label: n.label, href: localePath(lang, n.href.replace(/^\//, '')) })),
 ];
@@ -42,6 +44,8 @@ const social = [
   <div class="wrap grid">
     <div class="cta">
       <h2>{t.cta}</h2>
+
+      <Subscribe lang={lang} variant="compact" preset={['own']} />
 
       <a class="rss" href={localePath(lang, 'rss.xml')}>
         <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"

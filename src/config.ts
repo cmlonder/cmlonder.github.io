@@ -392,6 +392,37 @@ export const ANALYTICS = {
   ga4: 'G-1W2Z58W0MF',
 };
 
+/**
+ * E-posta aboneliği — Buttondown. `username` boşken sayfaya HİÇBİR ŞEY
+ * düşmez (form yok, script yok); doldurunca formlar açılır. Form düz HTML
+ * POST: JS'siz çalışır, çift onay ve çıkış Buttondown'da.
+ *
+ * Seri bazlı abonelik etiketle: form her seçili seri için bir `tag`
+ * gönderiyor, Buttondown yoksa etiketi kendisi açıyor. RSS-to-email
+ * otomasyonları seri beslemesini (/radar/<seri>/rss.xml) o etikete gönderir.
+ */
+export const NEWSLETTER = {
+  username: '',                      // buttondown.com/<username>; TODO.md madde 10
+  /** Abonelik seçenekleri: etiket -> ad. `own` = benim yazdıklarım. */
+  lists: {
+    own:            { tag: 'yazilar',       name: { en: 'My essays and notes', tr: 'Yazılarım ve notlarım' } as Record<Locale, string>, feed: (l: Locale) => (l === 'tr' ? '/tr/rss.xml' : '/rss.xml') },
+    'solo-founder': { tag: 'solo-kurucu',   name: { en: 'Solo Founder Bulletin (daily, Turkish)', tr: 'Solo Kurucu Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/solo-founder/rss.xml' },
+    'weekly-saas':  { tag: 'haftalik-saas', name: { en: 'Weekly SaaS Bulletin (Sundays, Turkish)', tr: 'Haftalık SaaS Bülteni (pazar)' } as Record<Locale, string>, feed: () => '/radar/weekly-saas/rss.xml' },
+    'github-radar': { tag: 'github-radar',  name: { en: 'Weekly GitHub Radar (Saturdays, Turkish)', tr: 'Haftalık GitHub Radar (cumartesi)' } as Record<Locale, string>, feed: () => '/radar/github-radar/rss.xml' },
+    'indie-postmortem': { tag: 'indie-game', name: { en: 'Indie Game Weekly (Turkish)', tr: 'Indie Game Weekly (haftalık)' } as Record<Locale, string>, feed: () => '/radar/indie-postmortem/rss.xml' },
+  },
+};
+export type NewsletterList = keyof typeof NEWSLETTER.lists;
+
+export const NEWSLETTER_UI: Record<Locale, Record<string, string>> = {
+  en: { title: 'Subscribe', blurb: 'Pick what lands in your inbox. Each bulletin has its own feed; you can also read everything by RSS.',
+        email: 'Email', go: 'Subscribe', note: 'Double opt-in, unsubscribe in every email, no tracking pixels.',
+        rss: 'RSS', feeds: 'Feeds', compact: 'Get this series by email', all: 'All options', allRadar: 'All radar series' },
+  tr: { title: 'Abone ol', blurb: 'Gelen kutuna ne düşeceğini sen seç. Her bültenin kendi beslemesi var; hepsini RSS ile de okuyabilirsin.',
+        email: 'E-posta', go: 'Abone ol', note: 'Çift onay, her e-postada çıkış bağlantısı, takip pikseli yok.',
+        rss: 'RSS', feeds: 'Beslemeler', compact: 'Bu seriyi e-postayla al', all: 'Bütün seçenekler', allRadar: 'Bütün radar serileri' },
+};
+
 export const COMMENTS = {
   enabled: true,
   repo: 'cmlonder/cmlonder.github.io',
@@ -442,6 +473,8 @@ export const RADAR_REVENUE_SOURCE: Record<string, string> = {
   platform: 'Platform verisi',
   interview: 'Kurucu mülakatı',
   self_reported: 'Kurucu beyanı',
+  developer_blog: 'Geliştirici yazısı',
+  estimated: 'Tahmin (yöntem yazıda)',
   unknown: 'Kaynağı belirsiz',
 };
 
@@ -474,6 +507,11 @@ export const RADAR_SERIES = {
     name: 'Haftalık GitHub Radar',
     driveFolder: 'Radar/Haftalık GitHub Radar',
     blurb: 'Haftanın bir GitHub projesi: altındaki mimari karar, topluluk sağlığı, production riski. Her cumartesi.',
+  },
+  'indie-postmortem': {
+    name: 'Indie Game Weekly',
+    driveFolder: 'Radar/Indie Game Weekly',
+    blurb: 'Haftada bir bağımsız oyun lansmanı: wishlist mekaniği, dağıtım, gerçek gelir tablosu. Her hafta.',
   },
 } as const;
 
@@ -541,6 +579,7 @@ export const PAGE: Record<Locale, {
   nowAll: string;
   nowOlder: string;
   nowNewer: string;
+  subscribe: string;
   audience: string;
   draftNotice: string;
   draftNoticeLink: string;
@@ -578,6 +617,7 @@ export const PAGE: Record<Locale, {
     nowAll: 'All updates',
     nowOlder: 'Earlier month',
     nowNewer: 'Later month',
+    subscribe: 'Subscribe',
     audience: 'Assumed audience',
     draftNotice:
       'Most of the content here is AI-generated. I am working on the design right now and ' +
@@ -618,6 +658,7 @@ export const PAGE: Record<Locale, {
     nowAll: 'Bütün güncellemeler',
     nowOlder: 'Önceki ay',
     nowNewer: 'Sonraki ay',
+    subscribe: 'Abone ol',
     audience: 'Kime',
     draftNotice:
       'Çoğu içerik AI üretimi. Şu anda taslak üzerine yoğunlaştım, içeriği de geçici olarak ' +

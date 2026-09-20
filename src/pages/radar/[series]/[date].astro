@@ -4,6 +4,7 @@ import Base from '../../../layouts/Base.astro';
 import AiMark from '../../../components/AiMark.astro';
 import { Image } from 'astro:assets';
 import RadarMeta from '../../../components/RadarMeta.astro';
+import Subscribe from '../../../components/Subscribe.astro';
 import { RADAR, RADAR_SERIES, RADAR_REVENUE_SOURCE, SITE, type Locale } from '../../../config';
 import { formatDate } from '../../../lib/content';
 
@@ -87,6 +88,7 @@ const { Content } = await render(entry);
         </a>
       )}
     </nav>
+    <Subscribe lang={lang} variant="compact" preset={[series as any]} />
   </article>
 </Base>
 
