@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { RADAR, RADAR_SERIES, type Locale } from '../../config';
-import { formatDate } from '../../lib/content';
+import { formatDate, localePath } from '../../lib/content';
 import AiMark from '../../components/AiMark.astro';
 
 /* Radar içeriğini Spark Türkçe üretiyor, o yüzden bu sayfa İngilizce kökte
@@ -30,7 +30,7 @@ const series = Object.entries(RADAR_SERIES)
         içerikler birçok kaynaktan toplanıp AI ile derlenmiş özetler. Blogumdaki
         AI üretimi içerikler her zaman <AiMark level="generated" lang={lang} />{' '}
         işaretini taşır; yöntemi ve neyi neden böyle gösterdiğimi{' '}
-        <a href="/ai">yapay zeka kullanımı</a> sayfasında anlattım.
+        <a href={localePath(lang, 'ai')}>yapay zeka kullanımı</a> sayfasında anlattım.
       </p>
     </header>
 
