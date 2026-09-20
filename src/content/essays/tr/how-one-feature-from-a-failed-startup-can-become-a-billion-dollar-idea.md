@@ -18,7 +18,7 @@ Bu yazıyı yumuşak bir caz eşliğinde okuyabilirsin:
 
 [▶ Slack Huddle bekleme müziği — YouTube](https://www.youtube.com/watch?v=uLMD_u41GlA)
 
-# Birinci deneme: Game Neverending
+## Birinci deneme: Game Neverending
 
 ![Game Neverending ekran görüntüsü](../../../assets/legacy/a761c859093d.jpg)
 
@@ -35,13 +35,13 @@ Oyunun dönemine göre basit ama cesur bir konsepti var:
 Bu oyunda kazanmanın bir yolu yok, sadece başkalarıyla oynamanın keyfini
 çıkarıyorsun: ["Game Neverending"](https://gamicus.fandom.com/wiki/Game_Neverending). Ama çok uzun süre tutunamadı.
 
-# Kapanış: Game Neverending
+## Kapanış: Game Neverending
 
 Oyun [2004'te](https://techcrunch.com/2008/04/02/game-neverending-rises-from-the-dead/)
 ömrünü tamamladı. Ama ekip, oyunun iç iletişiminde kullandıkları araçlardan
 birini elinde tuttu.
 
-# İkinci deneme: Flickr
+## İkinci deneme: Flickr
 
 ![Flickr arayüzü](../../../assets/legacy/6da087b3a3e8.jpg)
 
@@ -55,7 +55,7 @@ blog yazılarında paylaşmak için görsellerini Flickr'a yüklemeye yönlendir
 
 Bu, Flickr'ın büyümesini patlattı ve küresel şirketlerin dikkatini çekti.
 
-# Yahoo!'ya satış: Flickr
+## Yahoo!'ya satış: Flickr
 
 ![Yahoo ve Flickr](../../../assets/legacy/8901988c2761.jpg)
 
@@ -68,7 +68,7 @@ mecazlarla dolu
 [ilginç bir mektupla](https://www.businessinsider.com/stewart-butterfield-epic-resignation-letter-2014-8)
 Yahoo'dan ayrıldı.
 
-# Üçüncü deneme: Glitch
+## Üçüncü deneme: Glitch
 
 ![Glitch oyunundan bir kare](../../../assets/legacy/49193ba36555.jpg)
 
@@ -89,7 +89,7 @@ ekipteki herkese görünür olması gerekiyordu; böylece bir konunun çözümü
 klasik e-posta-cc-ilet-yanıtla döngüsünden daha hızlı çıkıyordu. Buna birazdan
 döneceğiz.
 
-# Kapanış: Glitch
+## Kapanış: Glitch
 
 Oyun yine [iş tarafında iyi gitmedi](https://www.failory.com/cemetery/glitch) ve
 [2012'de kapanacağı duyuruldu](http://web.archive.org/web/20121119062458/http://www.glitch.com/closing/#3).
@@ -109,7 +109,7 @@ yayıldı.
 
 ![Masaüstü ve mobil kullanım grafiği](../../../assets/legacy/cfe88b3f69f2.jpg)
 
-# Dördüncü deneme: Slack
+## Dördüncü deneme: Slack
 
 ![Slack arayüzü](../../../assets/legacy/8c3ae654fd2c.png)
 
@@ -131,7 +131,7 @@ Rakiplerle karşılaştırıldığında:
 Böylece "linefeed"i geliştirdiler, 2013'te adını SLACK koydular:
 *Searchable Log of All Communication and Knowledge*.
 
-# Başarı: 27,7 milyar dolarlık şirket
+## Başarı: 27,7 milyar dolarlık şirket
 
 Bu uzun ve zorlu yolculuğun sonunda Tiny Speck (sonradan [Slack](https://nira.com/slack-history/)) ekibi kendi iç
 araçlarıyla [başarıya ulaştı](https://www.singlegrain.com/casestudies/growth-study-slack-the-fastest-business-app-growth-in-history/).
@@ -143,7 +143,7 @@ vardı; aynı yıl Slack,
 [Salesforce tarafından](https://slack.com/blog/news/salesforce-completes-acquisition-of-slack)
 **27,7 milyar dolara** satın alındı (işlem 2021'de tamamlandı).
 
-# Siyah Kuğu teorisi
+## Siyah Kuğu teorisi
 
 **Siyah Kuğu teorisi**: Elimizdeki veriyi yorumlayarak öngörülemeyen ve
 şaşırtıcı etkisi olan olay. Bu terim çoğunlukla ekonomide kullanılıyor —
@@ -160,7 +160,7 @@ Siyah Kuğu'yu ilginç bir şekilde kullanıyor:
 Çok fazla karmaşıklık gerektirmeyen ve net bir iş ayrımı yaratmayan bir
 özellik, nadiren de olsa işinin çekirdek özelliği haline gelebiliyor.
 
-# Çıkarım
+## Çıkarım
 
 Slack'in hikâyesinde daha fazla ayrıntı var: pazar araştırması, geri bildirim
 ve iyileştirme döngüleri, iş yöntemleri. Bunu bir yanılsama gibi göstermek
@@ -176,7 +176,7 @@ yarıyor.
 
 > Zor seçimler kolay hayat, kolay seçimler zor hayat
 
-# Bonus
+## Bonus
 
 Başta önerdiğim müziği dinledin mi? Slack'in yeni özelliği Huddle'ın
 (Slack içindeki hızlı toplantı odası) bekleme müziği — ve o müzik, batan

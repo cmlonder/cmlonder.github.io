@@ -41,7 +41,7 @@ const entryHref = (e: AnyEntry) => entryPath(lang, collection, parseId(e.id).slu
 const related = await getRelated(collection, entry, lang);
 const { newer, older } = await getNeighbours(collection, entry, lang);
 // Notlar kısa ve tek soluk; içindekiler sadece gürültü olur.
-const icindekiler = collection !== 'notes' && headings.length >= 2;
+const icindekiler = collection !== 'notes' && headings.filter((h) => h.depth === 2 || h.depth === 3).length > 1;
 
 const t = {
   updated: lang === 'tr' ? 'Güncellendi' : 'Updated',
@@ -60,9 +60,11 @@ const t = {
       description={d.description} lang={lang} altLocale={altLocale}
       structured={{ collection, entry }} ai={d.ai}>
   <div class="reading" data-reader data-scroll="up">
-  <aside class="toc-col">
-    {icindekiler && <Toc headings={headings} label={t.toc} lang={lang} />}
-  </aside>
+  {icindekiler && (
+    <aside class="toc-col">
+      <Toc headings={headings} label={t.toc} lang={lang} />
+    </aside>
+  )}
 
   <article class="narrow" ai-disclosure={d.ai === 'generated' ? 'ai-generated' : undefined}>
     <header class="entry-head">

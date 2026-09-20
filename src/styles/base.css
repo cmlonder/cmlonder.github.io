@@ -278,15 +278,19 @@ a:hover { color: var(--c-accent); text-decoration-color: var(--c-accent); }
 }
 
 
-/* Numaralı kaynak atfı — Spark "[1]" yazıyor, markdown bağlantısı olarak geliyor */
-.prose sup.ref { line-height: 0; font-size: .66em; }
-.prose sup.ref a {
-  text-decoration: none;
-  padding-inline: .12em;
-  font-variant-numeric: tabular-nums;
+/*
+ * Numaralı kaynak atfı — radar gövdesinde <sup><a href>1</a></sup>.
+ * Köşeli parantez, aksan rengi, dış bağlantı oku YOK (her sayıya ok
+ * gelince "1↗2↗" gürültüsü oluşuyordu). Ardışık atıflar virgülle.
+ */
+.prose sup { line-height: 0; font-size: .68em; }
+.prose sup a {
+  text-decoration: none; padding-inline: .1em;
+  font-family: var(--f-sans); font-variant-numeric: tabular-nums; color: var(--c-accent);
 }
-.prose sup.ref a::before { content: '['; }
-.prose sup.ref a::after  { content: ']'; }
+.prose sup a::before { content: '['; color: var(--c-muted); }
+.prose sup a::after, .prose sup a.dis::after { content: ']'; color: var(--c-muted); margin: 0; transform: none; display: inline; }
+.prose sup + sup::before { content: ','; color: var(--c-muted); margin-inline: -.05em .05em; }
 
 
 /* Başlık içindeki bağlantılar tek başına birer hedef (cümle içi değil),
@@ -590,6 +594,9 @@ h2.section-title a,
 .onizleme .on-k { font-family: var(--f-sans); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--c-mark-ink); }
 .onizleme .on-t { margin-block-start: .15em; font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-size: var(--t-base); line-height: var(--lh-snug); color: var(--c-text); }
 .onizleme .on-d { margin-block-start: .3em; font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); line-height: 1.5; text-wrap: pretty; }
+
+/* — Liste kicker'ı: sayaç satırın sağ ucunda, geri bağlantısına yapışmaz — */
+.kicker .count { order: 2; margin-inline-start: auto; font-variant-numeric: tabular-nums; color: var(--c-muted); }
 
 /* — Kod bloğu: dil etiketi + kopyala. Shiki <pre>'si figure'a sarılı. — */
 .kod { margin-block: var(--s-m); border: 1px solid var(--c-border); border-radius: var(--radius-lg); overflow: hidden; background: var(--c-surface); }

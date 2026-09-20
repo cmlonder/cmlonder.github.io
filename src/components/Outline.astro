@@ -85,7 +85,7 @@ const no = (slug: string) => outline.findIndex((b) => b.slug === slug) + 1;
     font-family: var(--f-mono); font-size: var(--t-xs);
     color: var(--c-muted); font-variant-numeric: tabular-nums;
   }
-  .txt { display: grid; gap: .15em; }
+  .txt { display: grid; gap: .15em; justify-items: start; }
   .txt a, .txt .t {
     font-family: var(--f-serif); font-variation-settings: var(--axis-text);
     font-size: var(--t-sm); font-weight: 600; line-height: 1.3;
