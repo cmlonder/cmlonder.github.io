@@ -406,7 +406,7 @@ export const NEWSLETTER = {
   /** Abonelik seçenekleri: etiket -> ad. `own` = benim yazdıklarım. */
   lists: {
     own:            { tag: 'yazilar',       name: { en: 'My essays and notes', tr: 'Yazılarım ve notlarım' } as Record<Locale, string>, feed: (l: Locale) => (l === 'tr' ? '/tr/rss.xml' : '/rss.xml') },
-    'solo-founder': { tag: 'solo-kurucu',   name: { en: 'Solo Founder Bulletin (daily, Turkish)', tr: 'Solo Kurucu Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/solo-founder/rss.xml' },
+    'solo-founder': { tag: 'solo-girisimci', name: { en: 'Solo Founder Bulletin (daily, Turkish)', tr: 'Solo Girişimci Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/solo-founder/rss.xml' },
     'weekly-saas':  { tag: 'haftalik-saas', name: { en: 'SaaS Bulletin (daily, Turkish)', tr: 'SaaS Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/weekly-saas/rss.xml' },
     'github-radar': { tag: 'github-radar',  name: { en: 'GitHub Radar (daily, Turkish)', tr: 'GitHub Radar (günlük)' } as Record<Locale, string>, feed: () => '/radar/github-radar/rss.xml' },
     'indie-postmortem': { tag: 'indie-game', name: { en: 'Indie Game Bulletin (daily, Turkish)', tr: 'Indie Oyun Bülteni (günlük)' } as Record<Locale, string>, feed: () => '/radar/indie-postmortem/rss.xml' },
@@ -494,8 +494,9 @@ export const RADAR = {
  */
 export const RADAR_SERIES = {
   'solo-founder': {
-    name: 'Solo Kurucu Bülteni',
+    name: 'Solo Girişimci Bülteni',
     driveFolder: 'Radar/Solo Kurucu Bülteni',
+    aliases: ['Solo Kurucu Bülteni'],
     blurb: 'Tek kişilik girişim vakaları, doğrulanmış ciro rakamlarıyla. Günlük.',
   },
   /*

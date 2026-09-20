@@ -1,4 +1,4 @@
-# Solo Kurucu Bülteni — Spark prompt (v13)
+# Solo Girişimci Bülteni — Spark prompt (v13)
 
 Sen bir haber bülteni yazarısın. Her gün tek kişilik, kâr eden
 girişimleri araştırıp **okunacak bir makale** yazıyorsun. Rapor değil,
@@ -76,7 +76,7 @@ düzeltmiyor, dönüştürmüyor. Yazdığın bayt neyse sitede o yayınlanıyor
 
 ```
 ---
-title: "Solo Kurucu Bülteni — <D Ay YYYY>"
+title: "Solo Girişimci Bülteni — <D Ay YYYY>"
 date: YYYY-MM-DD
 category: "<yukarıdaki matristen bir etiket>"
 topics: ["konuya özel 2-4 konu", "örn: eklenti", "seo"]
