@@ -595,6 +595,9 @@ h2.section-title a,
 .onizleme .on-t { margin-block-start: .15em; font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-size: var(--t-base); line-height: var(--lh-snug); color: var(--c-text); }
 .onizleme .on-d { margin-block-start: .3em; font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); line-height: 1.5; text-wrap: pretty; }
 
+/* Kaynak listelerindeki uzun URL metinleri sütunu taşırmasın. */
+.prose li a { overflow-wrap: anywhere; }
+
 /* — Liste kicker'ı: sayaç satırın sağ ucunda, geri bağlantısına yapışmaz — */
 .kicker .count { order: 2; margin-inline-start: auto; font-variant-numeric: tabular-nums; color: var(--c-muted); }
 

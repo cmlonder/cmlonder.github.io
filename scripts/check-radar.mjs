@@ -17,6 +17,7 @@ import { join } from 'node:path';
 import { parse as parseYaml, stringify as yamlYaz } from 'yaml';
 import { radarSerileri } from './lib/series.mjs';
 import { normalizeRadar } from './lib/radar-topics.mjs';
+import { normalizeSources } from './lib/radar-sources.mjs';
 
 const IN  = 'inbox/radar';
 const OUT = 'src/content/radar';
@@ -77,8 +78,10 @@ for (const series of readdirSync(IN, { withFileTypes: true }).filter((d) => d.is
 
     // Sınıflandırma sözlükten geçer: tags -> topics, takma adlar, kategori.
     const degisen = normalizeRadar(fm, series.name);
+    const kaynak = normalizeSources(body);
+    degisen.push(...kaynak.degisen);
     for (const d of degisen) console.log(`  ~ ${name}: ${d}`);
-    const cikti = degisen.length ? `---\n${yamlYaz(fm)}---\n\n${body}\n` : raw;
+    const cikti = degisen.length ? `---\n${yamlYaz(fm)}---\n\n${kaynak.body.trim()}\n` : raw;
 
     mkdirSync(join(OUT, series.name), { recursive: true });
     const dest = join(OUT, series.name, `${date}.md`);
