@@ -138,7 +138,7 @@ durumları (açık dropdown, hover, tema değişimi) doğrudan doğrulayabilir.
 Ajanın onaysız dokunmadığı her şey burada; ayrıntı ilgili bölümde.
 
 - 128 yer tutucu: onayla ya da sil (bölüm 2)
-- Hashnode'u kapat; çift SPF kaydını düzelt; Search Console'a sitemap bildir (bölüm 4)
+- Hashnode'u kapat; çift SPF kaydını düzelt; Search Console'a sitemap bildir (bölüm 4) — ölçüm için şart (bölüm 11)
 - `/uses` donanım ve uygulama listesi (bölüm 5)
 - Radar'daki geriye dönük üretim kasıtlı mı (bölüm 7)
 - RIGGED `shipped` mı `archived` mı (bölüm 8)
@@ -183,6 +183,22 @@ yarışıyordu. Yerine düşünülen şey:
   (Chromium headless print), yoksa elle NotebookLM/Pages çıktısı mı?
   Repoya PDF konmuyor kuralı burada da geçerli — üretim build'de olmalı
   ya da dosya Buttondown/Drive'da durmalı.
+
+## 11. Ölçüm — ritim ve seri sayısı kararı veriyle (sen)
+
+Günlük mü haftalık mı, beş seri mi daha fazla mı: tahminle değil, sekiz
+haftalık veriyle karar verilecek.
+
+1. Search Console'u bağla (bölüm 4'teki sitemap adımı), `/radar/*` ve
+   `/domains/*` için sorgu ve tıklama raporunu aç.
+2. GA4 bağlı (G-1W2Z58W0MF); Raporlar → Etkileşim → Sayfalar'da
+   `/radar/` ve `/domains/` yollarını karşılaştır.
+3. 8 hafta sonra bakılacak sorular: hangi seri arama trafiği alıyor;
+   bülten sayfası mı varlık sayfası mı (Faz 0 sonrası) sorgu kazanıyor;
+   günlük sayıların kaçı ilk hafta sonrası hiç ziyaret almıyor.
+4. Karar: ritim (günlük/haftalık), seri sayısı, hangi seri kapanır.
+
+Başlangıç: 21 Eyl 2026. Değerlendirme: 16 Kas 2026.
 
 ## Radar zinciri hakkında yazı (backlog)
 
