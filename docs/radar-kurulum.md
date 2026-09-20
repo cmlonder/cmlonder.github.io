@@ -25,9 +25,41 @@ Kalıba uymayan dosyalara dokunulmuyor; ana dizindeki kişisel dosyaların
 hiçbiri görülmüyor bile. Seri adı eşleşmezse dosya olduğu yerde kalıyor ve
 yürütme kaydına sebebi yazılıyor.
 
-**Yeni seri açarken bu script'e dokunmuyorsun.** `src/config.ts` içindeki
-`RADAR_SERIES`'e bir satır ekle, site deploy olsun, yeter — Drive tarafı
-listeyi oradan okuyor.
+## Yeni seri açmak
+
+**Apps Script'e dokunmuyorsun.** Üç adım:
+
+```bash
+pnpm radar:seri weekly-saas "Haftalık SaaS Bülteni" "Haftanın öne çıkan SaaS vakaları. Her pazar."
+pnpm verify
+git push            # series.json yayına çıkmadan Drive tarafı seriyi tanımaz
+```
+
+Komut `src/config.ts` → `RADAR_SERIES`'e tek girdi yazar ve Spark'ın
+kullanması gereken dosya adını basar. Slug kebab-case ve ASCII olmalı
+(`weekly-saas`), ad ve açıklama tek tırnak içeremez.
+
+Sonra Spark'ta dosya adını şu kalıba göre ver — **`-PARSE-` şart**:
+
+```
+Haftalik-SaaS-Bulteni-PARSE-2026-09-20.md
+```
+
+Eşleşme Türkçe harfe ve büyük-küçüğe duyarsız: "Haftalık SaaS Bülteni",
+"haftalik-saas-bulteni", "HAFTALIK SAAS BULTENI" hepsi aynı seriye gider.
+Boşluk yerine tire kullan; `-PARSE-` olmayan dosyaya hiç dokunulmuyor.
+
+Ne olur, ne olmaz:
+
+- `/radar/<slug>` sayfası deploy'la birlikte hemen vardır.
+- `/radar` listesi ve anasayfa seriyi **ilk bülten gelene kadar göstermez** —
+  boş bölüm açmamak için, bilerek.
+- Seri kendiliğinden açılmaz. Spark bilinmeyen bir ad yazarsa dosya Drive
+  ana dizininde kalır, yürütme kaydına "seri eşleşmedi" düşer. Yazım
+  hatasının sessizce yeni seri açmaması için böyle.
+- Apps Script her gün 08:00'de bakıyor. Pazar yazılan haftalık bülten
+  pazartesi 08:00'de GitHub'a düşer; aynı gün istiyorsan Apps Script'te
+  `kur()` içindeki saati değiştir.
 
 ## 1. `GITHUB_TOKEN` — github.com'dan
 
