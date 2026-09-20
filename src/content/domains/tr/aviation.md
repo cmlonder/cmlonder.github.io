@@ -28,6 +28,10 @@ outline:
     title: "Gelir yönetimi ve stratejik operasyonlar: PEOPLExpress ve American Airlines analizi"
     promise: "Bacak bazlı kontrolden O&D'ye, hub-and-spoke'un %30/%70 matematiği, zeytin ve boya düzeyinde maliyet kültürü ve AAdvantage'ın verisi tek formülde."
     part: "Rezervasyon"
+  - slug: loyalty-and-gds
+    title: "PEOPLExpress ve havacılık sektörü: sadakat programları ve dağıtım sistemleri stratejik analizi"
+    promise: "Her mil kullanımı bir ücretli yolcunun yerini alır; tarafsız ortak sistem beş kez denendi ve beş kez öldü; ekran sıralaması bir iş kuralıdır."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

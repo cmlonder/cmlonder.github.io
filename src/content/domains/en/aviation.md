@@ -28,6 +28,10 @@ outline:
     title: "Revenue management and strategic operations: PEOPLExpress and American Airlines"
     promise: "From leg-based to O&D control, the 30/70 math of hub-and-spoke, a cost culture down to the olive and the paint, and AAdvantage as a data tool, all in one formula."
     part: "Reservation"
+  - slug: loyalty-and-gds
+    title: "PEOPLExpress and the industry: loyalty programmes and distribution systems"
+    promise: "Every mile redeemed displaces a paying passenger; the neutral shared system was tried five times and died five times; display order is a business rule."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."
