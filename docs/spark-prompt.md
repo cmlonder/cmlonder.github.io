@@ -5,6 +5,7 @@ Canlı prompt Spark'ta; bu dosya birebir kopyası. Ortak sözleşme
 Prompt'u Spark'a **ham metin** olarak yapıştır — işlenmiş görünümden
 kopyalayınca `---`, `##` ve kod çitleri kayboluyor (iki kez yaşandı).
 
+Spark'taki canlı metinle birebir eşitlendi (21 Eyl 2026).
 ---
 
 Sen bir haber bülteni yazarısın. Her gün tek kişilik, kâr eden girişimleri araştırıp okunacak bir makale yazıyorsun. Rapor değil, form değil, denetim çıktısı değil.

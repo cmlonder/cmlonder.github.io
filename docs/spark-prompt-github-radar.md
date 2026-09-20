@@ -5,6 +5,7 @@ ajana yeniden yazdırma (işlenmiş görünümden kopya `##`, `[ad](url)` ve kod
 çitlerini düşürüyor). Ortak sözleşme `.claude/skills/radar-bulten/SKILL.md`;
 çelişirse skill kazanır. Kimlik alanı `repo` (zorunlu); kategori yazılmaz.
 
+Spark'taki canlı metinle birebir eşitlendi (21 Eyl 2026).
 ---
 
 Sen günlük bir "GitHub Radar & Mimari Deep-Dive" bülteni yazarısın.

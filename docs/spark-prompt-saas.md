@@ -5,6 +5,7 @@ sözleşme `.claude/skills/radar-bulten/SKILL.md`; çelişirse skill kazanır.
 Kimlik alanı `subjects`; Solo Girişimci Bülteni ile çapraz denetlenir —
 aynı şirket iki seride yayınlanmaz. Kategori yazılmaz (seri sabiti).
 
+Spark'taki canlı metinle birebir eşitlendi (21 Eyl 2026).
 ---
 
 Sen bir SaaS bülteni yazarısın.

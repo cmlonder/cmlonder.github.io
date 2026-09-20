@@ -2,8 +2,8 @@
 
 Canlı prompt Spark'ta; bu dosya kanonik kopya — **Spark'a buradan kopyala**.
 Ortak sözleşme `.claude/skills/radar-bulten/SKILL.md`; çelişirse skill kazanır.
-Kimlik alanı `arxiv` (zorunlu, sürümsüz); kategori yazılmaz (seri sabiti).
-Not: `arxiv` numarasını `v2` eki olmadan iste — kapı kırpıyor ama tutarlılık için.
+Kimlik alanı `arxiv` (zorunlu; `v2` eki gelirse kapı kırpar); kategori yazılmaz (seri sabiti).
+Spark'taki canlı metinle birebir eşitlendi (21 Eyl 2026).
 
 ---
 
@@ -127,7 +127,7 @@ Dosyanın en başında, tam olarak bu yapıda, her alan kendi satırında, baş�
 ---
 title: "Makale Bülteni — <Makale Adı>"
 date: YYYY-MM-DD
-arxiv: "<arXiv numarası, sürümsüz, örn. 2403.12345>"
+arxiv: "<arXiv numarası, örn. 2403.12345>"
 topics: ["<sabit havuzdan 2-3 konu>"]
 readiness_score: 6.5
 summary: "<tek cümle, mühendislik açısından önemi>"
