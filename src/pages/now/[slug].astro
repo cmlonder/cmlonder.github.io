@@ -3,26 +3,35 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { PAGE, LOCALE_TAG, type Locale } from '../../config';
 import { formatDate, localePath } from '../../lib/content';
+import Neighbours from '../../components/Neighbours.astro';
 
 export async function getStaticPaths() {
-  const all = (await getCollection('now')).filter((e) => e.id.startsWith('en/'));
-  return all.map((entry) => ({ params: { slug: entry.id.split('/').pop()! }, props: { entry } }));
+  const all = (await getCollection('now')).filter((e) => e.id.startsWith('en/'))
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());   // yeniden eskiye
+  return all.map((entry, i) => ({
+    params: { slug: entry.id.split('/').pop()! },
+    props: { entry, yeni: all[i - 1] ?? null, eski: all[i + 1] ?? null },
+  }));
 }
 const lang: Locale = 'en';
-const { entry } = Astro.props;
+const { entry, yeni, eski } = Astro.props;
 const slug = entry.id.split('/').pop()!;
 const { Content } = await render(entry);
-const ayAdi = entry.data.date.toLocaleDateString(LOCALE_TAG[lang], { month: 'long', year: 'numeric' });
+const ay = (d: Date) => d.toLocaleDateString(LOCALE_TAG[lang], { month: 'long', year: 'numeric' });
+const ayAdi = ay(entry.data.date);
+const komsu = (e: any) => e ? { href: localePath(lang, 'now', e.id.split('/').pop()!), title: ay(e.data.date) } : null;
 const diger = (await getCollection('now')).some((e) => e.id === `tr/${slug}`);
 ---
 
 <Base title={`${ayAdi} — ${PAGE[lang].nowTitle}`} description={PAGE[lang].nowBlurb} lang={lang}
       altLocale={diger ? { lang: 'tr' as Locale, href: localePath('tr', 'now', slug) } : null}>
-  <article class="narrow" data-reader>
+  <article class="narrow">
     <p class="kicker"><a href={localePath(lang, 'now')}>{PAGE[lang].nowTitle}</a></p>
     <h1>{ayAdi}</h1>
     <p class="meta"><time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date, lang)}</time></p>
     <div class="prose"><Content /></div>
+    <Neighbours ariaLabel={PAGE[lang].nowTitle} labels={{ prev: PAGE[lang].nowOlder, next: PAGE[lang].nowNewer }}
+      prev={komsu(eski)} next={komsu(yeni)} />
     <p class="hepsi"><a href={localePath(lang, 'now')}>&#8592; {PAGE[lang].nowAll}</a></p>
   </article>
 </Base>
@@ -32,6 +41,8 @@ const diger = (await getCollection('now')).some((e) => e.id === `tr/${slug}`);
   .kicker a { color: var(--c-accent); text-decoration: none; }
   h1 { margin-block-start: var(--s-2xs); font-family: var(--f-serif); font-variation-settings: var(--axis-display); font-weight: 400; line-height: var(--lh-tight); }
   .meta { margin-block: var(--s-3xs) var(--s-l); }
-  .hepsi { margin-block-start: var(--s-2xl); font-family: var(--f-sans); font-size: var(--t-sm); }
+  .prose { font-size: var(--t-base); }
+  .prose :global(h2) { margin-block: var(--s-xl) var(--s-xs); font-size: var(--t-md); }
+  .hepsi { margin-block-start: var(--s-m); font-family: var(--f-sans); font-size: var(--t-sm); }
   .hepsi a { color: var(--c-accent); text-decoration: none; }
 </style>

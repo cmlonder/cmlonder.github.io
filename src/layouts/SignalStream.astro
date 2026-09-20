@@ -58,7 +58,9 @@ const t = {
         {akis.map(({ d, slug, Content }) => (
           <li class="sm">
             <p class="top">
-              <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+              <a class="tarih" href={entryPath(lang, 'signals', slug)} title={t.permalink}>
+                <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time>
+              </a>
               {(d.topics as string[]).map((k) => (
                 <a class="chip" href={localePath(lang, 'topics', k)}>{topicLabel(k, lang)}</a>
               ))}
@@ -76,12 +78,6 @@ const t = {
 
             <div class="prose"><Content /></div>
 
-            <p class="foot">
-              <a class="perma" href={entryPath(lang, 'signals', slug)} title={t.permalink}>
-                <span aria-hidden="true">&#10022;</span>
-                <span class="sr-only">{t.permalink}</span>
-              </a>
-            </p>
           </li>
         ))}
       </ol>
@@ -188,12 +184,11 @@ const t = {
     margin-block-start: var(--s-s);
     font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
   }
-  .perma { color: var(--c-border); text-decoration: none; transition: color .18s ease; }
-  .sm:hover .perma { color: var(--c-muted); }
-  .perma:hover { color: var(--c-accent); }
+  .tarih { color: inherit; text-decoration: none; border-block-end: 1px dashed transparent; transition: color .18s ease, border-color .18s ease; }
+  .tarih:hover { color: var(--c-accent); border-block-end-color: var(--c-accent); }
 
   @media (prefers-reduced-motion: reduce) {
-    .sm::before, .kart, .kart h2, .ext, .chip, .perma { transition: none; }
+    .sm::before, .kart, .kart h2, .ext, .chip, .tarih { transition: none; }
     .kart:hover .ext { transform: none; }
   }
 </style>

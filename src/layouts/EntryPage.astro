@@ -13,6 +13,7 @@ import AiMark from '../components/AiMark.astro';
 import EntryCard from '../components/EntryCard.astro';
 import Comments from '../components/Comments.astro';
 import Toc from '../components/Toc.astro';
+import Neighbours from '../components/Neighbours.astro';
 import { formatDate, localePath, entryPath, getTranslations, parseId, getRelated, getNeighbours } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 
@@ -39,6 +40,8 @@ const entryHref = (e: AnyEntry) => entryPath(lang, collection, parseId(e.id).slu
 
 const related = await getRelated(collection, entry, lang);
 const { newer, older } = await getNeighbours(collection, entry, lang);
+// Notlar kısa ve tek soluk; içindekiler sadece gürültü olur.
+const icindekiler = collection !== 'notes' && headings.length >= 2;
 
 const t = {
   updated: lang === 'tr' ? 'Güncellendi' : 'Updated',
@@ -58,7 +61,7 @@ const t = {
       structured={{ collection, entry }} ai={d.ai}>
   <div class="reading" data-reader data-scroll="up">
   <aside class="toc-col">
-    <Toc headings={headings} label={t.toc} lang={lang} />
+    {icindekiler && <Toc headings={headings} label={t.toc} lang={lang} />}
   </aside>
 
   <article class="narrow" ai-disclosure={d.ai === 'generated' ? 'ai-generated' : undefined}>
@@ -97,7 +100,7 @@ const t = {
       )}
     </header>
 
-    <Toc headings={headings} label={t.toc} lang={lang} variant="mobile" />
+    {icindekiler && <Toc headings={headings} label={t.toc} lang={lang} variant="mobile" />}
     <div class="prose"><Content /></div>
 
     <footer class="entry-foot">
@@ -108,22 +111,9 @@ const t = {
       </p>
 
 
-      {(newer || older) && (
-        <nav class="neighbours" aria-label={COLLECTION_LABELS[collection][lang]}>
-          {older ? (
-            <a class="prev" href={entryHref(older)}>
-              <span class="meta">&#8592; {t.older}</span>
-              <span class="ttl">{(older.data as any).title}</span>
-            </a>
-          ) : <span />}
-          {newer && (
-            <a class="next" href={entryHref(newer)}>
-              <span class="meta">{t.newer} &#8594;</span>
-              <span class="ttl">{(newer.data as any).title}</span>
-            </a>
-          )}
-        </nav>
-      )}
+      <Neighbours ariaLabel={COLLECTION_LABELS[collection][lang]} labels={{ prev: t.older, next: t.newer }}
+        prev={older ? { href: entryHref(older), title: (older.data as any).title } : null}
+        next={newer ? { href: entryHref(newer), title: (newer.data as any).title } : null} />
     </footer>
     <Sources body={entry.body} lang={lang} />
     <Backlinks entryId={entry.id} lang={lang} />
@@ -238,21 +228,6 @@ const t = {
   }
   .topics { display: flex; flex-wrap: wrap; gap: var(--s-2xs); }
 
-  .neighbours {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--s-s);
-    margin-block-start: var(--s-m);
-  }
-  .neighbours a { display: grid; gap: 2px; text-decoration: none; }
-  .neighbours .next { text-align: end; }
-  .neighbours .ttl {
-    font-family: var(--f-serif);
-    font-variation-settings: var(--axis-display);
-    font-size: var(--t-sm);
-    line-height: var(--lh-snug);
-  }
-  .neighbours a:hover .ttl { color: var(--c-accent); }
 
   .related { margin-block-start: var(--s-2xl); }
   .related ul {

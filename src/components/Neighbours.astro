@@ -1,0 +1,47 @@
+---
+/**
+ * Önceki / sonraki gezintisi — yazı, bulduğum, şu sıralar ayı: hepsi aynı.
+ * Maggie'de yok; burada var çünkü arşivde gezmenin en kısa yolu bu.
+ * İki taraf da yoksa hiç render edilmiyor.
+ */
+interface Props {
+  prev?: { href: string; title: string } | null;
+  next?: { href: string; title: string } | null;
+  labels: { prev: string; next: string };
+  ariaLabel: string;
+}
+const { prev = null, next = null, labels, ariaLabel } = Astro.props;
+---
+
+{(prev || next) && (
+  <nav class="neighbours" aria-label={ariaLabel}>
+    {prev ? (
+      <a class="prev" href={prev.href} rel="prev">
+        <span class="meta">&#8592; {labels.prev}</span>
+        <span class="ttl">{prev.title}</span>
+      </a>
+    ) : <span />}
+    {next && (
+      <a class="next" href={next.href} rel="next">
+        <span class="meta">{labels.next} &#8594;</span>
+        <span class="ttl">{next.title}</span>
+      </a>
+    )}
+  </nav>
+)}
+
+<style>
+  .neighbours {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-s);
+    margin-block-start: var(--s-xl); padding-block-start: var(--s-s);
+    border-block-start: 1px solid var(--c-border);
+  }
+  .neighbours a { display: grid; gap: 2px; text-decoration: none; }
+  .neighbours .next { text-align: end; }
+  .neighbours .meta { font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); }
+  .neighbours .ttl {
+    font-family: var(--f-serif); font-variation-settings: var(--axis-display);
+    font-size: var(--t-sm); line-height: var(--lh-snug); color: var(--c-text);
+  }
+  .neighbours a:hover .ttl { color: var(--c-accent); }
+</style>

@@ -529,6 +529,8 @@ export const PAGE: Record<Locale, {
   nowBlurb: string;
   nowIntro: string;
   nowAll: string;
+  nowOlder: string;
+  nowNewer: string;
   audience: string;
   draftNotice: string;
   draftNoticeLink: string;
@@ -564,6 +566,8 @@ export const PAGE: Record<Locale, {
     nowBlurb: 'A log of where my attention goes — appended irregularly, never overwritten.',
     nowIntro: 'This is a now page, but not the kind that gets overwritten: each update stacks on the last. Every month has its own address.',
     nowAll: 'All updates',
+    nowOlder: 'Earlier month',
+    nowNewer: 'Later month',
     audience: 'Assumed audience',
     draftNotice:
       'Most of the content here is AI-generated. I am working on the design right now and ' +
@@ -602,6 +606,8 @@ export const PAGE: Record<Locale, {
     nowBlurb: 'Neye baktığımın günlüğü — düzensiz aralıklarla eklenir, silinmez.',
     nowIntro: 'Bu bir now sayfası, ama silinen türden değil: her güncelleme öncekinin üstüne ekleniyor. Her ayın kendi adresi var.',
     nowAll: 'Bütün güncellemeler',
+    nowOlder: 'Önceki ay',
+    nowNewer: 'Sonraki ay',
     audience: 'Kime',
     draftNotice:
       'Çoğu içerik AI üretimi. Şu anda taslak üzerine yoğunlaştım, içeriği de geçici olarak ' +
