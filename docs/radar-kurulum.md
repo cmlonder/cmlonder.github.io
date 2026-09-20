@@ -25,6 +25,44 @@ Kalıba uymayan dosyalara dokunulmuyor; ana dizindeki kişisel dosyaların
 hiçbiri görülmüyor bile. Seri adı eşleşmezse dosya olduğu yerde kalıyor ve
 yürütme kaydına sebebi yazılıyor.
 
+## Kapı: `scripts/check-radar.mjs`
+
+Spark'ın dosyası siteye girmeden önce tek bir yerden geçer. `radar.yml`
+inbox'a düşen her dosya için bunu çalıştırır. İki iş yapar:
+
+**Durdurur** (dosya inbox'ta kalır, kayıtta sebebi yazar):
+
+| Sebep | Kayıttaki mesaj |
+|---|---|
+| `---` frontmatter yok ya da YAML bozuk | `frontmatter yok` / `YAML olarak okunamadı` |
+| `title`, `date`, `summary` eksik | `frontmatter'da eksik alan` |
+| `date` YYYY-MM-DD değil | `YYYY-MM-DD değil` |
+| gövde 500 karakterden kısa | `gövde çok kısa` |
+| seri `RADAR_SERIES`'te yok | `böyle bir seri yok` |
+| kimlik alanı boş ya da seride zaten var (`arxiv` gibi) | `zaten yayında (…) — aynı konu ikinci kez seçilmiş` |
+
+**Düzeltir** (dosya yayına girer, kayıtta `~` ile ne değiştiği yazar):
+
+| Gelen | Olan |
+|---|---|
+| `tags: [...]` | `topics: [...]` |
+| `devtool`, `chrome-extension`, `indie-hacker`… | sözlükteki tek ad (`tools`, `eklenti`, `solo-company`) |
+| kategoriyle aynı konu, `github`/`engineering` gibi jenerikler | düşer |
+| `category: github-radar` / `applied-research` (seri sabiti) | silinir |
+| `category: gamedev`, `icerik-medya`… | `oyun`, `icerik` |
+| `health_score: "9.2"` | sayı |
+| `arxiv: "arXiv:2403.12345v2"` | `2403.12345` |
+| `[1] https://…` düz satırlar | `1. [ad](url)` sıralı liste |
+| gövdede düz `[1]` | `<sup><a href="url">1</a></sup>` |
+
+Sözlük tek yerde: `scripts/lib/radar-topics.mjs` (konu/kategori) ve
+`scripts/lib/radar-sources.mjs` (kaynaklar). Yeni bir ikiz görürsen oraya
+ekle; `pnpm verify` içindeki `check-topics` sözlükteki bir takma adın içerikte
+kaldığını hata sayar.
+
+Yerelde denemek için: dosyayı `inbox/radar/<seri>/<tarih>.md` olarak koy,
+`node scripts/check-radar.mjs` çalıştır, `src/content/radar/<seri>/`'ye bak.
+
 ## Seriler — dosya adı ve başlık sözleşmesi
 
 Kural tek: dosya adı = seri adı (Türkçe harf ve büyük-küçük fark etmez,
