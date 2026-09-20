@@ -8,21 +8,31 @@ web
 
 ## Users
 
-Birincil kullanıcı sitenin sahibi: Cemal Önder, çözüm mimarı. Site önce
-onun kendi düşüncesini yazarak netleştirdiği ve ajanlı yayın hattını
-denediği yer; okurlar bunun yan ürünü. (Görüşme, 19 Eyl 2026.)
+Sahibi: Cemal Önder, çözüm mimarı. Site onun düşüncesini yazarak
+netleştirdiği ve ajanlı yayın hattını denediği yer; ama yalnız kendisi için
+değil — dışarıya açık bir yüz (21 Eyl 2026).
 
-İkincil okurlar — onaylanmış sıra yok, kayıt olarak: meslektaş
-mühendisler/mimarlar; nasıl çalıştığını görmek isteyen işveren, müşteri
-veya ortak; ve makine okurları (llms.txt, .md aynaları, JSON-LD).
+Okurlar, önem sırasıyla:
+1. Meslektaş mühendisler ve mimarlar — topluluk buradan oluşur.
+2. İşveren, müşteri ve ortak adayları — "bu adam nasıl çalışıyor" sorusunu
+   sitede cevaplayıp iş teklifi ya da müşteri olarak gelirler.
+3. Radar okurları — küçük internet pazarlarını izleyen kurucular; ödeme
+   yapabilecek kitle.
+4. Makine okurları (llms.txt, .md aynaları, JSON-LD, ajanlar).
 
 ## Product Purpose
 
 Kişisel site ve digital garden. Astro, statik, GitHub Pages, iki dil
-(en kökte, tr `/tr/` altında). Başarı ölçüsü tek: bir yıl sonra yer
-tutucular gitmiş, sahibinin kendi sesiyle yazılmış gerçek bir külliyat
-birikmiş olmalı. Trafik, iş teklifi veya ürün vitrini başarı ölçüsü
-DEĞİL (görüşmede seçilmedi).
+(en kökte, tr `/tr/` altında).
+
+Amaç (21 Eyl 2026): site üzerinden bir topluluk oluşturmak, iş teklifi
+almak, yapılan işlere müşteri bulmak ve mümkünse siteden gelir elde etmek.
+Başarı bu dört şeyin gerçekleşmesiyle ölçülür; kendi sesiyle yazılmış
+gerçek yazılar bunun aracı, kendisi değil.
+
+Bundan çıkan öncelikler: alan kitapları ve denemeler (yetkinliğin kanıtı,
+İngilizce), radar ve doğrulama defteri (topluluk ve olası gelir, Türkçe),
+abonelik ve iletişim yolları (topluluk ve teklifler için kapı).
 
 ## Positioning
 
