@@ -25,6 +25,24 @@ Kalıba uymayan dosyalara dokunulmuyor; ana dizindeki kişisel dosyaların
 hiçbiri görülmüyor bile. Seri adı eşleşmezse dosya olduğu yerde kalıyor ve
 yürütme kaydına sebebi yazılıyor.
 
+## Seriler — dosya adı ve başlık sözleşmesi
+
+Kural tek: dosya adı = seri adı (Türkçe harf ve büyük-küçük fark etmez,
+boşluk yerine tire), `-PARSE-` şart; `title` = seri adı + uzun tire + sayı.
+
+| Seri (slug) | Site adı | Spark dosya adı | `title:` |
+|---|---|---|---|
+| `solo-founder` | Solo Girişimci Bülteni | `Solo-Girisimci-Bulteni-PARSE-YYYY-MM-DD.md` | `"Solo Girişimci Bülteni — <D Ay YYYY>"` |
+| `saas` | SaaS Bülteni | `SaaS-Bulteni-PARSE-YYYY-MM-DD.md` | `"SaaS Bülteni — <D Ay YYYY>"` |
+| `github-radar` | GitHub Radar | `GitHub-Radar-PARSE-YYYY-MM-DD.md` | `"GitHub Radar — <Proje Adı>"` |
+| `indie-postmortem` | Indie Oyun Bülteni | `Indie-Oyun-Bulteni-PARSE-YYYY-MM-DD.md` | `"Indie Oyun Bülteni — <Oyun Adı>"` |
+| `paper-to-prod` | Makale Bülteni | `Makale-Bulteni-PARSE-YYYY-MM-DD.md` | `"Makale Bülteni — <Makale Adı>"` |
+
+Ortak frontmatter: `date`, `summary`, `generator`, `promptVersion`, `topics`
+(2-4 konu, `tags` değil); seriye özgü `revenue_source`, `health_score`,
+`readiness_score`. `category` yalnız ürün türü olarak anlamlı (Solo/SaaS);
+seri sabiti kategoriler (`github-radar`, `applied-research`) kapıda siliniyor.
+
 ## Yeni seri açmak
 
 **Apps Script'e dokunmuyorsun.** Üç adım:
