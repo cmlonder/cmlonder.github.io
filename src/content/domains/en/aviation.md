@@ -48,6 +48,10 @@ outline:
     title: "Airline reservation systems and digital distribution channels: a strategic analysis"
     promise: "Assembly still beats at the heart of the system; the phased migration from TPF to open systems, and the shift of control from inventory to attention, from eAAsy Sabre through Priceline and Orbitz to Google Flights."
     part: "Reservation"
+  - slug: travel-value-chain
+    title: "The travel value chain and distribution channels: a strategic briefing"
+    promise: "RM decides, the host CRS executes; showing the same inventory in four storefronts is as critical as the RM math. 2.5 bookings per ticket, agency incentives above 50%, and the pricing power NDC wants back."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."

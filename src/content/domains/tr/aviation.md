@@ -48,6 +48,10 @@ outline:
     title: "Havacılık rezervasyon sistemleri ve dijital dağıtım kanalları stratejik analizi"
     promise: "Sistemin kalbinde hâlâ assembly atıyor; TPF'den açık sisteme kademeli geçiş, eAAsy Sabre'den Priceline, Orbitz ve Google Flights'a kontrolün envanterden dikkate kayışı."
     part: "Rezervasyon"
+  - slug: travel-value-chain
+    title: "Seyahat değer zinciri ve dağıtım kanalları analizi: stratejik brifing notu"
+    promise: "RM karar verir, Host CRS uygular; dört vitrinde aynı envanteri göstermek RM matematiği kadar kritik. Bilet başına 2.5 rezervasyon, %50'yi aşan acente teşviki ve NDC'nin geri almak istediği fiyatlama gücü."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."
