@@ -52,6 +52,10 @@ outline:
     title: "The travel value chain and distribution channels: a strategic briefing"
     promise: "RM decides, the host CRS executes; showing the same inventory in four storefronts is as critical as the RM math. 2.5 bookings per ticket, agency incentives above 50%, and the pricing power NDC wants back."
     part: "Reservation"
+  - slug: ndc-retailing
+    title: "The travel distribution ecosystem and New Distribution Capability (NDC)"
+    promise: "The agency's five revenue streams, the commission cut of 1995, GDS surcharges since 2015; NDC moves pricing power back to the airline, ONE Order collapses three records into one, and the four certification levels."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."

@@ -52,6 +52,10 @@ outline:
     title: "Seyahat değer zinciri ve dağıtım kanalları analizi: stratejik brifing notu"
     promise: "RM karar verir, Host CRS uygular; dört vitrinde aynı envanteri göstermek RM matematiği kadar kritik. Bilet başına 2.5 rezervasyon, %50'yi aşan acente teşviki ve NDC'nin geri almak istediği fiyatlama gücü."
     part: "Rezervasyon"
+  - slug: ndc-retailing
+    title: "Seyahat dağıtım ekosistemi ve yeni dağıtım yeteneği (NDC) analizi"
+    promise: "Acentenin beş gelir kolu, 1995'te kırılan komisyon, 2015'ten beri GDS sürşarjı; NDC fiyatlandırma gücünü havayoluna taşıyor, ONE Order üç kaydı tek satıra indiriyor, dört seviyeli sertifikasyon."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."
