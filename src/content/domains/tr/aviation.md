@@ -44,6 +44,10 @@ outline:
     title: "GDS ve havacılık dağıtım ekosistemi: stratejik analiz ve iş mantığı rehberi"
     promise: "GDS'in müşterisi dört küme; 1994 e-bilet, 2004 DOT ve OTA'ların rezervasyonsuz bin sonuç talebi mainframe'i nasıl çökertti; look-to-book 10:1'den 10.000:1'e."
     part: "Rezervasyon"
+  - slug: tpf-to-metasearch
+    title: "Havacılık rezervasyon sistemleri ve dijital dağıtım kanalları stratejik analizi"
+    promise: "Sistemin kalbinde hâlâ assembly atıyor; TPF'den açık sisteme kademeli geçiş, eAAsy Sabre'den Priceline, Orbitz ve Google Flights'a kontrolün envanterden dikkate kayışı."
+    part: "Rezervasyon"
   - slug: pnr-is-a-contract
     title: "PNR bir kayıt değil, bir sözleşme"
     promise: "Rezervasyonu satır olarak modellersen ilk ay çalışır, ikinci ay çöker."

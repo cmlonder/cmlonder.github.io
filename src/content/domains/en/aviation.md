@@ -44,6 +44,10 @@ outline:
     title: "GDS and the airline distribution ecosystem: strategy and business logic"
     promise: "The GDS's customers are four clusters; how the 1994 e-ticket, the 2004 DOT sunset and the OTAs' demand for a thousand bookless results broke the mainframe; look-to-book from 10:1 to 10,000:1."
     part: "Reservation"
+  - slug: tpf-to-metasearch
+    title: "Airline reservation systems and digital distribution channels: a strategic analysis"
+    promise: "Assembly still beats at the heart of the system; the phased migration from TPF to open systems, and the shift of control from inventory to attention, from eAAsy Sabre through Priceline and Orbitz to Google Flights."
+    part: "Reservation"
   - slug: pnr-is-a-contract
     title: "A PNR is not a record, it is a contract"
     promise: "Model a reservation as a row and it works for a month, then collapses."
