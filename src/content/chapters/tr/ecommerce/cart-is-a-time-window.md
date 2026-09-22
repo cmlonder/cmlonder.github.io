@@ -4,10 +4,6 @@ domain: "ecommerce"
 summary: "Fiyat sepete eklerken mi donar, ödemede mi? Sorunun cevabı bir tercih değil; sistemin hangi sözü verdiğini belirliyor."
 pubDate: 2026-09-15
 topics: [solution-architecture]
-crossRef:
-  domain: "aviation"
-  slug: "pnr-is-a-contract"
-  why: "PNR da aynı şekilde bir kayıt değil, taraflar arası süreli bir sözleşme."
 placeholder: true
 ---
 

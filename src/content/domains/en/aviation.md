@@ -56,42 +56,6 @@ outline:
     title: "The travel distribution ecosystem and New Distribution Capability (NDC)"
     promise: "The agency's five revenue streams, the commission cut of 1995, GDS surcharges since 2015; NDC moves pricing power back to the airline, ONE Order collapses three records into one, and the four certification levels."
     part: "Reservation"
-  - slug: pnr-is-a-contract
-    title: "A PNR is not a record, it is a contract"
-    promise: "Model a reservation as a row and it works for a month, then collapses."
-    part: "Reservation"
-  - slug: overbooking-is-a-model
-    title: "Overbooking is not a mistake, it is a model"
-    promise: "Selling more seats than exist is a deliberate calculation, and the software has to carry it."
-    part: "Reservation"
-  - slug: inventory-is-not-seats
-    title: "Inventory is not seats"
-    promise: "What an airline sells is not a physical seat, and confusing the two breaks the pricing model."
-    part: "Inventory"
-  - slug: price-is-a-rule-stack
-    title: "A price is not a number, it is a stack of rules"
-    promise: "Why the same flight has a different price for every passenger, and where that is computed."
-    part: "Inventory"
-  - slug: codeshare
-    title: "Codeshare: two airlines, one seat"
-    promise: "When two carriers sell the same seat, who owns the truth about it."
-    part: "Inventory"
-  - slug: irops
-    title: "IROPS: when the plan collapses"
-    promise: "Disruption is not an exception path, it is the hardest normal path in the system."
-    part: "Operations"
-  - slug: crew-scheduling
-    title: "Why crew scheduling is NP-hard"
-    promise: "Legal duty limits, rest rules and fairness turn rostering into a genuinely hard problem."
-    part: "Operations"
-  - slug: edifact-messaging
-    title: "The industry still speaks EDIFACT"
-    promise: "A 1980s message format underneath modern APIs, and why replacing it keeps failing."
-    part: "Integration"
-  - slug: ndc-distribution
-    title: "NDC: who controls distribution"
-    promise: "A standard that is also a commercial power struggle, and what that means for the architecture."
-    part: "Integration"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

@@ -4,10 +4,6 @@ domain: "ecommerce"
 summary: "Does the price freeze at add-to-cart or at checkout? The answer is not a preference; it determines what promise the system is making."
 pubDate: 2026-09-15
 topics: [solution-architecture]
-crossRef:
-  domain: "aviation"
-  slug: "pnr-is-a-contract"
-  why: "A PNR is likewise not a record but a time-bounded contract between parties."
 placeholder: true
 ---
 

@@ -47,8 +47,9 @@ const DOMAIN_SLUGS = {
   eticaret: 'ecommerce',
 };
 const CHAPTER_SLUGS = {
-  'havacilik/pnr-bir-kayit-degil':        'aviation/pnr-is-a-contract',
-  'havacilik/overbooking-bir-hata-degil': 'aviation/overbooking-is-a-model',
+  /* İki yer tutucu bölüm 22 Eyl 2026'da silindi; eski adresleri domain sayfasına düşer. */
+  'havacilik/pnr-bir-kayit-degil':        'aviation',
+  'havacilik/overbooking-bir-hata-degil': 'aviation',
   'eticaret/stok-bir-sayi-degil':         'ecommerce/stock-is-a-reservation',
   'eticaret/sepet-bir-tablo-degil':       'ecommerce/cart-is-a-time-window',
 };
