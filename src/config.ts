@@ -398,6 +398,14 @@ export const ANALYTICS = {
  * gönderiyor, Buttondown yoksa etiketi kendisi açıyor. RSS-to-email
  * otomasyonları seri beslemesini (/radar/<seri>/rss.xml) o etikete gönderir.
  */
+/**
+ * Çeviri hedef dilleri. Kuyruk her hedef için ayrı üretilir
+ * (/translate-queue/<dil>.json); Spark görevi dil başına tetiklenir.
+ * Site bugün yalnız en/tr render ediyor; diğer diller üretilir ama
+ * src/translations/<dil>/ altında bekler — locale desteği ayrı iş.
+ */
+export const TRANSLATION_TARGETS = ['en'] as const;
+
 export const NEWSLETTER = {
   username: '',                      // buttondown.com/<username>; TODO.md madde 10
   /** Abonelik seçenekleri: etiket -> ad. `own` = benim yazdıklarım. */

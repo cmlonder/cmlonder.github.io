@@ -229,7 +229,7 @@ function githubaYaz(yol, icerik, kaynakAd) {
  * ÇEVİRİ ZİNCİRİ — Türkçe yazı -> İngilizce sayfa, API'siz.
  *
  *   site /translate-queue.json  (EN'i olmayan TR yazılar, ham GitHub URL'leri)
- *     -> ceviriKuyrugunuIndir()  02:00: her kaynağı Drive/Ceviri/Kuyruk/<inbox>.md olarak indirir
+ *     -> ceviriKuyrugunuIndir()  02:00: her kaynağı Drive/Ceviri/Kuyruk/<dil>/<dil>--<koleksiyon>--<slug>.md olarak indirir
  *     -> Spark görevi: Kuyruk'taki dosyayı çevirir, köke Ceviri-PARSE-<inbox>.md yazar
  *     -> cevirileriIsle()  09:00: GitHub inbox/translations/<inbox>.md'ye iter, Drive'da Gonderilen'e taşır
  *     -> repo: check-translations kapısı -> src/content/<koleksiyon>/en/
@@ -239,30 +239,35 @@ function githubaYaz(yol, icerik, kaynakAd) {
  * Kuyruk'tan Islendi'ye taşınır.
  * ============================================================ */
 
-const CEVIRI_KUYRUK_URL = 'https://cmlonder.com/translate-queue.json';
-const CEVIRI_KALIBI = /^Ceviri-PARSE-([a-z]+--[a-z0-9-]+(?:--[a-z0-9-]+)?)\.(?:md|markdown)$/i;
+const CEVIRI_DILLER_URL = 'https://cmlonder.com/translate-queue/index.json';   // hedef diller site config'inden
+const CEVIRI_KALIBI = /^Ceviri-PARSE-([a-z]{2}--[a-z]+--[a-z0-9-]+(?:--[a-z0-9-]+)?)\.(?:md|markdown)$/i;
 
 function ceviriKuyrugunuIndir() {
-  var res = UrlFetchApp.fetch(CEVIRI_KUYRUK_URL, { muteHttpExceptions: true });
-  if (res.getResponseCode() !== 200) { Logger.log('Kuyruk alınamadı: ' + res.getResponseCode()); return; }
-  var kuyruk = JSON.parse(res.getContentText()).items || [];
-  var klasor = klasorYolu('Ceviri/Kuyruk'), islendi = klasorYolu('Ceviri/Islendi');
-  var indirilen = 0;
-  kuyruk.forEach(function (i) {
-    var ad = i.inbox + '.md';
-    if (klasor.getFilesByName(ad).hasNext() || islendi.getFilesByName(ad).hasNext()) return; // zaten var
-    var kaynak = UrlFetchApp.fetch(i.raw, { muteHttpExceptions: true });
-    if (kaynak.getResponseCode() !== 200) { Logger.log('indirilemedi: ' + i.raw); return; }
-    klasor.createFile(ad, kaynak.getContentText('UTF-8'), 'text/markdown');
-    indirilen++;
+  var d = UrlFetchApp.fetch(CEVIRI_DILLER_URL, { muteHttpExceptions: true });
+  if (d.getResponseCode() !== 200) { Logger.log('Dil listesi alınamadı: ' + d.getResponseCode()); return; }
+  var diller = JSON.parse(d.getContentText()).targets || [];
+  diller.forEach(function (dil) {
+    var res = UrlFetchApp.fetch('https://cmlonder.com/translate-queue/' + dil + '.json', { muteHttpExceptions: true });
+    if (res.getResponseCode() !== 200) { Logger.log(dil + ': kuyruk alınamadı'); return; }
+    var kuyruk = JSON.parse(res.getContentText()).items || [];
+    var klasor = klasorYolu('Ceviri/Kuyruk/' + dil), islendi = klasorYolu('Ceviri/Islendi/' + dil);
+    var indirilen = 0;
+    kuyruk.forEach(function (i) {
+      var ad = i.inbox + '.md';                                   // <dil>--<koleksiyon>--<slug>.md
+      if (klasor.getFilesByName(ad).hasNext() || islendi.getFilesByName(ad).hasNext()) return;
+      var kaynak = UrlFetchApp.fetch(i.raw, { muteHttpExceptions: true });
+      if (kaynak.getResponseCode() !== 200) { Logger.log('indirilemedi: ' + i.raw); return; }
+      klasor.createFile(ad, kaynak.getContentText('UTF-8'), 'text/markdown');
+      indirilen++;
+    });
+    Logger.log(dil + ': ' + indirilen + ' kaynak indirildi (kuyrukta ' + kuyruk.length + ').');
   });
-  Logger.log(indirilen + ' kaynak indirildi (kuyrukta ' + kuyruk.length + ' girdi).');
 }
 
 function cevirileriIsle() {
   var files = DriveApp.getRootFolder().getFiles();
   var gonderilen = 0;
-  var kuyruk = klasorYolu('Ceviri/Kuyruk'), islendi = klasorYolu('Ceviri/Islendi'), giden = klasorYolu('Ceviri/Gonderilen');
+  var giden = klasorYolu('Ceviri/Gonderilen');
   while (files.hasNext()) {
     var file = files.next();
     var m = CEVIRI_KALIBI.exec(file.getName());
@@ -272,8 +277,9 @@ function cevirileriIsle() {
     var hedef = 'inbox/translations/' + m[1] + '.md';
     githubaYaz(hedef, md, 'Çeviri: ' + m[1]);                 // önce GitHub, patlarsa kökte kalır
     file.setName(benzersizAd(giden, m[1] + '.md')); file.moveTo(giden);
-    var k = kuyruk.getFilesByName(m[1] + '.md');               // kaynak Kuyruk'tan Islendi'ye
-    while (k.hasNext()) { var kf = k.next(); kf.moveTo(islendi); }
+    var dil = m[1].slice(0, 2);                                // kaynak Kuyruk/<dil> -> Islendi/<dil>
+    var k = klasorYolu('Ceviri/Kuyruk/' + dil).getFilesByName(m[1] + '.md');
+    while (k.hasNext()) { var kf = k.next(); kf.moveTo(klasorYolu('Ceviri/Islendi/' + dil)); }
     gonderilen++;
     Logger.log('çeviri gönderildi: ' + hedef);
   }

@@ -66,11 +66,11 @@ Yerelde denemek için: dosyayı `inbox/radar/<seri>/<tarih>.md` olarak koy,
 ## Çeviri zinciri (TR → EN, API'siz)
 
 ```
-site /translate-queue.json          EN'i olmayan TR yazı ve bölümler (yalnız outline'daki bölümler; taslak, yer tutucu, translate:false hariç)
-  → Apps Script ceviriKuyrugunuIndir()  02:00  Drive/Ceviri/Kuyruk/<koleksiyon>--<slug>.md
-  → Spark görevi (docs/spark-prompt-ceviri.md)  04:00  köke Ceviri-PARSE-<koleksiyon>--<slug>.md
+site /translate-queue/<dil>.json     hedef dilde karşılığı olmayan TR yazı ve bölümler (diller: config TRANSLATION_TARGETS) (yalnız outline'daki bölümler; taslak, yer tutucu, translate:false hariç)
+  → Apps Script ceviriKuyrugunuIndir()  02:00  Drive/Ceviri/Kuyruk/<dil>/<dil>--<koleksiyon>--<slug>.md
+  → Spark görevi (docs/spark-prompt-ceviri.md)  04:00  köke Ceviri-PARSE-<dil>--<koleksiyon>--<slug>.md (görev dil başına, prompt'un tepesindeki HEDEF_DIL)
   → Apps Script cevirileriIsle()  09:00  GitHub inbox/translations/  (kaynak Kuyruk → Islendi, çıktı → Gonderilen)
-  → check-translations kapısı  → src/content/<koleksiyon>/en/<slug>.md  (translation: reviewed: false)
+  → check-translations kapısı  → src/content/<koleksiyon>/<dil>/<slug>.md  (en/tr dışı diller src/translations/<dil>/ altında bekler; site o dili render etmiyor)
   → EN sayfada "Machine-translated from the Turkish original; not yet reviewed by me."
 ```
 

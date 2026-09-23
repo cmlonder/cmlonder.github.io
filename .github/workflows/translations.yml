@@ -40,7 +40,7 @@ jobs:
         run: |
           git config user.name  "ceviri-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/content inbox
+          git add src/content src/translations inbox
           git commit -m "Çeviri: yeni İngilizce sayfa (gözden geçirilmedi)
 
           Spark -> Drive -> inbox/translations -> check-translations -> site.

@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Çeviri kapısı — inbox/translations/<koleksiyon>--<slug>.md dosyalarını
- * Türkçe aslıyla karşılaştırıp src/content/<koleksiyon>/en/ altına koyar.
+ * Çeviri kapısı — inbox/translations/<dil>--<koleksiyon>--<slug>.md dosyalarını
+ * Türkçe aslıyla karşılaştırıp src/content/<koleksiyon>/<dil>/ altına koyar.
+ * Site yalnız en/tr render ediyor; başka dil src/translations/<dil>/ altında bekler.
  *
  * Doğrular (geçmezse dosya kuyrukta kalır, sebebi yazar):
  *   - aslı var mı; frontmatter YAML mı; title/description(summary) dolu mu
@@ -32,12 +33,14 @@ const tarih = (d) => (d instanceof Date ? d.toISOString().slice(0, 10) : String(
 let islenen = 0, hatali = 0;
 for (const name of readdirSync(IN).filter((f) => f.endsWith('.md'))) {
   const src = join(IN, name);
-  const m = /^([a-z]+)--(.+)\.md$/.exec(name);
-  if (!m) { die(`${src}: ad "<koleksiyon>--<slug>.md" değil`); hatali++; continue; }
-  const [, coll, rest] = m;
+  const m = /^([a-z]{2})--([a-z]+)--(.+)\.md$/.exec(name);
+  if (!m) { die(`${src}: ad "<dil>--<koleksiyon>--<slug>.md" değil`); hatali++; continue; }
+  const [, lang, coll, rest] = m;
+  if (lang === 'tr') { die(`${src}: hedef dil tr olamaz`); hatali++; continue; }
   const rel = coll === 'chapters' ? rest.replace('--', '/') : rest;
   const asil = join('src/content', coll, 'tr', `${rel}.md`);
-  const hedef = join('src/content', coll, 'en', `${rel}.md`);
+  const RENDER = new Set(['en', 'tr']);
+  const hedef = RENDER.has(lang) ? join('src/content', coll, lang, `${rel}.md`) : join('src/translations', lang, coll, `${rel}.md`);
   if (!existsSync(asil)) { die(`${src}: Türkçe aslı yok (${asil})`); hatali++; continue; }
 
   let ceviri, kaynak;
