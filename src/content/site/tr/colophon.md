@@ -1,44 +1,27 @@
 ---
 title: Künye
-description: Bu site nasıl kuruldu ve neden böyle kuruldu.
+description: Bu sitenin arkasındaki mimari kararlar, tasarım tercihleri ve altyapı detayları.
 updated: 2026-09-15
 ---
 
-Bu siteyi kurarken tek bir şeyi denedim: içerik repoda düz dosya olarak dursun
-ki bir ajan üzerinde gerçekten çalışabilsin. Aşağıdaki kararların hepsi bunun
-sonucu.
+Bu siteyi tasarlarken temel hedefim, içeriğin doğrudan kaynak kod deposunda düz metin dosyaları olarak yaşamasıydı. Böylece yapay zekâ ajanları içerik üzerinde bağımsız ve güvenilir bir biçimde çalışabiliyor. Aşağıdaki mimari tercihler bu temel tasarım felsefesinin birer sonucudur.
 
-## Yığın
+## Teknoloji Yığını
 
-Astro, statik çıktı, `main`'e her push'ta GitHub Actions ile GitHub Pages'e
-deploy. Veritabanı yok, sunucu yok; tek üçüncü taraf sayfa görüntülemelerini
-sayan Google Analytics.
+Astro altyapısı üzerine kurulu statik web sitesi, her kod gönderiminde GitHub Actions aracılığıyla otomatik olarak derlenir ve GitHub Pages üzerinden yayınlanır. Sistemde harici bir veritabanı veya dinamik sunucu katmanı yer almaz.
 
 ## Tipografi
 
-Serif olan her şey **Fraunces** — optik boyut ekseni sayesinde tek aile hem
-display hem gövde rolünü karşılıyor. Arayüz metni **Lato**, kod **IBM Plex
-Mono**. Üçü de build sırasında indirilip bu alan adından sunuluyor; sayfa hiçbir
-harici font isteği yapmıyor.
+Başlık ve vurgularda **Fraunces** yazı tipi kullanılıyor. Değişken optik boyut desteği sayesinde tek bir font ailesi hem gösterişli başlıkları hem de akıcı gövde metinlerini dengeli bir biçimde karşılıyor. Arayüz elemanlarında **Lato**, kod bloklarında ise **IBM Plex Mono** tercih edildi. Tüm fontlar derleme aşamasında yerel olarak paketlenir ve harici bir sunucuya istek yapılmadan doğrudan bu alan adından sunulur.
 
-## Renk
+## Renk Sistemi
 
-Altı token, bir kez tanımlı, koyu tema için bir kez yeniden tanımlı. Her
-eşleşme yayına çıkmadan WCAG AA'ya karşı ölçülüyor. Bir renk — deniz mavisi —
-metin için kontrastı geçmediğinden sadece ikonlarda kullanılıyor.
+Açık ve koyu temalar için özenle dengelenmiş altı temel tasarım belirteci (token) kullanılıyor. Renklerin kontrast oranları yayına alınmadan önce WCAG AA erişilebilirlik standartlarına göre test edilir. Gövde metninde yeterli kontrastı sağlamayan ikincil tonlar yalnızca dekoratif ikonlarda kullanılır.
 
-## Ajanlar için
+## Ajanlar ve Makineler İçin
 
-Her yazının temiz Markdown hâli var: URL'nin sonuna `.md` ekle. Bir
-[llms.txt](/llms.txt) indeksi ve iki dildeki her girdinin
-[tam listesi](/llms-full.txt) mevcut. Yazılar, Markdown aynalarını işaret eden
-JSON-LD taşıyor.
+Sitedeki her yazının temiz bir Markdown kopyası mevcuttur. Herhangi bir adresin sonuna `.md` ekleyerek ham içeriğe doğrudan ulaşabilirsiniz. Ayrıca yapay zekâ sistemleri için bir [llms.txt](/llms.txt) özeti ve sitenin [tam içerik dizini](/llms-full.txt) sunulmaktadır. Yazı sayfaları, bu Markdown aynalarını referans gösteren JSON-LD üst verileriyle desteklenir.
 
-Repoda içerik sözleşmesini anlatan bir `AGENTS.md` ve iki skill var: biri link
-eklemek, biri yazı/not/playbook eklemek için.
+## İlham ve Teşekkür
 
-## Hakkını teslim etmek
-
-Bilgi mimarisi, tipografi ölçeği ve düzen açıkça
-[Maggie Appleton](https://maggieappleton.com)'a borçlu. İçerik tiplerinin konuya
-göre değil düşüncenin ne kadar bittiğine göre ayrılması fikri ona ait.
+Sitenin bilgi mimarisi, tipografi hiyerarşisi ve dijital bahçe yaklaşımı büyük ölçüde [Maggie Appleton](https://maggieappleton.com)'ın çalışmalarından esinlenmiştir. İçeriklerin konuya göre değil, düşüncenin olgunluk seviyesine göre sınıflandırılması fikri bu ilhamın merkezinde yer alıyor.

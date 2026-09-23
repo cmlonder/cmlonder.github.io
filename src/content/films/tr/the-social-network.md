@@ -4,19 +4,15 @@ director: "David Fincher"
 year: 2010
 rating: 3
 runtime: 120
-note: "Ortaklığın nasıl dağıldığına dair, teknolojiden çok sözleşme filmi."
+note: "Girişimlerin çöküşüne sebep olan dinamikleri teknolojiden ziyade ortaklık yapısı ve sözleşme belirsizlikleri üzerinden inceleyen bir başyapıt."
 topics: [founding, partnership]
 order: 4
 placeholder: true
 ---
 
-Teknoloji filmi diye anılıyor ama içinde neredeyse hiç teknoloji yok.
-Anlattığı şey **ortaklık yapısı**: kim ne kadar pay aldı, sulandırma
-nasıl oldu, kim hangi toplantıya çağrılmadı.
+Bir teknoloji hikayesi gibi anılsa da filmin içinde aslında neredeyse hiç yazılım geliştirme süreci yoktur. Bütün hikaye **ortaklık yapısının kırılganlığına** odaklanır: Hisseler nasıl bölüşüldü, sermaye artırımıyla kimlerin payı eritildi ve hangi kurucu hangi kritik toplantıların dışında bırakıldı?
 
-Tek kişilik iş kurmayı düşünen biri için asıl dersi bu. Ürünün
-başarısızlığından çok daha sık, ortaklıktaki belirsizlikten dağılan
-girişimler görüyorum.
+Bağımsız ya da ortaklı bir girişim kurmayı düşünen herkes için çok temel bir uyarı barındırıyor. Projeler çoğu zaman ürün yetersizliğinden değil, kurucular arasındaki sınırların ve beklentilerin baştan net yazılmamasından ötürü dağılıyor.
 
-Üç yıldız çünkü film kendi hızına fazla âşık; her sahne aynı tempoda
-ve bir süre sonra kimin haklı olduğunu umursamıyorsun.
+Fincher'ın temposu ve Sorkin'in diyalogları filmi baştan sona bir solukta izletiyor.
+

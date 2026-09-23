@@ -1,9 +1,9 @@
 ---
-title: 'Tablo başına tek yazıcı'
-description: 'Paylaşımlı bir veritabanının dağıtık monolite dönüşmesini engellemenin en ucuz yolu.'
+title: 'Tablo başına tek yazıcı kuralı'
+description: 'Paylaşılan bir veritabanının zamanla kontrol edilemez bir monolite dönüşmesini engellemenin en etkili yolu.'
 pubDate: 2026-05-04
-problem: 'İki ya da daha fazla servis aynı tabloya yazıyor ve şema değişiklikleri korkutucu hale geldi.'
-context: 'Servislere geçiş sürecinin ortasındaki paylaşımlı veritabanı mimarileri.'
+problem: 'Birden fazla bağımsız servis aynı veritabanı tablosuna doğrudan yazıyor ve şema değişiklikleri korkutucu hale geldi.'
+context: 'Servis odaklı mimariye geçiş aşamasında olan ve ortak veritabanı kullanan sistemler.'
 topics: [solution-architecture, database, boundaries]
 draft: false
 placeholder: true
@@ -11,48 +11,32 @@ placeholder: true
 
 ## Problem
 
-İki ya da daha fazla servis aynı tabloya yazıyor ve şema değişiklikleri
-korkutucu hale geldi. Bir kolon değişikliğinin neyi bozacağını kimse
-güvenle söyleyemiyor, bu yüzden şema evrimi duruyor ve etrafında geçici
-çözümler birikiyor.
+Birden fazla bağımsız servis aynı tabloya doğrudan yazmaya başladığında veritabanı şemasını değiştirmek korkulu bir rüyaya dönüşür. Tek bir sütun tipini değiştirmenin hangi servisi çökerteceğini kimse kesin olarak kestiremez. Sonuç olarak şema gelişimi durur, sistem donar ve etrafta geçici yamalar birikmeye başlar.
 
 ## Bağlam
 
-Servislere geçişin yarısında kalmış paylaşımlı veritabanı mimarileri.
+Mikroservislere geçişin ortasında kalmış, servislerin hala aynı ilişkisel veritabanını paylaştığı karmaşık mimariler.
 
 ## Yaklaşım
 
-Her tabloya tek bir sahip seç ve diğer bütün yazıcıları onun üzerinden
-geçir. Sahip, verinin alanına ait olduğu servis; bu açık değilse sahip,
-veri yanlış olduğunda nöbet telefonu çalan kişi.
+İlk adım olarak her tabloya tek bir sahip servis belirliyorum ve diğer tüm yazma işlemlerini bu servisin API'sine yönlendiriyorum. Sahip servis, ilgili verinin iş mantığını barındıran servistir. Eğer bu sınır belirsizse kural basittir: Veri bozulduğunda gece yarısı telefonu çalan ekip o tablonun sahibidir.
 
-Okumaları en sona bırak. Yazmalar birleştirilirken diğer servislerin
-tabloyu doğrudan okumaya devam etmesi gayet iyi bir ara durum ve her şeyi
-aynı anda taşımaktan çok daha ucuz. Doğruluk problemleri yazma tarafında.
+Okuma işlemlerini ise ilk etapta olduğu gibi bırakıyorum. Yazma sınırları toparlanırken diğer servislerin doğrudan tablodan okuma yapmaya devam etmesi oldukça kabul edilebilir ve pratik bir geçiş aşamasıdır. Her şeyi tek seferde taşımaya çalışmaktan çok daha az risklidir, çünkü asıl tutarlılık sorunları yazma tarafından kaynaklanır.
 
-Her yabancı yazıcı için doğrudan yazmayı sahibe yapılan bir çağrıyla
-değiştir. Hazır oradayken o çağrıyı idempotent yap, çünkü retry isteyeceksin
-ve buraya bir daha dönmek istemiyorsun.
+Doğrudan yazma yapan her harici servis için bu işlemi sahip servise yapılan açık bir sözleşme çağrısına dönüştürüyorum. Bu çağrıyı baştan aynı işlem güvencesine (idempotent) kavuşturmak gelecekteki olası yeniden deneme ihtiyaçlarını da peşinen çözer.
 
-Yazmalar tek elde toplandığında şema yeniden değiştirilebilir hale geliyor;
-alıştırmanın amacı da bu. Okuyucuları bir API'nin arkasına taşımak sonra
-kademeli olarak, o an hangi değişiklik acı veriyorsa ona göre yapılabilir.
+Yazma yetkisi tek elde toplandığında veritabanı şeması yeniden güvenle geliştirilebilir hale gelir — bu çalışmanın asıl gayesi de budur. Doğrudan okumaları API arkasına taşımak ise daha sonra ihtiyaç duyuldukça parça parça tamamlanabilir.
 
 ## Ödünleşimler
 
-Yazmaları tek elde toplamak, eskiden yerel bir insert olan yollara bir ağ
-atlaması ve gecikme maliyeti ekliyor. Ayrıca sahip servisi, üzerinden yazan
-herkes için yeni bir erişilebilirlik bağımlılığı haline getiriyor.
+Tüm yazmaları tek servis üzerinden geçirmek, eskiden yerel bir kayıt ekleme işlemi olan akışlara bir ağ atlaması ve ek gecikme getirir. Ayrıca ilgili sahip servis, yazma yapan diğer tüm servisler için kritik bir çalışma bağımlılığı haline gelir.
 
-Organizasyonel bir maliyeti de var: sahip ekip artık diğer ekiplerden
-değişiklik talebi alıyor ve bunları karşılayacak kapasitesi olması
-gerekiyor, yoksa herkesin etrafından dolaştığı darboğaz oluyor.
+Sürecin operasyonel bir maliyeti de vardır. Tablonun sahibi olan ekip diğer ekiplerden sürekli şema değişikliği talepleri almaya başlar. Bu talepleri hızla eritebilecek bir iş akışı kurulmazsa sahip servis kurum içi bir darboğaza dönüşür.
 
 ## Bu ne zaman işe yaramaz
 
-Tablo gerçekten alan sahibi olmayan paylaşımlı bir altyapıysa — herkesin
-eklediği bir denetim günlüğü gibi — zorla sahip atamak fayda getirmeden bir
-boğaz oluşturuyor.
+Tablo gerçekten belirli bir iş alanına ait olmayan ortak bir günlükleme ya da denetim izi tablosuysa yapay bir sahip atamak gereksiz bir engel yaratır.
 
-Asıl problem tablonun iki farklı şeyi modelliyor olmasıysa da çözmüyor. O
-durumda önce tabloyu bölmek gerekiyor, sahiplik zaten arkasından geliyor.
+Ayrıca asıl sorun tablonun birbiriyle alakasız iki farklı iş modelini aynı yerde tutmasından kaynaklanıyorsa bu yöntem yetmez. O senaryoda öncelikle tabloyu mantıksal parçalara ayırmak gerekir. Sahiplik sınırları bu bölünmenin ardından kendiliğinden netleşir.
+
+

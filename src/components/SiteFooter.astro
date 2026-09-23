@@ -9,7 +9,7 @@ interface Props { lang: Locale }
 const { lang } = Astro.props;
 
 const t = lang === 'tr'
-  ? { cta: 'Haberdar olmak ister misin?', rss: 'RSS ile takip et', map: 'Site haritası' }
+  ? { cta: 'Güncellemelerden haberdar olun', rss: 'RSS ile takip et', map: 'Site haritası' }
   : { cta: 'Want to stay up to date?', rss: 'Subscribe via RSS', map: 'Sitemap' };
 
 const links = [

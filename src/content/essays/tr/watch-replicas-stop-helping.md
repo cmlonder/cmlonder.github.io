@@ -1,6 +1,6 @@
 ---
-title: 'Read replica ne zaman işe yaramaz oluyor'
-description: 'Replika yalnızca okuma doygunluğunu çözer, başka hiçbir şeyi. Bir tane daha eklemenin kendini ödemeyi bıraktığı nokta tam olarak burası.'
+title: 'Okuma kopyaları (read replica) ne zaman fayda sağlamayı bırakır?'
+description: 'Okuma kopyaları yalnızca okuma yoğunluğunu çözer, yazma yükünü değil. Sisteme yeni bir kopya eklemenin maliyetini kurtarmadığı kritik eşik.'
 pubDate: 2026-01-17
 topics: [scale-and-performance, solution-architecture, postgres, database, capacity, interactive]
 featured: true
@@ -8,77 +8,55 @@ draft: false
 placeholder: false
 ---
 
-Tek veritabanını aşan her ekip aynı tartışmayı yapıyor ve tartışma hep aynı
-sırayla ilerliyor. Okumalar yavaşlıyor. Biri replika ekliyor. İşe yarıyor. Biri
-bir tane daha ekliyor. Daha az işe yarıyor. Sonra biri *sharding* diyor ve iki
-çeyrek dolmuş oluyor.
+Tek bir veritabanının sınırlarını aşan her yazılım ekibi kaçınılmaz olarak aynı tartışmayı yaşar ve süreç hep aynı sırayla işler: Okuma sorguları yavaşlar. Biri sisteme bir okuma kopyası (replica) ekler. Performans anında düzelir. Yük biraz daha artınca bir kopya daha eklenir. Bu kez kazanç daha düşük kalır. Ardından masaya biri çıkıp "veritabanını sharding ile bölelim" der ve ekip sonraki iki çeyreği bu devasa dönüşüme kurban eder.
 
-İşe yarayan şey fikir değil. Replikaların kendini ödemeyi bıraktığı anı
-görebilmek.
+Burada asıl mesele yeni teknolojilere atlamak değil, okuma kopyalarının sisteme fayda sağlamayı bıraktığı o görünmez kırılma anını vaktinde teşhis edebilmektir.
 
-## Tek veritabanı, replika yok
+## Tek veritabanı, sıfır kopya
 
-Aşağıda tek bir birincil düğüm var. İstekler soldan geliyor; okumalar mavi,
-yazmalar sıcak renkte. Her düğümün üç servis yuvası ve kısa bir kuyruğu var,
-kuyruk doluyken gelen istek düşüyor.
+Aşağıda tek bir birincil veritabanı düğümü yer alıyor. İstekler soldan akıyor, okuma işlemleri mavi ve yazma işlemleri sıcak renkle gösteriliyor. Her düğümün üç işlem yuvası ve kısa bir bekleme kuyruğu var, kuyruk taştığında gelen istekler düşmeye başlıyor.
 
-Başlat, sonra kuyruk birikene kadar istek hızını yukarı çek.
+Simülasyonu başlatın ve kuyruk dolup taşana kadar istek hızını yukarı çekin:
 
 <c-replicas rps="18" read-pct="90" replicas="0" style="--ex-height: 150px" description="Replikasız tek bir birincil veritabanı, okuma ağırlıklı bir yükü karşılıyor. İstek hızı artırıldığında kuyruk doluyor ve istekler düşmeye başlıyor.">
 </c-replicas>
 
-Yüzde 90 okumada bu yapı sıkıcı bir sebeple çöküyor: bütün işi tek bir düğüm
-yapıyor ve o işin çoğu okuma.
+Trafiğin yüzde 90'ının okuma olduğu bir senaryoda bu mimari son derece öngörülebilir bir sebeple tıkanır: Tüm iş yükünü tek bir sunucu göğüslüyor ve bu yükün ezici çoğunluğu sadece veri okumaktan ibaret.
 
-## Replika ekle
+## Okuma kopyalarını devreye almak
 
-Şimdi aynı yük, replikalarla. Okumalar aralarında dağılıyor, yazmalar hâlâ
-birincile gidiyor.
+Şimdi aynı trafik yükünü iki adet okuma kopyasıyla karşılayalım. Okuma istekleri kopyalar arasında dengeli biçimde paylaştırılıyor, yazma işlemleri ise doğrudan birincil sunucuya yönlendiriliyor:
 
 <c-replicas rps="30" read-pct="90" replicas="2" style="--ex-height: 210px" description="Aynı okuma ağırlıklı yük, iki okuma replikasıyla. Okumalar replikalara dağılırken yazmalar birincilde kalıyor ve düşen istek oranı sıfıra yaklaşıyor.">
 </c-replicas>
 
-Herkesin aklında kalan durum bu, ve *sharding'den önce read replica*
-tavsiyesinin genelde doğru olmasının sebebi de bu. Düşen istekler neredeyse
-sıfıra iniyor. Canını yakan şey artık birincil değil.
+Mühendislerin zihninde yer eden o mucizevi rahatlama anı tam olarak budur ve "veritabanını bölmeden önce mutlaka okuma kopyası kurun" kuralının geçerliliği de buradan gelir. Düşen istek oranı hızla sıfıra iner ve veritabanı derin bir nefes alır.
 
-## Şimdi yazmaları artır
+## Şimdi yazma oranını artıralım
 
-**Okuma** oranını yüzde 90'dan 50'ye doğru çek ve ne olduğuna bak. Hazır
-oradayken üçüncü ve dördüncü replikayı da ekle — seni kurtarmayacak.
+Aşağıdaki simülasyonda **okuma** oranını yüzde 90'dan yüzde 50 seviyesine doğru çekin ve sistemin nasıl tepki verdiğine bakın. İsterseniz sisteme üçüncü ve dördüncü kopyaları da ekleyin, göreceksiniz ki düşen istekleri durdurmaya yetmeyecek:
 
 <c-replicas rps="30" read-pct="50" replicas="3" style="--ex-height: 250px" description="Okuma ve yazmanın karışık olduğu bir yük, üç replikayla. Her yazma hem birincili meşgul ediyor hem de replikasyon işi olarak her replikaya ulaşıyor, bu yüzden replika eklemek düşen istekleri artık azaltmıyor.">
 </c-replicas>
 
-Burada iki şey oluyor ve yalnızca biri bariz.
+Burada aynı anda iki farklı dinamik gerçekleşiyor ve bunlardan sadece biri ilk bakışta fark ediliyor.
 
-Bariz olan: yazmalar her zaman birincile gidiyor, yani yazma ağırlıklı bir yük
-kaç replika olursa olsun tek bir düğümde toplanıyor.
+Görünür olan gerçek şudur: Yazma işlemleri her zaman ana sunucuya gitmek zorundadır. Dolayısıyla yazma ağırlıklı bir trafikte kaç tane kopya açarsanız açın, ana sunucu tek başına boğulmaya devam eder.
 
-Gözden kaçan: **her yazma aynı zamanda her replikaya da düşüyor.**
-Simülasyondaki gri trafik bu. Replika bedava bir okuma birimi değil; bütün
-yazma akışını baştan oynatmak *ve* üstüne okuma servis etmek zorunda olan bir
-düğüm. Replika eklemek aynı anda hem okuma kapasitesi hem yazma yükü ekliyor.
-Belli bir yazma oranından sonra ikincisi kazanıyor.
+Gözden kaçan sinsi gerçek ise şudur: **Veritabanına gelen her yazma işlemi, aynı zamanda tüm okuma kopyalarına da iletilmek zorundadır.** Simülasyonda gri çizgilerle akan trafik tam olarak bu replikasyon yüküdür. Bir okuma kopyası sisteme sıfır maliyetle eklenen bedava bir kaynak değildir. Ana sunucudaki tüm yazma hareketlerini kendi diskinde baştan oynatmak ve bunun üstüne bir de kullanıcılara okuma hizmeti vermek zorunda olan bağımsız bir düğümdür. Yani sisteme her yeni kopya eklediğinizde hem okuma kapasitesini artırırsınız hem de genel replikasyon yükünü büyütürsünüz. Yazma oranı belirli bir eşiği aştığında bu ikinci faktör kaçınılmaz olarak galip gelir.
 
-## Pratikte ne anlama geliyor
+## Pratikte nasıl kararlar almalıyız?
 
-Read replica tek bir spesifik darboğazın çözümü: gerçekten okuma ağırlıklı bir
-yükteki okuma doygunluğu. Bir ölçekleme stratejisi değil.
+Okuma kopyası sihirli bir büyüme aracı değil, son derece somut tek bir darboğazın ilacıdır: Okuma trafiğinin ezici çoğunlukta olduğu sistemlerde okuma doygunluğunu çözmek.
 
-Doygunluğa gelmiş bir veritabanına bakıyorsan, bende işe yarayan sıra şu:
+Yavaşlayan bir veritabanıyla karşılaştığınızda izlemeniz gereken öncelik sırası şöyle olmalıdır:
 
-1. Bir şey önermeden önce okuma/yazma oranını ölç. Okuma kabaca yüzde 80'in
-   üstünde değilse cevabın replika değil.
-2. Okuma ağırlıklıysa replika ekle — açık ara en ucuz doğru çözüm.
-3. Değilse sırasıyla yazma çoğalmasına, indekslere ve iki servisin aynı tabloya
-   yazıp yazmadığına bak.
-4. Sharding en sonda, ve bir değişiklik değil bir proje.
+1. Herhangi bir mimari değişiklik önermeden önce okuma ve yazma oranını kesin olarak ölçün. Okuma oranı kabaca yüzde 80'in üzerinde değilse aradığınız çare kesinlikle okuma kopyası değildir.
+2. Trafik gerçekten okuma ağırlıklıysa hemen bir kopya ekleyin, bu sektördeki en ucuz ve en etkili mühendislik hamlesidir.
+3. Sorun yazma kaynaklıysa sırasıyla toplu yazma optimizasyonlarına, gereksiz güncellemelerin budanmasına, indekslerin temizlenmesine ve iki bağımsız servisin aynı tabloya yazıp yazmadığına bakın.
+4. Fiziksel parçalama yani sharding ancak bu listenin en sonunda yer alır ve basit bir altyapı iyileştirmesi değil, aylarca sürecek çok riskli bir kurumsal projedir.
 
-Bunun ödünleşimleri yazılmış kılavuz hali
-[Sharding'den önce read replica](/tr/playbooks/read-replicas-before-sharding)
-sayfasında.
+Bu yaklaşımın tüm ödünleşimlerini ve adımlarını [Veritabanını parçalamadan önce okuma kopyaları](/tr/playbooks/read-replicas-before-sharding) kılavuzunda detaylarıyla bulabilirsiniz.
 
-> Simülasyon bilerek kaba: sabit servis süreleri, ağ yok, replikasyon gecikmesi
-> yok, bağlantı havuzu yok. Amacı tek bir ilişkiyi görünür kılmak, senin p99'unu
-> tahmin etmek değil.
+> Buradaki simülasyon mantığı berraklaştırmak adına bilerek sadeleştirilmiştir: Sabit yanıt süreleri kullanılmış, ağ dalgalanmaları ve bağlantı havuzu sınırları kapsam dışı bırakılmıştır. Temel amaç p99 gecikmesini tahmin etmek değil, mimarideki temel ilişkiyi gözler önüne sermektir.
+

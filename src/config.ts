@@ -49,19 +49,19 @@ export const ENTRY_TYPE: Record<CollectionName, string> = {
 export const COLLECTION_BLURBS: Record<CollectionName, Dict> = {
   essays: {
     en: 'Finished arguments. Long, opinionated, meant to change your mind.',
-    tr: 'Arkasında durabildiğim argümanlar. Uzun ve iddialılar, çünkü amaçları seni ikna etmek.',
+    tr: 'Farklı bakış açılarını tartışmaya açan, üzerine düşünülmüş ve derinlemesine ele alınmış kapsamlı yazılar.',
   },
   notes: {
     en: "Thinking out loud. Unfinished, exploratory, often wrong.",
-    tr: 'Sesli düşündüğüm yer. Henüz bitmediler, bir kısmı da muhtemelen yanlış çıkacak.',
+    tr: 'Geliştirme sürecinde aldığım anlık notlar, keşifler ve zamanla olgunlaşacak ham düşünceler.',
   },
   playbooks: {
     en: 'Repeatable decisions. Problem, context, approach, tradeoffs.',
-    tr: 'Birden fazla kez verdiğim için artık bir yöntemi oturmuş kararlar. Her birinde problemi, bağlamı ve neyi neye karşı takas ettiğimi yazıyorum.',
+    tr: 'Saha tecrübelerinden süzülen, tekrar eden mimari ve mühendislik kararları için adım adım çözüm rehberleri.',
   },
   signals: {
     en: 'A link and why it matters. Two sentences, no more.',
-    tr: 'Okuduğum ve aklımda kalan linkler. Her birine neden önemli olduğunu anlatan iki cümle ekliyorum, fazlasını yazmıyorum.',
+    tr: 'Teknoloji dünyasında dikkatimi çeken gelişmeler, ilham verici kaynaklar ve kısa değerlendirmeler.',
   },
 };
 
@@ -154,11 +154,11 @@ export const CONTACT = {
   cv: '',
   label: {
     en: { write: 'Write to me', elsewhere: 'Elsewhere', open: 'What I am up for', cv: 'CV' },
-    tr: { write: 'Bana yaz', elsewhere: 'Başka yerlerde', open: 'Ne yapmaya açığım', cv: 'CV' },
+    tr: { write: 'Bana yaz', elsewhere: 'Başka yerlerde', open: 'Açık olduğum konular', cv: 'CV' },
   } as Record<Locale, Record<string, string>>,
   blurb: {
     en: 'The fastest way to reach me is email. I read everything; I answer what I can.',
-    tr: 'Bana ulaşmanın en hızlı yolu e-posta. Hepsini okuyorum, elimden geleni yanıtlıyorum.',
+    tr: 'Bana ulaşmanın en kolay yolu e-posta. Bütün iletileri okuyor, fırsat buldukça yanıtlıyorum.',
   } as Record<Locale, string>,
 };
 
@@ -167,7 +167,7 @@ export const PROJECTS = {
   name:  { en: 'Projects', tr: 'Projeler' } as Record<Locale, string>,
   blurb: {
     en: 'Things I built, with what they actually do and where they stand.',
-    tr: 'Kurduğum şeyler; her birinin ne işe yaradığını ve şu an hangi durumda olduğunu yazdım.',
+    tr: 'Geliştirdiğim projeler, çözdükleri problemler ve güncel durumları.',
   } as Record<Locale, string>,
 };
 
@@ -195,7 +195,7 @@ export const AI_UI: Record<Locale, { label: string; mini: string; title: string;
   en: { label: 'ai-written', mini: 'ai', anchor: '#the-label',
         title: 'An agent wrote this text; I edited it. Click for how that works.' },
   tr: { label: 'ai üretimi', mini: 'ai', anchor: '#etiket',
-        title: 'Metni bir ajan yazdı; düzenleyen benim. Nasıl çalıştığı için tıkla.' },
+        title: 'Bu metin bir yapay zekâ ajanı tarafından üretildi ve tarafımdan gözden geçirildi. Detaylar için tıklayın.' },
 };
 
 export const DOMAINS = {
@@ -203,7 +203,7 @@ export const DOMAINS = {
   name:  { en: 'Domains', tr: 'Domain' } as Record<Locale, string>,
   blurb: {
     en: 'One domain at a time, written in chapters. The outline is public from day one — including what is not written yet.',
-    tr: 'Tek bir alanı bölüm bölüm yazıyorum. İçindekiler listesi ilk günden açıkta duruyor, daha yazmadığım bölümler de dahil.',
+    tr: 'Karmaşık sektörleri ve iş modellerini adım adım, derinlemesine inceliyorum. Henüz yazılmamış bölümleri de içeren yol haritasını ilk günden şeffaf olarak paylaşıyorum.',
   } as Record<Locale, string>,
 };
 
@@ -233,13 +233,13 @@ export const DOMAIN_UI: Record<Locale, Record<string, string>> = {
     audience: 'Kime',
     written: 'bölüm yazıldı',
     contents: 'İçindekiler',
-    note: 'Yazılmamış bölümler de listede. Altlarındaki cümle, ne anlatacaklarına dair söz.',
+    note: 'Yol haritasının bütününü göstermek adına henüz yazılmamış bölümler de listede yer alıyor. Bölüm altındaki kısa notlar ise ele alınacak kapsamı özetliyor.',
     chapter: 'Bölüm',
     of: '/',
     nextUp: 'Sıradaki bölüm',
     notYet: 'Henüz yazılmadı',
     backToSpine: 'Tüm bölümler',
-    crossRef: 'Başka bir domainde, aynı problem',
+    crossRef: 'Farklı bir sektörde, benzer problem',
   },
 };
 
@@ -315,14 +315,14 @@ export const SHELVES = {
     name:  { en: 'Library', tr: 'Kitaplık' },
     blurb: {
       en: 'Books that changed how I think about systems, work, or myself.',
-      tr: 'Sistemler, iş ya da kendim hakkında düşüncemi değiştiren kitaplar.',
+      tr: 'Yazılım mimarisine, iş dünyasına ve düşünce sistematiğine bakışımı zenginleştiren kitaplar.',
     },
     creator: { en: 'Author', tr: 'Yazar' },
     done:    { en: 'Read', tr: 'Okuduklarım' },
     queued:  { en: 'Up next', tr: 'Sırada' },
     queuedBlurb: {
       en: 'Unread, and kept in sight on purpose — a reminder of how much I do not know.',
-      tr: 'Okumadıklarım burada duruyor — bildiklerimden çok bilmediklerimi hatırlatsın diye.',
+      tr: 'Henüz okumadığım ve bana keşfedecek ne kadar çok şey olduğunu hatırlatan kitaplar.',
     },
     ratio: '2 / 3',
   },
@@ -331,14 +331,14 @@ export const SHELVES = {
     name:  { en: 'Films', tr: 'Filmler' },
     blurb: {
       en: 'Films about craft, obsession, and systems that outgrow their makers.',
-      tr: 'Zanaat, saplantı ve yapıcısını aşan sistemler üzerine filmler.',
+      tr: 'Mühendislik, zanaat, tutku ve karmaşık sistemleri konu alan filmler.',
     },
     creator: { en: 'Director', tr: 'Yönetmen' },
     done:    { en: 'Watched', tr: 'İzlediklerim' },
     queued:  { en: 'Watchlist', tr: 'İzleme listesi' },
     queuedBlurb: {
       en: 'Queued up, not yet watched.',
-      tr: 'Sıraya aldım, henüz izlemedim.',
+      tr: 'İzleme listeme eklediğim, fırsat buldukça izleyeceğim filmler.',
     },
     ratio: '2 / 3',
   },
@@ -347,14 +347,14 @@ export const SHELVES = {
     name:  { en: 'Games', tr: 'Oyunlar' },
     blurb: {
       en: 'Mostly built by one or two people. Systems you learn by playing.',
-      tr: 'Çoğu bir ya da iki kişinin işi. Oynayarak öğrenilen sistemler.',
+      tr: 'Mekanikleri ve sistem tasarımıyla öne çıkan, büyük ölçüde bağımsız yapım oyunlar.',
     },
     creator: { en: 'Studio', tr: 'Geliştirici' },
     done:    { en: 'Played', tr: 'Oynadıklarım' },
     queued:  { en: 'Backlog', tr: 'Oynanacaklar' },
     queuedBlurb: {
       en: 'Bought, installed, not yet played.',
-      tr: 'Aldım, kurdum, henüz oynamadım.',
+      tr: 'Deneyimlemek üzere arşivime eklediğim yapımlar.',
     },
     ratio: '3 / 4',
   },
@@ -416,8 +416,8 @@ export const NEWSLETTER_UI: Record<Locale, Record<string, string>> = {
   en: { title: 'Subscribe', blurb: 'Pick what lands in your inbox. Each bulletin has its own feed; you can also read everything by RSS.',
         email: 'Email', go: 'Subscribe', note: 'Double opt-in, unsubscribe in every email, no tracking pixels.',
         rss: 'RSS', feeds: 'Feeds', compact: 'Get this series by email', all: 'All options', allRadar: 'All radar series' },
-  tr: { title: 'Abone ol', blurb: 'Gelen kutuna ne düşeceğini sen seç. Her bültenin kendi beslemesi var; hepsini RSS ile de okuyabilirsin.',
-        email: 'E-posta', go: 'Abone ol', note: 'Çift onay, her e-postada çıkış bağlantısı, takip pikseli yok.',
+  tr: { title: 'Abone ol', blurb: 'İlginizi çeken bültenleri seçerek e-posta kutunuza alabilir veya tüm akışı RSS üzerinden takip edebilirsiniz.',
+        email: 'E-posta', go: 'Abone ol', note: 'İki adımlı onay, her iletide çıkış bağlantısı ve takip pikselsiz temiz e-postalar.',
         rss: 'RSS', feeds: 'Beslemeler', compact: 'Bu seriyi e-postayla al', all: 'Bütün seçenekler', allRadar: 'Bütün radar serileri' },
 };
 
@@ -481,7 +481,7 @@ export const RADAR = {
   name:  { en: 'Radar', tr: 'Radar' } as Record<Locale, string>,
   blurb: {
     en: 'A daily briefing written by an agent, not by me, and not edited by me either. Written in Turkish.',
-    tr: 'Günlük bülteni bir ajan yazıyor, ben yazmıyorum. Sonradan düzeltmiyorum da; ajan ne yazdıysa onu okuyorsunuz.',
+    tr: 'Yapay zekâ ajanları tarafından derlenen ve otomatik veri akışlarıyla doğrudan yayına alınan günlük bültenler.',
   } as Record<Locale, string>,
 };
 
@@ -494,27 +494,27 @@ export const RADAR_SERIES = {
   'solo-founder': {
     name: 'Solo Girişimci Bülteni',
     driveFolder: 'Radar/Solo Girişimci Bülteni',
-    blurb: 'Tek kişilik girişim vakaları, doğrulanmış ciro rakamlarıyla. Günlük.',
+    blurb: 'Doğrulanmış gelir ve ciro rakamlarıyla tek kişilik yazılım girişimlerini inceleyen günlük bülten.',
   },
   'saas': {
     name: 'SaaS Bülteni',
     driveFolder: 'Radar/SaaS Bülteni',
-    blurb: 'Günün SaaS vakası, doğrulanmış rakamlarıyla. Günlük.',
+    blurb: 'Büyüyen SaaS girişimlerinin iş modellerini, gelir metriklerini ve dönüm noktalarını aktaran günlük vaka analizi.',
   },
   'github-radar': {
     name: 'GitHub Radar',
     driveFolder: 'Radar/GitHub Radar',
-    blurb: 'Günün bir GitHub projesi: altındaki mimari karar, topluluk sağlığı, production riski. Günlük.',
+    blurb: 'Öne çıkan açık kaynak projelerin mimari kararlarını, topluluk dinamiklerini ve canlı sistem risklerini değerlendiren bülten.',
   },
   'indie-postmortem': {
     name: 'Indie Oyun Bülteni',
     driveFolder: 'Radar/Indie Oyun Bülteni',
-    blurb: 'Her gün bir bağımsız oyun lansmanı: wishlist mekaniği, dağıtım, gerçek gelir tablosu. Günlük.',
+    blurb: 'Bağımsız oyunların çıkış süreçlerini, istek listesi dinamiklerini, dağıtım stratejilerini ve şeffaf gelir tablolarını ele alan günlük inceleme.',
   },
   'paper-to-prod': {
     name: 'Makale Bülteni',
     driveFolder: 'Radar/Makale Bülteni',
-    blurb: 'Her gün bir arXiv makalesi mühendislik süzgecinden: kod var mı, kim entegre etti, kimin faturasını düşürür. Günlük.',
+    blurb: 'Akademik yapay zekâ ve bilgisayar bilimleri makalelerinin üretim ortamına uygulanabilirliğini, kod kalitesini ve getireceği maliyet avantajlarını irdeleyen bülten.',
   },
 } as const;
 
@@ -525,7 +525,7 @@ export const HUB = {
   name:  { en: 'The Garden', tr: 'Bahçe' } as Record<Locale, string>,
   blurb: {
     en: 'A workbench of half-built ideas, finished arguments, and notes to myself — kept in the open.',
-    tr: 'Yarım kalmış fikirler, bitirdiğim argümanlar ve kendime aldığım notlar bir arada duruyor. Hepsini açıkta tutuyorum, çünkü ancak düzelte düzelte büyüyorlar.',
+    tr: 'Olgunlaşmış argümanlardan henüz tamamlanmamış keşif notlarına kadar tüm düşünce sürecimi açık bir çalışma alanı gibi burada paylaşıyorum.',
   } as Record<Locale, string>,
 };
 
@@ -545,9 +545,9 @@ export const HERO: Record<Locale, { name: string; rest: string; role: string; no
   },
   tr: {
     name: 'Cemal Önder',
-    rest: '. Ajanlarla yazılım geliştiriyorum, burası da onu anlamaya çalıştığım yer.',
+    rest: '. Yapay zekâ ajanlarıyla yazılım geliştiriyor, öğrendiklerimi ve mimari deneyimlerimi burada paylaşıyorum.',
     role: 'Çözüm mimarı ve yazılım mühendisi',
-    now: 'Ajanlarla uçtan uca çalışıyorum, bir yandan kendi işimi kuruyorum',
+    now: 'Geliştirme süreçlerini uçtan uca ajanlarla yönetiyor ve kendi projelerim üzerinde çalışıyorum',
   },
 };
 
@@ -583,6 +583,7 @@ export const PAGE: Record<Locale, {
   nowOlder: string;
   nowNewer: string;
   subscribe: string;
+  translated: string;
   audience: string;
   draftNotice: string;
   draftNoticeLink: string;
@@ -621,6 +622,7 @@ export const PAGE: Record<Locale, {
     nowOlder: 'Earlier month',
     nowNewer: 'Later month',
     subscribe: 'Subscribe',
+    translated: 'Machine-translated from the Turkish original; not yet reviewed by me.',
     audience: 'Assumed audience',
     draftNotice:
       'Most of the content here is AI-generated. I am working on the design right now and ' +
@@ -648,39 +650,40 @@ export const PAGE: Record<Locale, {
     tools: 'İzinli araçlar',
     repoPath: 'Repo yolu',
     showFile: 'Tam metni göster',
-    topicsBlurb: 'Yazdıklarım altı başlık altında toplanıyor. Bir konu her formatta görünebilir.',
-    topicBlurb: (t) => `${t} konusundaki tüm yazı, not, playbook ve sinyaller.`,
+    topicsBlurb: 'Sitedeki tüm çalışmalar altı ana tema etrafında şekillenir; her tema farklı içerik formatlarında karşınıza çıkabilir.',
+    topicBlurb: (t) => `${t} teması altındaki tüm yazılar, notlar, kılavuzlar ve sinyaller.`,
     tagsTitle: 'Etiketler',
-    tagsBlurb: 'Altı sabit konunun aksine serbest etiketler. Büyük olan daha sık geçiyor.',
-    tagBlurb: (t) => `${t} etiketli her şey.`,
+    tagsBlurb: 'Ana temalardan bağımsız serbest etiketler; yazı boyutu kullanım sıklığını gösterir.',
+    tagBlurb: (t) => `${t} etiketli tüm içerikler.`,
     archiveTitle: 'Arşiv',
-    archiveBlurb: 'Burada yazdığım her şey, yeniden eskiye. Yıl yıl, tek listede.',
+    archiveBlurb: 'Sitede yayınlanan tüm içeriklerin kronolojik arşivi.',
     nowTitle: 'Şu Sıralar',
-    nowBlurb: 'Neye baktığımın günlüğü — düzensiz aralıklarla eklenir, silinmez.',
-    nowIntro: 'Bu bir now sayfası, ama silinen türden değil: her güncelleme öncekinin üstüne ekleniyor. Her ayın kendi adresi var.',
+    nowBlurb: 'Üzerinde çalıştığım projeler ve odaklandığım konuların aylık günlüğü.',
+    nowIntro: 'Klasik now sayfalarının aksine, bu sayfada geçmiş güncellemeler silinmez; her ay kendi kalıcı bağlantısıyla zaman çizgisine eklenir.',
     nowAll: 'Bütün güncellemeler',
     nowOlder: 'Önceki ay',
     nowNewer: 'Sonraki ay',
     subscribe: 'Abone ol',
-    audience: 'Kime',
+    translated: 'İngilizce aslından makine çevirisi; henüz gözden geçirmedim.',
+    audience: 'Hedef kitle',
     draftNotice:
-      'Çoğu içerik AI üretimi. Şu anda taslak üzerine yoğunlaştım, içeriği de geçici olarak ' +
-      'AI\'a ürettiriyorum. Bir şekilde denk geldiyseniz şu anda düzgün içerik olarak ' +
-      'okuyabileceğiniz bölüm ',
+      'Sitedeki içeriklerin bir kısmı, altyapı ve tasarım sürecinde yer tutucu olarak ' +
+      'yapay zekâ desteğiyle oluşturulmuştur. Düzenli veri akışlarıyla üretilen ve ' +
+      'doğrulanabilir içerikleri incelemek isterseniz ',
     draftNoticeLink: 'radar',
-    draftNoticeTail: '. Burayı düzgün bir pipeline sonucu oluşturuyorum.',
+    draftNoticeTail: ' bölümüne göz atabilirsiniz.',
     recently: 'Son eklenenler',
-    findTitle: 'Hangi playbook?',
-    findBlurb: "Gördüğün belirtileri seç. Eşleşen playbook'lar öne çıkar.",
+    findTitle: 'Hangi kılavuz?',
+    findBlurb: "Karşılaştığınız mimari ve sistemsel belirtileri seçerek en uygun çözüm rehberlerine ulaşın.",
     symptoms: 'Belirtiler',
     clear: 'Temizle',
-    allPlaybooks: "Tüm playbook'lar",
+    allPlaybooks: "Tüm kılavuzlar",
     problem: 'Problem',
     context: 'Bağlam',
     match: 'eşleşme',
-    noSelection: 'Seçim yok — hepsi listeleniyor, en ucuz çözüm önce.',
-    noMatch: 'Bu kombinasyona uyan playbook yok. Bir belirti çıkarmayı dene.',
-    findAction: 'Hangi playbook? Belirtiden bul',
+    noSelection: 'Herhangi bir belirti seçilmedi; tüm kılavuzlar en pratik çözümlerden başlayarak listeleniyor.',
+    noMatch: 'Seçilen belirtilere uygun bir kılavuz bulunamadı. Lütfen filtreleri gözden geçirin.',
+    findAction: 'Hangi kılavuz? Belirtiden bul',
   },
 };
 

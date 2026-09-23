@@ -3,12 +3,11 @@ title: "The Act of Killing"
 director: "Joshua Oppenheimer"
 year: 2012
 status: "queued"
-note: "Yıllardır listemde. Kolay izlenmediğini duyduğum için sürekli erteliyorum."
+note: "Tarihsel travmaları ve faillerin kendi anlatılarını sahneye taşıyan, sindirmesi zor ama yüzleşilmesi gereken sarsıcı bir belgesel."
 topics: [documentary]
 order: 21
 placeholder: true
 ---
 
-Sırada bekliyor. Zor bir film olduğunu ve failleri kendi hikâyelerini
-yeniden canlandırmaya davet ettiğini biliyorum. Doğru zamanda izlemek
-gereken türden, o yüzden bekliyor.
+İzleme listemde bekliyor. Belgeselin failleri kendi suçlarını kamera önünde kurgusal olarak yeniden canlandırmaya davet eden sarsıcı bir dile sahip olduğunu biliyorum. Zihinsel olarak tamamen hazır olduğum bir zamanda izlemeyi planlıyorum.
+

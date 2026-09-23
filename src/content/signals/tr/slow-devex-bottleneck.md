@@ -1,6 +1,6 @@
 ---
-title: 'Yavaş geliştirici deneyimi hızlı modelleri tıkayacak'
-description: 'Model CI''ından hızlıysa artık ürünün kısıtı CI''dır.'
+title: 'Yavaş geliştirme döngüleri hızlı modellerin önünü tıkar'
+description: 'Yapay zeka modelleri dağıtım ve doğrulama süreçlerinizden daha hızlı ürettiğinde, asıl darboğaz altyapınız haline gelir.'
 pubDate: 2026-06-21
 url: https://seangoedecke.com/slow-devex-will-bottleneck-fast-models/
 source: 'Sean Goedecke'
@@ -9,7 +9,5 @@ draft: false
 placeholder: true
 ---
 
-Model senin CI'ından hızlı çalışmaya başladığı anda ürünün kısıtı artık
-model değil, CI oluyor; yani yıllardır ertelediğin build süresi işi birden
-bire öncelikli hâle geliyor. Bunu okuduktan sonra kendi pipeline sürelerime
-ilk kez ciddi bir gözle baktım.
+Yapay zeka modellerinin düşünme ve kodlama hızı yerel doğrulama süreçlerinizi aştığında, projenin önündeki asıl darboğaz modeller değil geliştirme altyapınız haline gelir. Yıllardır görmezden gelinen uzun derleme süreleri ve yavaş test adımları, ajanların üretim hızına yetişebilmek için bir anda en öncelikli işe dönüşür.
+

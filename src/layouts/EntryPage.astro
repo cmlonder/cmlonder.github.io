@@ -86,6 +86,7 @@ const t = {
       <h1>{d.title}</h1>
       <p class="standfirst">{d.description}</p>
       <Audience text={d.audience} lang={lang} />
+      {d.translation && !d.translation.reviewed && <p class="ceviri">{PAGE[lang].translated}</p>}
 
       {collection === 'playbooks' && (
         <dl class="facts">
@@ -227,6 +228,7 @@ const t = {
     border-block-start: 1px solid var(--c-border);
   }
   .topics { display: flex; flex-wrap: wrap; gap: var(--s-2xs); }
+  .ceviri { margin-block-start: var(--s-s); font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); font-style: italic; }
 
 
   .related { margin-block-start: var(--s-2xl); }

@@ -1,6 +1,6 @@
 ---
-title: 'Yarım kalmış soyutlamanın bedeli'
-description: 'Yarım soyutlama hiç soyutlama olmamasından kötü, ve ajanlar hem üretimini ucuzlatıyor hem fark edilmesini zorlaştırıyor.'
+title: 'Yarım bırakılmış soyutlamaların ağır maliyeti'
+description: 'Yarım kalmış bir soyutlama, hiç soyutlama yapılmamasından çok daha tehlikelidir ve yapay zeka araçları bu eksik yapıların üretimini inanılmaz hızlandırıyor.'
 pubDate: 2026-08-03
 status: seedling
 topics: [agentic-development, solution-architecture, abstraction]
@@ -8,27 +8,13 @@ draft: false
 placeholder: true
 ---
 
-Eksik bir soyutlama can sıkıcı ama görülmesi kolay: aynı mantık dört yerde
-duruyor ve dördünü birden değiştirmeyi hatırlaman gerekiyor. Yarım kalmış
-bir soyutlama daha kötü, ve görülmesi çok daha zor.
+Kod tabanında hiç soyutlanmamış yinelenen bir mantık görmek can sıkıcıdır fakat tespiti son derece kolaydır. Aynı iş kuralı dört ayrı yerde durur ve bir değişiklik gerektiğinde dördünü birden güncellemeniz gerektiğini bilirsiniz. Yarım bırakılmış bir soyutlama ise bundan çok daha tehlikelidir, çünkü arkasında sahte bir düzen hissi bırakır.
 
-Şekli hep benzer oluyor. Biri ortak parçayı çıkarıyor, beş çağrı yerinden
-üçünü kapsıyor, kalan ikisi eski yöntemle devam ediyor. Artık kod tabanında
-iki doğru var. Okuyan kişi soyutlamayı buluyor, onu yetkili sanıyor ve
-yanılıyor. Sonraki kişi kendi durumu için soyutlamayı genişletiyor, bu da
-onu biraz daha genel ve gerçekte neyi kapsadığı konusunda biraz daha az
-dürüst yapıyor.
+Senaryo her zaman benzer biçimde gelişir. Geliştirici ortak mantığı fark edip yeni bir soyutlama katmanı oluşturur. Mevcut beş kullanım noktasından üçünü bu yeni yapıya taşır fakat kalan ikisi eski haliyle çalışmaya devam eder. Artık sistemde aynı işi yapan iki farklı doğru vardır. Kodu yeni okuyan biri bu soyutlamayı görünce tüm projenin bu kuralla işlediğini varsayar ve yanılır. Ardından gelen kişi kendi özel senaryosunu da kapsasın diye o soyutlamayı biraz daha esnetir, bu da yapıyı hem daha karmaşık hem de neyi çözdüğü konusunda daha belirsiz bir hale getirir.
 
-Bedel tekrar değil. Bedel, soyutlamanın kodun tutmadığı bir söz vermesi ve
-sonraki her okuyucunun bunu keşfetmek için ödemesi.
+Buradaki asıl maliyet kodun tekrar etmesi değildir. Asıl bedel, soyutlamanın projenin geneli adına tutamayacağı bir söz vermesi ve sonraki her geliştiricinin bu tutarsızlığı kendi mesaisiyle keşfetmek zorunda kalmasıdır.
 
-Son dönemde değişen şey ekonomi. Soyutlama çıkarmak eskiden yeterince
-yavaştı, o yüzden önce düşünüyordun ve başladıysan bitiriyordun. Ajanla
-hızlı, yani yarım kalanlar daha kolay üretiliyor. Gözden geçirmede
-yakalanmaları da zor, çünkü fark temiz bir çıkarma gösteriyor ve geride
-bırakılan çağrı yerleri hakkında hiçbir şey söylemiyor.
+Son dönemde bu denklemi değiştiren en büyük etken ise yapay zeka ajanları oldu. Eskiden bir soyutlama kurmak zaman ve dikkat gerektirirdi, bu yüzden başlamadan önce derinlemesine düşünülür ve başlanan iş genellikle sonuna kadar götürülürdü. Ajanlarla birlikte kod yazmak çok hızlandı, bu da yarım kalan soyutlamaların çok daha zahmetsizce ve sıkça üretilmesine zemin hazırlıyor. Üstelik kod incelemelerinde bunları yakalamak da zordur, çünkü sunulan değişiklik gayet derli toplu bir fonksiyon sunarken, projenin unutulan diğer köşeleri hakkında hiçbir ipucu vermez.
 
-Şimdiye kadar bulduğum tek önlem mekanik: bir soyutlama girdiğinde, aynı
-değişiklikte taşınmamış çağrı yerlerinin listesini de iste. O liste boş
-değilse değişiklik bitmemiş demektir. Bunu sevmiyorum, çünkü sormayı
-hatırlamama bağlı.
+Şimdilik uygulayabildiğim tek pratik kural mekanik bir disiplinden ibaret: Projeye yeni bir soyutlama eklendiğinde, aynı değişiklik içinde eski yöntemle bırakılmış tüm kullanım noktalarının dökümünü istiyorum. Eğer taşınmamış yerler varsa o değişiklik henüz tamamlanmamış demektir. Ancak bu yöntemi de bütünüyle tatmin edici bulmuyorum, çünkü her seferinde bunu hatırlayıp denetlemeyi yine insan iradesine bırakıyor.
+

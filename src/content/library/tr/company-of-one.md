@@ -2,7 +2,7 @@
 title: 'Company of One'
 author: 'Paul Jarvis'
 year: 2019
-note: "Küçük kalmanın büyüyememek değil, bir strateji olduğu argümanı."
+note: "Küçük kalmanın bir yetersizlik değil, bilinçli ve karlı bir iş stratejisi olduğu savı."
 order: 8
 placeholder: true
 status: "done"
@@ -10,11 +10,9 @@ rating: 3
 topics: [solo-company, scale-and-performance]
 ---
 
-Küçük kalmanın bir strateji olabileceğini savunuyor ve bu savunmaya
-ihtiyacım vardı.
+Bir işletmeyi küçük tutmanın da bilinçli bir strateji olabileceğini savunuyor ve bu bakış açısına gerçekten ihtiyacım vardı.
 
-Ama kitap kendi tezini fazla tekrar ediyor; iki yüz sayfada elli sayfalık
-fikir var. Radar'da yazdığım vakalar bu tezi kitaptan daha iyi
-kanıtlıyor.
+Ancak kitap ana tezini biraz fazla yineliyor, iki yüz sayfanın içine yayılmış fikir aslında elli sayfada rahatlıkla toparlanabilirdi. Yine de bağımsız çalışanlar için ilham verici bir referans.
 
-Üç yıldız. Fikir doğru, kitap uzun.
+Üç yıldız vermemin sebebi fikrin kıymetine rağmen kitabın biraz gereksiz uzatılmış olması.
+

@@ -5,18 +5,15 @@ year: 2013
 rating: 4
 hours: 12
 platform: "PC"
-note: "Kuralları uygulamanın giderek nasıl bir şeye dönüştüğünü oynatarak anlatıyor."
+note: "Bürokrasinin ve katı kuralların insanı zamanla nasıl duygusuz bir kontrol mekanizmasına dönüştürdüğünü bizzat yaşatarak anlatan bir başyapıt."
 topics: [solo-company, rules, ethics]
 order: 3
 placeholder: true
 ---
 
-Mekaniği basit: belge kontrol et, tutarsızlık bul, damga vur. Ama her
-gün yeni bir kural ekleniyor ve kontrol listesi kafanda tutulamaz hale
-geliyor.
+Mekanik kağıt üzerinde son derece yalın görünüyor: belgeleri incele, çelişkileri yakala ve uygun damgayı bas. Fakat her geçen gün yeni bir kural ve istisna ekleniyor, kontrol listesi bir noktadan sonra insan zihninin taşıyamayacağı kadar karmaşık bir hal alıyor.
 
-Beni rahatsız eden şey, bir noktada insanları değil **alanları** kontrol
-etmeye başlamam oldu. Tam olarak bunu anlatıyor.
+İşin sarsıcı tarafı, birkaç bölüm sonra karşınızdaki çaresiz insanları değil sadece önünüzdeki **form alanlarını ve mühürleri** denetleyen hissiz bir çarka dönüştüğünüzü fark etmeniz. Oyun tam olarak bu tehlikeli yabancılaşmayı hedef alıyor.
 
-Yazılımda kural katmanlarının nasıl birikip kimsenin tamamını bilmediği
-bir sisteme dönüştüğünü anlatmak için kullandığım örnek.
+Yazılım mimarilerinde zamanla üst üste yığılan kuralların nasıl kimsenin bütününü kavrayamadığı hantal bir bürokrasiye dönüştüğünü anlatmak istediğimde aklıma gelen ilk örnek daima bu oluyor.
+

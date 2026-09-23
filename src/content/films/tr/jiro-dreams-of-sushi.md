@@ -4,21 +4,15 @@ director: "David Gelb"
 year: 2011
 rating: 5
 runtime: 81
-note: "Aynı işi elli yıl yapmanın sıkıcı değil, giderek daha zor hale geldiğine dair."
+note: "Aynı zanaatı yarım asır boyunca icra etmenin tekdüzelik değil, giderek derinleşen bir ustalık arayışına dönüştüğü üzerine."
 topics: [craft, repetition, mastery]
 order: 1
 placeholder: true
 ---
 
-Bir suşi ustasının belgeseli gibi görünüyor ama aslında **tekrarın** filmi.
-Jiro her gün aynı on parçayı yapıyor ve altmış yıl sonra hâlâ düzeltecek
-bir şey buluyor.
+Sıradan bir suşi ustası belgeseli gibi başlıyor fakat aslında **bilinçli tekrarın ve adanmışlığın** hikayesini anlatıyor. Jiro her gün aynı sınırlı menüyü hazırlıyor ve altmış yılın ardından hala tabakta kusursuzlaştıracak yeni bir detay buluyor.
 
-Bende kalan sahne pirinç sahnesi: çırak beş yıl boyunca sadece pirinç
-yıkıyor. Yazılımda bu kadar sabrı olan bir öğrenme yolu yok; biz üç ayda
-"senior" diyoruz. Filmi ilk izlediğimde bunu romantik bulmuştum. Şimdi
-daha çok bir **uzmanlık tanımı** olarak okuyorum: bir işin kaç farklı
-şekilde yanlış gidebileceğini biliyorsan ustasın.
+Beni en çok etkileyen kısım pirinç hazırlama süreci oldu: Bir çırak mutfakta beş yıl boyunca sadece pirinç yıkamayı öğreniyor. Yazılım dünyasında bu denli sabırlı bir çıraklık geleneği maalesef yok, sektörde birkaç yıl kod yazan herkese kolayca "kıdemli" unvanı veriliyor. Filmi ilk izlediğimde bu adanmışlığı sadece romantik bulmuştum, artık bunu gerçek bir **uzmanlık ölçütü** olarak okuyorum: Bir işin sahada kaç farklı yoldan ters gidebileceğini ezbere biliyorsanız gerçek bir ustasınızdır.
 
-Eksik yanı, filmin bu hayatın bedelini fazla nazikçe geçiştirmesi.
-Oğullarının anlattıkları o kadar da güzel değil.
+Eksik kalan tek yönü, yönetmenin bu yoğun adanmışlığın aileye ve çocuklara yüklediği ağır duygusal faturayı fazla naif biçimde geçiştirmesi.
+

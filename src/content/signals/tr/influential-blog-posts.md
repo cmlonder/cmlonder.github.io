@@ -1,6 +1,6 @@
 ---
-title: 'Düşünceni en çok hangi blog yazıları değiştirdi?'
-description: 'Sahada çalışan mühendislerin düşüncesini gerçekten değiştiren yazıların uzun bir listesi.'
+title: 'Mühendislerin bakış açısını temelden değiştiren yazılar'
+description: 'Yazılım dünyasında çalışanların düşünme biçimini gerçekten dönüştüren kaynakların özenli bir derlemesi.'
 pubDate: 2026-07-08
 url: https://simonwillison.net/2026/Sep/14/influences/
 source: 'Simon Willison'
@@ -9,7 +9,5 @@ draft: false
 placeholder: true
 ---
 
-Çalışan mühendislerin düşünme biçimini gerçekten değiştiren yazıların uzun bir
-listesi, ki bu popüler olan yazıların listesinden farklı bir liste. Linkler
-kadar kalıbı için de okumaya değer: neredeyse hiçbiri öğretici değil ve
-neredeyse hepsi okurun zaten bildiği bir şeyi yeniden çerçeveliyor.
+Yalnızca popüler olanları değil, sektörde çalışan mühendislerin bakış açısını gerçekten dönüştüren metinleri bir araya getiren zengin bir liste. Buradaki yazıların ortak gücü salt bilgi vermelerinde değil, okurun zaten bildiği gerçekleri yepyeni bir çerçeveye oturtup zihnini berraklaştırmasında yatıyor.
+

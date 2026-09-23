@@ -1,6 +1,6 @@
 ---
-title: 'Megafon olmadan açıkta inşa etmek'
-description: 'Kendi şeyini sessizce kurmak mümkün mü, ve bu işin amacını baltalıyor mu?'
+title: 'Gürültü koparmadan açıkta üretmek'
+description: 'İnsanın kendi projelerini sessizce ve gösterişe kaçmadan açık kaynak inşa etmesi mümkün mü, yoksa bu tercih açıkta üretmenin doğasına aykırı mı?'
 pubDate: 2026-09-13
 status: seedling
 topics: [solo-company, independence]
@@ -8,27 +8,13 @@ draft: false
 placeholder: true
 ---
 
-Açıkta inşa etmek deyince akla gelen şey genelde bir megafon: günlük
-gelir paylaşımları, kilometre taşı duyuruları, takipçi sayısıyla
-birlikte büyüyen bir anlatı. Bu yöntemin işe yaradığına dair yeterince
-örnek var, ama benim yapabileceğim bir şey olduğuna ikna olmadım.
+Açıkta üretmek (building in public) denildiğinde akla ilk gelen şey genellikle elinde megafonla dolaşan bir profil oluyor: Günlük gelir ekran görüntüleri, abartılı büyüme duyuruları ve takipçi sayısıyla yarışan bir başarı anlatısı. Bu yöntemin belirli kitlelerde işe yaradığı kesin, ancak kendi adıma benimseyebileceğim bir tarz olduğuna hiçbir zaman ikna olamadım.
 
-Sormak istediğim soru şu: dağıtımı megafondan gelmeyen bir açıklık
-mümkün mü? Yani yaptığın şey görünür olsun ama seslendirilmiş
-olmasın. Bu sitenin kendisi o denemenin bir parçası; yarım kalmış
-şeyleri de yayınlıyorum ama kimseye duyurmuyorum.
+Asıl merak ettiğim soru şu: Dağıtımı bir megafona yaslanmayan, gösterişsiz bir açıklık mümkün mü? Yani yaptığınız iş tamamen ortada ve erişilebilir olsun ama bunun için yapay bir gürültü çıkarılmasın. Zaten bu sitenin kendisi de tam olarak bu arayışın bir ürünü. Henüz tamamlanmamış taslakları ya da üzerinde düşündüğüm fikirleri açıkça yayınlıyorum ama kimseye bir duyuru fırlatmıyorum.
 
-Şüphelendiğim nokta şurada. Açıkta inşa etmenin faydası genelde iki
-şeyden geliyor: geri bildirim ve hesap verebilirlik. Megafonu
-kaldırdığında geri bildirim ciddi şekilde azalıyor, çünkü kimse
-görmüyorsa kimse yorum da yapmıyor. Hesap verebilirlik ise kısmen
-kalıyor, çünkü yayınlanmış bir şey yayınlanmamış bir şeyden farklı;
-en azından kendime karşı.
+Açıkta inşa etmenin sağladığı fayda genellikle iki temele dayandırılır: Dışarıdan gelen geri bildirim ve kişinin kendi üzerindeki hesap verebilirlik hissi. Megafonu devreden çıkardığınızda ilk fayda ciddi biçimde zayıflıyor, çünkü kimsenin görmediği bir işe doğal olarak kimse yorum da yapmıyor. Fakat hesap verebilirlik boyutu canlı kalmaya devam ediyor. Çünkü yayına alınmış bir yazı ya da kamuya açık bir kod deposu, çekmecede duran bir karalamadan psikolojik olarak her zaman daha bağlayıcıdır.
 
-Yani belki de sessiz versiyonun faydası dışarıdan değil, içeriden
-geliyor. Yazmak zorunda kalmak, düşünceyi bitirmeye zorluyor. Bunun
-için okuyucu gerekmiyor, sadece yayınlama eşiği gerekiyor.
+Dolayısıyla bu sessiz yaklaşımın asıl getirisi dışarıdan değil, insanın kendi içinden geliyor olabilir. Fikri başkalarının görebileceği bir formatta yazmak, insanı yarım kalmış düşünceleri toparlayıp bir sonuca ulaştırmaya zorluyor. Bunun için binlerce takipçiye değil, yalnızca içeriği yayına alma eşiğini aşmaya ihtiyaç var.
 
-Bu notu yarım bırakıyorum çünkü henüz yeterince veri yok. Altı ay
-sonra buraya dönüp ne olduğunu yazmak istiyorum: sessiz açıklık geri
-bildirim üretti mi, yoksa sadece kendime tuttuğum bir günlük mü oldu.
+Bu notu şimdilik açık uçlu bırakıyorum çünkü elimde henüz kesin bir çıkarım yapacak kadar tecrübe birikmedi. Belirli bir süre sonra buraya dönüp tablonun nereye evrildiğini görmek istiyorum: Sessiz açıklık zamanla sahici bir diyalog üretebildi mi, yoksa sadece kendime tuttuğum dijital bir günlük olarak mı kaldı?
+

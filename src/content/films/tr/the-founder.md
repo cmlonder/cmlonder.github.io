@@ -4,18 +4,15 @@ director: "John Lee Hancock"
 year: 2016
 rating: 3
 runtime: 115
-note: "Ürünü kuranla ölçekleyenin neden aynı kişi olmadığına dair."
+note: "Bir ürünü ilk tasarlayan zihin ile onu küresel ölçekte dağıtan aklın neden nadiren aynı kişi olduğunu gösteren çarpıcı bir vaka."
 topics: [scale-and-performance, systems, distribution]
 order: 8
 placeholder: true
 ---
 
-McDonald kardeşler mutfağı tasarlamış — tebeşirle zemine çizilen o
-sahne, bir üretim hattı optimizasyonu. Kroc mutfağı değil **dağıtımı**
-tasarlamış, ve şirket onun olmuş.
+McDonald kardeşler kusursuz bir mutfak akışı tasarlamışlardı. Tebeşirle basketbol sahasına çizdikleri o ünlü sahne, tarihin en zarif üretim hattı optimizasyonlarından biridir. Ray Kroc ise mutfağı değil, **büyümeyi ve franchise dağıtımını** tasarladı ve günün sonunda devasa imparatorluğun tek sahibi oldu.
 
-Film bunu trajedi olarak anlatıyor ve haklı, ama altında rahatsız edici
-bir gerçek var: kardeşler sistemi kurdukları ölçekte mükemmel işletmiş
-ve bir adım öteye taşımayı reddetmiş.
+Film bu süreci hüzünlü bir hak kaybı trajedisi olarak sunuyor ve bunda son derece haklı. Ancak meselenin altında rahatsız edici bir mühendislik gerçeği daha yatıyor: Kardeşler kurdukları sistemi tek bir restoran ölçeğinde mükemmel işletmişlerdi fakat kontrolü kaybetme korkusuyla bir adım ötesine taşımayı inatla reddettiler.
 
-Üç yıldız; Keaton iyi ama film son yarım saatte tekrara düşüyor.
+Michael Keaton harika bir performans sergiliyor ancak film son yarım saatinde biraz temposunu kaybediyor.
+

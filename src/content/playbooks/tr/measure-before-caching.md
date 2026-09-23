@@ -1,9 +1,9 @@
 ---
-title: 'Önbellekten önce ölç'
-description: 'Ölçülmeden eklenen bir önbellek, bilinmeyen bir kazanç için alınmış bir doğruluk riskidir.'
+title: 'Önbellek kurmadan önce ölçüm yapın'
+description: 'Performans ölçümüne dayanmayan bir önbellek katmanı, belirsiz bir hız kazanımı uğruna veri doğruluğunu riske atmaktır.'
 pubDate: 2026-06-10
-problem: 'Bir şey yavaş ve önerilen çözüm önüne Redis koymak.'
-context: 'Bayatlığın gerçek bir maliyeti olduğu ve erişim deseninin henüz bilinmediği okuma yolları.'
+problem: 'Sistemde bir yavaşlık var ve ilk çözüm önerisi hemen önüne bir Redis katmanı koymak.'
+context: 'Verinin bayatlamasının maliyetli olduğu ve okuma alışkanlıklarının henüz netleşmediği akışlar.'
 topics: [scale-and-performance, cache, redis]
 draft: false
 placeholder: true
@@ -11,49 +11,31 @@ placeholder: true
 
 ## Problem
 
-Bir şey yavaş ve önerilen çözüm önüne Redis koymak. Ölçülmeden eklenen bir
-önbellek, bilinmeyen bir kazanç karşılığında alınmış bir doğruluk riski.
+Uygulamada bir yavaşlık hissedildiğinde ekipteki ilk öneri çoğu zaman araya hemen bir Redis önbelleği koymak olur. Ancak ölçüme dayanmadan eklenen bir önbellek, ne kadar kazandıracağı bilinmeyen bir performans uğruna sistemin veri doğruluğunu doğrudan riske atmaktır.
 
 ## Bağlam
 
-Bayatlığın gerçek bir maliyeti olduğu ve erişim deseninin henüz
-anlaşılmadığı okuma yolları.
+Verinin eskiyip bayatlamasının iş süreçlerinde kabul edilemez sonuçlar doğurduğu ve okuma alışkanlıklarının henüz sayısallaştırılmadığı sorgu yolları.
 
 ## Yaklaşım
 
-Herhangi bir karar vermeden önce zamanın gerçekten nereye gittiğini
-buluyorum. "Önbellek lazım" denen durumların çoğunda gecikmenin tek bir
-kötü planlı sorguda toplandığı ortaya çıkıyor, ve onu düzeltmek ikinci bir
-doğruluk kaynağı eklemeden problemi ortadan kaldırıyor.
+Herhangi bir mimari karar vermeden önce gecikmenin kaynağını mikrosaniye düzeyinde tespit ediyorum. "Önbellek şart" denilen durumların büyük bir kısmında, sorunun aslında kötü planlanmış tek bir SQL sorgusundan ibaret olduğu anlaşılıyor. O sorguyu optimize etmek ya da doğru bir indeks eklemek, sisteme ikinci bir veri kaynağı sokmadan problemi kökünden çözüyor.
 
-Zaman gerçekten tekrar eden aynı okumalarda geçiyorsa, inşa etmeden önce
-elde edeceğin isabet oranını ölç. Gerçek istek akışından örnek al ve kaç
-okumanın önbellekten karşılanacağını say. Yüzde kırk isabet oranı olan bir
-önbellek genellikle geçersizleştirme maliyetine değmiyor.
+Gecikmenin gerçekten aynı veriyi tekrar tekrar okumaktan kaynaklandığı kanıtlanırsa, sistemi kurmadan önce potansiyel isabet oranını simüle ediyorum. Canlı istek trafiğinden örneklem alarak kaç okumanın önbellekten dönebileceğini hesaplıyorum. İsabet oranı yüzde kırkın altında kalan bir önbellek, getirdiği veri tazeleme yükünü kesinlikle karşılamaz.
 
-Sonra bayatlık sözleşmesini açıkça belirleyip yazıya döküyorum. Bu veri
-kimseye zarar vermeden ne kadar eski olabilir? Kimse cevap veremiyorsa
-önbelleğe almak için yeterince bilgin yok demektir.
+Ardından verinin bayatlama toleransını netleştiriyorum. Bu bilgi iş süreçlerine zarar vermeden ne kadar süre eski kalabilir? Bu soruya kesin bir yanıt verilemiyorsa önbellek kurmak için henüz erken demektir.
 
-Ancak bundan sonra önbelleğin nerede duracağına karar veriyorum. Süreç içi
-en ucuz ve en basit ama bayat kopya sayısını örnek sayısıyla çarpıyor.
-Paylaşımlı önbellekte tek bir doğru var ama kritik yola bir ağ atlaması ve
-yeni bir bağımlılık ekleniyor.
+Ancak bu adımlardan sonra önbelleğin mimarideki yerine karar veriyorum. Süreç içi bellek kullanımı en ucuz ve en hızlı yoldur fakat örnek sayısı arttıkça kopyalar çoğalır. Merkezi bir önbellek ise tek bir doğruluk kaynağı sunar ama kritik yola yeni bir ağ atlaması ve ek bir altyapı bağımlılığı sokar.
 
 ## Ödünleşimler
 
-Her önbellek, doğrunun yaşayabileceği ikinci bir yer ve ikisi
-uyuşmadığında yeni bir hata biçimi getiriyor. Geçersizleştirme mantığı
-zamanla kod tabanına yayılıyor ve ürettiği hatalar aralıklı, tekrar
-üretilmesi zor hatalar oluyor.
+Her önbellek katmanı verinin yaşayabileceği alternatif bir hafıza demektir ve bu hafızalar uyuşmadığında çözülmesi çok zor tutarsızlıklar doğar. Önbellek temizleme mantığı zamanla kodun her köşesine yayılır ve arkasında yakalanması güç aralıklı hatalar bırakır.
 
-Bir de kapasite tuzağı var: yeterince iyi çalışan bir önbellek, alttaki
-problemi soğuk kaldığı güne kadar gizliyor; o gün soğuk başlangıç sistemi
-tam da en kötü anda indiriyor.
+Ayrıca gizli bir kapasite riski taşır. Kusursuz çalışan bir önbellek alttaki veritabanı zafiyetlerini uzun süre maskeler. Önbelleğin boşaldığı bir yeniden başlatma anında ani gelen yük tüm sistemi bir anda çökertebilir.
 
 ## Bu ne zaman işe yaramaz
 
-Bakiye veya stok adedi gibi her zaman güncel olması gereken veride okumayı
-önbelleğe almak yanlış katman; çözüm o verinin nasıl hesaplandığında.
+Bakiye, stok adedi veya yetkilendirme gibi her milisaniye güncel olmak zorunda olan kritik verilerde okumayı önbelleğe almak yanlış tercihtir. Çözüm verinin hesaplanma mimarisini hızlandırmakta yatar.
 
-Darboğaz yazma tarafındaysa okuma önbelleği hiçbir şey yapmıyor.
+Sorun okuma sıklığından değil de yazma yoğunluğundan kaynaklanıyorsa önbellek eklemek hiçbir fark yaratmaz.
+

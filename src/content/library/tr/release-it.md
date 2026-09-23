@@ -2,7 +2,7 @@
 title: 'Release It!'
 author: 'Michael T. Nygard'
 year: 2018
-note: "Üretimin tam olarak hangi yollardan bozulduğunun kataloğu; yazan adam oradaydı."
+note: "Canlı ortamların hangi sinsi yollarla çökebildiğini içeriden yaşayan bir mühendisin gözünden anlatan mükemmel bir saha rehberi."
 order: 3
 placeholder: true
 status: "done"
@@ -10,12 +10,9 @@ rating: 4
 topics: [production, resilience]
 ---
 
-Üretimin kaç farklı şekilde bozulduğunun kataloğu. Devre kesici, bulkhead,
-zaman aşımı kalıpları buradan yayıldı.
+Üretim ortamlarının kaç farklı ve beklenmedik şekilde kırılabileceğinin ayrıntılı bir dökümü. Devre kesici (circuit breaker), bulkhead ve zaman aşımı kalıpları sektöre büyük ölçüde bu kitapla yayıldı.
 
-Bende kalan şey kalıplar değil, **hikâyeler** oldu. Havayolu rezervasyon
-sisteminin tek bir bağlantı sızıntısıyla çökmesi bölümünü nöbet
-yazılarında hâlâ örnek veriyorum.
+Aklımda asıl iz bırakan şey teknik kalıplardan ziyade yazarın paylaştığı **gerçek kriz hikayeleri** oldu. Bir havayolu rezervasyon altyapısının tek bir bağlantı sızıntısı yüzünden kilitlenmesi örneğini ekiplerle yaptığım toplantılarda hala sıkça anlatırım.
 
-İkinci baskı bulut tarafını ekliyor ama ilk baskının keskinliği daha
-fazla.
+İkinci baskı bulut mimarilerini de ekliyor fakat ilk baskının saha gerçekçiliği bana her zaman daha keskin geliyor.
+

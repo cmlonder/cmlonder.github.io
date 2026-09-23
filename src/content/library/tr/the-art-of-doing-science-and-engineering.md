@@ -3,13 +3,11 @@ title: "The Art of Doing Science and Engineering"
 author: "Richard Hamming"
 year: 1997
 status: "queued"
-note: "Hamming'in ünlü dersinin kitap hali. Yıllardır rafta."
+note: "Richard Hamming'in efsanevi derslerinin derlendiği, önemli problemler seçmeye odaklanan ilham verici bir başucu kitabı."
 topics: [career, method]
 order: 22
 placeholder: true
 ---
 
-Sırada bekliyor. Hamming'in bu dersleri hakkında duyduğum şey, tekil
-tekniklerden çok "önemli problem nasıl seçilir" sorusuna odaklanması.
-Kariyerin ortasında en çok ihtiyaç duyduğum şeyin bu olduğunu
-düşünüyorum, o yüzden aceleye getirmek istemiyorum.
+Okuma listemde bekleyen önemli eserlerden biri. Hamming'in bu derslerde salt teknik formüllerden ziyade "insanın ömrünü adayacağı gerçekten önemli problemler nasıl seçilir" sorusuna odaklandığını biliyorum. Kariyerimin bu olgunluk evresinde en çok ihtiyaç duyduğum rehberliğin bu olduğunu hissettiğim için sindirerek okumayı planlıyorum.
+

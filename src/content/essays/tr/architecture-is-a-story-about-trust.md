@@ -1,6 +1,6 @@
 ---
-title: 'Mimari, Güven Hakkında Bir Hikâyedir'
-description: 'Bir sistemdeki her sınır, hangi ekibin seni bozmayacağına güvendiğinin ifadesidir.'
+title: 'Mimari, Güven Üzerine Kurulmuş Bir Hikayedir'
+description: 'Bir yazılım sistemindeki her mimari sınır, hangi ekibin diğerini yarı yolda bırakmayacağına dair duyulan güvenin açık bir ifadesidir.'
 pubDate: 2026-07-19
 topics: [solution-architecture, boundaries, teams]
 featured: false
@@ -8,64 +8,25 @@ draft: false
 placeholder: true
 ---
 
-Bir mimari diyagrama baktığımda artık kutuları değil, kutuların arasındaki
-çizgileri okuyorum. Her çizgi teknik bir karar gibi duruyor ama altında
-neredeyse her zaman sosyal bir karar yatıyor: karşı taraftaki ekibin beni
-bozmayacağına ne kadar güveniyorum?
+Bir mimari diyagrama baktığımda artık kutuların kendisine değil, o kutuları birbirine bağlayan çizgilere odaklanıyorum. İlk bakışta her çizgi salt teknik bir tercih gibi görünür fakat altında neredeyse her zaman derin bir organizasyonel karar yatar: Çizginin öte tarafındaki ekibin beni zora sokmayacağına ne kadar güveniyorum?
 
-Bunu ilk net olarak fark ettiğim tartışma, senkron bir çağrıyı kuyruğa
-çevirdiğimiz bir tasarım toplantısıydı. Gerekçe olarak dayanıklılık
-yazmıştık ve bu yanlış da değildi. Ama asıl sebep, o servisin deploy
-takvimini bilmememiz ve ortasında habersiz yeniden başlamasıydı. Kuyruk
-burada teknik bir çözüm kılığına girmiş bir güvensizlik beyanıydı, çünkü
-karşı tarafın ne zaman ayakta olacağına dair bir sözümüz yoktu.
+Bu gerçeği ilk defa, iki servis arasındaki senkron bir HTTP çağrısını kuyruğa çevirdiğimiz hararetli bir tasarım toplantısında fark etmiştim. Değişiklik gerekçesine resmi olarak "dayanıklılık ve asenkron iletişim" yazmıştık. Bu teknik olarak yanlış değildi fakat asıl sebep bambaşkaydı: Karşı servisin dağıtım takviminden haberdar değildik ve gün ortasında aniden yeniden başlatılıp çağrılarımızı düşürmesinden bıkmıştık. Yani araya koyduğumuz kuyruk, teknik bir çözüm kılığına girmiş açık bir güvensizlik beyanıydı, çünkü karşı tarafın ne zaman ayakta kalacağına dair verilmiş kurumsal bir sözümüz yoktu.
 
-## Sınır, güvenin bittiği yerdir
+## Sınır, güvenin tükendiği yerde başlar
 
-Bir sistemde nereye sınır koyduğunu söyle, sana kime güvenmediğini
-söyleyeyim. Aynı ekibin içinde kalan iki modül arasında kimse şema
-versiyonlama, geriye dönük uyumluluk veya sözleşme testi konuşmuyor;
-çünkü bir şey bozulursa aynı kişi düzeltecek ve düzeltme maliyeti bir
-öğleden sonra. İki ekip arasına aynı çizgiyi koyduğun anda o çizgi birden
-bire sözleşmeye, sürüm politikasına ve yayın sırasına ihtiyaç duyuyor.
-Değişen şey teknoloji değil, hatanın kime fatura edildiği.
+Bir yazılım sisteminde sınırları nereye çizdiğinizi söylerseniz, kime güvenmediğinizi hemen tahmin edebilirim. Aynı ekip içinde geliştirilen iki dahili modül arasında kimse şema versiyonlama, geriye dönük uyumluluk protokolleri veya sözleşme testleri tartışmaz. Çünkü bir taraf bozulduğunda onu düzeltecek olan yine aynı masada oturan meslektaşıdır ve onarım maliyeti en fazla bir öğleden sonradır. Ancak aynı çizgiyi iki farklı ekibin arasına çektiğiniz anda işin rengi tamamen değişir. O çizgi bir anda resmi API sözleşmelerine, sürüm politikalarına ve onay süreçlerine ihtiyaç duyar. Burada değişen şey teknoloji değildir, olası bir hatanın faturasının kime kesileceğidir.
 
-Bu yüzden mikroservis tartışmalarının çoğunu yanlış yerden yapıyoruz.
-"Bunu ayrı bir servis yapalım mı" sorusu genelde ölçek sorusu gibi
-sunuluyor ama pratikte cevabı belirleyen şey ekip sayısı oluyor. Tek bir
-ekibin sahip olduğu bir sistemi beş servise bölmek, ödemeyi sevmediğin
-bir güven bedelini boşuna ödemek anlamına geliyor. Beş ekibin ortak
-sahip olduğu tek bir servisi bölmemek ise o bedeli görünmez hâle
-getiriyor, ki daha kötüsü bu.
+Bu yüzden mikroservis tartışmalarının büyük kısmını yanlış zeminlerde yürütüyoruz. "Bunu bağımsız bir servis yapalım mı" sorusu genelde ölçeklenebilirlik veya trafik hacmi gibi sunulur, oysa pratikte kararı belirleyen şey ekiplerin organizasyon yapısıdır. Tek bir ekibin sahipliğindeki bir ürünü beş ayrı servise bölmek, güven maliyetini lüzumsuz yere katlamaktan başka bir işe yaramaz. Benzer biçimde, beş farklı ekibin geliştirdiği devasa bir monolitik servisi parçalamamak da ekipler arasındaki sürtüşmeyi görünmez hale getirip sistemi içeriden çürütür.
 
-## Güven zamanla değişiyor, diyagram değişmiyor
+## Güven ilişkisi değişir fakat diyagramlar yerinde kalır
 
-Sistemlerin en sinsi tarafı, güven ilişkisinin yıllar içinde
-değişmesine rağmen sınırların yerinde kalması. Bir servisi üç yıl önce
-başka bir ekip yazmıştı, sonra o ekip dağıldı ve kod bize geçti. Artık
-aramızda bir sınır olmasının hiçbir gerekçesi yok, ama sınır duruyor;
-üstelik her değişiklikte iki repo, iki pipeline ve iki yayın süreci
-ödüyoruz. Tersi de oluyor: yıllardır iç modül gibi davrandığımız bir
-parça sessizce başka bir ekibe geçiyor ve biz hâlâ onun iç tablolarına
-doğrudan yazıyoruz.
+Yazılım mimarilerinin en aldatıcı yanı, insan ilişkileri yıllar içinde değişse bile çizilmiş sınırların taş gibi yerinde kalmasıdır. Bir servisi üç yıl önce başka bir ekip yazmıştır, sonra o ekip dağılmış ve projenin bakımı bize devredilmiştir. Artık aramızda bağımsız bir servis sınırı tutmanın hiçbir anlamı kalmamıştır fakat o sınır hala çalışır. Üstelik her küçük geliştirmede iki ayrı kod deposu, iki bağımsız derleme hattı ve iki ayrı sürüm dağıtımıyla vakit kaybederiz. Tersi de sıkça yaşanır: Yıllardır dahili bir kütüphane gibi davrandığımız bir modül sessizce başka bir ekibe devredilir ama biz hala onun veritabanı tablolarına doğrudan sorgu atmaya devam ederiz.
 
-O yüzden mimari gözden geçirmelerinde artık şunu soruyorum: bu sınır
-bugün hangi güven ilişkisini tarif ediyor, ve o ilişki hâlâ geçerli mi?
-Cevap "bilmiyorum, öyle gelmiş" ise, elimizdeki şey mimari değil,
-fosilleşmiş bir organizasyon şeması.
+Bu nedenle mimari değerlendirmelerde artık şu temel soruyu soruyorum: Bu çizgi bugün hangi güven ilişkisini temsil ediyor ve o ilişki günümüzde hala geçerli mi? Cevap "bilmiyoruz, yıllar önce böyle kurulmuş" ise masada duran şey yaşayan bir mimari değil, fosilleşmiş bir organizasyon şemasıdır.
 
-## Pratikte ne yapıyorum
+## Pratikte nasıl bir yol izliyorum?
 
-Bir sınır önerdiğimde artık gerekçeyi teknik terimlerle yazmamaya
-çalışıyorum. "Gevşek bağlılık için" demek yerine, kimin neye söz
-verdiğini yazıyorum: bu ekip şu alanları geriye dönük uyumlu tutmaya söz
-veriyor, şu tarihe kadar eski sürümü destekliyor, bozarsa nöbet telefonu
-onlarda çalıyor. Bu cümleyi kuramıyorsam sınırı koymuyorum, çünkü
-kuramadığım şey zaten var olmayan bir güven.
+Yeni bir sistem sınırı önerdiğimde gerekçeyi süslü teknik kavramlarla boğmamaya gayret ediyorum. "Gevşek bağlılık sağlamak için" gibi genel geçer cümleler kurmak yerine kimin kime ne sözü verdiğini açıkça yazıyorum. Örneğin: "Bu ekip şu alanları geriye dönük uyumlu tutmaya söz veriyor, şu tarihe kadar eski sürümleri destekleyecek ve sistem çökerse nöbet alarmı onların telefonunda çalacak." Eğer bu taahhütleri somut isimlerle yazamıyorsam o sınırı hiç koymuyorum, çünkü var olmayan bir güvenin üzerine mimari inşa edilemez.
 
-Bunun güzel tarafı, tartışmayı doğru odaya taşıması. Sınırın yeri
-teknik bir tercih olarak sunulduğunda mühendisler tartışıyor ve genelde
-en gürültülü olan kazanıyor. Aynı soru "bu sözü kim veriyor" diye
-sorulduğunda ise cevabı verebilecek kişi belli oluyor, ve o kişi
-çoğunlukla odada bile değil. Onu odaya çağırmak, çizgiyi nereye
-çizeceğimizi tartışmaktan daha faydalı oluyor.
+Bu yaklaşımın en değerli tarafı, tartışmayı doğru zemine taşımasıdır. Sınırın yeri soyut bir mühendislik tercihi olarak sunulduğunda toplantılar en çok bağıranın kazandığı teorik münazaralara döner. Oysa aynı mesele "bu taahhüdün altına kim imza atıyor" diye sorulduğunda cevabı verecek kişi hemen netleşir. Ve çoğu zaman o kişi o an toplantı odasında bile değildir. Onu masaya davet etmek, kutuların yerini tartışmaktan her zaman çok daha kalıcı sonuçlar üretir.
+

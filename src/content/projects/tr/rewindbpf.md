@@ -1,7 +1,7 @@
 ---
 title: "RewindBPF"
-summary: "Hackathon işi: ajanı tek kullanımlık bir filesystem transaction'ı içinde çalıştır, sonra geri al ya da kabul et."
-what: "Ajana dağıtabileceği bir workspace, insana da kabul edip reddedeceği bir diff veriyor."
+summary: "Yapay zekâ ajanını tek kullanımlık bir dosya sistemi işlemi içinde çalıştırıp değişiklikleri kontrollü biçimde geri alma veya onaylama aracı."
+what: "Ajana serbestçe çalışabileceği güvenli bir çalışma alanı, geliştiriciye ise onaylayıp reddedebileceği net bir fark dökümü sunuyor."
 status: "shipped"
 started: 2026-07-17
 updated: 2026-07-22
@@ -21,58 +21,30 @@ metrics:
 order: 4
 ---
 
-Altı gün, 213 commit, bir hackathon deadline'ı. Bu OpenAI Build Week için
-yazıldı; ürün değil, ve sayfadaki sayılar işin gerçek boyutu. Burada duruyor
-çünkü fikir hafta sonundan uzun yaşadı.
+Altı gün, 213 commit ve yoğun bir hackathon maratonu. OpenAI Build Week için geliştirilen bu prototip ticari bir ürün değil, ancak ortaya koyduğu mimari fikir tek bir hafta sonundan çok daha uzun ömürlü oldu.
 
-Dosya yazabilen bir ajan aynı zamanda bir kaynak klasörünü silebilir, bir
-config dosyasının üzerine yazabilir ya da kimse fark etmeden bir secret
-okuyabilir. Alışıldık cevap, yasaklı shell komutlarının listesi. O listenin
-etrafından dolaşmak kolay, her koşumdan önce bütün projeyi kopyalamak ise
-pahalı.
+Dosya sistemine yazma yetkisi olan bir yapay zekâ ajanı, farkında olmadan kaynak kod klasörünü silebilir, kritik bir yapılandırmanın üzerine yazabilir veya hassas ortam değişkenlerini okuyabilir. Bu duruma karşı geliştirilen geleneksel yöntem genellikle yasaklı terminal komutlarından oluşan bir kara liste oluşturmaktır. Oysa bu listelerin etrafından dolaşmak son derece kolayken, her çalıştırma öncesinde tüm projeyi kopyalamak ise operasyonel olarak çok pahalıdır.
 
-RewindBPF sınırın yerini değiştiriyor. Gerçek workspace değişmez bir alt
-katman oluyor. Ajan birleşik görüntüyü görüp normal çalışıyor, ama bütün
-yazma ve silme işlemleri tek kullanımlık bir üst katmana düşüyor. Koşum
-bitince tam olarak iki sonuç var: **üst katmanı çöpe at, ya da conflict
-kontrolünden geçirip kabul et.** Okuma ayrı bir policy — `.env` dosyasını
-sihirli bir isim olarak koda gömmek yerine `**/*.env` veya `**/*.pem`
-pattern'ini reddediyorsun.
+RewindBPF güvenlik sınırının yerini değiştirir. Gerçek çalışma alanı değişmez bir alt katman olarak korunur. Ajan birleşik dosya görünümü üzerinden normal biçimde çalışır, ancak yaptığı tüm yazma ve silme işlemleri tek kullanımlık geçici bir üst katmana yönlendirilir. Süreç tamamlandığında iki temel seçenek kalır: **üst katmanı tamamen çöpe atmak ya da çakışma kontrollerinden geçirerek ana sisteme dahil etmek.** Okuma izinleri ise ayrı bir politikayla yönetilir. `.env` gibi kritik dosyaları tek tek engellemek yerine desen bazlı kurallarla hassas dosyalara erişim sınırlandırılır.
 
-Git bunun yerine geçmiyor, bu da Git'in yerine geçmiyor. Git, geliştiricinin
-zaten commit'lediğini koruyor. Rewind ise o commit daha ortada yokken olan
-koşumu koruyor; üstelik track edilmeyen ve ignore edilen dosyalar da dahil:
-görseller, binary'ler, üretilmiş asset'ler, workspace içindeki her şey.
+Bu yapı Git'in yerine geçmediği gibi Git de bu yapının işlevini üstlenemez. Git, geliştiricinin bilinçli olarak kaydettiği commit'leri korur. Rewind ise henüz commit atılmamış dinamik çalışma anını güvenceye alır. Takip edilmeyen veya yok sayılan görseller, ikili dosyalar ve geçici varlıklar da dahil olmak üzere çalışma alanındaki her şey bu güvenlik çemberine dahildir.
 
-## Neyi geri almıyor
+## Neyi Geri Almıyor?
 
-Sınır, korunan workspace içindeki dosya yollarından ibaret. Yani veritabanı
-yazmalarını, cloud/API çağrılarını, network trafiğini, cihaz durumunu, kernel
-değişikliklerini ve workspace dışındaki dosyaları geri almıyor.
+Sistemin güvenlik sınırı, koruma altındaki yerel çalışma alanının dosya yollarıyla sınırlıdır. Dolayısıyla veritabanı yazma işlemlerini, bulut API çağrılarını, harici ağ trafiğini, işletim sistemi çekirdeğindeki değişiklikleri ve çalışma alanı dışındaki dosyaları geriye alamaz.
 
-Bir submission sayfasının genelde atladığı kısım burası. Ajan koşum sırasında
-bir API'ye istek attıysa, üst katmanı çöpe atmak o isteği geri çağırmıyor.
+Hackathon teslimlerinde genellikle göz ardı edilen kritik detay burasıdır. Ajan çalışma sırasında harici bir API'ye istek göndermişse, yerel üst katmanı silmek o isteğin dış dünyadaki etkisini geri döndürmez.
 
-## Gerçekten zorlanan tek platform var
+## Gerçek Anlamda Zorlanan Tek Platform
 
-Referans yol Linux: OverlayFS/FUSE copy-on-write, Landlock ile okuma
-kısıtlama, eBPF filesystem telemetrisi, cgroup-v2 ile process kapsamı.
-Yetki isteyen testler Ubuntu 24.04 VM'inde koşuyor.
+Sistemin referans platformu Linux ortamıdır: OverlayFS ile yazma anında kopyalama (copy-on-write), Landlock ile okuma kısıtlamaları, eBPF ile dosya sistemi telemetrisi ve cgroup v2 ile süreç izolasyonu sağlanır. Yetki gerektiren tüm testler Ubuntu 24.04 sanal makinesinde koşturulur.
 
-macOS'ta APFS clone'larına dayanan native bir yol var. Local supervisor'ı,
-Control Plane arayüzünü, okuma policy'sini, staged diff'i, rollback ve
-commit'i çalıştırmaya yetiyor — yani demoyu laptop'ta kaydetmeye yetiyor.
-eBPF veya OverlayFS zorlamasını kanıtlamıyor, ben de kanıtlıyor demiyorum.
-Windows'ta sadece fail-closed bir sözleşme var, fazlası yok.
+macOS tarafında APFS anlık kopyalarına (clone) dayanan yerel bir yol bulunur. Bu yapı yerel denetleyiciyi, kontrol paneli arayüzünü, aşamalı fark dökümünü ve geri alma adımlarını çalıştırmaya yeterlidir. Ancak eBPF veya OverlayFS seviyesinde çekirdek zorlaması sunmaz. Windows ortamında ise yalnızca işlem güvenliği sağlayan temel bir sözleşme yer alır.
 
-Yukarıdaki ölçüm bu yüzden "cross-platform" değil, 1 / 3 diyor.
+Yukarıdaki metriklerde "çapraz platform" yerine 1/3 ifadesinin kullanılma sebebi tam olarak budur.
 
-## Ajanlar hakkında, bir ajanla yazıldı
+## Ajan Güvenliği Üzerine, Bir Ajanla Birlikte Geliştirildi
 
-Codex içinde, GPT-5.6 ile implementasyon ve review partneri olarak yazdım.
-Altı günde 172 Go dosyası tek başına yazma hızı değil. Ajan güvenliğiyle
-ilgili bir projede bunun aksini ima etmek tuhaf bir başlangıç olurdu.
+Projeyi Codex ortamında, mimari ve kod gözden geçirme partneri olarak GPT modelinden yararlanarak geliştirdim. Altı günde 172 Go dosyası üretmek tek başına bir insanın yazma hızıyla açıklanamaz. Ajan güvenliğini ele alan bir çalışmada bunun aksini ima etmek samimiyetsiz bir başlangıç olurdu.
 
-Ajanlar için guardrail kuruyorsan ucuz soru "hangi komutları yasaklayacağım"
-değil. Soru şu: **yazma işlemi tam olarak nereye düşüyor?** Gerisi o cevaptan
-çıkıyor.
+Ajanlar için güvenlik bariyerleri kurarken asıl soru hangi komutların yasaklanacağı değildir. Asıl soru, **yazma işleminin tam olarak nereye yönlendirildiğidir.** Güvenli mimarinin tüm detayları bu temel sorunun cevabından doğar.

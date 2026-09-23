@@ -50,6 +50,16 @@ const base = z.object({
    * (`assisted`)? Yalnız `generated` sayfada işaret çıkarır. Boşsa insan.
    */
   ai: z.enum(['generated', 'assisted']).optional(),
+  /**
+   * Çeviri künyesi: bu dosya başka dildeki aslından çevrildiyse. Kapı
+   * (check-translations) yazar, `reviewed` sahibi elle true yapar; o güne
+   * kadar sayfada "makine çevirisi, gözden geçirilmedi" satırı durur.
+   */
+  translation: z.object({
+    from: z.enum(['tr', 'en']),
+    engine: z.string(),
+    reviewed: z.boolean().default(false),
+  }).optional(),
 });
 
 const collection = (dir: string, extend = z.object({})) =>
@@ -128,6 +138,16 @@ const chapters = defineCollection({
     crossRef: z.object({ domain: z.string(), slug: z.string(), why: z.string() }).optional(),
     topics: z.array(z.string()).default([]),
     ai: z.enum(['generated', 'assisted']).optional(),
+    /**
+     * Çeviri künyesi: bu dosya başka dildeki aslından çevrildiyse. Kapı
+     * (check-translations) yazar, `reviewed` sahibi elle true yapar; o güne
+     * kadar sayfada "makine çevirisi, gözden geçirilmedi" satırı durur.
+     */
+    translation: z.object({
+      from: z.enum(['tr', 'en']),
+      engine: z.string(),
+      reviewed: z.boolean().default(false),
+    }).optional(),
     placeholder: z.boolean().default(false),
   }),
 });

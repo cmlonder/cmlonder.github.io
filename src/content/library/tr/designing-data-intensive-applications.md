@@ -2,7 +2,7 @@
 title: 'Designing Data-Intensive Applications'
 author: 'Martin Kleppmann'
 year: 2017
-note: "Dağıtık sistemleri folklor olmaktan çıkarıp mühendisliğe çeviren tek kitap."
+note: "Dağıtık veri sistemlerini soyut bir mit olmaktan çıkarıp somut bir mühendislik disiplinine dönüştüren başucu kaynağı."
 order: 0
 placeholder: true
 status: "done"
@@ -10,13 +10,9 @@ rating: 5
 topics: [distributed, data, foundational]
 ---
 
-Bu kitabı bitirdikten sonra mimari tartışmalarında kullandığım kelimeler
-değişti. "Tutarlılık" demeyi bırakıp hangi tutarlılık olduğunu sormaya
-başladım.
+Bu kitabı bitirdikten sonra mimari tartışmalarda kullandığım terminoloji kökten değişti. Sadece "veri tutarlılığı" demek yerine tam olarak hangi tutarlılık garantisinden bahsettiğimizi sorgulamaya başladım.
 
-En çok işime yarayan bölüm replikasyon değil, **veri kodlaması** bölümü
-oldu. Şema evrimi problemini o bölümden önce hafife alıyordum; sonra üç
-farklı projede tam olarak anlattığı şekilde başımıza geldi.
+Benim için en aydınlatıcı kısım replikasyondan ziyade **veri kodlama ve şema evrimi** bölümü oldu. Şema değişikliklerinin getirdiği riskleri bu kitaptan önce yeterince ciddiye almıyordum, sonrasında üç farklı projede tam da kitapta anlatılan senaryolarla canlıda yüzleştik.
 
-Eksik yanı: örneklerin çoğu 2016 civarı sistemlerden. Fikirler duruyor,
-ürün adları eskimiş.
+Tek eksiği, sistem örneklerinin çoğunlukla 2016 yıllarına ait olması. Ancak temel mimari fikirler hala ilk günkü tazeliğini koruyor.
+

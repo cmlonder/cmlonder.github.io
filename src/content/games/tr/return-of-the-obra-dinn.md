@@ -5,19 +5,15 @@ year: 2018
 rating: 5
 hours: 16
 platform: "PC"
-note: "Tek kişilik üretimin nereye kadar gidebileceğinin kanıtı."
+note: "Tek bir zihinden çıkan vizyonun, özgün bir tümdengelim mekaniği ve cesur bir sanat yönetimiyle nerelere varabileceğinin kanıtı."
 topics: [solo-company, deduction, design]
 order: 2
 placeholder: true
 ---
 
-Tek kişi yapmış: kod, sanat, ses, tasarım. Ve ortaya oyun tarihinin en
-özgün **çıkarım mekaniği** çıkmış.
+Tasarımından koduna, müziklerinden görsel dünyasına kadar her ayrıntısı tek bir kişinin elinden çıkmış, oyun tarihinin en özgün **çıkarım ve dedektiflik mekaniği**.
 
-Oyun sana üç kişiyi birden doğru bilene kadar hiçbir şey söylemiyor.
-Bu, kısmi doğruyu ödüllendirmeyi reddeden bir tasarım kararı ve çok
-cesur: tahmin etmeyi işe yaramaz hale getiriyor, gerçekten düşünmek
-zorunda bırakıyor.
+Oyun, arka arkaya üç kişinin kaderini aynı anda ve eksiksiz çözmediğiniz sürece tahminleriniz hakkında size hiçbir geri bildirim vermiyor. Kısmi doğruları ödüllendirmeyi reddeden bu tercih son derece cesur bir tasarım hamlesi — rastgele tahmin yürütmeyi tamamen anlamsızlaştırarak oyuncuyu gerçekten gözlem yapmaya ve mantık yürütmeye zorluyor.
 
-1-bit grafik tercihi de bütçe kısıtı değil, tasarım kararı. Kısıtın
-estetiğe dönüşmesinin en temiz örneklerinden.
+Eski bilgisayarları anımsatan tek bitlik monokrom grafik tercihi ise parasızlıktan değil, atmosferi güçlendiren bilinçli bir sanatsal vizyondan kaynaklanıyor. Teknik kısıtların nasıl büyüleyici bir estetiğe evrilebileceğinin en parlak örneklerinden biri.
+

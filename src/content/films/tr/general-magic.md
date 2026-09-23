@@ -4,18 +4,15 @@ director: "Sarah Kerruish, Matt Maude"
 year: 2018
 rating: 4
 runtime: 93
-note: "Doğru ürünü on yıl erken yapmanın yanlış ürün yapmakla aynı sonucu verdiği."
+note: "Doğru bir teknoloji vizyonunu on yıl erken hayata geçirmenin, ticari olarak yanlış ürün geliştirmekle aynı hüsranı doğurduğuna dair bir ders."
 topics: [timing, failure]
 order: 6
 placeholder: true
 ---
 
-1994'te akıllı telefonu tarif etmişler: dokunmatik ekran, uygulama
-mağazası, e-posta, emoji. Hepsi çalışmış. Şirket batmış.
+Daha 1994 yılında bugünkü akıllı telefon dünyasını tüm detaylarıyla tarif etmişler: Dokunmatik ekran, mobil uygulama mağazası, cepten e-posta ve emojiler. Teknik olarak hepsi çalışıyordu fakat şirket ticari olarak battı.
 
-Belgeselin en değerli yanı **zamanlamayı** bir yetenek değil bir koşul
-olarak göstermesi. Ekipte sonradan iPhone'u, eBay'i, Android'i yapan
-insanlar var. Aynı insanlar, aynı fikir, farklı on yıl.
+Belgeselin en çarpıcı tarafı **zamanlama faktörünü** kişisel bir yetenekten ziyade kontrol edilemeyen dışsal bir koşul olarak resmetmesi. Ekipte sonradan iPhone, eBay ve Android devrimlerini yönetecek efsanevi isimler yer alıyordu. Aynı vizyoner insanlar ve aynı parlak fikirler, sadece on yıl erken ortaya çıkmıştı.
 
-Radar'da yazdığım "iyi teknoloji, kötü dağıtım" kalıbının en pahalı
-örneği. Ağ yoktu, pil yoktu, kimse taşımak istemiyordu.
+Bültende sıkça değindiğim "harika teknoloji, yetersiz pazar dağıtımı" sendromunun tarihteki en pahalı örneği. O yıllarda ne yaygın mobil veri ağı vardı ne de cebimizde taşıyabileceğimiz verimli piller.
+

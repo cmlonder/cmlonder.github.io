@@ -2,7 +2,7 @@
 title: 'The Mythical Man-Month'
 author: 'Frederick P. Brooks Jr.'
 year: 1975
-note: "Elli yaşında ve yazılımın neden geciktiğinin hâlâ en doğru tarifi."
+note: "Yarım asır önce yazılmış olmasına rağmen yazılım projelerinin neden geciktiğini hala en dürüst şekilde açıklayan klasik."
 order: 2
 placeholder: true
 status: "done"
@@ -10,11 +10,9 @@ rating: 4
 topics: [teams, communication]
 ---
 
-Elli yıllık ve hâlâ doğru, bu biraz da moral bozucu.
+Elli yıl önce yazılmış bir kitabın günümüz modern yazılım dünyasında hala harfiyen doğru olması hem büyüleyici hem de biraz düşündürücü.
 
-"Geç kalmış projeye adam eklemek onu daha da geciktirir" cümlesi klişe
-oldu ama kitabın asıl katkısı **iletişim yollarının kombinatoryal
-patlaması**. Ekip büyüdükçe artan şey iş değil, koordinasyon.
+"Gecikmiş bir projeye yeni insan kaynağı eklemek o projeyi daha da geciktirir" tespiti bir sektörel klişeye dönüştü fakat kitabın asıl büyük katkısı **iletişim kanallarının geometrik artışını** matematiksel olarak ortaya koymasıdır. Ekip genişledikçe büyüyen şey iş gücü değil, devasa bir koordinasyon ve senkronizasyon yüküdür.
 
-Bazı bölümleri tarihî belge olarak okunuyor; IBM 360 detayları
-atlanabilir.
+Eski donanım ve IBM 360 ayrıntıları içeren bazı bölümler tarihsel birer belge gibi okunabilir ancak organizasyonel dersler hala ilk günkü gibi geçerlidir.
+

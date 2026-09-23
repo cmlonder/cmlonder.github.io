@@ -1,9 +1,9 @@
 ---
-title: 'Tool eklemeden önce context bütçesi'
-description: 'Her tool tanımı her turda token yiyor. Ajan yavaşlamalarının çoğu model sorunu değil, context sorunu.'
+title: 'Yeni araç eklemeden önce bağlam bütçesini hesaplamak'
+description: 'Her araç tanımı her turda belirgin bir bağlam alanı tüketir. Ajanların yavaşlaması genellikle modelden değil, şişen bağlam penceresinden kaynaklanır.'
 pubDate: 2026-08-23
-problem: 'Bir ajan yavaş, pahalı ya da görevin ortasında dağılıyor.'
-context: 'Tanım listesinde birkaç taneden fazla tool olan her ajan.'
+problem: 'Ajan yavaşlıyor, maliyeti artıyor veya görevin ortasında odağını kaybediyor.'
+context: 'Tanım listesinde çok sayıda araç bulunan ve gitgide büyüyen sistem talimatlarına sahip ajan kurulumları.'
 topics: [agentic-development, context-engineering, tools]
 draft: false
 placeholder: true
@@ -11,52 +11,31 @@ placeholder: true
 
 ## Problem
 
-Ajan yavaşladı veya isabetsizleşti, ve ilk refleks yeni bir tool
-eklemek oluyor. Halbuki her tool tanımı her turda context penceresinde
-yer kaplıyor, yani eklediğin şey aynı zamanda bir şeyin payını
-düşürüyor.
+Ajan beklenenden yavaş yanıt vermeye veya görevleri şaşırmaya başladığında akla gelen ilk refleks yeni bir araç tanımlamak oluyor. Oysa her yeni araç şeması her etkileşim turunda bağlam penceresinden ciddi bir pay tüketiyor. Yani eklenen her yetenek, modelin asıl akıl yürütme alanından çalıyor.
 
 ## Bağlam
 
-Araç kullanan bir ajan kurulumu; genelde on üzeri tool ve büyüyen bir
-sistem talimatı.
+Onlarca fonksiyonun ve geniş bir sistem talimatının yüklendiği, birden çok aşamayı yöneten ajan mimarileri.
 
 ## Yaklaşım
 
-Önce mevcut bütçeyi ölçüyorum. Tool tanımları, sistem talimatı ve
-otomatik eklenen bağlam dosyaları ne kadar token tutuyor, bunu bilmeden
-karar vermiyorum. Çoğu kurulumda bu sayı tahminden belirgin şekilde
-büyük çıkıyor.
+Öncelikle mevcut bağlam bütçesini net biçimde ölçüyorum. Araç tanımlarının, sistem isteminin ve dinamik olarak eklenen dosyaların toplamda kaç token tuttuğunu kesinleştirmeden hareket etmiyorum. Çoğu zaman bu toplam miktar tahmin edilenden çok daha büyük çıkıyor.
 
-Sonra kullanım sayımına bakıyorum: son yüz çalıştırmada hangi tool kaç
-kez çağrıldı? Neredeyse her kurulumda hiç çağrılmayan veya bir kez
-çağrılmış toollar oluyor. Onları çıkarmak, yeni bir tane eklemekten
-daha çok fayda sağlıyor.
+Ardından kullanım sıklıklarını inceliyorum. Son yüz çalıştırmada hangi araç gerçekten çağrıldı? Neredeyse her projede hiç dokunulmamış ya da tek bir defa kullanılmış atıl araçlar bulunuyor. Bu gereksiz tanımları temizlemek, sisteme yeni bir araç eklemekten çok daha hızlı ve kalıcı bir ferahlama sağlıyor.
 
-Ardından tanımları kısaltıyorum. Uzun açıklamalar ve bol parametreli
-şemalar, aynı işi yapan kısa bir tanımın birkaç katı yer tutuyor.
-Parametre sayısını azaltmak hem bütçeyi hem de yanlış çağrı oranını
-düşürüyor.
+Sonraki adımda şema tanımlarını sadeleştiriyorum. Upuzun parametre açıklamaları ve karmaşık nesne yapıları yerine işi özetleyen yalın tarifler kullanmak hem bağlam tasarrufu sağlıyor hem de modelin parametreleri yanlış doldurma ihtimalini düşürüyor.
 
-Son olarak toolları göreve göre gruplayıp hepsini her zaman yüklemeyi
-bırakıyorum. Ancak bu üç adımdan sonra yeni tool eklemeyi
-değerlendiriyorum.
+Son olarak araçları görev bağlamına göre gruplayıp yalnızca ihtiyaç duyulan aşamada dinamik olarak yüklüyorum. Ancak bu adımların ardından hala açık bir ihtiyaç varsa yeni bir araç eklemeyi değerlendiriyorum.
 
 ## Ödünleşimler
 
-Tool çıkarmak, o yeteneğin gerçekten gerektiği nadir durumlarda ajanı
-çaresiz bırakıyor ve bunu fark etmek zaman alıyor. Göreve göre
-yükleme ise kurulum karmaşıklığı getiriyor: hangi görevin hangi
-paketi alacağına karar vermek yeni bir bakım işi.
+Araçları sistemden çıkarmak, o kabiliyete nadiren de olsa ihtiyaç duyulduğunda ajanı yanıtsız bırakabilir. Göreve göre dinamik yükleme kurgulamak ise yeni bir mimari karmaşıklık getirir, çünkü hangi görevin hangi araç setini yükleyeceğini yönetmek ayrı bir editoryal bakım gerektirir.
 
-Kısaltılmış tanımlar da belirsizleşebiliyor; fazla kısaltınca çağrı
-hataları artıyor ve kazandığın bütçeyi tekrar denemelerde
-kaybediyorsun.
+Şemaları fazla budamak da risklidir. Aşırı kısaltılan tanımlar belirsizlik yaratabilir, bu da başarısız fonksiyon çağrılarına ve tekrarlanan denemelerle kaybedilen zamana yol açabilir.
 
 ## Bu ne zaman işe yaramaz
 
-Sorun gerçekten yetenek eksikliğiyse bütçe düzenlemesi çözmüyor. Ajan
-yapamadığı bir şeyi yapmaya çalışıyorsa, eksik olan token değil araç.
+Sorun gerçekten de eksik bir yetenekten kaynaklanıyorsa bütçe optimizasyonu tek başına sonuç vermez. Modelin elinde veriyi çekecek hiçbir yöntem yoksa asıl ihtiyaç token değil, doğru araçtır.
 
-Pencerenin yarısından azını kullanan küçük kurulumlarda da bu
-kılavuzun getirisi yok; orada zaten sıkışma yaşanmıyor.
+Ayrıca bağlam penceresinin çok küçük bir kısmını kullanan hafif iş akışlarında bu tür bütçe disiplinleri fazladan efor anlamına gelir çünkü ortada henüz bir darboğaz yoktur.
+

@@ -1,6 +1,6 @@
 ---
-title: 'Pişman olduğum Kafka consumer''ları'
-description: 'Kendi hatalarımın kataloğu; yarısı kefaret, yarısı kontrol listesi.'
+title: 'Sonradan pişman olduğum Kafka tüketici kararları'
+description: 'Kendi yaptığım mimari hataların samimi bir dökümü — hem bir yüzleşme hem de geleceğe yönelik bir kontrol listesi.'
 pubDate: 2026-02-24
 updatedDate: 2026-07-28
 status: evergreen
@@ -9,32 +9,17 @@ draft: false
 placeholder: true
 ---
 
-Bu notu kendime kefaret olsun diye tutuyorum. Hepsini bizzat yaptım,
-bazılarını birden fazla kez.
+Bu notu kendi adıma bir kontrol listesi ve mesleki bir yüzleşme olarak tutuyorum. Aşağıdaki hataların hepsini bizzat yaşadım, hatta bazılarını birden fazla projede tekrarladım.
 
-**Offset'i işlemden önce commit ettim.** Hızlı görünüyordu ve gerçekten
-hızlıydı, ta ki bir yeniden başlatma sırasında işlenmemiş mesajları
-sessizce atlayana kadar. Kayıp veriyi fark etmek üç gün sürdü, çünkü
-hiçbir yerde hata görünmüyordu. En sinsi hata tipi bu: gürültü
-çıkarmadan eksilten hata.
+**Mesajı işlemeden önce ofseti kaydettim.** Kağıt üzerinde çok hızlı görünüyordu ve gerçekten de öyleydi, ta ki bir yeniden başlatma sırasında henüz tamamlanmamış onlarca mesaj sessizce atlanana kadar. Kayıp veriyi fark etmemiz üç tam gün sürdü, çünkü loglarda en ufak bir hata görünmüyordu. Yazılımdaki en sinsi problemler de zaten bunlardır: Arkasında hiçbir gürültü çıkarmadan veriyi eksilten hatalar.
 
-**Tüketiciyi idempotent yazmadım, sonra retry ekledim.** İkisi ayrı
-zamanlarda alınmış iki makul karardı ve bir araya geldiklerinde
-mükerrer kayıt üretmeye başladılar. Buradan çıkardığım genel ders şu:
-retry eklemek bir dayanıklılık kararı değil, bir doğruluk kararı.
+**Tüketiciyi aynı işlem güvencesine almadan yeniden deneme mekanizması ekledim.** Farklı zamanlarda alınmış iki son derece masum karardı. Ancak bir araya geldiklerinde ağdaki ilk aralıkta mükerrer kayıtlar üretmeye başladılar. Bu tecrübeden çıkardığım ders nettir: Bir akışa yeniden deneme eklemek salt bir dayanıklılık tercihi değil, doğrudan veri doğruluğu kararıdır.
 
-**Partition anahtarını iş anahtarıyla karıştırdım.** Sıralamanın
-müşteri bazında korunması gerekiyordu ama ben mesaj kimliğine göre
-dağıtmıştım. Sıralama bozulduğunda hata, kuyruğun kendisinde değil
-üç sistem ötede ortaya çıktı.
+**Bölümleme (partition) anahtarı ile iş mantığı anahtarını birbirine karıştırdım.** Mesaj sıralamasının müşteri bazında garanti edilmesi gerekiyordu fakat ben yükü eşit dağıtmak için rastgele bir mesaj kimliği seçmiştim. Sıralama bozulduğunda çıkan faturanın bedeli kuyrukta değil, üç servis ötedeki muhasebe veritabanında patladı.
 
-**Tek bir tüketici grubuna iki ayrı işi yaptırdım.** Biri yavaşlayınca
-diğeri de geride kaldı, ve ikisinin birbiriyle hiçbir ilgisi yoktu.
-Ayırmak sonradan zor oldu, çünkü offset geçmişi ortaktı.
+**Tek bir tüketici grubuna iki farklı iş yaptırdım.** Süreçlerden biri yavaşlayıp tıkanınca tamamen bağımsız olan diğer iş de geride kalmaya başladı. Aralarındaki bağı sonradan koparmak çok sancılı oldu çünkü geçmiş ofset kayıtları tek bir kümede birbirine dolanmıştı.
 
-**Ölü mektup kutusunu sonra ekleriz dedim.** Sonra hiç gelmedi.
-Zehirli tek bir mesaj, bütün tüketiciyi saatlerce döngüde tuttu.
+**Hata kuyruğunu (dead letter queue) sonra kurarız dedim.** O "sonra" hiçbir zaman gelmedi. Formatı bozuk tek bir zehirli mesaj, bütün tüketici havuzunu saatlerce anlamsız bir döngüde kilitledi.
 
-Ortak nokta şu galiba: hataların hiçbiri Kafka'yı yanlış anlamaktan
-çıkmadı. Hepsi, bir kuyruğun getirdiği yeni sorumlulukları
-üstlenmemekten çıktı.
+Geriye dönüp baktığımda gördüğüm ortak ders şu: Bu hataların hiçbiri Kafka teknolojisini yanlış anlamaktan çıkmadı. Hepsi, bir mesaj kuyruğunun sisteme getirdiği yeni sorumlulukları zamanında üstlenmemekten kaynaklandı.
+

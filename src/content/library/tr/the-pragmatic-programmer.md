@@ -2,7 +2,7 @@
 title: 'The Pragmatic Programmer'
 author: 'Hunt & Thomas'
 year: 1999
-note: "Zekice bir şey inşa ederken kendimi yakaladığımda tekrar okuduğum kitap."
+note: "Mühendislikte aşırı karmaşık çözümlere kapıldığımı hissettiğim anlarda ayaklarımı tekrar yere basması için açıp baktığım kılavuz."
 order: 7
 placeholder: true
 status: "done"
@@ -10,10 +10,9 @@ rating: 3
 topics: [craft, habit]
 ---
 
-İlk okuduğumda çok etkilenmiştim, şimdi daha sakin bakıyorum. Tavsiyelerin
-çoğu artık standart uygulama ve kitap bunu bilmiyor.
+Kariyerimin başlarında ilk okuduğumda çok derin etkilenmiştim, yıllar sonra tekrar elime aldığımda daha sakin bir gözle değerlendiriyorum. Kitapta sıralanan pratik tavsiyelerin büyük bir kısmı artık sektörde standart geliştirme alışkanlığı haline geldi.
 
-Hâlâ değerli olan kısım **kırık camlar** ve *taş çorbası* gibi mecazlar;
-teknik borcu ekibe anlatırken işe yarıyor.
+Yine de **kırık camlar teorisi** ve **taş çorbası** gibi çarpıcı analojiler, teknik borcu ve kod kalitesini ekiplere anlatırken bugün bile çok güçlü bir iletişim aracı olmaya devam ediyor.
 
-Üç yıldız: kötü olduğu için değil, zamanla sıradanlaştığı için.
+Üç yıldız vermemin sebebi kitabın zayıflığından değil, önerdiği disiplinlerin çoğunun artık günlük rutinin doğal bir parçasına dönüşmüş olmasından kaynaklanıyor.
+

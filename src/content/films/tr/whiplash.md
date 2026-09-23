@@ -4,18 +4,15 @@ director: "Damien Chazelle"
 year: 2014
 rating: 4
 runtime: 106
-note: "Mükemmeliyetçiliğin üretken olduğu yer ile yıkıcı olduğu yer arasındaki ince çizgi."
+note: "Yüksek standartlar ve mükemmeliyetçilik arayışının üretken bir disiplinden yıkıcı bir zorbalığa evrildiği o tehlikeli sınır."
 topics: [mastery, cost]
 order: 7
 placeholder: true
 ---
 
-İzledikten sonra rahatsız olmam gereken yerde heyecanlanmıştım, o
-yüzden bir daha izledim. İkincisinde Fletcher'ın haklı olmadığını,
-sadece *işe yaradığını* gördüm — ikisi aynı şey değil.
+İlk izlediğimde aslında rahatsızlık duymam gereken anlarda garip bir heyecana kapılmıştım, bu çelişkiyi anlamlandırmak için filmi bir kez daha izledim. İkinci seyredişimde Fletcher karakterinin haklı olmadığını, yalnızca uyguladığı ağır baskıyla *sonuç alabildiğini* çok daha net gördüm — bir yöntemin sonuç vermesiyle doğru olması kesinlikle aynı şey değil.
 
-Teknik ekiplerde bu figürün yumuşatılmış hali çok yaygın: zorlayıcı,
-standardı yüksek, insanları tüketen. Kısa vadede çıktı yükseliyor. Uzun
-vadede kimse kalmıyor ve kalanlar da aynısını yapıyor.
+Yazılım ve mühendislik ekiplerinde de bu figürün biraz daha medeni kılıklara bürünmüş benzerlerine sıkça rastlıyoruz. Çıtayı sürekli yukarı koyan, aşırı talepkâr ve etrafındaki insanları tüketen yöneticiler kısa vadede çıktıyı artırabiliyor gibi görünebilir. Ne var ki uzun vadede arkalarında kimse kalmıyor, ayrılmayanlar ise ne yazık ki bu zehirli kültürü devralarak aynı baskı yöntemlerini normalleştirmeye başlıyor.
 
-Final sahnesi sinema olarak kusursuz, mesaj olarak tehlikeli.
+Final sahnesi sinematografik açıdan büyüleyici bir an sunsa da verdiği örtük mesaj bakımından son derece tekinsiz bir yerde duruyor.
+

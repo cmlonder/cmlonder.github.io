@@ -5,20 +5,15 @@ year: 2020
 rating: 5
 hours: 310
 platform: "PC"
-note: "Darboğaz bulmanın ne demek olduğunu bir kitaptan daha iyi öğreten oyun."
+note: "Sistem mimarisinde darboğaz kavramını ve akış optimizasyonunu kalın mühendislik kitaplarından daha iyi kavratan bir yapım."
 topics: [systems, bottleneck, automation]
 order: 1
 placeholder: true
 ---
 
-Mesleki deformasyonla oynanan bir oyun. Her fabrika bir dağıtık sistem:
-üretim hattı bir kuyruk, maden bir kaynak havuzu, tren ağı bir mesaj
-kuyruğu. Tıkanma olduğunda yaptığın şey tam olarak üretimde yaptığın
-şey — **en yavaş adımı bul, gerisini boşver.**
+Yazılımcı refleksiyle oynamaktan kendinizi alamadığınız nadir oyunlardan biri. Kurduğunuz her fabrika aslında yaşayan bir dağıtık sistem mimarisi: üretim hatları mesaj kuyruklarına, maden yatakları paylaşılan kaynak havuzlarına, tren ağları ise servisler arası veri yollarına karşılık geliyor. Bir tıkanıklık baş gösterdiğinde yapmanız gereken hamle ise gerçek hayattaki operasyonlarla birebir örtüşüyor — **en yavaş çalışan halkayı tespit et ve enerjini sadece onu çözmeye ver.**
 
-Beni asıl etkileyen kısım, oyunun sana asla "şurası yavaş" dememesi.
-Sadece malzeme birikiyor ya da bitiyor; nedenini kendin bulman
-gerekiyor. Gözlemlenebilirlik aracı olmadan üretim izlemeye benziyor.
+Beni asıl cezbeden tarafı, oyunun size aksayan noktayı asla parmakla göstermemesi. Ya bir hatta malzemeler kontrolsüzce birikiyor ya da montaj bantları açlıktan duruyor, asıl kök nedeni ise hiçbir izleme ve telemetri paneli olmadan tamamen mantık yürüterek bulmanız gerekiyor.
 
-310 saat sonra hâlâ aynı hatayı yapıyorum: erken optimize ediyorum.
-Oyun her seferinde cezalandırıyor.
+Yüzlerce saatlik deneyime rağmen hâlâ bazen aynı mesleki tuzağa düşüp erken optimizasyon yapmaya kalkıyorum ve oyun bu aceleciliği her seferinde tavizsiz biçimde cezalandırıyor.
+

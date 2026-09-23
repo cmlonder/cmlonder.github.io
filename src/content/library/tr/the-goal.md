@@ -2,7 +2,7 @@
 title: 'The Goal'
 author: 'Eliyahu M. Goldratt'
 year: 1984
-note: "Gizlice darboğaz bulma üzerine en iyi kitap olan bir fabrika romanı."
+note: "Kısıtlar teorisini ve operasyonel darboğazları bir fabrika romanı kurgusuyla hafızaya kazıyan eşsiz bir yönetim klasiği."
 order: 5
 placeholder: true
 status: "done"
@@ -10,12 +10,9 @@ rating: 4
 topics: [bottleneck, systems]
 ---
 
-Roman formatı ilk başta gereksiz geldi, sonra anladım: **kısıt teorisini**
-bir tabloyla anlatsa unuturdum, hikâyeyle anlatınca unutmuyorum.
+Kitabın bir roman formatında kurgulanması ilk başta bana biraz tuhaf gelmişti fakat okudukça değerini anladım: **Kısıtlar teorisini** kuru tablolarla anlatsaydı muhtemelen çoktan unuturdum, canlı bir hikayeyle anlatınca zihne kalıcı olarak yerleşiyor.
 
-Tek cümlelik özeti şu: darboğaz dışındaki her iyileştirme israftır. Bunu
-bildiğimi sanıyordum ama pratikte sürekli darboğaz olmayan yeri
-optimize ediyordum.
+Kitabın tek cümlelik özü şudur: Darboğaz dışındaki her iyileştirme sadece bir yanılsamadır ve boşa harcanmış emektir. Bu prensibi teoride bildiğimi sanıyordum ama pratikte sistemin darboğazı olmayan noktalarını optimize etmekle ne kadar çok vakit kaybettiğimi fark ettim.
 
-Fabrika örnekleri yazılıma birebir oturmuyor; çeviriyi kendin yapman
-gerekiyor.
+Fabrika örnekleri doğrudan yazılım dünyasına oturmasa da zihniyet dönüşümü her mühendis için fazlasıyla geçerli.
+

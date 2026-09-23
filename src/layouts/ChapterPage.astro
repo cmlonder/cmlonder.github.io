@@ -12,7 +12,7 @@ import Spine from '../components/Spine.astro';
 import Sources from '../components/Sources.astro';
 import Audience from '../components/Audience.astro';
 import AiMark from '../components/AiMark.astro';
-import { DOMAINS, DOMAIN_UI, type Locale } from '../config';
+import { DOMAINS, DOMAIN_UI, PAGE, type Locale } from '../config';
 import { localePath, formatDate } from '../lib/content';
 
 interface Props {
@@ -44,6 +44,7 @@ const uretim = entry.data.ai === 'generated';
         <h1>{entry.data.title}</h1>
         <p class="standfirst">{entry.data.summary}</p>
         <Audience text={entry.data.audience} lang={lang} />
+        {entry.data.translation && !entry.data.translation.reviewed && <p class="ceviri">{PAGE[lang].translated}</p>}
         <p class="meta">
           <time datetime={entry.data.pubDate.toISOString()}>{formatDate(entry.data.pubDate, lang)}</time>
           {uretim && <><span aria-hidden="true">·</span><AiMark level="generated" lang={lang} /></>}
@@ -109,6 +110,7 @@ const uretim = entry.data.ai === 'generated';
     margin-block-start: var(--s-2xs); font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted);
     display: flex; gap: .55em; align-items: center; flex-wrap: wrap;
   }
+  .ceviri { margin-block-start: var(--s-s); font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); font-style: italic; }
   .prose { margin-block-start: var(--s-l); }
 
   /* Çapraz gönderme — domainler arası örüntü, bu yapının asıl iddiası. */

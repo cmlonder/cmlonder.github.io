@@ -1,6 +1,6 @@
 ---
-title: 'Asıl İş İnceleme'
-description: 'Üretim bedavaysa kıt olan kaynak muhakemedir. Bu, kıdemli mühendisin ne işe yaradığını yeniden tanımlar.'
+title: 'Yazılımda Asıl İş Artık İncelemedir'
+description: 'Kod üretimi ucuzladığında en kıt kaynak mühendislik muhakemesi haline gelir. Bu değişim kıdemli mühendis kavramını baştan tanımlıyor.'
 pubDate: 2026-02-22
 topics: [agentic-development, solution-architecture, code-review, craft]
 featured: false
@@ -8,66 +8,27 @@ draft: false
 placeholder: true
 ---
 
-Kod yazmanın pahalı kısmının yazmak olduğunu varsayarak büyüdüm. Bir
-özelliğin maliyetini tahmin ederken kaç gün klavye başında oturulacağını
-hesaplıyordum, çünkü kıt olan kaynak oydu. Ajanlarla çalışmaya başladıktan
-sonra o varsayımın altı boşaldı. Üretim artık ucuz; bir akşamda beş farklı
-yaklaşımın çalışan hâlini görebiliyorum. Ama beş yaklaşımın hangisinin
-doğru olduğuna karar vermek hiç ucuzlamadı, hatta göreli olarak çok daha
-pahalı hâle geldi.
+Yazılım geliştirmenin en pahalı ve zahmetli kısmının kod yazmak olduğu inancıyla büyüdüm. Bir özelliğin teslim süresini tahmin ederken klavye başında kaç gün geçirileceğini hesaplardım, çünkü en kıt ve değerli kaynak o saatlerdi. Yapay zeka ajanlarıyla çalışmaya başladıktan sonra bu temel varsayım tamamen çöktü. Kod üretimi inanılmaz derecede ucuzladı. Artık tek bir akşamda beş farklı mimari yaklaşımın çalışan prototipini görebiliyorum. Ancak bu beş yaklaşımdan hangisinin doğru olduğuna karar vermek hiç ucuzlamadı, hatta göreceli olarak çok daha kritik ve pahalı hale geldi.
 
-## Kıtlık yer değiştirdi
+## Kıt olan kaynak yer değiştirdi
 
-Bir kaynağın fiyatı düşünce yanındaki kaynağın değeri artıyor. Kod
-üretimi neredeyse bedava olunca darboğaz muhakemeye kaydı: bu değişiklik
-gerçekten istediğimiz şey mi, bu soyutlama altı ay sonra bize ne pahalıya
-mal olacak, bu testin geçmesi aslında neyi kanıtlıyor. Bunlar zaten hep
-önemliydi ama eskiden yazma süresinin gölgesinde kalıyordu. Artık gölge
-yok, ve muhakemenin ne kadar yavaş bir şey olduğu ortaya çıktı.
+Ekonomide temel bir kural vardır: Bir kaynağın maliyeti sıfıra yaklaştığında onun hemen yanındaki tamamlayıcı kaynağın değeri katlanarak artar. Kod üretmek neredeyse bedava olunca ana darboğaz doğrudan mühendislik muhakemesine kaydı. Bu değişiklik gerçekten çözmek istediğimiz soruna mı hizmet ediyor? Bu yeni soyutlama altı ay sonra başımıza ne tür belalar açacak? Bu testin yeşil yanması gerçekte neyi kanıtlıyor? Bu sorular her zaman önemliydi fakat eskiden günlerce süren kod yazma mesaisinin gölgesinde kalıyordu. Artık o gölge kalktı ve insani muhakemenin gerçekte ne kadar yavaş işleyen bir süreç olduğu tüm çıplaklığıyla ortaya çıktı.
 
-Bunun günlük hayattaki karşılığı şu: gözden geçirme artık işin sonunda
-yapılan bir kalite kontrolü değil, işin kendisi. Bir ajana görev verip
-çıktısını okumak, eskiden o kodu kendim yazmakla geçirdiğim sürenin
-azını değil, benzerini alıyor. Fark şu ki o süreyi artık yazmaya değil,
-karar vermeye harcıyorum.
+Bunun günlük çalışma rutinine yansıması çok nettir: Kod inceleme (review) artık sürecin en sonunda alelacele yapılan bir kalite kontrolü değil, mühendislik işinin ta kendisidir. Bir ajana kapsamlı bir görev verip dönen çıktıyı satır satır sindirmek, eskiden o kodu bizzat yazarken harcadığım zamandan daha azını almıyor. Tek fark şu: Artık o saatleri mekanik yazmaya değil, mimari kararlar almaya ve olası riskleri tartmaya harcıyorum.
 
-## Okumak yazmaktan zor
+## Okumak yazmaktan her zaman daha zordur
 
-Burada rahatsız edici bir gerçek var: kod okumak kod yazmaktan zor.
-Yazarken kararları sen veriyorsun ve her kararın gerekçesi kafanda taze
-duruyor. Okurken ise başkasının verdiği kararları tersine mühendislikle
-çıkarman gerekiyor, üstelik gerekçesiz. Ajan çıktısında bu daha da zor,
-çünkü çıktı her zaman kendinden emin görünüyor ve yanlış olduğunda bile
-makul duruyor.
+Burada yazılımcıların çok iyi bildiği rahatsız edici bir gerçek var: Kod okumak kod yazmaktan katbekat zordur. Kodu bizzat yazarken kararları siz verirsiniz ve her tercihin arkasındaki gerekçe hafızanızda tazedir. Okurken ise başkasının verdiği kararları tersine mühendislikle çözmeniz gerekir, üstelik gerekçeleri bilmeden. Ajanların ürettiği kodlarda bu süreç daha da yıpratıcıdır, çünkü çıktılar her zaman son derece kendinden emin görünür ve tamamen yanlış olduklarında bile ilk bakışta makul dururlar.
 
-Bunu yönetmenin bende işe yarayan tek yolu, okumayı kolaylaştıracak
-kısıtları baştan koymak oldu. Küçük değişiklik istemek, her değişikliğin
-yanında neyi kanıtladığı belli bir test istemek, ve repoda konvansiyonları
-yazılı tutmak. Konvansiyon yazılıysa çıktının ona uyup uymadığına bakmak
-saniyeler sürüyor; yazılı değilse her seferinde "acaba biz böyle mi
-yapıyorduk" diye düşünüyorum ve asıl yorgunluk oradan geliyor.
+Bunu yönetebilmek için okuma sürecini kolaylaştıracak kesin sınırlar koymak şarttır: Küçük ve odaklanmış değişiklikler istemek, her geliştirmenin yanında tam olarak neyi kanıtladığı belli olan testler beklemek ve projedeki kuralları yazılı hale getirmek. Kurallar açıkça yazılıysa çıktının projeye uyup uymadığını anlamak saniyeler sürer. Yazılı olmadığında ise her satırda zihinsel bir kararsızlık yaşanır ve asıl yorgunluk oradan doğar.
 
-## Kıdemin anlamı değişiyor
+## Kıdemli mühendis tanımı değişiyor
 
-Kıdemli mühendisin ne işe yaradığı sorusunun cevabı da bu yüzden
-kayıyor. Eskiden kıdem, zor olanı yazabilmekti. Şimdi giderek daha çok,
-üretilen şeyin nerede yanlış olduğunu hızlı görebilmek anlamına geliyor.
-Bu ikisi aynı kas değil. Çok iyi yazan ama başkasının kodunu okurken
-sabırsızlanan mühendisler tanıyorum, ve yeni düzende zorlanan taraf
-onlar oluyor.
+Kıdemli bir mühendisin ekibe kattığı değer de tam bu noktada dönüşüyor. Eskiden kıdem, en karmaşık algoritmaları tek başına yazabilme gücüydü. Bugün ise üretilen devasa kod yığınının içindeki gizli kusurları ve tasarım gediklerini hızla teşhis edebilme kabiliyetine evriliyor. Bu ikisi tamamen farklı kaslardır. Mükemmel kod yazan fakat başkasının kodunu incelerken sabırsızlanan harika mühendisler tanıyorum ve yeni çalışma düzeninde en çok zorlananlar da maalesef onlar oluyor.
 
-İşin garibi, bu değişim junior seviyeyi de zorlaştırıyor. Muhakeme,
-yeterince kötü karar verip sonucunu görerek gelişen bir şey. Yazma
-adımını atlayan biri o geri bildirim döngüsünü nereden alacak, bunun
-iyi bir cevabını henüz bulamadım. Şimdilik kendi ekibimde yaptığım şey,
-ajanın ürettiği çıktıyı gözden geçirme egzersizi olarak kullanmak:
-"burada ne yanlış" sorusu, "bunu yaz" sorusundan daha çok öğretiyor.
+İşin daha da düşündürücü tarafı, bu dönüşümün sektöre yeni başlayan mühendislerin gelişimini de zorlaştırmasıdır. Sağlam bir muhakeme yeteneği ancak yeterince kötü karar verip o kararların acı sonuçlarıyla yüzleşerek kazanılır. Yazma adımını tamamen ajanlara devreden bir genç mühendisin bu tecrübe döngüsünü nasıl edineceğine dair henüz net bir modelimiz yok. Kendi ekibimde uyguladığım yöntem, ajanın ürettiği çıktıyı bir inceleme egzersizi olarak kullanmak: "Burada hangi mimari risk var" sorusu, "bunu sıfırdan yaz" görevinden çok daha fazla şey öğretiyor.
 
-## Ölçtüğüm şey
+## Artık neyi ölçüyorum?
 
-Bir süredir kendi haftamı şöyle bölüyorum: ne kadarını üretim, ne
-kadarını gözden geçirme aldı. Oran giderek gözden geçirme lehine
-değişiyor ve bunu bir sorun olarak görmüyorum. Sorun olarak gördüğüm
-şey, gözden geçirmeyi hâlâ ücretsiz bir ek iş gibi planlamak. Takvimde
-yeri olmayan bir iş, yapılmıyor demektir; ajanlarla çalışırken
-yapılmayan gözden geçirmenin faturası da doğrudan ürüne yazılıyor.
+Bir süredir çalışma haftamı dikkatle gözlemliyorum: Zamanımın ne kadarı üretime, ne kadarı inceleme ve değerlendirmeye gidiyor? İbre her geçen gün inceleme lehine kayıyor ve bunu bir verimsizlik olarak görmüyorum. Asıl tehlike, kod incelemeyi hala araya sıkıştırılacak ücretsiz bir ek iş gibi planlamaktır. Takvimde resmi yeri olmayan bir iş gerçekte yapılmıyor demektir ve yapay zeka ile çalışırken hakkıyla yapılmayan bir incelemenin faturası doğrudan canlıdaki ürüne kesilir.
+

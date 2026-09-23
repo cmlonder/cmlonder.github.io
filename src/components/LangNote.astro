@@ -18,7 +18,7 @@ const AD: Record<Locale, Record<Locale, string>> = {
 {lang !== shown && (
   <p class="langnote">
     {lang === 'tr'
-      ? `Bu bölüm henüz Türkçe yazılmadı; ${AD.tr[shown]} hâli gösteriliyor.`
+      ? `Bu içerik henüz Türkçeye çevrilmediği için ${AD.tr[shown]} sürümü gösterilmektedir.`
       : `This section is not written in English yet; showing the ${AD.en[shown]} version.`}
   </p>
 )}

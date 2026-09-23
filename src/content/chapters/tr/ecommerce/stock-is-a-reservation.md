@@ -1,99 +1,74 @@
 ---
-title: "Stok bir sayı değil, bir rezervasyon"
+title: "Stok salt bir sayı değil, dinamik bir rezervasyondur"
 domain: "ecommerce"
-summary: "Stok sayacını azaltmak ile müşteriye söz vermek aynı şey değil. Oversell'in kaynağı neredeyse her zaman bu iki işlemin karıştırılması."
+summary: "Veritabanındaki bir stok sayacını eksiltmek ile müşteriye kesin teslimat sözü vermek aynı şey değildir. Stok fazlası satış hatalarının kaynağı bu iki kavramın birbirine karıştırılmasıdır."
 pubDate: 2026-09-11
 topics: [solution-architecture, scale-and-performance]
 placeholder: true
 ---
 
-Neredeyse her e-ticaret sisteminde şu satır bir yerlerde duruyor:
+Neredeyse her e-ticaret altyapısında şu tanıdık SQL sorgusu bir yerlerde sessizce bekler:
 
 ```sql
 UPDATE products SET stock = stock - 1 WHERE id = ? AND stock > 0
 ```
 
-Tek başına doğru bir ifade. Sorun, bu ifadenin **hangi soruyu cevapladığı**.
+Kendi başına bakıldığında matematiksel olarak gayet doğru bir ifadedir. Asıl problem, bu ifadenin **hangi soruya cevap verdiğidir**.
 
-## İki farklı soru
+## Birbirine karışan iki farklı soru
 
-Sistemde iki ayrı soru var ve ikisi sürekli birbirine karışıyor:
+Stok yönetiminde iki ayrı soru vardır ve ikisi sürekli olarak birbiriyle karıştırılır:
 
-1. **Depoda kaç tane var?** — fiziksel gerçek, sayım sonucu
-2. **Kaç tane söz verebilirim?** — ticari karar, hesaplanan bir değer
+1. **Fiziksel depoda kaç adet ürün var?** — Fiziksel sayım gerçeği
+2. **Kaç adet ürün için müşteriye kesin satış sözü verebilirim?** — İş mantığına dayalı hesaplanan değer
 
-İkincisine sektörde *available-to-promise* deniyor ve birinciden farklı bir
-sayı. Depoda 10 tane olabilir ama:
+İkinci kavrama tedarik zincirinde *satılabilir stok* (available-to-promise) denir ve fiziksel adetten çok farklı bir sayıdır. Depoda 10 adet ürün bulunabilir fakat:
 
-- 3'ü ödemesi devam eden siparişlere ayrılmış
-- 2'si iade olarak gelmiş ama henüz kontrol edilmemiş
-- 1'i hasarlı, satılamaz
-- 5'i yolda, üç gün sonra gelecek
+- 3 adedi ödeme adımı devam eden sepetlere ayrılmıştır
+- 2 adedi müşteriden iade gelmiştir ancak henüz kalite kontrolünden geçmemiştir
+- 1 adedi rafta hasar görmüştür ve satışa uygun değildir
+- 5 adedi ise tedarikçiden yola çıkmıştır ve üç gün sonra depoya girecektir
 
-Söz verebileceğin sayı 10 değil. Ve bu sayı **sorgu anına bağlı** —
-beş dakika sonra farklı.
+Dolayısıyla müşteriye taahhüt edebileceğiniz sayı 10 değildir. Üstelik bu sayı **sorgunun yapıldığı ana bağlıdır** ve beş dakika sonra tamamen değişebilir.
 
-## Rezervasyon: sayaç yerine süreli söz
+## Rezervasyon modeli: Sayaç yerine süreli taahhüt
 
-Doğru model şu: müşteri sepete eklediğinde ya da ödemeye geçtiğinde sayacı
-azaltmıyorsun, **süreli bir rezervasyon** yaratıyorsun.
+Doğru mimari yaklaşım şudur: Müşteri ürünü sepete eklediğinde ya da ödeme adımına geçtiğinde veritabanındaki ana sayacı doğrudan eksiltmezsiniz, **süreli bir rezervasyon** kaydı oluşturursunuz:
 
 ```
-rezervasyon
-  ürün, adet, sahip (oturum/sipariş), son_geçerlilik
+rezervasyon:
+  ürün_id, adet, oturum_veya_sipariş_id, son_geçerlilik_zamanı
 ```
 
-Satılabilir miktar artık bir sayaç değil, bir hesap:
+Böylece satılabilir stok artık veritabanında tutulan statik bir sayaç değil, anlık bir formül haline gelir:
 
 ```
-satılabilir = fiziksel − (süresi dolmamış rezervasyonlar) − (bloke)
+satılabilir = fiziksel_stok − aktif_rezervasyonlar − hasarlı_veya_bloke_stok
 ```
 
-Bu yapının üç avantajı var.
+Bu yapının sisteme kazandırdığı üç devasa avantaj vardır:
 
-**Süre dolduğunda kendiliğinden geri geliyor.** Ödemesini yarım bırakan
-müşterinin tuttuğu stok, iptal işlemi çalışmasa bile on beş dakika sonra
-serbest kalıyor. Sayaç modelinde bunu telafi etmek için bir temizlik işi
-yazman ve o işin çalıştığından emin olman gerekiyor — çalışmadığı gün stok
-sızıyor.
+**Süresi dolan stok kendiliğinden sisteme döner.** Ödeme adımını yarıda bırakan bir müşterinin kilitlediği stok, herhangi bir iptal işlemi çalışmasa bile on beş dakika sonra rezervasyonun süresi bittiği için otomatikman serbest kalır. Sayaç modelinde bunu telafi etmek için arka planda sürekli bir temizlik görevi çalıştırmak zorundasınızdır ve o görevin aksadığı gün stoklar sessizce sızar.
 
-**Kimin tuttuğu belli.** Sayaç azaldığında geriye bilgi kalmıyor: 7 yerine 4
-yazıyor, neden bilmiyorsun. Rezervasyon modelinde "bu üç adedi şu üç oturum
-tutuyor" sorusunun cevabı var. Destek ekibi için fark budur.
+**Hangi adedin kime ayrıldığı nettir.** Basit sayaç modelinde 7 yerine 4 yazdığında aradaki 3 adedin kime ve neden gittiğini izleyemezsiniz. Rezervasyon modelinde ise "bu 3 adedi şu sipariş adımları tutuyor" yanıtı her zaman hazırdır. Müşteri destek ve operasyon ekipleri için aradaki fark paha biçilemezdir.
 
-**Yarış koşulu tek yerde.** Rezervasyon yaratma işlemi tek bir kritik bölge;
-gerisi okuma. Sayaç modelinde her akış — sepet, ödeme, iptal, iade — sayaca
-dokunuyor ve her biri ayrı bir yarış koşulu kaynağı.
+**Yarış koşulları tek bir kritik noktada toplanır.** Rezervasyon oluşturma adımı sistemdeki tek kritik eşzamanlılık bölgesidir, geri kalan tüm akışlar salt okumadan ibarettir. Sayaç modelinde ise sepet, ödeme, iptal ve iade gibi tüm servisler doğrudan aynı sayıya yazmaya çalışır ve her biri bağımsız bir yarış koşulu (race condition) riski doğurur.
 
-## Nerede tıkanıyor
+## Bu mimari nerede zorlanır?
 
-Rezervasyon modeli bedava değil.
+Rezervasyon modeli elbette kendi içinde yeni teknik bedeller getirir:
 
-**Popüler ürün tek satıra dönüşüyor.** Bin kişi aynı anda aynı ürünü
-rezerve etmeye çalıştığında o ürünün satırı bir kilit noktası oluyor.
-Çözümü ürün bazında kilit yerine **rezervasyon eklemek** — yani satır
-güncellemek yerine satır yazmak — ve satılabilir miktarı toplamla
-hesaplamak. Yazma çakışması kalkıyor, okuma pahalılaşıyor.
+**Çok popüler ürünlerde kilitlenme yaşanabilir.** Binlerce müşteri aynı saniyede sınırlı sayıdaki tek bir ürünü rezerve etmeye çalıştığında o satır bir kilit noktasına dönüşür. Çözüm, ürün kaydını kilitlemek yerine **append-only rezervasyon kayıtları eklemek** ve satılabilir miktarı anlık toplamlarla hesaplamaktır. Bu tercih yazma kilitlenmesini çözer fakat okuma maliyetini artırır.
 
-**Okuma pahalılaşınca önbellek geliyor, önbellek gelince tutarlılık
-gidiyor.** Ürün sayfasında gösterdiğin "son 3 ürün" bilgisinin bayat olması
-kabul edilebilir. Sepete eklerken de bayat olması kabul edilemez. Bu iki
-okumayı ayırmadığın sürece ya yavaş ya yanlış olacak.
+**Okuma pahalılaşınca önbellek devreye girer, önbellek girince tutarlılık riski doğar.** Ürün detay sayfasında kullanıcıya gösterilen "son 3 ürün" bilgisinin birkaç saniye eski kalması kabul edilebilir bir durumdur. Ancak ödeme anında da bayat veriye bakılması kesinlikle kabul edilemez. Bu iki okuma ihtiyacını birbirinden ayırmadığınız sürece sistem ya çok yavaşlayacak ya da hatalı stok sözü verecektir.
 
-**Kısmi sipariş kararı ticari, teknik değil.** Üç kalemden ikisi rezerve
-edilebiliyorsa ne yapacağın bir ürün kararı: bekletmek, kısmi göndermek ya da
-tamamını reddetmek. Sistem üçünü de destekleyebilmeli; hangisinin seçileceği
-kodda sabit olmamalı.
+**Kısmi sipariş politikası teknik değil, ticari bir karardır.** Üç ürünlük bir sepetin sadece iki kalemi rezerve edilebiliyorsa ne yapılacağı bir mühendislik kararı değil, ürün stratejisidir: Siparişi bekletmek mi, eldekileri hemen kargolamak mı, yoksa siparişi tamamen reddetmek mi gerekir? Sistem bu üç senaryoyu da destekleyecek esneklikte tasarlanmalıdır ve karar koda sabitlenmemelidir.
 
-## Havacılığın tersi
+## Havacılık sektörünün zıt yaklaşımı
 
-İlginç olan, havacılığın bu problemi **tam tersinden** çözmesi: koltuktan
-fazla bilet satıp, açığı kapıda tazminatla kapatıyor.
+İlginç bir karşılaştırma olarak, havacılık sektörü aynı kapasite problemini **tam tersi bir mantıkla** çözer: Uçaktaki koltuk sayısından daha fazla bilet satar (overbooking) ve kapıda açıkta kalan yolculara nakit tazminat öder.
 
-Bunu yapabilmelerinin tek sebebi tazminatın **önceden hesaplanabilir**
-olması — hangi durumda ne ödeneceği düzenlemeyle belli. E-ticarette
-siparişi iptal edilen müşterinin kaybı düzenlenmiş değil; maliyet itibar
-tarafında ve ölçülemiyor.
+Havayollarının bunu göze alabilmesinin yegane sebebi, ödenecek tazminatın **kanunlarla önceden belirlenmiş ve hesaplanabilir** olmasıdır. Hangi gecikmede ne kadar ceza ödeneceği bellidir. E-ticarette ise siparişi iptal edilen bir müşterinin yarattığı itibar kaybı yasal kurallarla sınırlandırılmamıştır ve maliyeti ölçülemez.
 
-Ölçemediğin riski optimize edemezsin. O yüzden biz rezerve ediyoruz,
-onlar fazla satıyor. Aynı problem, farklı bir maliyet fonksiyonu.
+Ölçemediğiniz bir riski matematiksel olarak optimize edemezsiniz. Bu yüzden e-ticaret sistemleri süreli rezervasyon yapar, havayolları ise fazla bilet satar. Problem aynıdır fakat maliyet fonksiyonu taban tabana zıttır.
+

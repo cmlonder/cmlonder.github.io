@@ -3,13 +3,11 @@ title: "Hoop Dreams"
 director: "Steve James"
 year: 1994
 status: "queued"
-note: "Beş yıl boyunca çekilmiş; uzun süreli takibin nasıl bir şey olduğunu merak ediyorum."
+note: "Beş yıl boyunca iki gencin hayatını takip ederek bir sistemin ve kurumların insanları nasıl elediğini gösteren efsanevi bir belgesel."
 topics: [longform]
 order: 20
 placeholder: true
 ---
 
-Sırada bekliyor. Beş yıl boyunca iki çocuğu takip eden bir belgesel ve
-asıl konusunun basketbol değil, bir kurumun insanları nasıl elediği
-olduğunu söylüyorlar. Uzun süre boyunca aynı şeyi izlemenin ne
-gösterdiğini merak ediyorum.
+İzleme listemde sırada bekliyor. Beş yıl boyunca iki basketbolcunun büyüme sancılarını takip eden belgeselin asıl meselesinin spor değil, kurumsal yapıların bireyleri nasıl acımasızca elediği olduğunu söylüyorlar. Bir konuyu zamana yayarak böylesine uzun soluklu izlemenin nasıl bir derinlik yarattığını merak ediyorum.
+

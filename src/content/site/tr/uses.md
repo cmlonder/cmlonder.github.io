@@ -1,8 +1,7 @@
 ---
 title: Kullandıklarım
-description: Gerçekten içinde çalıştığım araçlar. Çalışma şeklimi değiştiren ajan kurulumu; gerisi tezgâh.
+description: Günlük mühendislik ve geliştirme süreçlerimde aktif olarak kullandığım donanım, yazılım ve araçlar.
 updated: 2026-09-20
 ---
 
-Gerçekten içinde çalıştığım araçlar. Çalışma şeklimi değiştiren şey ajan
-kurulumu; gerisi onun üstünde durduğu tezgâh.
+Günlük mühendislik ve üretim süreçlerimde bizzat kullandığım donanım ve yazılımlar. Çalışma alışkanlıklarımı kökten dönüştüren yapay zekâ ajanları ve bu akışın üzerinde koştuğu temel geliştirme araçları.

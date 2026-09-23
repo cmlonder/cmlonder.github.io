@@ -1,0 +1,58 @@
+name: Çeviri
+
+# Site /translate-queue.json -> Apps Script -> Drive -> Spark -> Drive -> Apps Script
+# -> inbox/translations/ -> burası -> src/content/<koleksiyon>/en/ -> site
+on:
+  push:
+    paths: ['inbox/translations/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: translations
+  cancel-in-progress: false
+
+jobs:
+  isle:
+    runs-on: ubuntu-latest
+    outputs:
+      degisti: ${{ steps.isle.outputs.degisti }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - id: isle
+        name: Kuyruğu işle
+        run: |
+          set -euo pipefail
+          node scripts/check-translations.mjs | tee /tmp/ceviri.log
+          grep -q '^✓' /tmp/ceviri.log || { echo "degisti=false" >> "$GITHUB_OUTPUT"; exit 0; }
+          pnpm verify
+          echo "degisti=true" >> "$GITHUB_OUTPUT"
+      - name: Sonucu commit'le
+        if: steps.isle.outputs.degisti == 'true'
+        run: |
+          git config user.name  "ceviri-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/content inbox
+          git commit -m "Çeviri: yeni İngilizce sayfa (gözden geçirilmedi)
+
+          Spark -> Drive -> inbox/translations -> check-translations -> site.
+          reviewed: false; sahibi okuyup true yapana kadar sayfada uyarı var."
+          git push
+  yayinla:
+    needs: isle
+    if: needs.isle.outputs.degisti == 'true'
+    uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ github.ref_name }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

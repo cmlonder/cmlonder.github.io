@@ -1,6 +1,6 @@
 ---
-title: 'AGENTS.md yeni README'
-description: 'README bir kere göz gezdirecek insan için yazılmıştı. Bu dosya her çalıştırmada baştan sona okunuyor.'
+title: 'AGENTS.md neden yeni README haline geldi?'
+description: 'Klasik bir README dosyası projeye hızla göz gezdirecek insanlar için yazılırdı, oysa AGENTS.md her çalıştırmada baştan sona ve satır satır okunuyor.'
 pubDate: 2026-07-29
 status: budding
 topics: [agentic-development, conventions]
@@ -8,27 +8,11 @@ draft: false
 placeholder: true
 ---
 
-README bir kere göz gezdirecek insan için yazılmış bir tür. İlk kurulum
-adımları, bir rozet sırası, belki bir mimari şeması. Kimse onu her gün
-baştan sona okumuyor, o yüzden eskimesi de kimseyi rahatsız etmiyor.
+Geleneksel README dosyaları projeye ilk kez göz gezdirecek insanlar için yazılmış bir türdür. İlk kurulum adımları, birkaç durum rozeti ve belki kaba bir mimari şeması içerir. Kimse bu dosyayı her gün baştan sona satır satır okumaz, bu yüzden içindeki bazı bilgilerin eskimesi de kimseyi ciddi şekilde rahatsız etmez.
 
-`AGENTS.md` bambaşka bir dosya, çünkü gerçekten her çalıştırmada baştan
-sona okunuyor. Bu tek fark, dosyanın nasıl yazılması gerektiğini de
-değiştiriyor. Bir kural belirsizse insan onu görmezden geliyor; ajan
-görmezden gelmiyor, yanlış yorumluyor. Belirsizliğin maliyeti ilk kez
-gerçek oldu.
+Oysa `AGENTS.md` bambaşka bir amaca hizmet ediyor, çünkü yapay zeka ajanları tarafından her çalıştırmada baştan sona taranıyor. Bu temel fark, dosyanın nasıl kaleme alınması gerektiğini de kökten değiştiriyor. Bir kural belirsiz yazıldığında insan geliştirici onu sezgileriyle tamamlayabilir ya da görmezden gelebilir. Fakat bir ajan belirsizliği görmezden gelmez, doğrudan yanlış yorumlayarak hatalı kod üretir. Yazılımdaki belirsizliklerin maliyeti ilk defa bu kadar somut hale geldi.
 
-Bende işe yarayan üç alışkanlık şöyle oluştu. Kuralı değil, kuralın
-sebebini yazıyorum; çünkü sebebi bilen bir ajan yeni durumda da doğru
-tarafı seçebiliyor. Yasakları örnekle yazıyorum, çünkü "temiz kod yaz"
-hiçbir şey söylemiyor ama "şu dosyada şu kalıbı kullanma, yerine bunu
-kullan" bir şey söylüyor. Bir de kuralın kanıtlanabilir olmasına
-dikkat ediyorum: bir komutla kontrol edilemeyen kural, uyulup
-uyulmadığını kimsenin bilmediği kural demek.
+Süreç içinde bende karşılık bulan üç temel alışkanlık oluştu. Öncelikle kuralın kendisini değil, arkasındaki gerekçeyi yazıyorum. Sebebini bilen bir model, daha önce hiç karşılaşmadığı bir ikilemde kaldığında da doğru tercihi yapabiliyor. İkinci olarak yasakları somut örneklerle destekliyorum. "Temiz kod yaz" demek hiçbir anlam ifade etmezken, "bu dizinde şu kalıbı kullanma, onun yerine bunu tercih et" demek ajana net bir sınır çiziyor. Üçüncüsü ise kuralların mekanik olarak doğrulanabilir olmasına özen gösteriyorum. Tek bir komutla kontrol edilemeyen her kural, pratikte uyulup uyulmadığı asla bilinemeyecek bir temenniden ibaret kalıyor.
 
-Henüz çözemediğim kısım, dosyanın büyümesi. Her yeni kural context
-bütçesinden yiyor ve belli bir boyuttan sonra ajan dosyanın ortasındaki
-şeyleri kaçırmaya başlıyor. Şu an elimde iki kötü seçenek var: ya
-kuralları kısaltıp belirsizleştireceğim ya da dosyayı bölüp hangi
-parçanın ne zaman yükleneceğine karar vereceğim. İkincisi daha doğru
-geliyor ama bölme kriterini henüz bulamadım.
+Henüz net bir çözüme kavuşturamadığım taraf ise dosyanın zamanla şişmesi. Eklenen her yeni kural bağlam bütçesinden pay alıyor ve belli bir hacmin ardından modeller dosyanın ortasında kalan detayları gözden kaçırmaya başlıyor. Şu an önümde iki zorlu seçenek var: Ya kuralları aşırı özetleyip belirsizlik riskini göze alacağım ya da dosyayı modüler parçalara bölüp hangi aşamada hangi bölümün yükleneceğini yöneteceğim. İkinci yol kulağa çok daha sağlıklı geliyor fakat ideal bölme kriterini henüz tam olarak oturtamadım.
+

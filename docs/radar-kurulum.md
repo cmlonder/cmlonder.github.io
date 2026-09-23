@@ -63,6 +63,28 @@ kaldığını hata sayar.
 Yerelde denemek için: dosyayı `inbox/radar/<seri>/<tarih>.md` olarak koy,
 `node scripts/check-radar.mjs` çalıştır, `src/content/radar/<seri>/`'ye bak.
 
+## Çeviri zinciri (TR → EN, API'siz)
+
+```
+site /translate-queue.json          EN'i olmayan TR yazı ve bölümler (yalnız outline'daki bölümler; taslak, yer tutucu, translate:false hariç)
+  → Apps Script ceviriKuyrugunuIndir()  02:00  Drive/Ceviri/Kuyruk/<koleksiyon>--<slug>.md
+  → Spark görevi (docs/spark-prompt-ceviri.md)  04:00  köke Ceviri-PARSE-<koleksiyon>--<slug>.md
+  → Apps Script cevirileriIsle()  09:00  GitHub inbox/translations/  (kaynak Kuyruk → Islendi, çıktı → Gonderilen)
+  → check-translations kapısı  → src/content/<koleksiyon>/en/<slug>.md  (translation: reviewed: false)
+  → EN sayfada "Machine-translated from the Turkish original; not yet reviewed by me."
+```
+
+Kapı neyi durdurur: aslı yok, frontmatter bozuk, title/description boş, gövde
+aslının yarısından kısa (özet), slayt yolları / dipnot sayısı / açıklayıcı
+element'ler aslıyla uyuşmuyor. Neyi düzeltir: pubDate, topics, ai, domain,
+crossRef gibi çevirinin değiştirmemesi gereken alanları aslından kopyalar.
+
+Gözden geçirince: EN dosyasında `reviewed: false` → `true`; uyarı satırı kalkar.
+Çevrilmesin istediğin yazıya `translate: false` yaz.
+
+Google Translate: Apps Script'te `LanguageApp.translate()` ücretsiz ve anahtarsız
+ama Markdown'ı bozuyor ve ses taşımıyor; bu zincirde kullanılmıyor.
+
 ## Seriler — dosya adı ve başlık sözleşmesi
 
 Kural tek: dosya adı = seri adı (Türkçe harf ve büyük-küçük fark etmez,
