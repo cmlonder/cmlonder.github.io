@@ -101,6 +101,16 @@ const domains = defineCollection({
     thesis: z.string(),
     blurb: z.string(),
     order: z.number().default(0),
+    /**
+     * Kitabın parçaları — bölümlerden BAĞIMSIZ. Henüz tek bölümü
+     * yazılmamış bir parça da burada duruyor: harita ilk günden tam,
+     * "buraya ne gelecek" sorusunun cevabı yazılmayı beklemiyor.
+     * Sıra burada belirleniyor; outline'daki `part` bu adlara bağlanır.
+     */
+    parts: z.array(z.object({
+      name: z.string(),
+      blurb: z.string(),
+    })).default([]),
     outline: z.array(z.object({
       slug: z.string(),
       title: z.string(),

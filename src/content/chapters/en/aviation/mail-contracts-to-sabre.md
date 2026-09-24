@@ -6,10 +6,6 @@ audience: "Engineers meeting an airline reservation system for the first time, o
 pubDate: 2026-09-19
 topics: [solution-architecture]
 ai: generated
-crossRef:
-  domain: "ecommerce"
-  slug: "stock-is-a-reservation"
-  why: "A buffer seat and a safety stock are two names for the same problem."
 ---
 
 The first question anyone asks when they open an airline reservation system is

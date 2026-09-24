@@ -18,7 +18,11 @@ const { Content } = await render(entry);
 
 const chapters = await getChapters('tr', slug);
 const yazilan = new Map(chapters.map((c) => [c.id.split('/').pop()!, c]));
-const toplam = entry.data.outline.length;
+/* İlerleme bölümle değil PARÇAYLA ölçülüyor: yazılmış 14 bölümün
+   tamamı ilk dört parçada, "14/14" ise kitap bitmiş gibi okunuyordu. */
+const parcalar = entry.data.parts;
+const baslanan = parcalar.filter((x) =>
+  entry.data.outline.some((b) => b.part === x.name && yazilan.has(b.slug))).length;
 const ilk = entry.data.outline.find((b) => yazilan.has(b.slug));
 ---
 
@@ -29,8 +33,8 @@ const ilk = entry.data.outline.find((b) => yazilan.has(b.slug));
     <p class="thesis">{entry.data.thesis}</p>
 
     <p class="prog">
-      <span class="bar"><span class="fill" style={`--p:${(yazilan.size / toplam) * 100}%`} /></span>
-      <span class="n">{yazilan.size}/{toplam} {DOMAIN_UI[lang].written}</span>
+      <span class="bar"><span class="fill" style={`--p:${(baslanan / parcalar.length) * 100}%`} /></span>
+      <span class="n">{baslanan}/{parcalar.length} {DOMAIN_UI[lang].partsStarted} · {yazilan.size} {DOMAIN_UI[lang].written}</span>
     </p>
 
     <div class="prose"><Content /></div>
@@ -40,7 +44,7 @@ const ilk = entry.data.outline.find((b) => yazilan.has(b.slug));
       <p class="note">
         {DOMAIN_UI[lang].note}
       </p>
-      <Outline outline={entry.data.outline} yazilan={yazilan} domain={slug} lang={lang} />
+      <Outline outline={entry.data.outline} parts={entry.data.parts} yazilan={yazilan} domain={slug} lang={lang} />
     </section>
 
   </article>

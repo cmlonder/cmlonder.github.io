@@ -44,18 +44,27 @@ const LEGACY_SLUGS = {
  */
 const DOMAIN_SLUGS = {
   havacilik: 'aviation',
-  eticaret: 'ecommerce',
 };
-const CHAPTER_SLUGS = {
-  /* İki yer tutucu bölüm 22 Eyl 2026'da silindi; eski adresleri domain sayfasına düşer. */
-  'havacilik/pnr-bir-kayit-degil':        'aviation',
-  'havacilik/overbooking-bir-hata-degil': 'aviation',
-  'eticaret/stok-bir-sayi-degil':         'ecommerce/stock-is-a-reservation',
-  'eticaret/sepet-bir-tablo-degil':       'ecommerce/cart-is-a-time-window',
+/* 25 Eyl 2026'da kaldırılan bölge ve bölümler. Hepsi bir zamanlar
+   yayındaydı; adresleri kırılmasın diye kaldıkları domainin sayfasına,
+   domain de kalktıysa listeye düşüyorlar.
+
+   E-ticaret domaini tamamen kalktı. Havacılıkta iki bölüm ise hiç
+   yazılmadı: Türkçe adresleri yayındaydı, İngilizce karşılıkları
+   yalnızca yönlendirme tablosunda vardı. */
+const REMOVED_DOMAINS = [
+  'eticaret', 'ecommerce',
+  'eticaret/stok-bir-sayi-degil', 'ecommerce/stock-is-a-reservation',
+  'eticaret/sepet-bir-tablo-degil', 'ecommerce/cart-is-a-time-window',
+];
+const REMOVED_CHAPTERS = {
+  aviation: [
+    'havacilik/pnr-bir-kayit-degil', 'aviation/pnr-is-a-contract',
+    'havacilik/overbooking-bir-hata-degil', 'aviation/overbooking-is-a-model',
+  ],
 };
-/* Proje slug'ları da aynı sebeple İngilizceye çevrilmişti. Üç proje sayfası
-   21 Eyl 2026'da kaldırıldı (cmlonder-com, radar-pipeline, spark-prompt-contract);
-   eski ve yeni adresleri proje listesine düşer. */
+/* Proje slug'ları da İngilizceye çevrilmişti. Üç proje sayfası 21 Eyl
+   2026'da kaldırıldı; eski ve yeni adresleri proje listesine düşer. */
 const REMOVED_PROJECTS = [
   'radar-boru-hatti', 'radar-pipeline',
   'spark-prompt-sozlesmesi', 'spark-prompt-contract',
@@ -66,7 +75,9 @@ const REMOVED_PROJECTS = [
 const domainYonlendirmeleri = Object.fromEntries(
   ['', '/tr'].flatMap((on) => [
     ...Object.entries(DOMAIN_SLUGS).map(([e, y]) => [`${on}/domains/${e}`, `${on}/domains/${y}`]),
-    ...Object.entries(CHAPTER_SLUGS).map(([e, y]) => [`${on}/domains/${e}`, `${on}/domains/${y}`]),
+    ...REMOVED_DOMAINS.map((e) => [`${on}/domains/${e}`, `${on}/domains`]),
+    ...Object.entries(REMOVED_CHAPTERS).flatMap(([dm, eskiler]) =>
+      eskiler.map((e) => [`${on}/domains/${e}`, `${on}/domains/${dm}`])),
     /* "Tek sayfa" görünümü 21 Eyl 2026'da kaldırıldı; eski ve yeni slug'ın
        /read adresi domain sayfasına düşer. */
     ...Object.entries(DOMAIN_SLUGS).flatMap(([e, y]) => [

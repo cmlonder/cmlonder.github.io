@@ -3,63 +3,84 @@ title: "Havacılık"
 thesis: "Havacılık yazılımları, kırk yıllık köklü veri modelleri üzerine kurulu ve gerçek zamanlı uzlaşmaya dayanan devasa bir ekosistemdir."
 blurb: "Rezervasyon, envanter ve operasyon süreçlerinin perde arkası ile bu sistemlerin neden göründüğünden çok daha karmaşık olduğunun analizi."
 order: 1
+parts:
+  - name: "Kökler"
+    blurb: "1925'te posta uçağındaki tek koltuktan 1978 deregülasyonuna: bugünkü veri modeli nereden geldi."
+  - name: "Gelir yönetimi"
+    blurb: "Kâr garantisi kalkınca doğan disiplin: kısıtlı indirim, kontrollü fazla satış, bacak bazlı kontrolden köken-varışa."
+  - name: "Dağıtım"
+    blurb: "Rezervasyon ekranının acentenin masasına taşınması; standardı kim yazıyor, mesajı kim taşıyor, parayı kim takas ediyor."
+  - name: "Perakendecilik"
+    blurb: "Değer zinciri kimin elinde: acente ekonomisi, komisyonun kesilmesi ve NDC ile fiyat gücünün geri alınması."
+  - name: "Ücret ve fiyatlama"
+    blurb: "Ücret ürünleri ve sınıflandırması, kural motorları, güzergâh fiyatlaması, özel ücretler, paylaşım anlaşmaları ve yan gelirler."
+  - name: "Talep tahmini"
+    blurb: "Rezervasyon eğrileri, kesilen talebin geri kazanımı, taşma modelleri ve köken-varış bazlı tahmin."
+  - name: "Envanter ve erişilebilirlik"
+    blurb: "Fazla satış, iç içe geçmiş sınıflar, teklif fiyatı kontrolleri, ağ optimizasyonu ve koltuğun gerçekten satılabilir olup olmadığı."
+  - name: "Teklif ve teşhir"
+    blurb: "Segmentasyon, öneri motorları, paketleme, dinamik fiyat ve koltuğun kendisinin ürüne dönüşmesi."
+  - name: "Operasyon"
+    blurb: "Arama trafiği, ekran sıralaması, tarife planlama ve aksaklığa dayanıklı gelir yönetimi."
+  - name: "Yapay zeka ve sonrası"
+    blurb: "Otomasyon, yorumlanabilirlik, dijital kimlik ve e-ticaret devlerinin seyahate girişi."
 outline:
   - slug: mail-contracts-to-sabre
     title: "Posta sözleşmesinden SABRE'ye"
     promise: "Envanterle yolcu kaydının neden ayrı doğduğunu ve bu tarihsel ayrılığın günümüze uzanan etkilerini inceliyoruz."
-    part: "Rezervasyon"
+    part: "Kökler"
   - slug: sabre-to-pss
     title: "SABRE'den PSS'e: bir mimari neden 60 yıl yaşadı"
     promise: "1964 yılından kalan veri modelinin bugünkü PSS yapılarında neden hâlâ yaşadığını ve standartlaşmanın ilk denemede neden kaçırıldığını ele alıyoruz."
-    part: "Rezervasyon"
+    part: "Kökler"
   - slug: deregulation-1978
     title: "1978: kâr garantisi kalkınca gelir yönetimi doğdu"
     promise: "%55 dolulukla sağlanan kâr garantisi kalkınca fiyat, rota ve envanter kararlarının kime devredildiğini ve gelir yönetiminin nasıl bir hayatta kalma şartına dönüştüğünü aktarıyoruz."
-    part: "Rezervasyon"
+    part: "Kökler"
   - slug: yield-management-origins
     title: "Yield Management: erken dönem stratejik analiz ve iş mantığı"
     promise: "Kısıtlı indirimler, kontrollü fazla bilet satışı ve Littlewood kuralının DINAMO çatısı altında nasıl birleştiği, ucuz bilet satarken kârlı kalmanın temel formülü."
-    part: "Rezervasyon"
+    part: "Gelir yönetimi"
   - slug: yield-management-peoplexpress
     title: "Yield Management: rekabet stratejileri ve PEOPLExpress analizi"
     promise: "Yılda bir milyar dolar daha düşük operasyon maliyetinin neden yetersiz kaldığı ve marjinal trafik kontrolünün kaybeden tarafın gözünden analizi."
-    part: "Rezervasyon"
+    part: "Gelir yönetimi"
   - slug: revenue-management-operations
     title: "Gelir yönetimi ve stratejik operasyonlar: PEOPLExpress ve American Airlines analizi"
     promise: "Bacak bazlı kontrolden köken-varış kontrolüne geçiş, aktarmalı hatların matematiksel dengesi ve sadakat programı verilerinin aynı modelde birleşmesi."
-    part: "Rezervasyon"
+    part: "Gelir yönetimi"
   - slug: loyalty-and-gds
     title: "PEOPLExpress ve havacılık sektörü: sadakat programları ve dağıtım sistemleri stratejik analizi"
     promise: "Mil kullanımının biletli yolcularla ilişkisi, bağımsız ortak sistem denemelerinin akıbeti ve ekran sıralamalarının ardındaki kritik iş kuralları."
-    part: "Rezervasyon"
+    part: "Gelir yönetimi"
   - slug: crs-to-gds
     title: "Havacılık rezervasyon ve küresel dağıtım sistemleri (GDS) analizi: stratejik gelişim ve iş mantığı"
     promise: "Erken dönem rezervasyon sistemlerinin çöküş nedenleri, 1984 kurallarının getirdiği yasaklar ve pazarın üç büyük küresel dağıtım sistemine dönüşme süreci."
-    part: "Rezervasyon"
+    part: "Dağıtım"
   - slug: industry-standards
     title: "Havacılık endüstri standartları ve yönetişim: stratejik analiz belgesi"
     promise: "Standartları belirleyen otoriteler, mesaj trafiğini yöneten ağlar, tarifeleri dağıtan platformlar ve takas odaları arasındaki operasyonel işleyiş."
-    part: "Rezervasyon"
+    part: "Dağıtım"
   - slug: gds-ecosystem
     title: "GDS ve havacılık dağıtım ekosistemi: stratejik analiz ve iş mantığı rehberi"
     promise: "Elektronik bilet devrimi, internet üzerinden gelen yoğun sorguların ana çatı sistemlerini nasıl zorladığı ve dönüşüm oranlarının evrimi."
-    part: "Rezervasyon"
+    part: "Dağıtım"
   - slug: tpf-to-metasearch
     title: "Havacılık rezervasyon sistemleri ve dijital dağıtım kanalları stratejik analizi"
     promise: "Sistemin çekirdeğindeki düşük seviyeli dillerden modern açık mimarilere geçiş ve dağıtım kontrolünün envanter yönetiminden arama motorlarına kayması."
-    part: "Rezervasyon"
+    part: "Dağıtım"
   - slug: travel-value-chain
     title: "Seyahat değer zinciri ve dağıtım kanalları analizi: stratejik brifing notu"
     promise: "Gelir yönetimi kararları ile ana rezervasyon sistemlerinin uyumu, vitrin tutarlılığı, bilet başına düşen rezervasyon oranları ve doğrudan satış yetkinlikleri."
-    part: "Rezervasyon"
+    part: "Perakendecilik"
   - slug: ndc-retailing
     title: "Seyahat dağıtım ekosistemi ve yeni dağıtım yeteneği (NDC) analizi"
     promise: "Acentelerin gelir modelleri, komisyon yapısındaki değişimler, modern perakendecilik kabiliyetleri ve sipariş verilerinin tekilleştirilmesi."
-    part: "Rezervasyon"
+    part: "Perakendecilik"
   - slug: ndc-at-scale
     title: "NDC@Scale: havacılık dağıtım kanallarında dönüşüm ve iş mantığı analizi"
     promise: "Fiyatlandırma gücüyle birlikte hesaplama yükü de havayoluna geçti: günde 675 milyon arama, GDS'in varoluşsal tercihi, agregatörlerin açtığı boşluk ve şeffaflığın yerini alan normalizasyon."
-    part: "Rezervasyon"
+    part: "Perakendecilik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

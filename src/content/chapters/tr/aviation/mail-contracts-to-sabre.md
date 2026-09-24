@@ -6,10 +6,6 @@ audience: "Rezervasyon sistemine ilk kez bakan ya da PNR ile envanterin neden ay
 pubDate: 2026-09-18
 topics: [solution-architecture]
 ai: generated
-crossRef:
-  domain: "ecommerce"
-  slug: "stock-is-a-reservation"
-  why: "Tampon koltuk ile emniyet stoğu aynı problemin iki adı."
 ---
 
 Bir havayolu rezervasyon sistemine ilk kez bakan yazılımcının sorusu hep aynı:

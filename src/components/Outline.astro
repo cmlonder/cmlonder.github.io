@@ -7,33 +7,49 @@ import AiMark from './AiMark.astro';
  * bağlantı, yazılmamış bölüm bir SÖZ — ne anlatacağını tek cümleyle
  * ilan ediyor. Boşluk saklanmıyor; hem okura harita hem yazara taahhüt.
  */
-import { DOMAINS, type Locale } from '../config';
+import { DOMAINS, DOMAIN_UI, type Locale } from '../config';
 import { localePath } from '../lib/content';
 
 interface Props {
   outline: { slug: string; title: string; promise: string; part?: string }[];
+  /** Kitabın parçaları, sırasıyla. Bölümü olmayan parça da listede durur. */
+  parts?: { name: string; blurb: string }[];
   yazilan: Map<string, any>;
   domain: string;
   lang: Locale;
   aktif?: string;
   compact?: boolean;
 }
-const { outline, yazilan, domain, lang, aktif, compact = false } = Astro.props as Props;
+const { outline, parts = [], yazilan, domain, lang, aktif, compact = false } = Astro.props as Props;
+const t = DOMAIN_UI[lang];
 
-// Bölümleri "part" başlıklarına göre grupla, sırayı koru.
-const gruplar: { part?: string; items: typeof outline }[] = [];
-for (const b of outline) {
-  const son = gruplar[gruplar.length - 1];
-  if (son && son.part === b.part) son.items.push(b);
-  else gruplar.push({ part: b.part, items: [b] });
-}
+/*
+ * Sıra parçalardan geliyor, bölümlerden değil: henüz tek bölümü
+ * yazılmamış parça da listede duruyor — haritanın yarısını saklamak,
+ * yazılmamış bölümü saklamakla aynı şey olurdu.
+ *
+ * Parçalarda adı geçmeyen bölüm kaybolmuyor: sonda kendi grubunda
+ * toplanıyor. Ad değiştirirken sessizce düşmesin diye.
+ */
+const gruplar = parts.map((x) => ({
+  ...x, items: outline.filter((b) => b.part === x.name),
+}));
+const adlar = new Set(parts.map((x) => x.name));
+const artan = outline.filter((b) => !b.part || !adlar.has(b.part));
+if (artan.length) gruplar.push({ name: '', blurb: '', items: artan });
+
 const no = (slug: string) => outline.findIndex((b) => b.slug === slug) + 1;
 ---
 
 <ol class:list={['outline', compact && 'compact']}>
   {gruplar.map((g) => (
     <>
-      {g.part && <li class="part" role="presentation">{g.part}</li>}
+      {g.name && (
+        <li class:list={['part', !g.items.length && 'bos']} role="presentation">
+          <span class="ad">{g.name}{!g.items.length && <em>{t.partNotStarted}</em>}</span>
+          {!compact && g.blurb && <span class="pdek">{g.blurb}</span>}
+        </li>
+      )}
       {g.items.map((b) => {
         const var_ = yazilan.has(b.slug);
         const simdiki = aktif === b.slug;
@@ -64,14 +80,29 @@ const no = (slug: string) => outline.findIndex((b) => b.slug === slug) + 1;
   .outline { list-style: none; padding: 0; margin: 0; }
 
   .part {
-    font-family: var(--f-sans); font-size: var(--t-xs);
-    text-transform: uppercase; letter-spacing: .1em;
-    color: var(--c-muted);
+    display: grid; gap: .3em;
     margin-block: var(--s-m) var(--s-2xs);
-    padding-block-end: var(--s-3xs);
+    padding-block-end: var(--s-2xs);
     border-block-end: 1px solid var(--c-border);
   }
   .part:first-child { margin-block-start: 0; }
+  .part .ad {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: .8em;
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--c-muted);
+  }
+  /* Bölümü yazılmamış parça: başlık aynı, yanında ne durumda olduğu.
+     Solgunlaştırmıyoruz — harita eksik değil, henüz boş. */
+  .part .ad em {
+    font-style: normal; letter-spacing: .02em; text-transform: none;
+    color: var(--c-mark-ink);
+  }
+  .part .pdek {
+    font-family: var(--f-sans); font-size: var(--t-xs);
+    text-transform: none; letter-spacing: 0;
+    color: var(--c-muted); line-height: 1.45; max-inline-size: 60ch;
+  }
 
   .row {
     display: grid;
@@ -127,5 +158,5 @@ const no = (slug: string) => outline.findIndex((b) => b.slug === slug) + 1;
 
   .compact .row { padding-block: .3em; grid-template-columns: 2rem 1fr; }
   .compact .txt a, .compact .txt .t { font-size: var(--t-xs); font-weight: 400; }
-  .compact .part { margin-block: var(--s-s) var(--s-3xs); }
+  .compact .part { margin-block: var(--s-s) var(--s-3xs); gap: 0; }
 </style>

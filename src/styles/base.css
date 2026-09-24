@@ -556,6 +556,13 @@ h2.section-title a,
 .toc-col a[data-aktif] { color: var(--c-accent); border-inline-start-color: var(--c-accent); }
 /* Omurga (domain bölümleri): numara + başlık; yazılmamış bölüm sönük. */
 .toc-col .toc-up { border: 0; padding: 0; margin: 0; color: var(--c-accent); text-transform: none; letter-spacing: 0; font-size: var(--t-xs); }
+.toc-col .toc-part, .toc-mobil .toc-part {
+  font-family: var(--f-sans); font-size: .68rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--c-muted); opacity: .75;
+  margin-block-start: .5em; padding-block-end: .2em;
+  border-block-end: 1px solid var(--c-border);
+}
+.toc-col ol > .toc-part:first-child, .toc-mobil ol > .toc-part:first-child { margin-block-start: 0; }
 .toc-n { display: inline-block; min-inline-size: 1.9em; font-family: var(--f-mono); font-size: .9em; opacity: .65; font-variant-numeric: tabular-nums; }
 .toc-col .toc-todo, .toc-mobil .toc-todo { display: block; font-family: var(--f-sans); font-size: var(--t-xs); color: var(--c-muted); opacity: .6; line-height: 1.4; padding-inline-start: .6em; margin-inline-start: -.6em; }
 .toc-mobil summary { font-family: var(--f-sans); font-size: var(--t-sm); }

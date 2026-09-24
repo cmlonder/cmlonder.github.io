@@ -5,6 +5,10 @@
  * Yazı sayfalarındaki içindekiler paneliyle aynı yuvada durur (.toc-col):
  * sabit, yarı saydam, oluğa sığar, dar ekranda <details> olur. Yazılmış
  * bölüm bağlantı, yazılmamış bölüm sönük metin; okunan bölüm aksanlı.
+ *
+ * Parça başlıkları burada yalnızca BÖLÜMÜ OLAN parçalar için çıkıyor:
+ * okurken lazım olan şey yerini bulmak, haritanın tamamı değil. Boş
+ * parçalar domain sayfasındaki içindekilerde duruyor.
  */
 import { DOMAINS, DOMAIN_UI, type Locale } from '../config';
 import { localePath } from '../lib/content';
@@ -12,6 +16,8 @@ import { localePath } from '../lib/content';
 interface Props {
   title: string;
   outline: { slug: string; title: string; part?: string }[];
+  /** Kitabın parçaları, sırasıyla; boş olanlar burada gösterilmiyor. */
+  parts?: { name: string }[];
   yazilan: Map<string, any>;
   domain: string;
   lang: Locale;
@@ -19,11 +25,16 @@ interface Props {
   /** 'col' = sabit panel, 'mobile' = yazı başındaki <details> */
   variant?: 'col' | 'mobile';
 }
-const { title, outline, yazilan, domain, lang, aktif, variant = 'col' } = Astro.props as Props;
+const { title, outline, parts = [], yazilan, domain, lang, aktif, variant = 'col' } = Astro.props as Props;
 const t = DOMAIN_UI[lang];
 const no = (i: number) => String(i + 1).padStart(2, '0');
 const href = (b: { slug: string }) => localePath(lang, DOMAINS.path, domain, b.slug);
 const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }));
+
+/* Parça adı yalnızca o parçanın İLK bölümünde basılıyor; parça ilan
+   edilmemişse (ya da adı tutmuyorsa) başlık yok, satır yine listede. */
+const adlar = parts.map((x) => x.name).filter((n) => outline.some((b) => b.part === n));
+const basligi = new Map(adlar.map((n) => [outline.find((b) => b.part === n)!.slug, n]));
 ---
 
 {variant === 'col' ? (
@@ -31,6 +42,8 @@ const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }));
     <p class="toc-h"><a class="toc-up" href={localePath(lang, DOMAINS.path, domain)}>{title}</a></p>
     <ol>
       {satirlar.map(({ b, i, var_ }) => (
+        <>
+        {basligi.has(b.slug) && <li class="toc-part" role="presentation">{basligi.get(b.slug)}</li>}
         <li>
           {var_
             ? <a href={href(b)} data-aktif={aktif === b.slug ? '' : undefined}
@@ -39,6 +52,7 @@ const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }));
               </a>
             : <span class="toc-todo"><span class="toc-n">{no(i)}</span>{b.title}</span>}
         </li>
+        </>
       ))}
     </ol>
   </nav>
@@ -47,6 +61,8 @@ const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }));
     <summary>{title} · {t.contents}</summary>
     <ol>
       {satirlar.map(({ b, i, var_ }) => (
+        <>
+        {basligi.has(b.slug) && <li class="toc-part" role="presentation">{basligi.get(b.slug)}</li>}
         <li>
           {var_
             ? <a href={href(b)} aria-current={aktif === b.slug ? 'page' : undefined}>
@@ -54,6 +70,7 @@ const satirlar = outline.map((b, i) => ({ b, i, var_: yazilan.has(b.slug) }));
               </a>
             : <span class="toc-todo"><span class="toc-n">{no(i)}</span>{b.title}</span>}
         </li>
+        </>
       ))}
     </ol>
   </details>

@@ -16,7 +16,7 @@ kendi başına yapmamalı — hepsi kişisel tercih veya dış sistem erişimi g
 > Ne yazacağını [WRITING.md](./WRITING.md) anlatıyor — bölüm bölüm, örnekli.
 
 ```bash
-grep -rl 'placeholder: true' src/content | wc -l      # 128
+grep -rl 'placeholder: true' src/content | wc -l      # 120
 ```
 
 Metinlerin hepsi yazılı. `placeholder: true` "bu metin var" demiyor,
@@ -31,9 +31,10 @@ Metinlerin hepsi yazılı. `placeholder: true` "bu metin var" demiyor,
 | `essays` | 12 | Aynı soru, iddia taşıyor |
 | `playbooks` | 12 | Aynı soru, tavsiye veriyor |
 | `signals` | 12 | Link ve kaynak gerçek; yalnızca yorum yer tutucu |
-| `chapters` | 8 | Havacılık ve e-ticaret dummy bölümleri |
 
 68'i raf girdisi (hızlı geçilir), 40'ı görüş metni (asıl iş).
+Bölümlerde yer tutucu kalmadı: e-ticaret domaini ve dummy bölümleri
+25 Eyl 2026'da silindi.
 
 Onaylıyorsan `placeholder` satırını sil. Onaylamıyorsan dosyayı sil ya da
 içeriğini değiştir. **Yer tutucuyu olduğu gibi bırakıp gerçek gibi sunma.**

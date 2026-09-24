@@ -22,8 +22,14 @@ ls src/content/domains/tr/ src/content/domains/en/
 Domain yoksa **dur ve sor**. Yeni domain açmak bu skill'in işi değil.
 
 Bölümün outline'daki yerini seç: `src/content/domains/<dil>/<domain>.md`
-içindeki `outline` listesine bak, hangi `part` altına ve kaçıncı sıraya
+içindeki `parts` listesi kitabın parçalarını **sırasıyla** tanımlar;
+`outline` ise bölümleri. Hangi parçaya ve o parçanın kaçıncı sırasına
 gireceğine karar ver. Tarihsel/temel anlatı genelde başa gider.
+
+Henüz tek bölümü yazılmamış parçalar da `parts` içinde duruyor —
+sayfada "henüz başlamadı" etiketiyle görünürler. İlk bölümü yazdığın
+parça kendiliğinden açılır; `parts`'a dokunman gerekmez. Yeni bir parça
+**açma**, kitabın yapısı senin işin değil: uymayan bir bölüm varsa dur ve sor.
 
 ## 2. Slaytları üret
 
@@ -101,7 +107,7 @@ bunu zaten destekliyor.
   - slug: <bölüm-slug>
     title: "<o dildeki başlık>"
     promise: "<bölüm yazılmamışken görünecek vaat — tek cümle>"
-    part: "<mevcut part adlarından biri>"
+    part: "<parts listesindeki adlardan biri — birebir aynı yaz>"
 ```
 
 ## 6. Doğrula

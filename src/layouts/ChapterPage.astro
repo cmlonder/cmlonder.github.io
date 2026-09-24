@@ -31,7 +31,7 @@ const uretim = entry.data.ai === 'generated';
 <Base title={`${entry.data.title} — ${dm.data.title}`} description={entry.data.summary} lang={lang} ai={entry.data.ai}>
   <div class="reading" data-reader data-scroll="up">
     <aside class="toc-col">
-      <Spine title={dm.data.title} outline={dm.data.outline} yazilan={yazilan} domain={dSlug} lang={lang} aktif={cSlug} />
+      <Spine title={dm.data.title} outline={dm.data.outline} parts={dm.data.parts} yazilan={yazilan} domain={dSlug} lang={lang} aktif={cSlug} />
     </aside>
 
     <article class="narrow chapter" ai-disclosure={uretim ? 'ai-generated' : undefined}>
@@ -51,7 +51,7 @@ const uretim = entry.data.ai === 'generated';
         </p>
       </header>
 
-      <Spine title={dm.data.title} outline={dm.data.outline} yazilan={yazilan} domain={dSlug} lang={lang} aktif={cSlug} variant="mobile" />
+      <Spine title={dm.data.title} outline={dm.data.outline} parts={dm.data.parts} yazilan={yazilan} domain={dSlug} lang={lang} aktif={cSlug} variant="mobile" />
 
       <div class="prose"><Content /></div>
 
