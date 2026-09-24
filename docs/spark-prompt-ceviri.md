@@ -1,5 +1,6 @@
 # Çeviri — Spark prompt (v1, 23 Eyl 2026)
 
+Kurye ayrı Apps Script projesi (`docs/drive-to-github-ceviri.gs`); Spark yalnız çevirir.
 Görev dil başına: aynı prompt, yalnız en üstteki HEDEF_DIL değişir. Her gün
 04:00 (kuyruk 02:00'de dolar, gönderim 09:00'da). Spark siteye gitmez;
 Drive'daki `Ceviri/Kuyruk/<dil>/` klasöründen okur, köke yazar.
