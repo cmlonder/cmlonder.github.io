@@ -56,6 +56,10 @@ outline:
     title: "The travel distribution ecosystem and New Distribution Capability (NDC)"
     promise: "The agency's five revenue streams, the commission cut of 1995, GDS surcharges since 2015; NDC moves pricing power back to the airline, ONE Order collapses three records into one, and the four certification levels."
     part: "Reservation"
+  - slug: ndc-at-scale
+    title: "NDC@Scale: transformation and business logic in airline distribution"
+    promise: "Pricing power brought the compute load with it: 675 million searches a day, the GDS's existential choice, the gap the aggregators opened, and normalisation replacing transparency."
+    part: "Reservation"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

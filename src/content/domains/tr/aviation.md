@@ -56,6 +56,10 @@ outline:
     title: "Seyahat dağıtım ekosistemi ve yeni dağıtım yeteneği (NDC) analizi"
     promise: "Acentelerin gelir modelleri, komisyon yapısındaki değişimler, modern perakendecilik kabiliyetleri ve sipariş verilerinin tekilleştirilmesi."
     part: "Rezervasyon"
+  - slug: ndc-at-scale
+    title: "NDC@Scale: havacılık dağıtım kanallarında dönüşüm ve iş mantığı analizi"
+    promise: "Fiyatlandırma gücüyle birlikte hesaplama yükü de havayoluna geçti: günde 675 milyon arama, GDS'in varoluşsal tercihi, agregatörlerin açtığı boşluk ve şeffaflığın yerini alan normalizasyon."
+    part: "Rezervasyon"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
