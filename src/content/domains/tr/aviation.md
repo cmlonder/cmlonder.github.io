@@ -237,6 +237,10 @@ outline:
     title: "Havacılıkta veri odaklı iş mantığı ve karar destek sistemleri"
     promise: "Alışveriş verisinin beş karar sistemini nasıl beslediği: talep sinyaliyle revize edilen ek komisyon hedefi, robotik aramaların ayıklanması, kanala göre tersine dönen al-bekle tavsiyesi, QSI'dan CCM'e geçen O&D talep tahmini ve üst satışı görmeyen envanterin geliri seyreltmesi."
     part: "Talep tahmini"
+  - slug: consumer-choice-modeling
+    title: "Havacılık gelir yönetimi ve tüketici tercih modellemesi"
+    promise: "Talebi bir sayı değil bir seçim olarak modellemek: anket yerine satış verisiyle paket tasarımı, fayda fonksiyonu ve β katsayıları, MNL ile pazar payı ve ölçek parametresi, bir sınıf kapandığında talebin orantılı kayması ve bu varsayımın uzak kalkış saatlerinde neden kırıldığı."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

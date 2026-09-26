@@ -237,6 +237,10 @@ outline:
     title: "Data-driven business logic and decision support systems in aviation"
     promise: "How shopping data feeds five decision systems: override commission targets revised by demand signals, filtering out robotic shops, buy-or-wait advice that flips by channel, O&D demand forecasting moving from QSI to CCM, and inventory control that dilutes revenue when it ignores upsell."
     part: "Forecasting"
+  - slug: consumer-choice-modeling
+    title: "Airline revenue management and consumer choice modeling"
+    promise: "Modeling demand as a choice rather than a number: designing bundles from revealed rather than stated preferences, the utility function and its β coefficients, MNL market share and the scale parameter, proportional re-attraction when a class closes, and why that assumption breaks when departure times are far apart."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
