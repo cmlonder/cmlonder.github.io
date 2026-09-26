@@ -345,6 +345,10 @@ outline:
     title: "O&D gelir yönetimi ve koltuk kullanılabilirliği hesaplama"
     promise: "Bir rezervasyon talebinin önce fiziksel, sonra toplam teklif fiyatıyla finansal kapıdan nasıl geçtiğini, satış noktasına göre nasıl farklı açıldığını ve bu mantığın eski bir CRS'in yanına nasıl kurulduğunu anlatır."
     part: "Envanter ve erişilebilirlik"
+  - slug: fare-qualification-rules
+    title: "Yolcu değerlemesinde ücret kalifikasyon kuralları"
+    promise: "O&D envanterinde net katkıyı belirleyen kalifiye ücretin hangi kurallarla süzüldüğü, pazar değeri tablosunun NDC ile neden gerçek zamanlı fiyatlamaya dönmek zorunda kaldığı ve yolculuğun başlangıç noktasının dönüş segmentini nasıl değerlediği."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

@@ -345,6 +345,10 @@ outline:
     title: "O&D revenue management and seat availability calculation"
     promise: "Explains how a booking request passes a physical check and then a financial check against the total bid price, how the same product opens differently by point of sale, and how this logic is attached to a legacy CRS."
     part: "Inventory and availability"
+  - slug: fare-qualification-rules
+    title: "Fare qualification rules in passenger valuation"
+    promise: "Which rules filter the qualified fare behind net contribution in O&D inventory, why NDC forces the market value table to give way to real-time pricing, and how the point of commencement values the return segment."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
