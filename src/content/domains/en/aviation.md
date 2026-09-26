@@ -109,6 +109,10 @@ outline:
     title: "Airline distribution channels and fare rules: a strategic analysis"
     promise: "A ticket price sits where two layers meet: the full content agreement and its parity clause that constrain web fares, NDC making that agreement obsolete, ATPCO's 29 rule categories with the stopover threshold, and Fare by Rule cutting ADMs on corporate contracts."
     part: "Fares and pricing"
+  - slug: fare-rules-journey-types
+    title: "Airline fare rules and journey types: a strategic analysis"
+    promise: "Which pricing logic back-to-back tickets, hidden cities and point-of-commencement arbitrage exploit, how revenue integrity software catches them, and how journey types such as one-way, circle trip, open jaw and round the world are modelled in the system."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

@@ -109,6 +109,10 @@ outline:
     title: "Havacılık dağıtım kanalları ve ücret kuralları: stratejik analiz belgesi"
     promise: "Bir bilet fiyatı iki katmanın kesişimi: web ücretlerini sınırlayan tam içerik anlaşması ve paritesi, NDC'nin bu anlaşmayı eskitmesi, ATPCO'nun 29 kural kategorisiyle stopover eşiği ve kurumsal kontratlarda ADM'yi azaltan Fare by Rule."
     part: "Ücret ve fiyatlama"
+  - slug: fare-rules-journey-types
+    title: "Havacılık ücret kuralları ve yolculuk tipleri stratejik analizi"
+    promise: "Çakışan biletler, saklı şehirler ve başlangıç noktası arbitrajının hangi fiyatlandırma mantığını sömürdüğü, gelir bütünlüğü yazılımının onları nasıl yakaladığı ve tek yön, çember, açık çene, dünya turu gibi yolculuk tiplerinin sistemde nasıl modellendiği."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
