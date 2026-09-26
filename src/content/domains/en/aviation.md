@@ -141,6 +141,10 @@ outline:
     title: "Revenue sharing in aviation: multilateral and special prorate agreements (MPA and SPA)"
     promise: "How a single ticket's revenue is split between two airlines: IATA's mileage- and cost-weighted default MPA, and the bilateral SPA that overrides it."
     part: "Fares and pricing"
+  - slug: ancillaries
+    title: "Airline ancillaries and their business logic"
+    promise: "How services added back on top of a no-frills base fare split into EMDs and receipts, the move from flat fees to market-based pricing, carrying brands across channels with the ATPCO S-8 record, and total itinerary prices that change with loyalty status."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

@@ -141,6 +141,10 @@ outline:
     title: "Havacılıkta gelir paylaşımı: çok taraflı ve ikili prorate anlaşmaları (MPA ve SPA)"
     promise: "Tek biletin geliri iki havayolu arasında hangi kuralla bölünüyor: IATA'nın mil ve maliyet faktörlü varsayılanı MPA ile onu ezen ikili ticari anlaşma SPA."
     part: "Ücret ve fiyatlama"
+  - slug: ancillaries
+    title: "Havayolu ek hizmetleri (ancillaries) ve iş mantığı analizi"
+    promise: "Yalın temel ücretin üzerine geri eklenen hizmetlerin EMD ve makbuz ayrımı, sabit ücretten pazar bazlı fiyata geçiş, ATPCO S-8 kaydıyla markanın kanallara taşınması ve sadakat statüsüne göre değişen toplam güzergâh fiyatı."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
