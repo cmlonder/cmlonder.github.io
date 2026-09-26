@@ -325,6 +325,10 @@ outline:
     title: "Airline revenue management and O&D optimization: virtual nesting and CER"
     promise: "How hundreds of O&D-class combinations are ranked by CER rather than fare and partitioned by dynamic programming into the eight virtual buckets a reservation system allows, and why the mapping must be fed with flown ticketed data."
     part: "Inventory and availability"
+  - slug: continuous-nesting-bid-price
+    title: "Continuous nesting and bid price control systems"
+    promise: "Explains how continuous nesting prices every seat by its opportunity cost instead of allocating it to buckets: the net contribution rule, bid prices that move with each sale and cancellation, linear gradients versus bid price curves, and how market variables like POS enter the decision."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
