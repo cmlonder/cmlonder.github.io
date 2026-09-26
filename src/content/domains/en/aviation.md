@@ -157,6 +157,10 @@ outline:
     title: "Expected spill and the Boeing spill model"
     promise: "Estimating the demand a closed flight never sees with the Boeing spill model: why demand variability doubles the loss at the same load factor and why the closing load factor pushes the tables up."
     part: "Forecasting"
+  - slug: demand-forecast-spill
+    title: "Aviation demand forecasting and spill models analysis"
+    promise: "Explains how the passengers a full flight turns away are estimated, why the Boeing model's logit approximation overstates spill at high load factors, and how the Gamma model closes that gap."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

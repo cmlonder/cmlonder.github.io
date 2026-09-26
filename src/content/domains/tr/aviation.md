@@ -157,6 +157,10 @@ outline:
     title: "Beklenen kapasite aşımı (expected spill) ve Boeing modeli analizi"
     promise: "Satışa kapanan uçuşun göremediği talebi Boeing spill modeliyle tahmin etmek: talep değişkenliği aynı dolulukta kaybı neden ikiye katlıyor ve kapanış yük faktörü tabloları neden yukarı çekiyor."
     part: "Talep tahmini"
+  - slug: demand-forecast-spill
+    title: "Havacılık talep tahmini ve spill (taşan talep) modelleri analizi"
+    promise: "Dolu kalkan uçuşun geri çevirdiği yolcunun nasıl hesaplandığını, Boeing modelinin logit yaklaşımının yüksek dolulukta spill'i neden fazla bulduğunu ve Gamma modelinin bu hatayı nasıl kapattığını anlatır."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
