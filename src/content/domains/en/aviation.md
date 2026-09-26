@@ -289,6 +289,10 @@ outline:
     title: "Airline revenue management: inventory control and business logic"
     promise: "Net and threshold nesting, SCIs and segment limits, POS controls: the rules by which a revenue management decision reaches the sales screen."
     part: "Inventory and availability"
+  - slug: shared-cabin-funnel-flights
+    title: "Shared cabin inventory and funnel flights"
+    promise: "What counting one seat in two cabins and selling two flights under one number gains in load factor and visibility, and what it costs in inventory synchronization and during disruptions."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

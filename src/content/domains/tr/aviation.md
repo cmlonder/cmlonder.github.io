@@ -289,6 +289,10 @@ outline:
     title: "Havacılık gelir yönetimi: envanter kontrolü ve iş mantığı analizi"
     promise: "Net ve threshold nesting, SCI ve segment limitleri, POS kontrolleri: gelir yönetimi kararının satış ekranına hangi kuralla indiği."
     part: "Envanter ve erişilebilirlik"
+  - slug: shared-cabin-funnel-flights
+    title: "Paylaşımlı kabin envanteri ve funnel uçuşlar"
+    promise: "Bir koltuğu iki kabinde birden saymanın ve iki uçuşu tek numarayla satmanın kazandırdığı doluluk ve görünürlük ile envanter senkronizasyonunda ve aksaklık anında ödenen bedel."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
