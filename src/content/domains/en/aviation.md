@@ -213,6 +213,10 @@ outline:
     title: "Demand forecasting and unconstrained demand in revenue management"
     promise: "Recovering demand from closed booking periods with booking profiles and the EM algorithm, reducing it to net demand with cancellation and boarding rates, classifying holidays, and forecasting methods from time series to machine learning."
     part: "Forecasting"
+  - slug: time-series-forecasting
+    title: "Airline demand forecasting and time series analysis"
+    promise: "How demand is forecast from history before a flight has bookings, from moving averages to Holt-Winters and its α, β, γ parameters."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

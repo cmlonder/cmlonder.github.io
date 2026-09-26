@@ -213,6 +213,10 @@ outline:
     title: "Gelir yönetiminde talep tahmini ve kısıtlanmamış talep analizi"
     promise: "Satışa kapalı dönemlerin talebinin rezervasyon profili ve EM algoritmasıyla geri kazanılması, iptal ve biniş oranıyla net talebe inilmesi, tatil sınıflandırması ve zaman serisinden makine öğrenmesine tahmin yöntemleri."
     part: "Talep tahmini"
+  - slug: time-series-forecasting
+    title: "Havacılık talebi tahminleme ve zaman serisi analizi"
+    promise: "Uçuşta henüz rezervasyon yokken talebin geçmişten nasıl tahmin edildiğini, hareketli ortalamadan Holt-Winters'a ve α, β, γ parametrelerine kadar anlatır."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
