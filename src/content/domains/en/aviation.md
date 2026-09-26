@@ -273,6 +273,10 @@ outline:
     title: "Gamma distribution and discount allocation: protection levels and revenue ratios"
     promise: "Explains why the protection level depends only on the demand distribution and the revenue ratio between classes, how the Gamma distribution is parameterised from historical data, and how rejected demand is won back through upsell and recapture."
     part: "Inventory and availability"
+  - slug: discount-allocation-optimization
+    title: "Discount allocation and booking optimization: EMSR and integrated overbooking"
+    promise: "Will explain how the EMSR family decides how many seats to protect for high-fare passengers, why EMSRB earns more, and why merging it with overbooking promises 1-3 percent extra revenue."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

@@ -273,6 +273,10 @@ outline:
     title: "Gamma dağılımı ve indirim tahsisi: koruma seviyeleri ve gelir oranları"
     promise: "Koruma seviyesinin neden yalnızca talep dağılımı ve sınıflar arası gelir oranından çıktığını, Gamma dağılımının geçmiş veriden nasıl parametrelendiğini ve reddedilen talebin upsell ve recapture ile nasıl geri kazanıldığını anlatır."
     part: "Envanter ve erişilebilirlik"
+  - slug: discount-allocation-optimization
+    title: "İndirim tahsisi ve rezervasyon optimizasyonu: EMSR ve entegre overbooking"
+    promise: "Yüksek ücretli yolcuya kaç koltuk saklanacağını EMSR ailesinin nasıl hesapladığını, EMSRB'nin neden daha çok kazandırdığını ve overbooking ile birleşik modelin neden yüzde 1-3 ek gelir vaat ettiğini anlatacak."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
