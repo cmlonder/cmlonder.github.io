@@ -317,6 +317,10 @@ outline:
     title: "Virtual nesting and dual indexing: who gets the seat in airline inventory"
     promise: "How net value (CER), found by subtracting a leg-specific displacement cost from the fare, spreads seats across four virtual buckets regardless of booking class, why the same K class can be open for one O&D and closed for another, and why dual indexing, which values a connecting passenger separately on each leg, is enough in a network where 70 percent of traffic connects and the average trip uses 1.7 legs."
     part: "Inventory and availability"
+  - slug: dynamic-virtual-nesting
+    title: "Dynamic virtual nesting and revenue management analysis"
+    promise: "Explains why the bucket an itinerary falls into is decided at request time, and why bucket boundaries should be drawn by dynamic programming that minimizes displacement cost rather than by equal traffic."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
