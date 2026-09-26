@@ -277,6 +277,10 @@ outline:
     title: "İndirim tahsisi ve rezervasyon optimizasyonu: EMSR ve entegre overbooking"
     promise: "Yüksek ücretli yolcuya kaç koltuk saklanacağını EMSR ailesinin nasıl hesapladığını, EMSRB'nin neden daha çok kazandırdığını ve overbooking ile birleşik modelin neden yüzde 1-3 ek gelir vaat ettiğini anlatacak."
     part: "Envanter ve erişilebilirlik"
+  - slug: inventory-control
+    title: "Rezervasyon envanter kontrolü ve gelir yönetimi"
+    promise: "Non-nested, paralel ve seri yuvalanmış envanter kontrolünün, düşük değerli sınıfın yüksek değerli sınıfı engellemesini nasıl önlediği ya da önleyemediği."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

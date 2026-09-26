@@ -277,6 +277,10 @@ outline:
     title: "Discount allocation and booking optimization: EMSR and integrated overbooking"
     promise: "Will explain how the EMSR family decides how many seats to protect for high-fare passengers, why EMSRB earns more, and why merging it with overbooking promises 1-3 percent extra revenue."
     part: "Inventory and availability"
+  - slug: inventory-control
+    title: "Reservation inventory control and revenue management"
+    promise: "How non-nested, parallel nested and serial nested inventory controls do or do not stop a low-value class from blocking a high-value one."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
