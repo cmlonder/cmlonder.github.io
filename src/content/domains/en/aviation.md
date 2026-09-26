@@ -357,6 +357,10 @@ outline:
     title: "Branded fare families and connectivity architecture"
     promise: "Explains how a branded fare bundle is built, why price consistency between brands rests on an inequality, and why 30 booking classes do not fit into the GDS's 26-letter alphabet."
     part: "Offers and merchandising"
+  - slug: inventory-gds-integration
+    title: "Airline inventory management and GDS integration systems"
+    promise: "Four integration levels from AVS/AVN teletype to DCS/DCA: what the agent sees, when confirmation arrives, and why O&D control is only possible at the top level."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

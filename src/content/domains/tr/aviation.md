@@ -357,6 +357,10 @@ outline:
     title: "Markalı ücret aileleri ve bağlantı mimarisi"
     promise: "Markalı ücret paketinin nasıl kurulduğunu, markalar arası fiyat tutarlılığının neden bir eşitsizliğe bağlı olduğunu ve 30 rezervasyon sınıfının GDS'in 26 harflik alfabesine neden sığmadığını anlatır."
     part: "Teklif ve teşhir"
+  - slug: inventory-gds-integration
+    title: "Havacılık envanter yönetimi ve GDS entegrasyon sistemleri"
+    promise: "AVS/AVN teletiplerinden DCS/DCA'ya dört entegrasyon basamağı: acente ne görüyor, teyidi ne zaman alıyor ve O&D kontrolü neden yalnızca en üst basamakta mümkün."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
