@@ -185,6 +185,10 @@ outline:
     title: "İki aşamalı Cox dağılımıyla spill ölçümü"
     promise: "Satış sisteminin göremediği talebi geçmiş verinin ortalama ve sapmasından moment eşleştirmeyle geri kurmak: a = 0,1 sabiti ve sınırı, uçuş kapanma oranı, beklenen spill ve spill oranının aynı kuyruk alanından çıkışı ve bu sayıların uçak tipi ile envanter kararına bağlanması."
     part: "Talep tahmini"
+  - slug: industry-and-rm
+    title: "Havacılık endüstrisi ve gelir yönetimi analizi"
+    promise: "Maliyetin yüzde 80-90'ı sabitken fazladan yolcunun neden neredeyse bedava olduğu, fiyatı maliyetin değil ödeme isteğinin belirlemesi, envanterde gelirin kârın önüne geçmesi ve gelir yönetiminin üzerinde çalıştığı bacak, segment, O&D hizmeti ve pazar katmanları."
+    part: "Gelir yönetimi"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

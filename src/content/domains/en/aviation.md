@@ -185,6 +185,10 @@ outline:
     title: "Measuring spill with the two-stage Cox distribution"
     promise: "Rebuilding the demand the sales system never sees from the mean and deviation of history via moment matching: the a = 0.1 constant and its bound, how flight closing rate, expected spill and spill rate come from the same tail area, and how those numbers feed equipment and inventory decisions."
     part: "Forecasting"
+  - slug: industry-and-rm
+    title: "The airline industry and revenue management: an analysis"
+    promise: "Why an extra passenger is nearly free when 80-90 percent of costs are fixed, why willingness to pay rather than cost sets the fare, why inventory maximizes revenue rather than profit, and the leg, segment, O&D service and market layers revenue management works on."
+    part: "Revenue management"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
