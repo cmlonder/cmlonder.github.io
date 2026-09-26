@@ -125,6 +125,10 @@ outline:
     title: "Special fares and price elasticity in aviation"
     promise: "The unrealized revenue a single price leaves on the table, private fares visible only to their target segment, the conditions behind bereavement and child fares, and price elasticity that falls as departure nears, along with how a competitor's fare moves your demand."
     part: "Fares and pricing"
+  - slug: fare-management-planning
+    title: "Fare management and planning strategies in aviation"
+    promise: "How a single fare action is decided where the competitive landscape meets the market profile: responses that differ by competitor, price elasticity turning a discount into loss or gain, and the RASK goal split between volume and yield."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

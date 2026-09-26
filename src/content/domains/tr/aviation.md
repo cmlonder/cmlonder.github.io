@@ -125,6 +125,10 @@ outline:
     title: "Havacılıkta özel ücretler ve fiyat esnekliği"
     promise: "Tek fiyatın masada bıraktığı gerçekleşmemiş gelir, yalnızca hedef segmente görünen özel ücretler, yas ve çocuk ücretlerinin koşulları ve kalkışa yaklaştıkça düşen fiyat esnekliğiyle rakip fiyatının talebe etkisi."
     part: "Ücret ve fiyatlama"
+  - slug: fare-management-planning
+    title: "Havacılıkta ücret yönetimi ve planlama stratejileri"
+    promise: "Bir ücret aksiyonunun rekabet manzarası ile pazar profilinin kesişiminde nasıl karar verildiği: rakibe göre farklılaşan tepki, fiyat esnekliğinin indirimi kayba ya da kazanca çevirmesi ve RASK hedefinin hacimle getiri arasında bölünmesi."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
