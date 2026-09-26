@@ -97,6 +97,10 @@ outline:
     title: "Airline pricing and yield management strategies: an analytical view"
     promise: "The shift in 1978 from fixed fares to answering competitors, why marginal cost makes pricing reactive, the logic of systemwide versus market-specific changes, and the cascade that spreads through ATPCO, which carries 87% of fare filings."
     part: "Fares and pricing"
+  - slug: fare-products
+    title: "Airline fare products and their business logic"
+    promise: "How restricted, qualified and unqualified discounts differ, why revenue management breaks down once fences disappear, and how a fare is represented in the many-to-one mapping chain that narrows from fare basis code to booking class."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
