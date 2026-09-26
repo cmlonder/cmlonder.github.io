@@ -269,6 +269,10 @@ outline:
     title: "Discount allocation controls, Littlewood's rule and the Gamma demand model"
     promise: "Explains why a discount seat is sold by comparing today's fare with the expected revenue of a future full-fare passenger, and why protection levels should be computed with a Gamma rather than a normal demand distribution."
     part: "Inventory and availability"
+  - slug: gamma-discount-allocation
+    title: "Gamma distribution and discount allocation: protection levels and revenue ratios"
+    promise: "Explains why the protection level depends only on the demand distribution and the revenue ratio between classes, how the Gamma distribution is parameterised from historical data, and how rejected demand is won back through upsell and recapture."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

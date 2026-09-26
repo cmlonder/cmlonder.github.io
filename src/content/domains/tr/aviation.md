@@ -269,6 +269,10 @@ outline:
     title: "İndirim tahsis kontrolleri, Littlewood kuralı ve Gamma talep modeli"
     promise: "İndirimli koltuğun neden bugünkü ücretle gelecekteki tam ücretli yolcunun beklenen geliri kıyaslanarak satıldığını ve koruma seviyesinin neden normal değil Gamma dağılımıyla hesaplanması gerektiğini anlatır."
     part: "Envanter ve erişilebilirlik"
+  - slug: gamma-discount-allocation
+    title: "Gamma dağılımı ve indirim tahsisi: koruma seviyeleri ve gelir oranları"
+    promise: "Koruma seviyesinin neden yalnızca talep dağılımı ve sınıflar arası gelir oranından çıktığını, Gamma dağılımının geçmiş veriden nasıl parametrelendiğini ve reddedilen talebin upsell ve recapture ile nasıl geri kazanıldığını anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
