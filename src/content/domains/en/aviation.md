@@ -153,6 +153,10 @@ outline:
     title: "The airline spill model and its business logic"
     promise: "How the demand a full flight cuts off is estimated, how six decisions from upgauging and cabin layout to corporate discounts and award tickets are priced from that one calculation, and why assuming an LFCF of 1.0 understates spill."
     part: "Forecasting"
+  - slug: expected-spill-boeing
+    title: "Expected spill and the Boeing spill model"
+    promise: "Estimating the demand a closed flight never sees with the Boeing spill model: why demand variability doubles the loss at the same load factor and why the closing load factor pushes the tables up."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

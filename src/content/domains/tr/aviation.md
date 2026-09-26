@@ -153,6 +153,10 @@ outline:
     title: "Havacılıkta spill (taşan talep) modeli ve iş mantığı analizi"
     promise: "Dolu uçuşun kesip attığı talebin nasıl tahmin edildiği, uçak büyütmeden kabin düzenine, kurumsal indirimden mil biletine kadar altı kararın bu hesaptan nasıl fiyatlandığı ve LFCF'yi 1.0 kabul etmenin taşmayı neden olduğundan az gösterdiği."
     part: "Talep tahmini"
+  - slug: expected-spill-boeing
+    title: "Beklenen kapasite aşımı (expected spill) ve Boeing modeli analizi"
+    promise: "Satışa kapanan uçuşun göremediği talebi Boeing spill modeliyle tahmin etmek: talep değişkenliği aynı dolulukta kaybı neden ikiye katlıyor ve kapanış yük faktörü tabloları neden yukarı çekiyor."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
