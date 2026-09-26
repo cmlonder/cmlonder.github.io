@@ -329,6 +329,10 @@ outline:
     title: "Sürekli yuvalama (continuous nesting) ve teklif fiyatı kontrol sistemleri analizi"
     promise: "Koltukları kovalara ayırmak yerine her koltuğa anlık bir fırsat maliyeti biçen sürekli yuvalamanın net katkı kuralını, satış ve iptalle kayan teklif fiyatını, doğrusal eğim ile teklif fiyatı eğrisi arasındaki farkı ve POS gibi pazar değişkenlerinin karara nasıl girdiğini anlatır."
     part: "Envanter ve erişilebilirlik"
+  - slug: network-optimization-models
+    title: "Havacılık gelir yönetimi: şebeke optimizasyon modelleri"
+    promise: "Kapasite kısıtı altında ağın beklenen gelirini en büyük yapan modelin Rsc, Dsc, Cj, Isc ve Xsc ile kuruluşu, teklif fiyatının kapasite kısıtının ikili değerinden çıkışı, deterministik talebin neden agresif kontrol ürettiği ve büyük ağlarda hesabın Lagrangian relaksasyonuyla nasıl küçültüldüğü."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

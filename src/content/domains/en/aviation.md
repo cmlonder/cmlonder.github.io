@@ -329,6 +329,10 @@ outline:
     title: "Continuous nesting and bid price control systems"
     promise: "Explains how continuous nesting prices every seat by its opportunity cost instead of allocating it to buckets: the net contribution rule, bid prices that move with each sale and cancellation, linear gradients versus bid price curves, and how market variables like POS enter the decision."
     part: "Inventory and availability"
+  - slug: network-optimization-models
+    title: "Airline revenue management: network optimization models"
+    promise: "How the model that maximizes expected network revenue under capacity constraints is built from Rsc, Dsc, Cj, Isc and Xsc, how bid prices emerge as the dual values of leg capacity, why deterministic demand produces aggressive controls, and how Lagrangian relaxation shrinks the computation on large networks."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
