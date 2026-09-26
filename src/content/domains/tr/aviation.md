@@ -169,6 +169,10 @@ outline:
     title: "Havacılık spill modelleri için girdi parametrelerinin kalibrasyonu"
     promise: "Spill modelinin iki girdisi olan talep değişkenliği katsayısı (CV) ve kapalı uçuş doluluğu (LFCF) hangi veriden, hangi filtreyle kalibre edilir ve küçük bir kayma yüksek dolulukta tahmini neden katlar."
     part: "Talep tahmini"
+  - slug: capacity-and-spill
+    title: "Havacılıkta kapasite yönetimi ve spill (taşan talep) analizi"
+    promise: "Kapalı uçuşların doluluğundan kaybedilen talebi geri hesaplayan spill tahmininin dört varsayımı: Gamma ya da Normal dağılım, yüzde 100 yerine yüzde 96 LFCF, kapsamla 0.30'dan 0.46'ya büyüyen CV ve gözlenen doluluğa yakınsayan iteratif hesap."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

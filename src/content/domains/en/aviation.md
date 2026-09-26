@@ -169,6 +169,10 @@ outline:
     title: "Calibrating input parameters for airline spill models"
     promise: "How the two inputs of a spill model, the demand coefficient of variation (CV) and the load factor of closed flights (LFCF), are calibrated from which data and with which filter, and why a small drift multiplies the estimate at high load factors."
     part: "Forecasting"
+  - slug: capacity-and-spill
+    title: "Capacity management and spill (lost demand) analysis in aviation"
+    promise: "The four assumptions behind estimating spill from the load factor of closed flights: Gamma versus Normal demand, a 96 rather than 100 percent LFCF, a CV that grows from 0.30 to 0.46 with scope, and an iterative calculation that converges on the observed load factor."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
