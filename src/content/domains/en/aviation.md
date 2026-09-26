@@ -349,6 +349,10 @@ outline:
     title: "Fare qualification rules in passenger valuation"
     promise: "Which rules filter the qualified fare behind net contribution in O&D inventory, why NDC forces the market value table to give way to real-time pricing, and how the point of commencement values the return segment."
     part: "Inventory and availability"
+  - slug: post-process-nesting
+    title: "Airline revenue management and inventory control systems: a post-process nesting analysis"
+    promise: "Explains how network optimization output is translated into nested limits on a legacy host CRS, how satellite processors work around TPF/ALCS constraints, and how branded fare families replaced cryptic fare codes."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

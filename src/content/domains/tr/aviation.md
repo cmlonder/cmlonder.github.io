@@ -349,6 +349,10 @@ outline:
     title: "Yolcu değerlemesinde ücret kalifikasyon kuralları"
     promise: "O&D envanterinde net katkıyı belirleyen kalifiye ücretin hangi kurallarla süzüldüğü, pazar değeri tablosunun NDC ile neden gerçek zamanlı fiyatlamaya dönmek zorunda kaldığı ve yolculuğun başlangıç noktasının dönüş segmentini nasıl değerlediği."
     part: "Envanter ve erişilebilirlik"
+  - slug: post-process-nesting
+    title: "Havacılık gelir yönetimi ve envanter kontrol sistemleri: post-process nesting analizi"
+    promise: "Ağ optimizasyonunun çıktısının legacy host CRS'te hiyerarşik limitlere nasıl çevrildiğini, uydu işlemcilerin TPF/ALCS kısıtını nasıl aştığını ve kriptik ücret kodlarının yerini markalı ailelerin nasıl aldığını anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
