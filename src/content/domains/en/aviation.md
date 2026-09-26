@@ -285,6 +285,10 @@ outline:
     title: "Mixed and hybrid inventory control systems"
     promise: "Mixed nesting that guarantees quota to low-yield traffic, hybrid nesting that isolates channels and forbids seat borrowing, and how threshold nesting derives availability from total seats sold."
     part: "Inventory and availability"
+  - slug: inventory-control-logic
+    title: "Airline revenue management: inventory control and business logic"
+    promise: "Net and threshold nesting, SCIs and segment limits, POS controls: the rules by which a revenue management decision reaches the sales screen."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

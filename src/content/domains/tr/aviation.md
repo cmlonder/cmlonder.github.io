@@ -285,6 +285,10 @@ outline:
     title: "Karma ve hibrit envanter kontrol sistemleri"
     promise: "Düşük getirili trafiğe garanti kontenjan veren karma yuvalama, kanalları yalıtıp koltuk aktarımını yasaklayan hibrit yuvalama ve mevcudiyetin eşik yuvalamayla toplam satıştan nasıl hesaplandığı."
     part: "Envanter ve erişilebilirlik"
+  - slug: inventory-control-logic
+    title: "Havacılık gelir yönetimi: envanter kontrolü ve iş mantığı analizi"
+    promise: "Net ve threshold nesting, SCI ve segment limitleri, POS kontrolleri: gelir yönetimi kararının satış ekranına hangi kuralla indiği."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
