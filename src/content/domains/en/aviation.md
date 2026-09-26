@@ -293,6 +293,10 @@ outline:
     title: "Shared cabin inventory and funnel flights"
     promise: "What counting one seat in two cabins and selling two flights under one number gains in load factor and visibility, and what it costs in inventory synchronization and during disruptions."
     part: "Inventory and availability"
+  - slug: rm-performance
+    title: "Measuring airline revenue management performance"
+    promise: "Splits RM performance indicators into pre-departure and post-departure measures, and explains why RASM and CASM must be read together, how spoilage and denied boarding costs are tracked, and how forecast error is interrogated with MAD, bias and WMAPE."
+    part: "Revenue management"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

@@ -293,6 +293,10 @@ outline:
     title: "Paylaşımlı kabin envanteri ve funnel uçuşlar"
     promise: "Bir koltuğu iki kabinde birden saymanın ve iki uçuşu tek numarayla satmanın kazandırdığı doluluk ve görünürlük ile envanter senkronizasyonunda ve aksaklık anında ödenen bedel."
     part: "Envanter ve erişilebilirlik"
+  - slug: rm-performance
+    title: "Havacılık gelir yönetimi performans ölçümü"
+    promise: "RM performansını ölçen göstergeleri uçuş öncesi ve uçuş sonrası diye ayırır; RASM ile CASM'in birlikte okunmasını, spoilage ve denied boarding maliyetinin takibini ve tahmin hatasının MAD, bias ve WMAPE ile sorgulanmasını anlatır."
+    part: "Gelir yönetimi"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
