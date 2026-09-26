@@ -261,6 +261,10 @@ outline:
     title: "Overbooking and show-up modeling strategies in aviation"
     promise: "The overbooking limit is set by the variance of the show-up rate, not its mean; explains why binomial and deterministic models are too aggressive, what the truncated normal distribution separates, and how the limit is chosen to maximize net revenue."
     part: "Inventory and availability"
+  - slug: overbooking-rm
+    title: "Overbooking strategies and revenue management in aviation"
+    promise: "Explains why the overbooking limit must be solved together with the fare mix, why the fall-off rate is a more robust input, and how the true cost of a voucher changes the calculation."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

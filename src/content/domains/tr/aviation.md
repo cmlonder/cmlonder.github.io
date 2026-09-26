@@ -261,6 +261,10 @@ outline:
     title: "Havacılıkta overbooking (fazla rezervasyon) ve show-up modelleme stratejileri"
     promise: "Overbooking limitini show-up oranının ortalaması değil varyansı belirler; Binom ve deterministik modellerin neden fazla agresif kaldığını, kesilmiş normal dağılımı ve limitin net gelire göre nasıl seçildiğini anlatır."
     part: "Envanter ve erişilebilirlik"
+  - slug: overbooking-rm
+    title: "Havacılıkta overbooking stratejileri ve gelir yönetimi"
+    promise: "Overbooking limitinin ücret karmasıyla neden aynı anda çözülmesi gerektiğini, fall-off oranının neden daha sağlam bir girdi olduğunu ve kuponun gerçek maliyetinin hesabı nasıl değiştirdiğini anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
