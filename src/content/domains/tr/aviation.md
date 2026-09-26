@@ -265,6 +265,10 @@ outline:
     title: "Havacılıkta overbooking stratejileri ve gelir yönetimi"
     promise: "Overbooking limitinin ücret karmasıyla neden aynı anda çözülmesi gerektiğini, fall-off oranının neden daha sağlam bir girdi olduğunu ve kuponun gerçek maliyetinin hesabı nasıl değiştirdiğini anlatır."
     part: "Envanter ve erişilebilirlik"
+  - slug: discount-allocation
+    title: "İndirim tahsis kontrolleri, Littlewood kuralı ve Gamma talep modeli"
+    promise: "İndirimli koltuğun neden bugünkü ücretle gelecekteki tam ücretli yolcunun beklenen geliri kıyaslanarak satıldığını ve koruma seviyesinin neden normal değil Gamma dağılımıyla hesaplanması gerektiğini anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

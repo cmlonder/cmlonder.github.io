@@ -265,6 +265,10 @@ outline:
     title: "Overbooking strategies and revenue management in aviation"
     promise: "Explains why the overbooking limit must be solved together with the fare mix, why the fall-off rate is a more robust input, and how the true cost of a voucher changes the calculation."
     part: "Inventory and availability"
+  - slug: discount-allocation
+    title: "Discount allocation controls, Littlewood's rule and the Gamma demand model"
+    promise: "Explains why a discount seat is sold by comparing today's fare with the expected revenue of a future full-fare passenger, and why protection levels should be computed with a Gamma rather than a normal demand distribution."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
