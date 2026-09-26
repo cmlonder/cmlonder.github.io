@@ -309,6 +309,10 @@ outline:
     title: "Airline inventory control strategies and network effects"
     promise: "Explains why the same last seat sells for 225 dollars with no controls and 1,712 dollars with itinerary controls, and how a promotion on one route ripples through the rest of the network."
     part: "Inventory and availability"
+  - slug: virtual-nesting
+    title: "Airline revenue management: an analysis of virtual nesting"
+    promise: "How thousands of itinerary classes are clustered into a few nested virtual buckets by the passenger's net network value (CER), and how inventory is controlled through those buckets."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

@@ -309,6 +309,10 @@ outline:
     title: "Havayolu envanter kontrol stratejileri ve ağ etkileri"
     promise: "Aynı son koltuğun kontrolsüz satışta 225, güzergah kontrolünde 1.712 dolara gitmesinin nedenini ve bir rotadaki promosyonun ağın geri kalanına nasıl yayıldığını anlatır."
     part: "Envanter ve erişilebilirlik"
+  - slug: virtual-nesting
+    title: "Havacılık gelir yönetimi: virtual nesting (sanal yuvalama) analizi"
+    promise: "Binlerce güzergah sınıfının, yolcunun ağa kattığı net değere (CER) göre birkaç iç içe sanal kovaya toplanıp envanterin o kovalar üzerinden nasıl yönetildiği."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
