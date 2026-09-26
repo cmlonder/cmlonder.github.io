@@ -137,6 +137,10 @@ outline:
     title: "Proactive pricing and fare rationalization: a strategic business logic analysis"
     promise: "Will explain the rules behind proactive pricing decisions and why an RM system stops protecting higher classes when fares do not sit in a clean booking-class hierarchy."
     part: "Fares and pricing"
+  - slug: prorate-agreements
+    title: "Revenue sharing in aviation: multilateral and special prorate agreements (MPA and SPA)"
+    promise: "How a single ticket's revenue is split between two airlines: IATA's mileage- and cost-weighted default MPA, and the bilateral SPA that overrides it."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
