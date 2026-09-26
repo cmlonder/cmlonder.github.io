@@ -209,6 +209,10 @@ outline:
     title: "Demand profiles and data cleansing in revenue management"
     promise: "Cleansing booking counts before they reach the forecast: the net demand profile that absorbs cancellations to stay monotonic and the PNR data it costs, the cancellation rate profile too volatile to drive decisions, and untruncating a closed class's censored data back to unconstrained demand with open/close indicators and the standard booking profile."
     part: "Forecasting"
+  - slug: unconstrained-demand
+    title: "Demand forecasting and unconstrained demand in revenue management"
+    promise: "Recovering demand from closed booking periods with booking profiles and the EM algorithm, reducing it to net demand with cancellation and boarding rates, classifying holidays, and forecasting methods from time series to machine learning."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

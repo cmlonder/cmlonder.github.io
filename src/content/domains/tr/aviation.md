@@ -209,6 +209,10 @@ outline:
     title: "Gelir yönetiminde talep profilleri ve veri arındırma"
     promise: "Rezervasyon sayısını tahmine sokmadan önce arındırmak: iptali içine alıp eğriyi monoton tutan net talep profili ve bedeli olan PNR verisi, oynaklığı yüzünden karar veremeyen iptal oranı profili ve kapanan sınıfın sansürlü verisinin açık/kapalı göstergeleri ile standart profil üzerinden kısıtlanmamış talebe geri çevrilmesi."
     part: "Talep tahmini"
+  - slug: unconstrained-demand
+    title: "Gelir yönetiminde talep tahmini ve kısıtlanmamış talep analizi"
+    promise: "Satışa kapalı dönemlerin talebinin rezervasyon profili ve EM algoritmasıyla geri kazanılması, iptal ve biniş oranıyla net talebe inilmesi, tatil sınıflandırması ve zaman serisinden makine öğrenmesine tahmin yöntemleri."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
