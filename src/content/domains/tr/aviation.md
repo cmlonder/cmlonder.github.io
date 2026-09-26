@@ -321,6 +321,10 @@ outline:
     title: "Dinamik sanal gruplama (dynamic virtual nesting) ve gelir yönetimi analizi"
     promise: "Bir rotanın hangi sepete düştüğüne neden sorgu anında karar verildiğini ve sepet sınırlarının eşit trafikle değil deplasman maliyetini en aza indiren dinamik programlamayla neden çizilmesi gerektiğini anlatır."
     part: "Envanter ve erişilebilirlik"
+  - slug: od-optimization
+    title: "Havacılık gelir yönetimi ve O&D optimizasyonu: sanal yuvalama ve CER"
+    promise: "Yüzlerce O&D-sınıf kombinasyonunun rezervasyon sisteminin izin verdiği sekiz sanal kovaya ücretle değil CER ile sıralanıp dinamik programlamayla nasıl bölündüğünü ve eşlemenin neden uçulmuş biletlenmiş veriyle beslenmesi gerektiğini anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

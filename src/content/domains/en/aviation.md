@@ -321,6 +321,10 @@ outline:
     title: "Dynamic virtual nesting and revenue management analysis"
     promise: "Explains why the bucket an itinerary falls into is decided at request time, and why bucket boundaries should be drawn by dynamic programming that minimizes displacement cost rather than by equal traffic."
     part: "Inventory and availability"
+  - slug: od-optimization
+    title: "Airline revenue management and O&D optimization: virtual nesting and CER"
+    promise: "How hundreds of O&D-class combinations are ranked by CER rather than fare and partitioned by dynamic programming into the eight virtual buckets a reservation system allows, and why the mapping must be fed with flown ticketed data."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
