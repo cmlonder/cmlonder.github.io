@@ -301,6 +301,10 @@ outline:
     title: "The revenue opportunity model (ROM) and measuring airline revenue management performance"
     promise: "How ROM separates revenue management's contribution from the market by placing actual revenue between no-control and perfect-control scenarios, and how it splits the loss into spoilage and dilution."
     part: "Revenue management"
+  - slug: critical-state-od
+    title: "Critical state identification and O&D strategies in revenue management"
+    promise: "How KPI thresholds pick which flights deserve attention across 5,000 daily departures and 1.65 million inventory units, when analyst overrides add revenue and when they lose it, and why O&D control replaces leg-based control for connecting traffic."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

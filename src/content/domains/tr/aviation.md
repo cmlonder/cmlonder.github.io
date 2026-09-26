@@ -301,6 +301,10 @@ outline:
     title: "Gelir fırsat modeli (ROM) ve havayolu gelir yönetimi performansının ölçümü"
     promise: "Gelir yönetiminin katkısını piyasadan ayırmak için gerçekleşen geliri kontrolsüz ve mükemmel kontrol senaryolarının arasına yerleştiren ROM'un nasıl çalıştığı ve kaybı spoilage ile dilution olarak nasıl ayırdığı."
     part: "Gelir yönetimi"
+  - slug: critical-state-od
+    title: "Gelir yönetiminde kritik durum belirleme ve O&D stratejileri"
+    promise: "Günde 5.000 kalkış ve 1,65 milyon envanter biriminde hangi uçuşa bakılacağını seçen KPI eşikleri, analist müdahalesinin ne zaman gelir kazandırıp ne zaman kaybettirdiği ve bağlantılı trafikte bacak bazlı kontrolün yerini neden O&D kontrolünün aldığı."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
