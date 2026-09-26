@@ -93,6 +93,10 @@ outline:
     title: "Havacılıkta gelir yönetimi ve rekabet stratejileri: Sun Tzu prensipleriyle iş mantığı analizi"
     promise: "Sun Tzu'nun ilkeleri havayolu iş kurallarına çevrildiğinde gelir yönetimi bir fiyat aracından pazar payı ile marjı birlikte hedefleyen, net yön, rakibi ve kendini tanıma ve sınırı önceden çizilmiş karar yetkisi isteyen bir rekabet silahına dönüşüyor."
     part: "Gelir yönetimi"
+  - slug: pricing-and-yield
+    title: "Havayolu fiyatlandırma ve verim yönetimi stratejileri: analitik bir bakış"
+    promise: "1978'de sabit fiyattan rakibe verilen cevaba geçiş, marjinal maliyetin fiyatı neden reaktif yaptığı, sistem geneli ve pazara özel değişikliklerin mantığı ve fiyat dosyalamalarının yüzde 87'sini taşıyan ATPCO üzerinden yayılan kaskad etkisi."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

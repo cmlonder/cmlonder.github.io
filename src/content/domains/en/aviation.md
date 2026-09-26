@@ -93,6 +93,10 @@ outline:
     title: "Revenue management and competitive strategy in aviation: a business logic analysis through Sun Tzu's principles"
     promise: "Translated into airline business rules, Sun Tzu's principles turn revenue management from a pricing tool into a competitive weapon that targets market share and margin together and demands clear direction, knowledge of both the rival and oneself, and decision authority with limits drawn in advance."
     part: "Revenue management"
+  - slug: pricing-and-yield
+    title: "Airline pricing and yield management strategies: an analytical view"
+    promise: "The shift in 1978 from fixed fares to answering competitors, why marginal cost makes pricing reactive, the logic of systemwide versus market-specific changes, and the cascade that spreads through ATPCO, which carries 87% of fare filings."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
