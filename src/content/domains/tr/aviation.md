@@ -281,6 +281,10 @@ outline:
     title: "Rezervasyon envanter kontrolü ve gelir yönetimi"
     promise: "Non-nested, paralel ve seri yuvalanmış envanter kontrolünün, düşük değerli sınıfın yüksek değerli sınıfı engellemesini nasıl önlediği ya da önleyemediği."
     part: "Envanter ve erişilebilirlik"
+  - slug: hybrid-inventory-control
+    title: "Karma ve hibrit envanter kontrol sistemleri"
+    promise: "Düşük getirili trafiğe garanti kontenjan veren karma yuvalama, kanalları yalıtıp koltuk aktarımını yasaklayan hibrit yuvalama ve mevcudiyetin eşik yuvalamayla toplam satıştan nasıl hesaplandığı."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

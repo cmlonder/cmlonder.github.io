@@ -281,6 +281,10 @@ outline:
     title: "Reservation inventory control and revenue management"
     promise: "How non-nested, parallel nested and serial nested inventory controls do or do not stop a low-value class from blocking a high-value one."
     part: "Inventory and availability"
+  - slug: hybrid-inventory-control
+    title: "Mixed and hybrid inventory control systems"
+    promise: "Mixed nesting that guarantees quota to low-yield traffic, hybrid nesting that isolates channels and forbids seat borrowing, and how threshold nesting derives availability from total seats sold."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
