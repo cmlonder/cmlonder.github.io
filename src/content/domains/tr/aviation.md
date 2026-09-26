@@ -173,6 +173,10 @@ outline:
     title: "Havacılıkta kapasite yönetimi ve spill (taşan talep) analizi"
     promise: "Kapalı uçuşların doluluğundan kaybedilen talebi geri hesaplayan spill tahmininin dört varsayımı: Gamma ya da Normal dağılım, yüzde 100 yerine yüzde 96 LFCF, kapsamla 0.30'dan 0.46'ya büyüyen CV ve gözlenen doluluğa yakınsayan iteratif hesap."
     part: "Talep tahmini"
+  - slug: nominal-load-factor
+    title: "Nominal doluluk oranı ve talep kaybı (spill) analizi"
+    promise: "Dolu uçağın gizlediği gerçek talebe iteratif olarak geri dönmek, taşan yolcunun üç akıbeti, geri kazanım sayılmazsa şişen nominal talep ve First Class talebinin neden çan eğrisiyle değil negatif eksponansiyelle modellendiği."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

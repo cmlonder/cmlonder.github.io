@@ -173,6 +173,10 @@ outline:
     title: "Capacity management and spill (lost demand) analysis in aviation"
     promise: "The four assumptions behind estimating spill from the load factor of closed flights: Gamma versus Normal demand, a 96 rather than 100 percent LFCF, a CV that grows from 0.30 to 0.46 with scope, and an iterative calculation that converges on the observed load factor."
     part: "Forecasting"
+  - slug: nominal-load-factor
+    title: "Nominal load factor and spill analysis"
+    promise: "Iterating back to the true demand a full aircraft hides, the three fates of a spilled passenger, how ignoring recapture inflates nominal demand, and why First Class demand is modeled with a negative exponential rather than a bell curve."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
