@@ -217,6 +217,10 @@ outline:
     title: "Havacılık talebi tahminleme ve zaman serisi analizi"
     promise: "Uçuşta henüz rezervasyon yokken talebin geçmişten nasıl tahmin edildiğini, hareketli ortalamadan Holt-Winters'a ve α, β, γ parametrelerine kadar anlatır."
     part: "Talep tahmini"
+  - slug: forecasting-models
+    title: "Gelir yönetiminde tahminleme modelleri ve iş mantığı analizi"
+    promise: "Kalman filtresi, ARMA/ARIMA ve regresyonun havayolu rezervasyon verisinde hangi koşulda iş gördüğünü ve model seçiminin hangi iş kurallarına dönüştüğünü anlatır."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

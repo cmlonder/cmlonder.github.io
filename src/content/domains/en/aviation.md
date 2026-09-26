@@ -217,6 +217,10 @@ outline:
     title: "Airline demand forecasting and time series analysis"
     promise: "How demand is forecast from history before a flight has bookings, from moving averages to Holt-Winters and its α, β, γ parameters."
     part: "Forecasting"
+  - slug: forecasting-models
+    title: "Forecasting models in revenue management and their business logic"
+    promise: "Explains when the Kalman filter, ARMA/ARIMA and regression work on airline booking data, and which business rules model selection turns into."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
