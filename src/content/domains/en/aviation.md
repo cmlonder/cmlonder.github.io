@@ -121,6 +121,10 @@ outline:
     title: "Fare construction, segmentation and loyalty programs analysis"
     promise: "Fares built from gateway and add-on components, currencies reduced to a single unit via NUC, the number of price points bounded by inventory control, and the business logic behind stopover, open jaw and one-way redemption rules."
     part: "Fares and pricing"
+  - slug: special-fares-elasticity
+    title: "Special fares and price elasticity in aviation"
+    promise: "The unrealized revenue a single price leaves on the table, private fares visible only to their target segment, the conditions behind bereavement and child fares, and price elasticity that falls as departure nears, along with how a competitor's fare moves your demand."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

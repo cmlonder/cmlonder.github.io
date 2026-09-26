@@ -121,6 +121,10 @@ outline:
     title: "Ücret yapılandırması, segmentasyon ve sadakat programları analizi"
     promise: "Gateway ve eklenti ücretlerinden kurulan fiyatlar, NUC ile tek birime inen para birimleri, envanterin sınırladığı fiyat noktası sayısı ve stopover, open jaw, tek yön mil kurallarının arkasındaki iş mantığı."
     part: "Ücret ve fiyatlama"
+  - slug: special-fares-elasticity
+    title: "Havacılıkta özel ücretler ve fiyat esnekliği"
+    promise: "Tek fiyatın masada bıraktığı gerçekleşmemiş gelir, yalnızca hedef segmente görünen özel ücretler, yas ve çocuk ücretlerinin koşulları ve kalkışa yaklaştıkça düşen fiyat esnekliğiyle rakip fiyatının talebe etkisi."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
