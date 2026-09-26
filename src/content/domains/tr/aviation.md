@@ -129,6 +129,10 @@ outline:
     title: "Havacılıkta ücret yönetimi ve planlama stratejileri"
     promise: "Bir ücret aksiyonunun rekabet manzarası ile pazar profilinin kesişiminde nasıl karar verildiği: rakibe göre farklılaşan tepki, fiyat esnekliğinin indirimi kayba ya da kazanca çevirmesi ve RASK hedefinin hacimle getiri arasında bölünmesi."
     part: "Ücret ve fiyatlama"
+  - slug: reactive-pricing
+    title: "Reaktif fiyatlandırma süreci ve stratejik karar mekanizmaları"
+    promise: "Rakibin fiyat hamlesine verilen yanıtın beş aşaması: kural ve dipnotlara kadar inen tespit, gelir seyrelmesini tartan etki analizi, eşitlememenin ne zaman doğru olduğu ve bir sonraki dağıtım penceresine sığma zorunluluğu."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

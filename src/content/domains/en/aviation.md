@@ -129,6 +129,10 @@ outline:
     title: "Fare management and planning strategies in aviation"
     promise: "How a single fare action is decided where the competitive landscape meets the market profile: responses that differ by competitor, price elasticity turning a discount into loss or gain, and the RASK goal split between volume and yield."
     part: "Fares and pricing"
+  - slug: reactive-pricing
+    title: "Reactive pricing process and strategic decision mechanisms"
+    promise: "The five stages of responding to a competitor's fare move: detection down to rules and footnotes, impact analysis that weighs revenue dilution, when not matching is the right call, and the hard requirement to fit into the next fare distribution window."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
