@@ -229,6 +229,10 @@ outline:
     title: "O&D talep tahmini: birinci ve ikinci nesil yaklaşımlar"
     promise: "Segment tahminini geçmiş bilet akışlarıyla bölen birinci nesilden günlük PNR ile beslenen doğrudan O&D tahminine geçişin veriyi, gecikmeyi ve seçim modellerini nasıl değiştirdiği."
     part: "Talep tahmini"
+  - slug: competitive-shopping-data
+    title: "Rekabetçi havayolu alışveriş verileri analizi"
+    promise: "Yolcuya neyin hangi fiyatla gösterildiğini kaydeden alışveriş verisinin, MIDT'nin göremediği reddedilen seçenekler üzerinden talep tahmini, dinamik fiyat, tarife kârlılığı, ekran sıralaması ve NDC karşılaştırmasını nasıl beslediği."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

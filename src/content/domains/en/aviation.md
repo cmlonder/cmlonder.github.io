@@ -229,6 +229,10 @@ outline:
     title: "O&D demand forecasting: first- and second-generation approaches"
     promise: "How the move from first-generation forecast enrichment, which splits segment forecasts by historical ticket flows, to direct O&D forecasting fed by daily PNR data changed the data, the latency and the role of choice models."
     part: "Forecasting"
+  - slug: competitive-shopping-data
+    title: "Competitive airline shopping data analysis"
+    promise: "How shopping data, which records what was shown to the traveller and at what price, feeds demand forecasting, dynamic pricing, schedule profitability, display ranking and NDC comparison through the rejected options MIDT cannot see."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
