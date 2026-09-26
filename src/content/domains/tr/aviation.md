@@ -113,6 +113,10 @@ outline:
     title: "Havacılık ücret kuralları ve yolculuk tipleri stratejik analizi"
     promise: "Çakışan biletler, saklı şehirler ve başlangıç noktası arbitrajının hangi fiyatlandırma mantığını sömürdüğü, gelir bütünlüğü yazılımının onları nasıl yakaladığı ve tek yön, çember, açık çene, dünya turu gibi yolculuk tiplerinin sistemde nasıl modellendiği."
     part: "Ücret ve fiyatlama"
+  - slug: route-pricing
+    title: "Havacılık güzergah fiyatlandırması ve iş mantığı analizi"
+    promise: "Yolculuğun ücret bileşenlerine bölünüp fiyatlandırılabilir birimler altında yeniden birleştirilmesi, open jaw mesafe kuralı, IATA TC bölgeleri ve vergiler dahil en ucuz geçerli çözümün seçilmesi."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

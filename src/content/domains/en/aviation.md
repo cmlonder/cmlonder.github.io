@@ -113,6 +113,10 @@ outline:
     title: "Airline fare rules and journey types: a strategic analysis"
     promise: "Which pricing logic back-to-back tickets, hidden cities and point-of-commencement arbitrage exploit, how revenue integrity software catches them, and how journey types such as one-way, circle trip, open jaw and round the world are modelled in the system."
     part: "Fares and pricing"
+  - slug: route-pricing
+    title: "Itinerary pricing in aviation: business logic analysis"
+    promise: "How a journey is split into fare components and recombined into priceable units, the open jaw distance rule, IATA TC areas, and picking the cheapest valid solution with taxes included."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
