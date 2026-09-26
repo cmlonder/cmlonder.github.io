@@ -249,6 +249,10 @@ outline:
     title: "O&D forecasting and the must-forecast list"
     promise: "Why forecasting only the markets that carry most of the demand, and treating the rest as a pseudo-local residual on each leg, gives the network optimizer more consistent input than forecasting every O&D."
     part: "Forecasting"
+  - slug: overbooking-strategies
+    title: "Overbooking strategies and operational analysis in aviation and hospitality"
+    promise: "Explains the balance between the cost of an empty seat and the cost of denying boarding, the quality-of-service constraints (premium cabins, EU 261) that pull that balance below the optimum, and why the same logic works differently in hotels."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

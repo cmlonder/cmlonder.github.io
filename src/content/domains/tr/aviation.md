@@ -249,6 +249,10 @@ outline:
     title: "O&D tahminleme ve must-forecast listesi"
     promise: "Ağdaki her O&D'yi tahminlemek yerine talebin büyük kısmını taşıyan pazarları listeye alıp geri kalanını bacak üzerinde pseudo-local artık olarak yönetmenin neden daha tutarlı bir optimizasyon girdisi ürettiği."
     part: "Talep tahmini"
+  - slug: overbooking-strategies
+    title: "Havacılık ve hizmet sektöründe overbooking stratejileri ve operasyonel analiz"
+    promise: "Boş koltuk maliyeti ile yolcu reddetme maliyeti arasındaki dengeyi, bu dengeyi optimumun altına çeken hizmet kalitesi kısıtlarını (üst kabin, EU 261) ve aynı mantığın otelcilikte neden farklı işlediğini anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
