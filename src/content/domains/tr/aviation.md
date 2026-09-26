@@ -333,6 +333,10 @@ outline:
     title: "Havacılık gelir yönetimi: şebeke optimizasyon modelleri"
     promise: "Kapasite kısıtı altında ağın beklenen gelirini en büyük yapan modelin Rsc, Dsc, Cj, Isc ve Xsc ile kuruluşu, teklif fiyatının kapasite kısıtının ikili değerinden çıkışı, deterministik talebin neden agresif kontrol ürettiği ve büyük ağlarda hesabın Lagrangian relaksasyonuyla nasıl küçültüldüğü."
     part: "Envanter ve erişilebilirlik"
+  - slug: network-optimization-technical
+    title: "Gelir yönetiminde ağ optimizasyonu ve bacak ayrıştırma"
+    promise: "Ağ optimizasyon motorunun doğru sonuç vermesi için gereken varsayımlar: Gamma talebinin tablo aramasıyla hızlandırılması, Lagrangian iyileşme ve durma kriterleri, yuvalanmış envanter ve teklif fiyatı tabanlı paylaştırma."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

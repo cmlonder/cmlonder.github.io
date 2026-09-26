@@ -333,6 +333,10 @@ outline:
     title: "Airline revenue management: network optimization models"
     promise: "How the model that maximizes expected network revenue under capacity constraints is built from Rsc, Dsc, Cj, Isc and Xsc, how bid prices emerge as the dual values of leg capacity, why deterministic demand produces aggressive controls, and how Lagrangian relaxation shrinks the computation on large networks."
     part: "Inventory and availability"
+  - slug: network-optimization-technical
+    title: "Network optimization and leg decomposition in revenue management"
+    promise: "The assumptions a network optimization engine needs to get right: fast table lookups for Gamma demand, Lagrangian improvement and stopping criteria, nested inventory and bid price-based proration."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
