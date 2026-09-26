@@ -341,6 +341,10 @@ outline:
     title: "Airline revenue management and network optimization strategies"
     promise: "How inventory is managed with bid prices under O&D control, why network optimization must cover a full day's schedule and rerun 5 to 50 times a day, and why dynamic programming gives way to hybrid models on large networks."
     part: "Inventory and availability"
+  - slug: od-seat-availability
+    title: "O&D revenue management and seat availability calculation"
+    promise: "Explains how a booking request passes a physical check and then a financial check against the total bid price, how the same product opens differently by point of sale, and how this logic is attached to a legacy CRS."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

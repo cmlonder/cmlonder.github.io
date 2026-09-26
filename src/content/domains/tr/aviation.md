@@ -341,6 +341,10 @@ outline:
     title: "Havacılık gelir yönetimi ve ağ optimizasyonu stratejileri"
     promise: "O&D kontrolünde envanterin teklif fiyatıyla nasıl yönetildiği, ağ optimizasyonunun neden bir günün bütün programını kapsayıp günde 5 ila 50 kez çalışması gerektiği ve büyük ağlarda dinamik programlamanın neden hibrit modellere bırakıldığı."
     part: "Envanter ve erişilebilirlik"
+  - slug: od-seat-availability
+    title: "O&D gelir yönetimi ve koltuk kullanılabilirliği hesaplama"
+    promise: "Bir rezervasyon talebinin önce fiziksel, sonra toplam teklif fiyatıyla finansal kapıdan nasıl geçtiğini, satış noktasına göre nasıl farklı açıldığını ve bu mantığın eski bir CRS'in yanına nasıl kurulduğunu anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
