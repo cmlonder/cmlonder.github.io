@@ -365,6 +365,10 @@ outline:
     title: "Airline inventory control and O&D management"
     promise: "We examine the three mechanisms that make O&D control hold at the point of sale (market restricted flights, married segments and journey data) and the trade-off between GDS polling fees and control discipline."
     part: "Inventory and availability"
+  - slug: reservation-inventory-logic
+    title: "Airline reservation and inventory management: strategic business logic analysis"
+    promise: "Shows how inventory answers a seat request by looking at who asks, from where and as part of which journey, through Married to Journey, the POS hierarchy, POC and bid-price control of off-tariff fares."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

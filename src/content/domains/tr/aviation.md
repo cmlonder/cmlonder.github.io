@@ -365,6 +365,10 @@ outline:
     title: "Havacılık envanter kontrolü ve O&D yönetimi"
     promise: "O&D kontrolünü satış anında geçerli kılan üç mekanizmayı (pazar kısıtlı uçuşlar, evli segmentler ve seyahat verisi) ve GDS sorgu ücretiyle kontrol disiplini arasındaki takası inceliyoruz."
     part: "Envanter ve erişilebilirlik"
+  - slug: reservation-inventory-logic
+    title: "Havacılık rezervasyon ve envanter yönetimi: stratejik iş mantığı analizi"
+    promise: "Envanterin bir koltuk sorusunu kimin, nereden ve hangi yolculuğun parçası olarak sorduğuna bakarak cevapladığını; Married to Journey, POS hiyerarşisi, POC ve liste dışı ücretlerin teklif fiyatıyla denetimi üzerinden anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
