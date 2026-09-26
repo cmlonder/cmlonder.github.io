@@ -337,6 +337,10 @@ outline:
     title: "Gelir yönetiminde ağ optimizasyonu ve bacak ayrıştırma"
     promise: "Ağ optimizasyon motorunun doğru sonuç vermesi için gereken varsayımlar: Gamma talebinin tablo aramasıyla hızlandırılması, Lagrangian iyileşme ve durma kriterleri, yuvalanmış envanter ve teklif fiyatı tabanlı paylaştırma."
     part: "Envanter ve erişilebilirlik"
+  - slug: network-optimization-strategy
+    title: "Havacılık gelir yönetimi ve ağ optimizasyonu stratejileri"
+    promise: "O&D kontrolünde envanterin teklif fiyatıyla nasıl yönetildiği, ağ optimizasyonunun neden bir günün bütün programını kapsayıp günde 5 ila 50 kez çalışması gerektiği ve büyük ağlarda dinamik programlamanın neden hibrit modellere bırakıldığı."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

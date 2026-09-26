@@ -337,6 +337,10 @@ outline:
     title: "Network optimization and leg decomposition in revenue management"
     promise: "The assumptions a network optimization engine needs to get right: fast table lookups for Gamma demand, Lagrangian improvement and stopping criteria, nested inventory and bid price-based proration."
     part: "Inventory and availability"
+  - slug: network-optimization-strategy
+    title: "Airline revenue management and network optimization strategies"
+    promise: "How inventory is managed with bid prices under O&D control, why network optimization must cover a full day's schedule and rerun 5 to 50 times a day, and why dynamic programming gives way to hybrid models on large networks."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
