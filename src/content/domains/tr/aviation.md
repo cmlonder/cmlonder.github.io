@@ -85,6 +85,10 @@ outline:
     title: "Havayolu pazarlama planlama süreci ve iş mantığı analizi"
     promise: "Filo kararıyla beş yıl önce başlayıp kalkışa üç ay kala uçak değişimiyle süren planlama döngüsü, fonksiyonlar arası geri besleme ve MIDT, IATA DDS, DB1B gibi veri setlerinin kör noktaları."
     part: "Operasyon"
+  - slug: airline-planning-overview
+    title: "Havacılık planlaması ve gelir yönetimi: stratejik analiz"
+    promise: "Çizelgeden kârlılığa beş halka: kapasite planlaması, fiyat esnekliğine dayalı segmentasyon, O&D envanter kontrolü, rezervasyon anına taşınan CRM verisi, kanal maliyeti ve algoritmanın cevaplayamadığı rakip sorusu."
+    part: "Gelir yönetimi"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

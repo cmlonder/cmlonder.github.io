@@ -85,6 +85,10 @@ outline:
     title: "Airline marketing planning: process and business logic"
     promise: "A planning loop that starts with the fleet decision five years out and runs to close-in re-fleeting three months before departure, the feedback between functions, and the blind spots of MIDT, IATA DDS and DB1B."
     part: "Operations"
+  - slug: airline-planning-overview
+    title: "Airline planning and revenue management: a strategic analysis"
+    promise: "Five links from schedule to profit: capacity planning, elasticity-based segmentation, O&D inventory control, CRM data carried into the booking moment, channel cost, and the competitor question no algorithm can answer."
+    part: "Revenue management"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
