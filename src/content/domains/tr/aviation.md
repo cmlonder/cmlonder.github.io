@@ -89,6 +89,10 @@ outline:
     title: "Havacılık planlaması ve gelir yönetimi: stratejik analiz"
     promise: "Çizelgeden kârlılığa beş halka: kapasite planlaması, fiyat esnekliğine dayalı segmentasyon, O&D envanter kontrolü, rezervasyon anına taşınan CRM verisi, kanal maliyeti ve algoritmanın cevaplayamadığı rakip sorusu."
     part: "Gelir yönetimi"
+  - slug: revenue-management-sun-tzu
+    title: "Havacılıkta gelir yönetimi ve rekabet stratejileri: Sun Tzu prensipleriyle iş mantığı analizi"
+    promise: "Sun Tzu'nun ilkeleri havayolu iş kurallarına çevrildiğinde gelir yönetimi bir fiyat aracından pazar payı ile marjı birlikte hedefleyen, net yön, rakibi ve kendini tanıma ve sınırı önceden çizilmiş karar yetkisi isteyen bir rekabet silahına dönüşüyor."
+    part: "Gelir yönetimi"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

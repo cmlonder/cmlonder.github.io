@@ -89,6 +89,10 @@ outline:
     title: "Airline planning and revenue management: a strategic analysis"
     promise: "Five links from schedule to profit: capacity planning, elasticity-based segmentation, O&D inventory control, CRM data carried into the booking moment, channel cost, and the competitor question no algorithm can answer."
     part: "Revenue management"
+  - slug: revenue-management-sun-tzu
+    title: "Revenue management and competitive strategy in aviation: a business logic analysis through Sun Tzu's principles"
+    promise: "Translated into airline business rules, Sun Tzu's principles turn revenue management from a pricing tool into a competitive weapon that targets market share and margin together and demands clear direction, knowledge of both the rival and oneself, and decision authority with limits drawn in advance."
+    part: "Revenue management"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
