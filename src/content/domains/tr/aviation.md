@@ -177,6 +177,10 @@ outline:
     title: "Nominal doluluk oranı ve talep kaybı (spill) analizi"
     promise: "Dolu uçağın gizlediği gerçek talebe iteratif olarak geri dönmek, taşan yolcunun üç akıbeti, geri kazanım sayılmazsa şişen nominal talep ve First Class talebinin neden çan eğrisiyle değil negatif eksponansiyelle modellendiği."
     part: "Talep tahmini"
+  - slug: coxian-demand
+    title: "Yüksek varyanslı talep ve iki aşamalı Cox dağılımı"
+    promise: "Birinci sınıf talebinin neden negatif üstel dağılıma sığmadığı, iki aşamalı Cox dağılımının varyansı tek bir geçiş olasılığıyla nasıl açtığı ve kapanış doluluğu (LFCF) varsayımındaki 15 puanlık farkın kayıp yolcu tahminini nasıl katladığı."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

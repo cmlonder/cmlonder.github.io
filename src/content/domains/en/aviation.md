@@ -177,6 +177,10 @@ outline:
     title: "Nominal load factor and spill analysis"
     promise: "Iterating back to the true demand a full aircraft hides, the three fates of a spilled passenger, how ignoring recapture inflates nominal demand, and why First Class demand is modeled with a negative exponential rather than a bell curve."
     part: "Forecasting"
+  - slug: coxian-demand
+    title: "High-variance demand and the two-stage Coxian distribution"
+    promise: "Why first-class demand does not fit a negative exponential distribution, how the two-stage Coxian distribution opens up variance with a single transition probability, and how a 15-point difference in the load-factor-on-closed-flights (LFCF) assumption multiplies the spilled-passenger estimate."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
