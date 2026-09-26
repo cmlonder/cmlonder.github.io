@@ -225,6 +225,10 @@ outline:
     title: "Airline revenue management: booking forecasting and demand analysis"
     promise: "How time-series and booking-profile forecasts are blended by days to departure, how demand hidden by closed classes is recovered with EM, and why a simple average often beats sophisticated models."
     part: "Forecasting"
+  - slug: od-forecasting-generations
+    title: "O&D demand forecasting: first- and second-generation approaches"
+    promise: "How the move from first-generation forecast enrichment, which splits segment forecasts by historical ticket flows, to direct O&D forecasting fed by daily PNR data changed the data, the latency and the role of choice models."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

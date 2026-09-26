@@ -225,6 +225,10 @@ outline:
     title: "Havacılık gelir yönetimi: rezervasyon tahminleme ve talep analizi"
     promise: "Zaman serisi ile rezervasyon profili tahmininin kalkışa kalan güne göre nasıl harmanlandığı, kapanan sınıfların gizlediği talebin EM ile nasıl geri kazanıldığı ve basit ortalamanın neden çoğu zaman karmaşık modelleri geçtiği."
     part: "Talep tahmini"
+  - slug: od-forecasting-generations
+    title: "O&D talep tahmini: birinci ve ikinci nesil yaklaşımlar"
+    promise: "Segment tahminini geçmiş bilet akışlarıyla bölen birinci nesilden günlük PNR ile beslenen doğrudan O&D tahminine geçişin veriyi, gecikmeyi ve seçim modellerini nasıl değiştirdiği."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
