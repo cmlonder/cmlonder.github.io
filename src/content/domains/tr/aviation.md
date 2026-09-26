@@ -353,6 +353,10 @@ outline:
     title: "Havacılık gelir yönetimi ve envanter kontrol sistemleri: post-process nesting analizi"
     promise: "Ağ optimizasyonunun çıktısının legacy host CRS'te hiyerarşik limitlere nasıl çevrildiğini, uydu işlemcilerin TPF/ALCS kısıtını nasıl aştığını ve kriptik ücret kodlarının yerini markalı ailelerin nasıl aldığını anlatır."
     part: "Envanter ve erişilebilirlik"
+  - slug: branded-fare-families
+    title: "Markalı ücret aileleri ve bağlantı mimarisi"
+    promise: "Markalı ücret paketinin nasıl kurulduğunu, markalar arası fiyat tutarlılığının neden bir eşitsizliğe bağlı olduğunu ve 30 rezervasyon sınıfının GDS'in 26 harflik alfabesine neden sığmadığını anlatır."
+    part: "Teklif ve teşhir"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

@@ -353,6 +353,10 @@ outline:
     title: "Airline revenue management and inventory control systems: a post-process nesting analysis"
     promise: "Explains how network optimization output is translated into nested limits on a legacy host CRS, how satellite processors work around TPF/ALCS constraints, and how branded fare families replaced cryptic fare codes."
     part: "Inventory and availability"
+  - slug: branded-fare-families
+    title: "Branded fare families and connectivity architecture"
+    promise: "Explains how a branded fare bundle is built, why price consistency between brands rests on an inequality, and why 30 booking classes do not fit into the GDS's 26-letter alphabet."
+    part: "Offers and merchandising"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
