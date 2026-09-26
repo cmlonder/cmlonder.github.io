@@ -101,6 +101,10 @@ outline:
     title: "Havacılık fiyatlandırma ürünleri ve iş mantığı analizi"
     promise: "Kısıtlı, nitelikli ve kısıtlamasız indirimlerin farkı, çit kalkınca gelir yönetiminin neden çöktüğü ve bir ücretin ücret esas kodundan rezervasyon sınıfına çoktan teke daralan eşleme zincirinde nasıl temsil edildiği."
     part: "Ücret ve fiyatlama"
+  - slug: fare-product-classification
+    title: "Havacılık ücret ürünlerinin sınıflandırılması: stratejik analiz ve iş mantığı"
+    promise: "Açık, özel ve pazarlıklı ücretleri kimin satıp kimin alabildiğine göre ayıran ATPCO kategorileri (CAT 1, 15, 25, 35), indirimli kurumsal ücretin neden açık ücretten pahalı çıkabildiği ve net tutar üzerinden BSP uzlaşmasında havayolunun fiyat kontrolünü nasıl kaybettiği."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

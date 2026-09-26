@@ -101,6 +101,10 @@ outline:
     title: "Airline fare products and their business logic"
     promise: "How restricted, qualified and unqualified discounts differ, why revenue management breaks down once fences disappear, and how a fare is represented in the many-to-one mapping chain that narrows from fare basis code to booking class."
     part: "Fares and pricing"
+  - slug: fare-product-classification
+    title: "Classifying airline fare products: strategic analysis and business logic"
+    promise: "The ATPCO categories (CAT 1, 15, 25, 35) that separate public, private and negotiated fares by who may sell and who may buy them, why a discounted corporate fare can cost more than a public one, and how the airline loses control of the final price when negotiated fares settle net through BSP."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
