@@ -313,6 +313,10 @@ outline:
     title: "Airline revenue management: an analysis of virtual nesting"
     promise: "How thousands of itinerary classes are clustered into a few nested virtual buckets by the passenger's net network value (CER), and how inventory is controlled through those buckets."
     part: "Inventory and availability"
+  - slug: virtual-nesting-dual-indexing
+    title: "Virtual nesting and dual indexing: who gets the seat in airline inventory"
+    promise: "How net value (CER), found by subtracting a leg-specific displacement cost from the fare, spreads seats across four virtual buckets regardless of booking class, why the same K class can be open for one O&D and closed for another, and why dual indexing, which values a connecting passenger separately on each leg, is enough in a network where 70 percent of traffic connects and the average trip uses 1.7 legs."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

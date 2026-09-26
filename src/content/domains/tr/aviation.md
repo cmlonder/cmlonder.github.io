@@ -313,6 +313,10 @@ outline:
     title: "Havacılık gelir yönetimi: virtual nesting (sanal yuvalama) analizi"
     promise: "Binlerce güzergah sınıfının, yolcunun ağa kattığı net değere (CER) göre birkaç iç içe sanal kovaya toplanıp envanterin o kovalar üzerinden nasıl yönetildiği."
     part: "Envanter ve erişilebilirlik"
+  - slug: virtual-nesting-dual-indexing
+    title: "Sanal gruplama ve çift indeksleme: havacılık envanterinde koltuğun kime açılacağı"
+    promise: "Ücretten bacağa özel yer değiştirme maliyeti düşülerek bulunan net değerin (CER) koltuğu rezervasyon sınıfından bağımsız olarak dört sanal gruba nasıl dağıttığı, aynı K sınıfının bir O&D için açık öbürü için kapalı olabilmesi ve yüzde 70'i aktarmalı, ortalama 1.7 bacaklı bir ağda aktarmalı yolcuyu her bacakta ayrı değerlendiren çift indekslemenin neden yettiği."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
