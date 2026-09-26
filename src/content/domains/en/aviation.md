@@ -221,6 +221,10 @@ outline:
     title: "Forecasting models in revenue management and their business logic"
     promise: "Explains when the Kalman filter, ARMA/ARIMA and regression work on airline booking data, and which business rules model selection turns into."
     part: "Forecasting"
+  - slug: booking-forecasting
+    title: "Airline revenue management: booking forecasting and demand analysis"
+    promise: "How time-series and booking-profile forecasts are blended by days to departure, how demand hidden by closed classes is recovered with EM, and why a simple average often beats sophisticated models."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
