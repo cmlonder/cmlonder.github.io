@@ -105,6 +105,10 @@ outline:
     title: "Classifying airline fare products: strategic analysis and business logic"
     promise: "The ATPCO categories (CAT 1, 15, 25, 35) that separate public, private and negotiated fares by who may sell and who may buy them, why a discounted corporate fare can cost more than a public one, and how the airline loses control of the final price when negotiated fares settle net through BSP."
     part: "Fares and pricing"
+  - slug: fare-rules-and-channels
+    title: "Airline distribution channels and fare rules: a strategic analysis"
+    promise: "A ticket price sits where two layers meet: the full content agreement and its parity clause that constrain web fares, NDC making that agreement obsolete, ATPCO's 29 rule categories with the stopover threshold, and Fare by Rule cutting ADMs on corporate contracts."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

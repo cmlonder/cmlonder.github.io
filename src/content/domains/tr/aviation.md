@@ -105,6 +105,10 @@ outline:
     title: "Havacılık ücret ürünlerinin sınıflandırılması: stratejik analiz ve iş mantığı"
     promise: "Açık, özel ve pazarlıklı ücretleri kimin satıp kimin alabildiğine göre ayıran ATPCO kategorileri (CAT 1, 15, 25, 35), indirimli kurumsal ücretin neden açık ücretten pahalı çıkabildiği ve net tutar üzerinden BSP uzlaşmasında havayolunun fiyat kontrolünü nasıl kaybettiği."
     part: "Ücret ve fiyatlama"
+  - slug: fare-rules-and-channels
+    title: "Havacılık dağıtım kanalları ve ücret kuralları: stratejik analiz belgesi"
+    promise: "Bir bilet fiyatı iki katmanın kesişimi: web ücretlerini sınırlayan tam içerik anlaşması ve paritesi, NDC'nin bu anlaşmayı eskitmesi, ATPCO'nun 29 kural kategorisiyle stopover eşiği ve kurumsal kontratlarda ADM'yi azaltan Fare by Rule."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
