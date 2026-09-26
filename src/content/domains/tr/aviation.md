@@ -205,6 +205,10 @@ outline:
     title: "Rezervasyon profillerinin kümelenmesi ve iptal oranı analizi"
     promise: "Tek uçuşun oynak rezervasyon profilinin neden k-means ile standart profillere ya da hiyerarşik seviyelere indirgendiği, analistin neden hiyerarşiye güvendiği ve eldeki rezervasyonun yüzdesi olarak kurulan iptal oranı profilinin aşırı satışa neden en istikrarlı girdi olduğu."
     part: "Talep tahmini"
+  - slug: demand-profiles-cleansing
+    title: "Gelir yönetiminde talep profilleri ve veri arındırma"
+    promise: "Rezervasyon sayısını tahmine sokmadan önce arındırmak: iptali içine alıp eğriyi monoton tutan net talep profili ve bedeli olan PNR verisi, oynaklığı yüzünden karar veremeyen iptal oranı profili ve kapanan sınıfın sansürlü verisinin açık/kapalı göstergeleri ile standart profil üzerinden kısıtlanmamış talebe geri çevrilmesi."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

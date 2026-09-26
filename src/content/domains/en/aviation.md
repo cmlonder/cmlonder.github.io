@@ -205,6 +205,10 @@ outline:
     title: "Clustering booking profiles and analysing cancellation rates"
     promise: "Why a single flight's volatile booking profile is reduced to k-means standard profiles or hierarchical levels, why analysts trust the hierarchy, and why the cancellation rate profile, built as a share of bookings on hand, is the most stable input to overbooking."
     part: "Forecasting"
+  - slug: demand-profiles-cleansing
+    title: "Demand profiles and data cleansing in revenue management"
+    promise: "Cleansing booking counts before they reach the forecast: the net demand profile that absorbs cancellations to stay monotonic and the PNR data it costs, the cancellation rate profile too volatile to drive decisions, and untruncating a closed class's censored data back to unconstrained demand with open/close indicators and the standard booking profile."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
