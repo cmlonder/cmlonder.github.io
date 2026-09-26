@@ -233,6 +233,10 @@ outline:
     title: "Rekabetçi havayolu alışveriş verileri analizi"
     promise: "Yolcuya neyin hangi fiyatla gösterildiğini kaydeden alışveriş verisinin, MIDT'nin göremediği reddedilen seçenekler üzerinden talep tahmini, dinamik fiyat, tarife kârlılığı, ekran sıralaması ve NDC karşılaştırmasını nasıl beslediği."
     part: "Talep tahmini"
+  - slug: data-driven-decision-support
+    title: "Havacılıkta veri odaklı iş mantığı ve karar destek sistemleri"
+    promise: "Alışveriş verisinin beş karar sistemini nasıl beslediği: talep sinyaliyle revize edilen ek komisyon hedefi, robotik aramaların ayıklanması, kanala göre tersine dönen al-bekle tavsiyesi, QSI'dan CCM'e geçen O&D talep tahmini ve üst satışı görmeyen envanterin geliri seyreltmesi."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

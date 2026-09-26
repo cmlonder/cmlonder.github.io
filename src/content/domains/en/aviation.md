@@ -233,6 +233,10 @@ outline:
     title: "Competitive airline shopping data analysis"
     promise: "How shopping data, which records what was shown to the traveller and at what price, feeds demand forecasting, dynamic pricing, schedule profitability, display ranking and NDC comparison through the rejected options MIDT cannot see."
     part: "Forecasting"
+  - slug: data-driven-decision-support
+    title: "Data-driven business logic and decision support systems in aviation"
+    promise: "How shopping data feeds five decision systems: override commission targets revised by demand signals, filtering out robotic shops, buy-or-wait advice that flips by channel, O&D demand forecasting moving from QSI to CCM, and inventory control that dilutes revenue when it ignores upsell."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
