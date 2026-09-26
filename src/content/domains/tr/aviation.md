@@ -245,6 +245,10 @@ outline:
     title: "İtinerer tercih modelleri ve talep analizi"
     promise: "Bir uçuş kalktığında ya da dolduğunda talebin fayda puanına göre hangi seçeneklere aktığını ve çok terimli lojitin IIA varsayımının bu kaymayı neden yanlış hesapladığını anlatır."
     part: "Talep tahmini"
+  - slug: must-forecast
+    title: "O&D tahminleme ve must-forecast listesi"
+    promise: "Ağdaki her O&D'yi tahminlemek yerine talebin büyük kısmını taşıyan pazarları listeye alıp geri kalanını bacak üzerinde pseudo-local artık olarak yönetmenin neden daha tutarlı bir optimizasyon girdisi ürettiği."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

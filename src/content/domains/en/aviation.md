@@ -245,6 +245,10 @@ outline:
     title: "Itinerary choice models and demand analysis"
     promise: "Explains where demand flows by utility when a flight is removed or fills up, and why the IIA assumption of multinomial logit gets that shift wrong."
     part: "Forecasting"
+  - slug: must-forecast
+    title: "O&D forecasting and the must-forecast list"
+    promise: "Why forecasting only the markets that carry most of the demand, and treating the rest as a pseudo-local residual on each leg, gives the network optimizer more consistent input than forecasting every O&D."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
