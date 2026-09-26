@@ -241,6 +241,10 @@ outline:
     title: "Havacılık gelir yönetimi ve tüketici tercih modellemesi"
     promise: "Talebi bir sayı değil bir seçim olarak modellemek: anket yerine satış verisiyle paket tasarımı, fayda fonksiyonu ve β katsayıları, MNL ile pazar payı ve ölçek parametresi, bir sınıf kapandığında talebin orantılı kayması ve bu varsayımın uzak kalkış saatlerinde neden kırıldığı."
     part: "Talep tahmini"
+  - slug: itinerary-choice
+    title: "İtinerer tercih modelleri ve talep analizi"
+    promise: "Bir uçuş kalktığında ya da dolduğunda talebin fayda puanına göre hangi seçeneklere aktığını ve çok terimli lojitin IIA varsayımının bu kaymayı neden yanlış hesapladığını anlatır."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

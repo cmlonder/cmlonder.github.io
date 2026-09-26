@@ -241,6 +241,10 @@ outline:
     title: "Airline revenue management and consumer choice modeling"
     promise: "Modeling demand as a choice rather than a number: designing bundles from revealed rather than stated preferences, the utility function and its β coefficients, MNL market share and the scale parameter, proportional re-attraction when a class closes, and why that assumption breaks when departure times are far apart."
     part: "Forecasting"
+  - slug: itinerary-choice
+    title: "Itinerary choice models and demand analysis"
+    promise: "Explains where demand flows by utility when a flight is removed or fills up, and why the IIA assumption of multinomial logit gets that shift wrong."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
