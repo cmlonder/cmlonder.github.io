@@ -149,6 +149,10 @@ outline:
     title: "Havacılık gelir yönetimi ve ücret yapıları analizi"
     promise: "Yakıt, kanal ve opsiyonel hizmet ücretlerinin (YQ/YR, OB, OC) hangi taşıyıcıya ve belgeye bağlandığı, hiç görülmeyen talebin (spill) nasıl tahmin edildiği ve geri kazanım ile üst satış oranlarının envanter kararına nasıl girdiği."
     part: "Ücret ve fiyatlama"
+  - slug: spill-model
+    title: "Havacılıkta spill (taşan talep) modeli ve iş mantığı analizi"
+    promise: "Dolu uçuşun kesip attığı talebin nasıl tahmin edildiği, uçak büyütmeden kabin düzenine, kurumsal indirimden mil biletine kadar altı kararın bu hesaptan nasıl fiyatlandığı ve LFCF'yi 1.0 kabul etmenin taşmayı neden olduğundan az gösterdiği."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

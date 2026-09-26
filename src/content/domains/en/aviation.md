@@ -149,6 +149,10 @@ outline:
     title: "Airline revenue management and fare structures"
     promise: "Which carrier and document fuel, channel and optional-service charges (YQ/YR, OB, OC) attach to, how unseen demand (spill) is estimated, and how recapture and upsell rates feed the inventory decision."
     part: "Fares and pricing"
+  - slug: spill-model
+    title: "The airline spill model and its business logic"
+    promise: "How the demand a full flight cuts off is estimated, how six decisions from upgauging and cabin layout to corporate discounts and award tickets are priced from that one calculation, and why assuming an LFCF of 1.0 understates spill."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
