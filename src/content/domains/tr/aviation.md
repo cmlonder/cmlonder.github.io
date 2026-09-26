@@ -305,6 +305,10 @@ outline:
     title: "Gelir yönetiminde kritik durum belirleme ve O&D stratejileri"
     promise: "Günde 5.000 kalkış ve 1,65 milyon envanter biriminde hangi uçuşa bakılacağını seçen KPI eşikleri, analist müdahalesinin ne zaman gelir kazandırıp ne zaman kaybettirdiği ve bağlantılı trafikte bacak bazlı kontrolün yerini neden O&D kontrolünün aldığı."
     part: "Envanter ve erişilebilirlik"
+  - slug: inventory-control-strategies
+    title: "Havayolu envanter kontrol stratejileri ve ağ etkileri"
+    promise: "Aynı son koltuğun kontrolsüz satışta 225, güzergah kontrolünde 1.712 dolara gitmesinin nedenini ve bir rotadaki promosyonun ağın geri kalanına nasıl yayıldığını anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
