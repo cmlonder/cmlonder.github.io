@@ -201,6 +201,10 @@ outline:
     title: "Booking profiles and demand forecasting"
     promise: "How bookings leading up to departure become a profile through reading days, and why that profile misleads the forecast unless closed-for-sale periods are separated out."
     part: "Forecasting"
+  - slug: booking-profiles-cancellations
+    title: "Clustering booking profiles and analysing cancellation rates"
+    promise: "Why a single flight's volatile booking profile is reduced to k-means standard profiles or hierarchical levels, why analysts trust the hierarchy, and why the cancellation rate profile, built as a share of bookings on hand, is the most stable input to overbooking."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

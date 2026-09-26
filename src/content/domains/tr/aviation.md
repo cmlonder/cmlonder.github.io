@@ -201,6 +201,10 @@ outline:
     title: "Rezervasyon profilleri ve talep tahmini"
     promise: "Kalkışa kadar gelen rezervasyonların okuma günleriyle nasıl bir profile dönüştüğünü ve satışa kapalı dönemler ayıklanmadan bu profilin neden tahmini yanıltacağını anlatır."
     part: "Talep tahmini"
+  - slug: booking-profiles-cancellations
+    title: "Rezervasyon profillerinin kümelenmesi ve iptal oranı analizi"
+    promise: "Tek uçuşun oynak rezervasyon profilinin neden k-means ile standart profillere ya da hiyerarşik seviyelere indirgendiği, analistin neden hiyerarşiye güvendiği ve eldeki rezervasyonun yüzdesi olarak kurulan iptal oranı profilinin aşırı satışa neden en istikrarlı girdi olduğu."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
