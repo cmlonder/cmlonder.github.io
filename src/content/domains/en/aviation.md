@@ -165,6 +165,10 @@ outline:
     title: "Expected spill and demand analysis in revenue management"
     promise: "Shows how the passengers a full flight turns away are counted from the demand distribution, and why a single passenger's rejection probability always exceeds the flight's closing probability."
     part: "Forecasting"
+  - slug: spill-calibration
+    title: "Calibrating input parameters for airline spill models"
+    promise: "How the two inputs of a spill model, the demand coefficient of variation (CV) and the load factor of closed flights (LFCF), are calibrated from which data and with which filter, and why a small drift multiplies the estimate at high load factors."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

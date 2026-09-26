@@ -165,6 +165,10 @@ outline:
     title: "Gelir yönetiminde beklenen kayıp (spill) ve talep analizi"
     promise: "Dolu bir uçağın kapıda bıraktığı yolcunun talep dağılımı üzerinden nasıl sayıldığını ve tek bir yolcunun reddedilme olasılığının neden uçuşun kapanma olasılığından hep büyük olduğunu anlatır."
     part: "Talep tahmini"
+  - slug: spill-calibration
+    title: "Havacılık spill modelleri için girdi parametrelerinin kalibrasyonu"
+    promise: "Spill modelinin iki girdisi olan talep değişkenliği katsayısı (CV) ve kapalı uçuş doluluğu (LFCF) hangi veriden, hangi filtreyle kalibre edilir ve küçük bir kayma yüksek dolulukta tahmini neden katlar."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
