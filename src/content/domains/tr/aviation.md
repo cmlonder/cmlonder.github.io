@@ -189,6 +189,10 @@ outline:
     title: "Havacılık endüstrisi ve gelir yönetimi analizi"
     promise: "Maliyetin yüzde 80-90'ı sabitken fazladan yolcunun neden neredeyse bedava olduğu, fiyatı maliyetin değil ödeme isteğinin belirlemesi, envanterde gelirin kârın önüne geçmesi ve gelir yönetiminin üzerinde çalıştığı bacak, segment, O&D hizmeti ve pazar katmanları."
     part: "Gelir yönetimi"
+  - slug: rm-alternatives
+    title: "Havacılık gelir yönetimi alternatifleri ve iş mantığı analizi"
+    promise: "Leg bazlı ile O&D bazlı envanter kontrolü arasındaki seçimi, RM motorunu besleyen veriyi ve tahmin hatasının iki yönünün neden aynı bedeli ödetmediğini anlatır."
+    part: "Gelir yönetimi"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

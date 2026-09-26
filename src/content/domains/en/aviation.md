@@ -189,6 +189,10 @@ outline:
     title: "The airline industry and revenue management: an analysis"
     promise: "Why an extra passenger is nearly free when 80-90 percent of costs are fixed, why willingness to pay rather than cost sets the fare, why inventory maximizes revenue rather than profit, and the leg, segment, O&D service and market layers revenue management works on."
     part: "Revenue management"
+  - slug: rm-alternatives
+    title: "Airline revenue management alternatives and business logic analysis"
+    promise: "Explains the choice between leg-based and O&D inventory control, the data that feeds the RM engine, and why the two directions of forecast error do not cost the same."
+    part: "Revenue management"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
