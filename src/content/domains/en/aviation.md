@@ -133,6 +133,10 @@ outline:
     title: "Reactive pricing process and strategic decision mechanisms"
     promise: "The five stages of responding to a competitor's fare move: detection down to rules and footnotes, impact analysis that weighs revenue dilution, when not matching is the right call, and the hard requirement to fit into the next fare distribution window."
     part: "Fares and pricing"
+  - slug: proactive-pricing
+    title: "Proactive pricing and fare rationalization: a strategic business logic analysis"
+    promise: "Will explain the rules behind proactive pricing decisions and why an RM system stops protecting higher classes when fares do not sit in a clean booking-class hierarchy."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

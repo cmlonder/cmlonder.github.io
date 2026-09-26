@@ -133,6 +133,10 @@ outline:
     title: "Reaktif fiyatlandırma süreci ve stratejik karar mekanizmaları"
     promise: "Rakibin fiyat hamlesine verilen yanıtın beş aşaması: kural ve dipnotlara kadar inen tespit, gelir seyrelmesini tartan etki analizi, eşitlememenin ne zaman doğru olduğu ve bir sonraki dağıtım penceresine sığma zorunluluğu."
     part: "Ücret ve fiyatlama"
+  - slug: proactive-pricing
+    title: "Proaktif fiyatlandırma ve ücret rasyonalizasyonu: stratejik iş mantığı analizi"
+    promise: "Fiyat kararlarının hangi kurala göre verildiğini ve ücretler rezervasyon sınıflarına temiz bir hiyerarşiyle oturmadığında RM sisteminin neden üst sınıfı korumayı bıraktığını anlatacak."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
