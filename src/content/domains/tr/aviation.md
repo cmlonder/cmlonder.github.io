@@ -361,6 +361,10 @@ outline:
     title: "Havacılık envanter yönetimi ve GDS entegrasyon sistemleri"
     promise: "AVS/AVN teletiplerinden DCS/DCA'ya dört entegrasyon basamağı: acente ne görüyor, teyidi ne zaman alıyor ve O&D kontrolü neden yalnızca en üst basamakta mümkün."
     part: "Envanter ve erişilebilirlik"
+  - slug: inventory-od-control
+    title: "Havacılık envanter kontrolü ve O&D yönetimi"
+    promise: "O&D kontrolünü satış anında geçerli kılan üç mekanizmayı (pazar kısıtlı uçuşlar, evli segmentler ve seyahat verisi) ve GDS sorgu ücretiyle kontrol disiplini arasındaki takası inceliyoruz."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

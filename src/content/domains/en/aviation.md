@@ -361,6 +361,10 @@ outline:
     title: "Airline inventory management and GDS integration systems"
     promise: "Four integration levels from AVS/AVN teletype to DCS/DCA: what the agent sees, when confirmation arrives, and why O&D control is only possible at the top level."
     part: "Inventory and availability"
+  - slug: inventory-od-control
+    title: "Airline inventory control and O&D management"
+    promise: "We examine the three mechanisms that make O&D control hold at the point of sale (market restricted flights, married segments and journey data) and the trade-off between GDS polling fees and control discipline."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
