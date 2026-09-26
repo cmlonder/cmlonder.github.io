@@ -257,6 +257,10 @@ outline:
     title: "Biniş oranı tahmini ve overbooking stratejileri"
     promise: "Overbooking limitinin dayandığı biniş oranının go-show ve mis-connect düzeltmeleri, dört saatlik snapshot, PNR tabanlı nedensel modeller ve 10.000'de 20 kısıtıyla Binom modeli üzerinden nasıl hesaplandığını anlatıyoruz."
     part: "Envanter ve erişilebilirlik"
+  - slug: show-up-modeling
+    title: "Havacılıkta overbooking (fazla rezervasyon) ve show-up modelleme stratejileri"
+    promise: "Overbooking limitini show-up oranının ortalaması değil varyansı belirler; Binom ve deterministik modellerin neden fazla agresif kaldığını, kesilmiş normal dağılımı ve limitin net gelire göre nasıl seçildiğini anlatır."
+    part: "Envanter ve erişilebilirlik"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

@@ -257,6 +257,10 @@ outline:
     title: "Show-rate forecasting and overbooking strategies"
     promise: "How the show rate behind every overbooking limit is computed: go-show and mis-connect corrections, the four-hour snapshot, PNR-based causal models, and a binomial search against a 20-per-10,000 denied-boarding cap."
     part: "Inventory and availability"
+  - slug: show-up-modeling
+    title: "Overbooking and show-up modeling strategies in aviation"
+    promise: "The overbooking limit is set by the variance of the show-up rate, not its mean; explains why binomial and deterministic models are too aggressive, what the truncated normal distribution separates, and how the limit is chosen to maximize net revenue."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
