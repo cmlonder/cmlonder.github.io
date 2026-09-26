@@ -197,6 +197,10 @@ outline:
     title: "Gelir artışı ve tahmin doğruluğu: iki boyutlu zamanda talep tahmini"
     promise: "Havacılık talep tahmininin neden rezervasyon ve kalkış tarihinden oluşan iki boyutlu zamanla çalıştığı, kısıtlanmamış talebin görünen satış ve sınıf kapanış zaman damgalarından nasıl geri hesaplandığı, upsell ve recapture'ın tahmine nasıl girdiği ve tahminin toplam ya da kalan kurguyla bacak/segment envanter kararına nasıl dönüştüğü."
     part: "Talep tahmini"
+  - slug: booking-profiles
+    title: "Rezervasyon profilleri ve talep tahmini"
+    promise: "Kalkışa kadar gelen rezervasyonların okuma günleriyle nasıl bir profile dönüştüğünü ve satışa kapalı dönemler ayıklanmadan bu profilin neden tahmini yanıltacağını anlatır."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

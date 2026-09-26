@@ -197,6 +197,10 @@ outline:
     title: "Revenue improvement and forecast accuracy: demand forecasting in two-dimensional time"
     promise: "Why airline demand forecasting works in two-dimensional time (booking date and departure date), how unconstrained demand is rebuilt from observed sales and class open/close timestamps, how upsell and recapture enter the forecast, and how the forecast turns into leg/segment inventory decisions through total or remaining-demand formulations."
     part: "Forecasting"
+  - slug: booking-profiles
+    title: "Booking profiles and demand forecasting"
+    promise: "How bookings leading up to departure become a profile through reading days, and why that profile misleads the forecast unless closed-for-sale periods are separated out."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
