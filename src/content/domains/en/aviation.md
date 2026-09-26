@@ -145,6 +145,10 @@ outline:
     title: "Airline ancillaries and their business logic"
     promise: "How services added back on top of a no-frills base fare split into EMDs and receipts, the move from flat fees to market-based pricing, carrying brands across channels with the ATPCO S-8 record, and total itinerary prices that change with loyalty status."
     part: "Fares and pricing"
+  - slug: fare-structures-rm
+    title: "Airline revenue management and fare structures"
+    promise: "Which carrier and document fuel, channel and optional-service charges (YQ/YR, OB, OC) attach to, how unseen demand (spill) is estimated, and how recapture and upsell rates feed the inventory decision."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

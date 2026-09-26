@@ -145,6 +145,10 @@ outline:
     title: "Havayolu ek hizmetleri (ancillaries) ve iş mantığı analizi"
     promise: "Yalın temel ücretin üzerine geri eklenen hizmetlerin EMD ve makbuz ayrımı, sabit ücretten pazar bazlı fiyata geçiş, ATPCO S-8 kaydıyla markanın kanallara taşınması ve sadakat statüsüne göre değişen toplam güzergâh fiyatı."
     part: "Ücret ve fiyatlama"
+  - slug: fare-structures-rm
+    title: "Havacılık gelir yönetimi ve ücret yapıları analizi"
+    promise: "Yakıt, kanal ve opsiyonel hizmet ücretlerinin (YQ/YR, OB, OC) hangi taşıyıcıya ve belgeye bağlandığı, hiç görülmeyen talebin (spill) nasıl tahmin edildiği ve geri kazanım ile üst satış oranlarının envanter kararına nasıl girdiği."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
