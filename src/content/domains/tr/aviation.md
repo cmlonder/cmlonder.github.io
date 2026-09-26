@@ -161,6 +161,10 @@ outline:
     title: "Havacılık talep tahmini ve spill (taşan talep) modelleri analizi"
     promise: "Dolu kalkan uçuşun geri çevirdiği yolcunun nasıl hesaplandığını, Boeing modelinin logit yaklaşımının yüksek dolulukta spill'i neden fazla bulduğunu ve Gamma modelinin bu hatayı nasıl kapattığını anlatır."
     part: "Talep tahmini"
+  - slug: spill-and-demand
+    title: "Gelir yönetiminde beklenen kayıp (spill) ve talep analizi"
+    promise: "Dolu bir uçağın kapıda bıraktığı yolcunun talep dağılımı üzerinden nasıl sayıldığını ve tek bir yolcunun reddedilme olasılığının neden uçuşun kapanma olasılığından hep büyük olduğunu anlatır."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

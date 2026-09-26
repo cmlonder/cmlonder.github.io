@@ -161,6 +161,10 @@ outline:
     title: "Aviation demand forecasting and spill models analysis"
     promise: "Explains how the passengers a full flight turns away are estimated, why the Boeing model's logit approximation overstates spill at high load factors, and how the Gamma model closes that gap."
     part: "Forecasting"
+  - slug: spill-and-demand
+    title: "Expected spill and demand analysis in revenue management"
+    promise: "Shows how the passengers a full flight turns away are counted from the demand distribution, and why a single passenger's rejection probability always exceeds the flight's closing probability."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
