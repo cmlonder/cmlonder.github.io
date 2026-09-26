@@ -193,6 +193,10 @@ outline:
     title: "Havacılık gelir yönetimi alternatifleri ve iş mantığı analizi"
     promise: "Leg bazlı ile O&D bazlı envanter kontrolü arasındaki seçimi, RM motorunu besleyen veriyi ve tahmin hatasının iki yönünün neden aynı bedeli ödetmediğini anlatır."
     part: "Gelir yönetimi"
+  - slug: revenue-improvement
+    title: "Gelir artışı ve tahmin doğruluğu: iki boyutlu zamanda talep tahmini"
+    promise: "Havacılık talep tahmininin neden rezervasyon ve kalkış tarihinden oluşan iki boyutlu zamanla çalıştığı, kısıtlanmamış talebin görünen satış ve sınıf kapanış zaman damgalarından nasıl geri hesaplandığı, upsell ve recapture'ın tahmine nasıl girdiği ve tahminin toplam ya da kalan kurguyla bacak/segment envanter kararına nasıl dönüştüğü."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

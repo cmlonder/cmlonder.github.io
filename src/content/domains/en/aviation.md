@@ -193,6 +193,10 @@ outline:
     title: "Airline revenue management alternatives and business logic analysis"
     promise: "Explains the choice between leg-based and O&D inventory control, the data that feeds the RM engine, and why the two directions of forecast error do not cost the same."
     part: "Revenue management"
+  - slug: revenue-improvement
+    title: "Revenue improvement and forecast accuracy: demand forecasting in two-dimensional time"
+    promise: "Why airline demand forecasting works in two-dimensional time (booking date and departure date), how unconstrained demand is rebuilt from observed sales and class open/close timestamps, how upsell and recapture enter the forecast, and how the forecast turns into leg/segment inventory decisions through total or remaining-demand formulations."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
