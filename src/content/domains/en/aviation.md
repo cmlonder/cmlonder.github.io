@@ -297,6 +297,10 @@ outline:
     title: "Measuring airline revenue management performance"
     promise: "Splits RM performance indicators into pre-departure and post-departure measures, and explains why RASM and CASM must be read together, how spoilage and denied boarding costs are tracked, and how forecast error is interrogated with MAD, bias and WMAPE."
     part: "Revenue management"
+  - slug: revenue-opportunity-model
+    title: "The revenue opportunity model (ROM) and measuring airline revenue management performance"
+    promise: "How ROM separates revenue management's contribution from the market by placing actual revenue between no-control and perfect-control scenarios, and how it splits the loss into spoilage and dilution."
+    part: "Revenue management"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

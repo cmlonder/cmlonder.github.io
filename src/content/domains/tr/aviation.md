@@ -297,6 +297,10 @@ outline:
     title: "Havacılık gelir yönetimi performans ölçümü"
     promise: "RM performansını ölçen göstergeleri uçuş öncesi ve uçuş sonrası diye ayırır; RASM ile CASM'in birlikte okunmasını, spoilage ve denied boarding maliyetinin takibini ve tahmin hatasının MAD, bias ve WMAPE ile sorgulanmasını anlatır."
     part: "Gelir yönetimi"
+  - slug: revenue-opportunity-model
+    title: "Gelir fırsat modeli (ROM) ve havayolu gelir yönetimi performansının ölçümü"
+    promise: "Gelir yönetiminin katkısını piyasadan ayırmak için gerçekleşen geliri kontrolsüz ve mükemmel kontrol senaryolarının arasına yerleştiren ROM'un nasıl çalıştığı ve kaybı spoilage ile dilution olarak nasıl ayırdığı."
+    part: "Gelir yönetimi"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
