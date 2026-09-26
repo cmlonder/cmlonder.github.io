@@ -181,6 +181,10 @@ outline:
     title: "High-variance demand and the two-stage Coxian distribution"
     promise: "Why first-class demand does not fit a negative exponential distribution, how the two-stage Coxian distribution opens up variance with a single transition probability, and how a 15-point difference in the load-factor-on-closed-flights (LFCF) assumption multiplies the spilled-passenger estimate."
     part: "Forecasting"
+  - slug: coxian-spill
+    title: "Measuring spill with the two-stage Cox distribution"
+    promise: "Rebuilding the demand the sales system never sees from the mean and deviation of history via moment matching: the a = 0.1 constant and its bound, how flight closing rate, expected spill and spill rate come from the same tail area, and how those numbers feed equipment and inventory decisions."
+    part: "Forecasting"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

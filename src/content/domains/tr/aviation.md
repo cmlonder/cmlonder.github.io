@@ -181,6 +181,10 @@ outline:
     title: "Yüksek varyanslı talep ve iki aşamalı Cox dağılımı"
     promise: "Birinci sınıf talebinin neden negatif üstel dağılıma sığmadığı, iki aşamalı Cox dağılımının varyansı tek bir geçiş olasılığıyla nasıl açtığı ve kapanış doluluğu (LFCF) varsayımındaki 15 puanlık farkın kayıp yolcu tahminini nasıl katladığı."
     part: "Talep tahmini"
+  - slug: coxian-spill
+    title: "İki aşamalı Cox dağılımıyla spill ölçümü"
+    promise: "Satış sisteminin göremediği talebi geçmiş verinin ortalama ve sapmasından moment eşleştirmeyle geri kurmak: a = 0,1 sabiti ve sınırı, uçuş kapanma oranı, beklenen spill ve spill oranının aynı kuyruk alanından çıkışı ve bu sayıların uçak tipi ile envanter kararına bağlanması."
+    part: "Talep tahmini"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
