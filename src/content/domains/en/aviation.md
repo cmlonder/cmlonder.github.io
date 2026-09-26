@@ -253,6 +253,10 @@ outline:
     title: "Overbooking strategies and operational analysis in aviation and hospitality"
     promise: "Explains the balance between the cost of an empty seat and the cost of denying boarding, the quality-of-service constraints (premium cabins, EU 261) that pull that balance below the optimum, and why the same logic works differently in hotels."
     part: "Inventory and availability"
+  - slug: show-rate-forecasting
+    title: "Show-rate forecasting and overbooking strategies"
+    promise: "How the show rate behind every overbooking limit is computed: go-show and mis-connect corrections, the four-hour snapshot, PNR-based causal models, and a binomial search against a 20-per-10,000 denied-boarding cap."
+    part: "Inventory and availability"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
