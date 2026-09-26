@@ -117,6 +117,10 @@ outline:
     title: "Itinerary pricing in aviation: business logic analysis"
     promise: "How a journey is split into fare components and recombined into priceable units, the open jaw distance rule, IATA TC areas, and picking the cheapest valid solution with taxes included."
     part: "Fares and pricing"
+  - slug: fare-structure-segmentation
+    title: "Fare construction, segmentation and loyalty programs analysis"
+    promise: "Fares built from gateway and add-on components, currencies reduced to a single unit via NUC, the number of price points bounded by inventory control, and the business logic behind stopover, open jaw and one-way redemption rules."
+    part: "Fares and pricing"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so

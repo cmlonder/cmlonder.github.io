@@ -117,6 +117,10 @@ outline:
     title: "Havacılık güzergah fiyatlandırması ve iş mantığı analizi"
     promise: "Yolculuğun ücret bileşenlerine bölünüp fiyatlandırılabilir birimler altında yeniden birleştirilmesi, open jaw mesafe kuralı, IATA TC bölgeleri ve vergiler dahil en ucuz geçerli çözümün seçilmesi."
     part: "Ücret ve fiyatlama"
+  - slug: fare-structure-segmentation
+    title: "Ücret yapılandırması, segmentasyon ve sadakat programları analizi"
+    promise: "Gateway ve eklenti ücretlerinden kurulan fiyatlar, NUC ile tek birime inen para birimleri, envanterin sınırladığı fiyat noktası sayısı ve stopover, open jaw, tek yön mil kurallarının arkasındaki iş mantığı."
+    part: "Ücret ve fiyatlama"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.
