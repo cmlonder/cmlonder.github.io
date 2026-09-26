@@ -81,6 +81,10 @@ outline:
     title: "NDC@Scale: havacılık dağıtım kanallarında dönüşüm ve iş mantığı analizi"
     promise: "Fiyatlandırma gücüyle birlikte hesaplama yükü de havayoluna geçti: günde 675 milyon arama, GDS'in varoluşsal tercihi, agregatörlerin açtığı boşluk ve şeffaflığın yerini alan normalizasyon."
     part: "Perakendecilik"
+  - slug: marketing-planning
+    title: "Havayolu pazarlama planlama süreci ve iş mantığı analizi"
+    promise: "Filo kararıyla beş yıl önce başlayıp kalkışa üç ay kala uçak değişimiyle süren planlama döngüsü, fonksiyonlar arası geri besleme ve MIDT, IATA DDS, DB1B gibi veri setlerinin kör noktaları."
+    part: "Operasyon"
 ---
 
 Havacılık, yazılımcıların ilk bakışta “bu süreç neden bu kadar karmaşık” diye sorduğu, ancak sistemin içine girdikçe her karmaşıklığın arkasında haklı bir gerekçe olduğunu gördüğü ender alanlardan biridir.

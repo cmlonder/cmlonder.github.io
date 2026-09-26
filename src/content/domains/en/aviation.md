@@ -81,6 +81,10 @@ outline:
     title: "NDC@Scale: transformation and business logic in airline distribution"
     promise: "Pricing power brought the compute load with it: 675 million searches a day, the GDS's existential choice, the gap the aggregators opened, and normalisation replacing transparency."
     part: "Retailing"
+  - slug: marketing-planning
+    title: "Airline marketing planning: process and business logic"
+    promise: "A planning loop that starts with the fleet decision five years out and runs to close-in re-fleeting three months before departure, the feedback between functions, and the blind spots of MIDT, IATA DDS and DB1B."
+    part: "Operations"
 ---
 
 Aviation is one of the rare domains where engineers say "why is this so
