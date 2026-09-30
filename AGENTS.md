@@ -40,6 +40,30 @@ Serbest konu gerekiyorsa `topics`'e yeni bir kebab-case ad ekle; `check-topics` 
 **Çeviri opsiyoneldir.** Aynı slug iki dilde varsa otomatik bağlanır. Bir yazı
 tek dilde yaşayabilir. Kullanıcı açıkça istemedikçe çeviri üretme.
 
+**Site şu an TEK DİL yayında: Türkçe.** (30 Eyl 2026) İngilizce içerik yeterince
+dolmadığı için gezinme katmanında kapatıldı. Tek düğme: `src/config.ts` →
+`SITE.liveLocale` artı `astro.config.mjs` → `TEK_DIL`. İkisi birlikte çevrilir.
+
+Kapatma şunları yapıyor:
+
+| Nerede | Ne |
+|---|---|
+| `SiteHeader.astro` | dil anahtarı hiç basılmıyor (`LANG_SWITCH`) |
+| `astro.config.mjs` | `/` → `/tr/` yönlendirmesi; ön kapı Türkçe |
+| `Base.astro` | kapalı dilin sayfaları `noindex` ve `data-pagefind-ignore` |
+| sitemap | yalnızca `/tr/` + dil bağımsız `/radar` |
+
+Kapatmanın YAPMADIĞI şey: sayfa silmek. `/essays/foo` gibi İngilizce adresler
+yayındaydı, hâlâ açılıyor — sadece hiçbir yerden bağlanmıyor. Bu yüzden
+`SITE.defaultLocale` **'en' kalmalı**: o URL biçimini belirliyor (İngilizce
+prefix'siz, Türkçe `/tr/` altında), gösterilen dili değil. İkisini karıştırıp
+`defaultLocale`'i çevirmek yayındaki her Türkçe adresi kırar.
+
+`src/pages/index.astro` (İngilizce anasayfa) tek dil modunda ölü: yönlendirme
+dosya route'unu geçiyor. Bilerek duruyor, bayrak geri açılınca tekrar yayına
+giriyor. `llms.txt` ve `/llms-full.txt` hâlâ İngilizce indeks üretiyor — makine
+tarafı kasten dokunulmadı, ajanlara İngilizce konuşmaya devam ediyor.
+
 **Renk sadece `src/styles/tokens.css` içinde tanımlanır.** Başka hiçbir dosyada
 ham hex olmamalı. Token eklersen açık ve koyu temanın ikisini de tanımla ve
 kontrastı ölç (gövde metni en az 4.5:1).

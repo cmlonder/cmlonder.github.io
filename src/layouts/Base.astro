@@ -3,7 +3,7 @@ import { Font } from 'astro:assets';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import StructuredData from '../components/StructuredData.astro';
-import { SITE, ANALYTICS, type CollectionName, type Locale } from '../config';
+import { SITE, LANG_SWITCH, isLive, ANALYTICS, type CollectionName, type Locale } from '../config';
 import { localePath } from '../lib/content';
 import type { AnyEntry } from '../lib/content';
 import '../styles/base.css';
@@ -32,6 +32,13 @@ const ogUrl = new URL(ogPath, SITE.url).href;
 
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const home = localePath(lang, '');
+
+/*
+ * Tek dil modunda kapalı dilin sayfaları duruyor ama keşfedilmiyor:
+ * arama indeksine girmiyor (data-pagefind-body yerine -ignore) ve
+ * arama motorlarına noindex diyor. Bkz. SITE.liveLocale.
+ */
+const yayinda = isLive(lang);
 ---
 
 <!doctype html>
@@ -44,9 +51,10 @@ const home = localePath(lang, '');
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {altLocale && (
+    {LANG_SWITCH && altLocale && (
       <link rel="alternate" hreflang={altLocale.lang} href={new URL(altLocale.href, SITE.url).href} />
     )}
+    {!yayinda && <meta name="robots" content="noindex, follow" />}
 
     <meta property="og:type" content={structured ? 'article' : 'website'} />
     <meta property="og:site_name" content={SITE.author} />
@@ -110,7 +118,8 @@ const home = localePath(lang, '');
 
     <SiteHeader lang={lang} altLocale={altLocale} />
 
-    <main id="main" data-pagefind-body>
+    <main id="main" data-pagefind-body={yayinda ? true : undefined}
+          data-pagefind-ignore={yayinda ? undefined : true}>
       <slot />
     </main>
 

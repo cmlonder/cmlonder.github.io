@@ -2,7 +2,7 @@
 import ThemeToggle from './ThemeToggle.astro';
 import Search from './Search.astro';
 import {
-  SITE, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
+  SITE, LANG_SWITCH, COLLECTIONS, COLLECTION_LABELS, COLLECTION_BLURBS,
   HUB, NAV, SHELVES, SHELF_NAMES, RADAR, DOMAINS, PROJECTS, type Locale,
 } from '../config';
 import NavIcon from './NavIcon.astro';
@@ -103,7 +103,9 @@ const menuLabel = lang === 'tr' ? 'Bölümler' : 'Sections';
 
     <div class="controls">
       <Search lang={lang} />
-      {altLocale && (
+      {/* Dil anahtarı tek dil modunda hiç basılmıyor — bkz. SITE.liveLocale.
+          Çağıran sayfalar altLocale'i yine veriyor; kapı burada. */}
+      {LANG_SWITCH && altLocale && (
         <a class="lang" href={altLocale.href} lang={altLocale.lang}
            title={altLocale.lang === 'tr' ? 'Türkçe' : 'English'}
            aria-label={altLocale.lang === 'tr' ? 'Türkçe sürüm' : 'English version'}>

@@ -19,6 +19,28 @@ const SITE_URL = 'https://cmlonder.com';
 const IS_CUTOVER = SITE_URL === 'https://cmlonder.com';
 
 /**
+ * TEK DİL MODU — src/config.ts → SITE.liveLocale ile birlikte çevrilir.
+ *
+ * İngilizce yayından çekildi: kök adres Türkçe anasayfaya yönleniyor ve
+ * sitemap yalnızca Türkçeyi artı dil bağımsız /radar bölgesini duyuruyor.
+ * İngilizce sayfalar SİLİNMİYOR, adresleri açık kalıyor — sadece hiçbir
+ * yerden bağlanmıyor ve noindex alıyor (bkz. Base.astro).
+ *
+ * Bayrak burada ayrıca duruyor çünkü astro.config bir .mjs ve src/config.ts'i
+ * import etmiyor. İkisini birlikte çevir.
+ */
+const TEK_DIL = true;
+
+/**
+ * Sitemap'e girenler: Türkçe kabuk + dil bağımsız radar bölgesi.
+ * @param {string} page
+ */
+const yayindaMi = (page) => {
+  const { pathname } = new URL(page);
+  return pathname.startsWith('/tr/') || pathname.startsWith('/radar');
+};
+
+/**
  * Eski Hashnode slug'ları -> /essays/<slug>.
  * Üçüncüsü yazının Hashnode'da yeniden adlandırılmadan önceki adı; HackerNoon
  * hâlâ ona link veriyor ve cutover sonrası 404 dönüyordu.
@@ -97,6 +119,9 @@ export default defineConfig({
   site: SITE_URL,
 
   redirects: {
+    // Tek dil modu: ön kapı Türkçe. İngilizce anasayfa kalkmıyor, /tr/'ye
+    // yöneliyor — statik çıktıda meta refresh + canonical sayfası olarak.
+    ...(TEK_DIL ? { '/': '/tr/' } : {}),
     // /work /about ile birleşti (19 Eyl 2026): eski adres gitmesin.
     '/work': '/about',
     '/tr/work': '/tr/about',
@@ -112,9 +137,10 @@ export default defineConfig({
     // Build sonrası dist/ üzerinden statik arama indeksi üretir. Sunucu yok.
     pagefind(),
     sitemap({
-      i18n: { defaultLocale: 'en', locales: { en: 'en', tr: 'tr' } },
+      // Tek dil modunda hreflang eşlemesi yok: karşı dil sitemap'te değil.
+      ...(TEK_DIL ? {} : { i18n: { defaultLocale: 'en', locales: { en: 'en', tr: 'tr' } } }),
       // .md aynaları insan sayfası değil — sitemap'e girmemeli.
-      filter: (page) => !page.endsWith('.md'),
+      filter: (page) => !page.endsWith('.md') && (!TEK_DIL || yayindaMi(page)),
     }),
   ],
 

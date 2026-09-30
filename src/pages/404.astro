@@ -1,20 +1,24 @@
 ---
 import Base from '../layouts/Base.astro';
-import { HUB, COLLECTIONS, COLLECTION_LABELS, type Locale } from '../config';
+import { SITE, HUB, COLLECTIONS, COLLECTION_LABELS, PAGE, type Locale } from '../config';
 import { localePath } from '../lib/content';
 
-// GitHub Pages tek bir 404.html sunar; dil ayrımı yapamayız, iki dili de yazıyoruz.
-const lang: Locale = 'en';
+/*
+ * GitHub Pages tek bir 404.html sunar; dil ayrımı yapamayız, iki dili de
+ * yazıyoruz. Birincil dil yayında olan dil: bağlantılar da onun kabuğuna
+ * gider, yoksa 404'ten kapalı dile düşülüyor.
+ */
+const lang: Locale = SITE.liveLocale ?? 'en';
 ---
 
-<Base title="Not found — Cemal Önder" description="That page does not exist." lang={lang}>
+<Base title={`${PAGE[lang].notFoundTitle} — Cemal Önder`} description={PAGE[lang].notFoundDek} lang={lang}>
   <div class="wrap narrow-col">
     <p class="kicker">404</p>
-    <h1>This page isn't on the workbench.</h1>
-    <p class="sub">Bu sayfa tezgâhta yok.</p>
+    <h1>{PAGE[lang].notFoundHead}</h1>
+    <p class="sub">{PAGE[lang].notFoundAlt}</p>
 
     <ul class="links">
-      <li><a href={localePath(lang, '')}>Home</a></li>
+      <li><a href={localePath(lang, '')}>{PAGE[lang].home}</a></li>
       <li><a href={localePath(lang, HUB.path)}>{HUB.name[lang]}</a></li>
       {COLLECTIONS.map((c) => (
         <li><a href={localePath(lang, c)}>{COLLECTION_LABELS[c][lang]}</a></li>

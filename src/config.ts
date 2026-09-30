@@ -5,11 +5,36 @@
 export const SITE = {
   url: 'https://cmlonder.com',
   author: 'Cemal Önder',
+  /**
+   * URL BİÇİMİNİ belirler, gösterilen dili değil: İngilizce prefix'siz
+   * (/essays/x), Türkçe /tr/ altında. Adresler yayında olduğu için
+   * 'en' kalmalı — gösterilen dili `liveLocale` seçiyor.
+   */
   defaultLocale: 'en' as const,
   locales: ['en', 'tr'] as const,
+  /**
+   * TEK DİL MODU. İngilizce içerik yeterince dolmadığı için 2026-09-30'da
+   * yayından çekildi: dil anahtarı görünmüyor, kök adres Türkçeye
+   * yönleniyor, İngilizce sayfalar aramaya ve sitemap'e girmiyor ve
+   * `noindex` alıyor.
+   *
+   * Sayfalar SİLİNMEDİ — adresleri canlıdaydı, hâlâ açılıyorlar. Kapatma
+   * gezinme ve keşif katmanında; içerik yerinde duruyor.
+   *
+   * İki dili geri açmak: burayı `null` yap ve astro.config.mjs'deki
+   * TEK_DIL'i `false` çevir. Başka yere dokunmak gerekmiyor.
+   */
+  liveLocale: 'tr' as 'en' | 'tr' | null,
 } as const;
 
 export type Locale = (typeof SITE.locales)[number];
+
+/** Bu dil yayında mı? Kapalı dil gezinmede, aramada ve sitemap'te yok. */
+export const isLive = (lang: Locale): boolean =>
+  SITE.liveLocale === null || SITE.liveLocale === lang;
+
+/** Dil anahtarı yalnızca iki dil de yayındayken görünür. */
+export const LANG_SWITCH: boolean = SITE.liveLocale === null;
 
 /** İçerik tipleri = olgunluk seviyeleri. Konu DEĞİL. */
 export const COLLECTIONS = ['essays', 'notes', 'playbooks', 'signals'] as const;
@@ -612,6 +637,11 @@ export const PAGE: Record<Locale, {
   noSelection: string;
   noMatch: string;
   findAction: string;
+  notFoundTitle: string;
+  notFoundDek: string;
+  notFoundHead: string;
+  /** Diğer dildeki aynı cümle: 404 tek dosya, iki dil de yazılı. */
+  notFoundAlt: string;
 }> = {
   en: {
     back: 'Back to the workbench',
@@ -654,6 +684,10 @@ export const PAGE: Record<Locale, {
     noSelection: 'Nothing selected — showing everything, cheapest fix first.',
     noMatch: 'Nothing matches that combination. Try removing a symptom.',
     findAction: 'Which playbook? Find it by symptom',
+    notFoundTitle: 'Not found',
+    notFoundDek: 'That page does not exist.',
+    notFoundHead: "This page isn't in the garden.",
+    notFoundAlt: 'Bu sayfa bahçede yok.',
   },
   tr: {
     back: 'Bahçeye dön',
@@ -696,6 +730,10 @@ export const PAGE: Record<Locale, {
     noSelection: 'Herhangi bir belirti seçilmedi; tüm kılavuzlar en pratik çözümlerden başlayarak listeleniyor.',
     noMatch: 'Seçilen belirtilere uygun bir kılavuz bulunamadı. Lütfen filtreleri gözden geçirin.',
     findAction: 'Hangi kılavuz? Belirtiden bul',
+    notFoundTitle: 'Sayfa bulunamadı',
+    notFoundDek: 'Aradığınız sayfa burada değil.',
+    notFoundHead: 'Bu sayfa bahçede yok.',
+    notFoundAlt: "This page isn't in the garden.",
   },
 };
 
